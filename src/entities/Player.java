@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Point;
+
 /**
  * Subclass of Entity that represents a player in Project Z.
  * 
@@ -9,4 +11,7 @@ package entities;
  * @version 1.0
  */
 public class Player extends Entity {
+	public Player(Point position) {
+		super(position);
+	}
 }

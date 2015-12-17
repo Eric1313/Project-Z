@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Point;
+
 /**
  * Abstract Entity class for all entities in Project Z.
  * 
@@ -8,4 +10,21 @@ package entities;
  * @version 1.0
  */
 public abstract class Entity {
+	private Point position;
+
+	public Entity(Point position) {
+		if (position != null) {
+			this.position = position;
+		} else {
+			position = new Point(0, 0);
+		}
+	}
+
+	public void updatePosition(Point position) {
+		this.position = position;
+	}
+
+	public Point getPosition() {
+		return position;
+	}
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Point;
+
 /**
  * Debris object that holds an inventory for players to take from.
  * 
@@ -9,4 +11,9 @@ package entities;
  * @version 1.0
  */
 public class Debris extends Entity {
+
+	public Debris(Point position) {
+		super(position);
+		// TODO Auto-generated constructor stub
+	}
 }
