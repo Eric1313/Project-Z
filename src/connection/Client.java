@@ -17,6 +17,8 @@ public class Client implements Runnable {
 	private BufferedReader input;
 	private PrintWriter output;
 	
+	private int playerNo;
+	private String name;
 	private boolean connected;
 	
 	/**
@@ -49,8 +51,27 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 		
-		while (this.connected) {
-			String message = this.readLine();
+		this.name = this.readLine();
+		
+		String msg = this.server.getNoOfClients() + " " + this.getPlayerNo() + " ";
+		
+		for (int player = 0; player < this.server.getNoOfClients(); player++) {
+			msg += this.server.getName(player) + " | ";
+		}
+		
+		this.sendMessage(msg);
+		
+		while (this.connected && this.server.isRunning()) {
+			msg = this.readLine();
+			
+			char msgType = msg.charAt(0);
+			
+			switch (msgType) {
+			case 'm':
+				break;
+			case 's':
+				break;
+			}
 		}
 	}
 	
@@ -65,13 +86,32 @@ public class Client implements Runnable {
 		try {
 			message = this.input.readLine();
 		} catch (IOException e) {
+			this.server.disconnect(this);
 			this.disconnect();
 		}
 		
 		if (message == null) {
+			this.server.disconnect(this);
 			this.disconnect();
 		}
 		
 		return message;
+	}
+	
+	public void sendMessage(String msg) {
+		this.output.println(msg);
+		this.output.flush();
+	}
+
+	public int getPlayerNo() {
+		return this.playerNo;
+	}
+
+	public void setPlayerNo(int playerNo) {
+		this.playerNo = playerNo;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 }

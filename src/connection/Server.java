@@ -17,6 +17,7 @@ public class Server {
 	private ServerSocket socket;
 	private ArrayList<Client> clientList;
 	private int noOfClients = 0;
+	private boolean running;
 
 	/**
 	 * Server constructor.
@@ -37,13 +38,17 @@ public class Server {
 			}
 		}
 
-		while (true) {
+		this.running = true;
+		
+		while (this.running && this.noOfClients < 7) {
 			System.out.println("Waiting for client to connect...");
 			try {
 				Socket client = this.socket.accept();
 				Client newClient = new Client(client, this);
 				this.clientList.add(newClient);
 				this.noOfClients++;
+				newClient.setPlayerNo(noOfClients - 1);
+				new Thread(newClient).start();
 			} catch (Exception e) {
 				System.err.println("Error connecting to client");
 				e.printStackTrace();
@@ -51,7 +56,25 @@ public class Server {
 		}
 	}
 	
+	public boolean isRunning() {
+		return this.running;
+	}
+	
 	public void disconnect(Client client) {
 		this.clientList.remove(client);
+	}
+	
+	public void broadcast(String msg) {
+		for (int client = 0; client < clientList.size(); client++) {
+			clientList.get(client).sendMessage(msg);
+		}
+	}
+	
+	public int getNoOfClients() {
+		return this.noOfClients;
+	}
+	
+	public String getName(int playerNo) {
+		return this.clientList.get(playerNo).getName();
 	}
 }
