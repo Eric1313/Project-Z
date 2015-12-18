@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.Point;
 
+import com.sun.prism.Graphics;
+
 /**
  * Abstract Entity class for all entities in Project Z.
  * 
@@ -27,4 +29,6 @@ public abstract class Entity {
 	public Point getPosition() {
 		return position;
 	}
+
+	public abstract void render(Graphics g);
 }
