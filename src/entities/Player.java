@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.Point;
 
+import com.sun.prism.Graphics;
+
 /**
  * Subclass of Entity that represents a player in Project Z.
  * 
@@ -13,5 +15,14 @@ import java.awt.Point;
 public class Player extends Entity {
 	public Player(Point position) {
 		super(position);
+	}
+
+	@Override
+	public void render(Graphics g) {
+
+	}
+
+	public void getInput() {
+
 	}
 }

@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.Point;
 
+import com.sun.prism.Graphics;
+
 /**
  * Debris object that holds an inventory for players to take from.
  * 
@@ -15,5 +17,11 @@ public class Debris extends Entity {
 	public Debris(Point position) {
 		super(position);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void render(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 }
