@@ -17,8 +17,9 @@ public class Map
 
 	int height;
 	int width;
-	final int minArea = 625;
 	final int maxArea = 2500;
+	final double lengthWidthRatio=0.5;
+
 	char[][] map;
 
 	public Map(int height, int width)
@@ -34,25 +35,24 @@ public class Map
 
 	}
 
-	public void generateSideRoads(Point start, Point end, double xyRatio, int minArea)
+	public void generateSideRoads(Point start, Point end, double xyRatio,
+			int minArea)
 	{
-	int boxWidth=(int) Math.abs(end.getX()-start.getX());
-	int boxHeight=(int)Math.abs(end.getY()-start.getY()) > maxArea);
-		if (Math.abs(end.getY()-start.getY()) > maxArea){
-		
-	if(Math.random()>.5)
-	{
-		generateVertiacalRoad(startingPoint, 0, Direction.DOWN, 23);
-	}
-	else
-	{
-		generateVertiacalRoad(, 0, Direction.DOWN, 23);
-
-	}
-	
+		int boxWidth = (int) (Math.abs(end.getX() - start.getX()));
+		int boxHeight = (int) (Math.abs(end.getY() - start.getY()));
+		int startingPoint;
+		if (boxWidth * boxHeight > maxArea)
+		{
+			if (Math.random() > .5)
+			{
+				
+				// generateVertiacalRoad(startingPoint, 0, Direction.DOWN, 7);
+			}
+			else
+			{
+				// generateHorizontalRoad(startingPoint 0, Direction.WEST, 7);
+			}
 		}
-	else
-	{
 	}
 
 	public void generateVertiacalRoad(int x, int y, Direction direction,
@@ -61,7 +61,8 @@ public class Map
 
 	}
 
-	public void generateHorizontalRoad(int width)
+	public void generateHorizontalRoad(int x, int y, Direction direction,
+			int width)
 	{
 
 	}
