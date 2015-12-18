@@ -22,7 +22,7 @@ public class Map
 
 	char[][] map;
 
-	public Map(int height, int width)
+	public Map(int height, int width) 
 	{
 		this.width = width;
 		this.height = height;
@@ -66,5 +66,4 @@ public class Map
 	{
 
 	}
-
 }
