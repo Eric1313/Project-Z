@@ -21,13 +21,13 @@ public class Map
 	final int maxArea = 2500;
 	final double heightWidthRatio = 0.5;
 
-	char[][] map;
+	short[][] map;
 
 	public Map(int height, int width)
 	{
 		this.width = width;
 		this.height = height;
-		this.map = new char[width][height];
+		this.map = new short[width][height];
 
 		// Generate main road
 
@@ -84,13 +84,46 @@ public class Map
 		}
 	}
 
-	public void generateVertiacalRoad(int x, int y, 
-			int width)
+	public void generateVertiacalRoad(int x, int y,
+			int size)
 	{
-		int 
-		while(map[x][y]!=null)
+		int tempx = x;
+		int tempy = y;
+		// Connect to other roads if not edge
+		if (tempy++ < width)
 		{
-			
+			tempy++;
+			tempx -= ((size - 1) / 2);
+			setTile(tempx, tempy, 104, Direction.UP);
+			tempx++;
+			for (int i = 1; i < size - 2; i++)
+			{
+				setTile(tempx, tempy, 105, Direction.UP);
+				tempx++;
+			}
+			setTile(tempx, tempy, 104, Direction.RIGHT);
+			tempy++;
+			tempx -= size;
+			while ((map[tempx][tempy] & 0xFFF) == 100
+					|| (map[tempx][tempy] & 0xFFF) == 101)
+			{
+				setTile(tempx, tempy, 105, Direction.LEFT);
+				tempx++;
+				for (int i = 0; i < size - 3; i++)
+				{
+					setTile(tempx, tempy, 101, Direction.UP);
+					tempx++;
+				}
+				setTile(tempx, tempy, 105, Direction.RIGHT);
+				tempx -= size;
+				tempy++;
+			}
+		}
+		tempx = x;
+		tempy = y;
+		while (map[tempx][tempy] != 0)
+		{
+
 		}
 	}
 
@@ -98,5 +131,23 @@ public class Map
 			int width)
 	{
 
+	}
+
+	public void setTile(int x, int y, int i, Direction direction)
+	{
+		map[x][y] = (short) i;
+		if (direction == Direction.RIGHT)
+		{
+			map[x][y] = (short) (map[x][y] | (1 << 12));
+		}
+		else if (direction == Direction.LEFT)
+		{
+			map[x][y] = (short) (map[x][y] | (1 << 13));
+		}
+		else if (direction == Direction.DOWN)
+		{
+			map[x][y] = (short) (map[x][y] | (1 << 12));
+			map[x][y] = (short) (map[x][y] | (1 << 13));
+		}
 	}
 }
