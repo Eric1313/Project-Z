@@ -1,4 +1,4 @@
-package connection;
+package server;
 
 import java.io.*;
 import java.net.*;
@@ -9,13 +9,13 @@ import java.util.ArrayList;
  * connected to it.
  * 
  * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
- * @see Client
+ * @see ClientHandeler
  * @since 1.0
  * @version 1.0
  */
 public class Server {
 	private ServerSocket socket;
-	private ArrayList<Client> clientList;
+	private ArrayList<ClientHandeler> clientList;
 	private int noOfClients = 0;
 	private boolean running;
 
@@ -26,7 +26,7 @@ public class Server {
 	 *            the port to set up the server on.
 	 */
 	public Server(int port) {
-		this.clientList = new ArrayList<Client>();
+		this.clientList = new ArrayList<ClientHandeler>();
 
 		while (socket == null) {
 			try {
@@ -44,7 +44,7 @@ public class Server {
 			System.out.println("Waiting for client to connect...");
 			try {
 				Socket client = this.socket.accept();
-				Client newClient = new Client(client, this);
+				ClientHandeler newClient = new ClientHandeler(client, this);
 				this.clientList.add(newClient);
 				this.noOfClients++;
 				newClient.setPlayerNo(noOfClients - 1);
@@ -60,21 +60,21 @@ public class Server {
 		return this.running;
 	}
 	
-	public void disconnect(Client client) {
+	public void disconnect(ClientHandeler client) {
 		this.clientList.remove(client);
 	}
 	
-	public void broadcast(String msg) {
-		for (int client = 0; client < clientList.size(); client++) {
-			clientList.get(client).sendMessage(msg);
-		}
-	}
+//	public void broadcast(String msg) {
+//		for (int client = 0; client < clientList.size(); client++) {
+//			clientList.get(client).sendMessage(msg);
+//		}
+//	}
 	
 	public int getNoOfClients() {
 		return this.noOfClients;
 	}
 	
-	public String getName(int playerNo) {
-		return this.clientList.get(playerNo).getName();
-	}
+//	public String getName(int playerNo) {
+//		return this.clientList.get(playerNo).getName();
+//	}
 }

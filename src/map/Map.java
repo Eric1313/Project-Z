@@ -397,7 +397,7 @@ public class Map
 	//TEMP MAIN FOR TESTING
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		Map map = new Map(1000, 1000);
+		Map map = new Map(500, 500);
 		System.out.println("hi");
 	}
 }
