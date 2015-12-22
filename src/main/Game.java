@@ -1,5 +1,5 @@
 package main;
 
-public class Game {
+public class Game implements Runnable{
 
 }

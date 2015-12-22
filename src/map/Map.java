@@ -59,12 +59,9 @@ public class Map
 		{
 			for (int j = 0; j < width; j++)
 			{
-				// System.out.print(map[i][j]);
 				writer.printf("%3d ", (map[j][i] & 0xFFF));
-				// System.out.printf("%3d ",(map[i][j]& 0xFFF));
 			}
 			writer.println();
-			// System.out.println();
 
 		}
 		writer.close();
@@ -348,7 +345,6 @@ public class Map
 		// Intersection
 		else
 		{
-			tempx--;
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++)
 			{
@@ -393,11 +389,16 @@ public class Map
 		}
 
 	}
+	
+	public short[][] getMap()
+	{
+		return map;
+	}
 
 	//TEMP MAIN FOR TESTING
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		Map map = new Map(500, 500);
+		Map map = new Map(1000, 1000);
 		System.out.println("hi");
 	}
 }

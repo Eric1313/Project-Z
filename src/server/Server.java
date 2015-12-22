@@ -64,11 +64,22 @@ public class Server {
 		this.clientList.remove(client);
 	}
 	
-//	public void broadcast(String msg) {
-//		for (int client = 0; client < clientList.size(); client++) {
-//			clientList.get(client).sendMessage(msg);
-//		}
-//	}
+	
+	public void broadcast(String msg) {
+		for (int client = 0; client < clientList.size(); client++) {
+			clientList.get(client).sendMessage(msg);
+		}
+	}
+	public void broadcast(byte msg) {
+		for (int client = 0; client < clientList.size(); client++) {
+			clientList.get(client).sendMessage(msg);
+		}
+	}
+	public void broadcast(short msg) {
+		for (int client = 0; client < clientList.size(); client++) {
+			clientList.get(client).sendMessage(msg);
+		}
+	}
 	
 	public int getNoOfClients() {
 		return this.noOfClients;
