@@ -400,5 +400,6 @@ public class Map
 	{
 		Map map = new Map(1000, 1000);
 		System.out.println("hi");
+		System.out.println("bye");
 	}
 }
