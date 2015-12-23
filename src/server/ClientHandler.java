@@ -11,7 +11,7 @@ import java.net.*;
  * @since 1.0
  * @version 1.0
  */
-public class ClientHandeler implements Runnable
+public class ClientHandler implements Runnable
 {
 	private Server server;
 	private Socket socket;
@@ -28,7 +28,7 @@ public class ClientHandeler implements Runnable
 	 * @param socket the socket that the client is on.
 	 * @param server the server that the client is on.
 	 */
-	public ClientHandeler(Socket socket, Server server)
+	public ClientHandler(Socket socket, Server server)
 	{
 		this.socket = socket;
 		this.server = server;

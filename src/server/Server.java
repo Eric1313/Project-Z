@@ -9,13 +9,13 @@ import java.util.ArrayList;
  * connected to it.
  * 
  * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
- * @see ClientHandeler
+ * @see ClientHandler
  * @since 1.0
  * @version 1.0
  */
 public class Server {
 	private ServerSocket socket;
-	private ArrayList<ClientHandeler> clientList;
+	private ArrayList<ClientHandler> clientList;
 	private int noOfClients = 0;
 	private boolean running;
 
@@ -26,7 +26,7 @@ public class Server {
 	 *            the port to set up the server on.
 	 */
 	public Server(int port) {
-		this.clientList = new ArrayList<ClientHandeler>();
+		this.clientList = new ArrayList<ClientHandler>();
 
 		while (socket == null) {
 			try {
@@ -44,7 +44,7 @@ public class Server {
 			System.out.println("Waiting for client to connect...");
 			try {
 				Socket client = this.socket.accept();
-				ClientHandeler newClient = new ClientHandeler(client, this);
+				ClientHandler newClient = new ClientHandler(client, this);
 				this.clientList.add(newClient);
 				this.noOfClients++;
 				newClient.setPlayerNo(noOfClients - 1);
@@ -60,7 +60,7 @@ public class Server {
 		return this.running;
 	}
 	
-	public void disconnect(ClientHandeler client) {
+	public void disconnect(ClientHandler client) {
 		this.clientList.remove(client);
 	}
 	
