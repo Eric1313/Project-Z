@@ -57,29 +57,49 @@ public class ClientHandler implements Runnable
 			System.err.println("Error setting up output");
 			e.printStackTrace();
 		}
-		
-		this.name=readString();
-		
+
+		this.name = readString();
 
 		while (this.connected && this.server.isRunning())
 		{
+			// first byte is operation code
 			switch (readByte())
 			{
 			case 1:// Disconnect
 			{
 				readByte();
 			}
-			case 2://Move
+			case 2:// Move
 			{
 				readShort();
 			}
+			case 3:// Shoot
+			{
+				readShort();
+				readShort();
+				// read UID
 
 			}
+			case 4:// Throw
+			{
+				readShort();
+				readShort();
+				// readUID
 
+			}
+			case 5:// Melee
+			{
+				readShort();
+				// read UID
+			}
+			case 6:// Interact
+			{
+				// read UID
+			}
+			}
 		}
 
 	}
-
 
 	private String readString()
 	{
