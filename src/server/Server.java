@@ -3,6 +3,7 @@ package server;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import entities.*;
 
 /**
  * Server object that hosts a game of Project Z and handles the players
@@ -13,11 +14,13 @@ import java.util.ArrayList;
  * @since 1.0
  * @version 1.0
  */
-public class Server {
+public class Server implements Runnable {
 	private ServerSocket socket;
 	private ArrayList<ClientHandler> clientList;
+	private Player[] players; 
 	private int noOfClients = 0;
 	private boolean running;
+	private GameState gameState;
 
 	/**
 	 * Server constructor.
@@ -37,9 +40,13 @@ public class Server {
 				port = 5000; // get a new port
 			}
 		}
-
 		this.running = true;
-		
+		this.gameState=GameState.LOBBY;
+	}
+	
+	@Override
+	public void run()
+	{
 		while (this.running && this.noOfClients < 7) {
 			System.out.println("Waiting for client to connect...");
 			try {
@@ -53,7 +60,7 @@ public class Server {
 				System.err.println("Error connecting to client");
 				e.printStackTrace();
 			}
-		}
+		}		
 	}
 	
 	public boolean isRunning() {
@@ -84,8 +91,4 @@ public class Server {
 	public int getNoOfClients() {
 		return this.noOfClients;
 	}
-	
-//	public String getName(int playerNo) {
-//		return this.clientList.get(playerNo).getName();
-//	}
 }

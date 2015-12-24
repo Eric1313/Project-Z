@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import com.sun.prism.Graphics;
 
@@ -13,8 +14,10 @@ import com.sun.prism.Graphics;
  * @version 1.0
  */
 public class Player extends Entity {
+	public Rectangle boundry;
 	public Player(Point position) {
 		super(position);
+		
 	}
 
 	@Override
