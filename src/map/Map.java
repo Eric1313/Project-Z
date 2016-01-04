@@ -14,8 +14,7 @@ import java.util.ArrayList;
  * @since 1.0
  * @version 1.0
  */
-public class Map
-{
+public class Map {
 	public enum Direction {
 		UP, DOWN, RIGHT, LEFT
 	};
@@ -33,12 +32,15 @@ public class Map
 
 	/**
 	 * Creates map object
-	 * @param height height of map to make
-	 * @param width width of map to make
-	 * @throws FileNotFoundException temp file writer
+	 * 
+	 * @param height
+	 *            height of map to make
+	 * @param width
+	 *            width of map to make
+	 * @throws FileNotFoundException
+	 *             temp file writer
 	 */
-	public Map(int height, int width) throws FileNotFoundException
-	{
+	public Map(int height, int width) throws FileNotFoundException {
 		this.width = width;
 		this.height = height;
 		this.map = new short[width][height];
@@ -55,10 +57,8 @@ public class Map
 		// TEMP WRITE TO FILE FOR TESTING
 		File output = new File("map.txt");
 		PrintWriter writer = new PrintWriter(output);
-		for (int i = 0; i < height; i++)
-		{
-			for (int j = 0; j < width; j++)
-			{
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				writer.printf("%3d ", (map[j][i] & 0xFFF));
 			}
 			writer.println();
@@ -70,47 +70,40 @@ public class Map
 
 	/**
 	 * Generates side road off of main road
+	 * 
 	 * @param start
 	 * @param end
 	 */
-	public void generateSideRoads(Point start, Point end)
-	{
+	public void generateSideRoads(Point start, Point end) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
 		System.out.println(boxWidth + " " + boxHeight);
 		int roadX;
 		int roadY;
-		if (boxWidth * boxHeight > maxArea)
-		{
+		if (boxWidth * boxHeight > maxArea) {
 
 			if ((boxWidth > (2 * minSideLength + 7))
 					&& (((boxWidth * heightWidthRatio < boxHeight)
 							&& (boxHeight * heightWidthRatio < boxWidth) && Math
-							.random() > .5) || (boxHeight * heightWidthRatio < boxWidth)))
-			{
+							.random() > .5) || (boxHeight * heightWidthRatio < boxWidth))) {
 				roadX = (int) ((Math.min(start.getX(), end.getX()) + minSideLength) + ((Math
 						.random() * (boxWidth - (2 * minSideLength)))));
 				roadY = (int) Math.max(start.getY(), end.getY());
-				if (roadX == 1000 || roadY == 1000)
-				{
+				if (roadX == 1000 || roadY == 1000) {
 					System.out.println("WTF");
 				}
 				generateVerticalRoad(roadX, roadY, 7);
 				// Recursive split new generated squares
 
-				Point start1 = new Point((int) start.getX(),
-						(int) start.getY());
+				Point start1 = new Point((int) start.getX(), (int) start.getY());
 				Point end1 = new Point(roadX - 4, roadY);
 				generateSideRoads(start1, end1);
 
 				Point start2 = new Point(roadX + 4, (int) start.getY());
-				Point end2 = new Point((int) end.getX(),
-						(int) end.getY());
+				Point end2 = new Point((int) end.getX(), (int) end.getY());
 				generateSideRoads(start2, end2);
 
-			}
-			else if (boxHeight > (2 * minSideLength + 7))
-			{
+			} else if (boxHeight > (2 * minSideLength + 7)) {
 				roadY = (int) ((Math.min(start.getY(), end.getY()) + minSideLength) + (Math
 						.random() * (boxHeight - (2 * minSideLength))));
 				roadX = (int) Math.max(start.getX(), end.getX());
@@ -118,26 +111,19 @@ public class Map
 				generateHorizontalRoad(roadX, roadY, 7);
 				// Recursive split new generated squares
 
-				Point start1 = new Point((int) start.getX(),
-						(int) start.getY());
+				Point start1 = new Point((int) start.getX(), (int) start.getY());
 				Point end1 = new Point(roadX, roadY - 4);
 				generateSideRoads(start1, end1);
 
-				Point start2 = new Point((int) start.getX(),
-						(int) roadY + 4);
-				Point end2 = new Point((int) end.getX(),
-						(int) end.getY());
+				Point start2 = new Point((int) start.getX(), (int) roadY + 4);
+				Point end2 = new Point((int) end.getX(), (int) end.getY());
 				generateSideRoads(start2, end2);
-			}
-			else
-			{
+			} else {
 				// records corners of plaza
 				startingPoints.add(start);
 				endingPoints.add(end);
 			}
-		}
-		else
-		{
+		} else {
 			// records corners of plaza
 			startingPoints.add(start);
 			endingPoints.add(end);
@@ -146,21 +132,21 @@ public class Map
 
 	/**
 	 * Generates a vertical road
-	 * @param x starting x
-	 * @param y staring y
-	 * @param size road size in blocks
+	 * 
+	 * @param x
+	 *            starting x
+	 * @param y
+	 *            staring y
+	 * @param size
+	 *            road size in blocks
 	 */
-	public void generateVerticalRoad(int x, int y,
-			int size)
-	{
+	public void generateVerticalRoad(int x, int y, int size) {
 		int tempx = x - ((size - 1) / 2);
 		int tempy = y;
 		// Starting intersection
 		// end of map
-		if (y == (height - 1))
-		{
-			for (int i = 1; i <= size; i++)
-			{
+		if (y == (height - 1)) {
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, tempy, 120, Direction.RIGHT);
 				else if (i == size)
@@ -172,11 +158,9 @@ public class Map
 			tempy--;
 		}
 		// Road intersection
-		else
-		{
+		else {
 			tempy++;
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, (tempy + 1), 103, Direction.LEFT);
 				else if (i == size)
@@ -195,11 +179,9 @@ public class Map
 		// Actual road generation
 		tempx = x - ((size - 1) / 2);
 
-		while (tempy > 0 && map[tempx][tempy] == 0)
-		{
+		while (tempy > 0 && map[tempx][tempy] == 0) {
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size)
 					setTile(tempx, tempy, 100, Direction.UP);
 				else if (i == 2)
@@ -216,11 +198,9 @@ public class Map
 			tempx -= size;
 		}
 		// End of map
-		if (tempy == 0)
-		{
+		if (tempy == 0) {
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, tempy, 120, Direction.LEFT);
 				else if (i == size)
@@ -231,12 +211,10 @@ public class Map
 			}
 		}
 		// road intersection
-		else
-		{
+		else {
 			tempy--;
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, (tempy - 1), 103, Direction.UP);
 				else if (i == size)
@@ -255,21 +233,21 @@ public class Map
 
 	/**
 	 * Generates a horizontal road
-	 * @param x starting x
-	 * @param y staring y
-	 * @param size road size in blocks
+	 * 
+	 * @param x
+	 *            starting x
+	 * @param y
+	 *            staring y
+	 * @param size
+	 *            road size in blocks
 	 */
-	public void generateHorizontalRoad(int x, int y,
-			int size)
-	{
+	public void generateHorizontalRoad(int x, int y, int size) {
 		int tempx = x;
 		int tempy = y - ((size - 1) / 2);
 		// End of map
-		if (x == (width - 1))
-		{
+		if (x == (width - 1)) {
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, tempy, 120, Direction.UP);
 				else if (i == size)
@@ -281,12 +259,10 @@ public class Map
 			tempx--;
 		}
 		// Road intersection
-		else
-		{
+		else {
 			// Places correct tile type and direction
 			tempx++;
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile((tempx + 1), tempy, 103, Direction.RIGHT);
 				else if (i == size)
@@ -308,8 +284,7 @@ public class Map
 													// another road
 		{
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size)
 					setTile(tempx, tempy, 100, Direction.UP);
 				else if (i == 2)
@@ -328,11 +303,9 @@ public class Map
 		}
 
 		// End of map
-		if (tempx == 0)
-		{
+		if (tempx == 0) {
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile(tempx, tempy, 120, Direction.LEFT);
 				else if (i == size)
@@ -343,11 +316,9 @@ public class Map
 			}
 		}
 		// Intersection
-		else
-		{
+		else {
 			// Places correct tile type and direction
-			for (int i = 1; i <= size; i++)
-			{
+			for (int i = 1; i <= size; i++) {
 				if (i == 1)
 					setTile((tempx - 1), tempy, 103, Direction.UP);
 				else if (i == size)
@@ -365,40 +336,37 @@ public class Map
 
 	/**
 	 * Sets tile to tile id and sets direction
-	 * @param x x position
-	 * @param y y position
-	 * @param id tile ID
-	 * @param direction tile direction
+	 * 
+	 * @param x
+	 *            x position
+	 * @param y
+	 *            y position
+	 * @param id
+	 *            tile ID
+	 * @param direction
+	 *            tile direction
 	 */
-	public void setTile(int x, int y, int id, Direction direction)
-	{
+	public void setTile(int x, int y, int id, Direction direction) {
 		// set id
 		map[x][y] = (short) id;
 		// Set bit 12/ 13 to indicate direction
-		if (direction == Direction.RIGHT)
-		{
-		}
-		else if (direction == Direction.LEFT)
-		{
+		if (direction == Direction.RIGHT) {
+		} else if (direction == Direction.LEFT) {
 			map[x][y] = (short) (map[x][y] | (1 << 13));
-		}
-		else if (direction == Direction.DOWN)
-		{
+		} else if (direction == Direction.DOWN) {
 			map[x][y] = (short) (map[x][y] | (1 << 12));
 			map[x][y] = (short) (map[x][y] | (1 << 13));
 		}
 	}
-	
-	public short[][] getMap()
-	{
+
+	public short[][] getMap() {
 		return map;
 	}
 
-	//TEMP MAIN FOR TESTING
-	public static void main(String[] args) throws FileNotFoundException
-	{
+	// TEMP MAIN FOR TESTING
+	public static void main(String[] args) throws FileNotFoundException {
 		Map map = new Map(1000, 1000);
 		System.out.println("hi");
 		System.out.println("bye");
 	}
-}
+}	
