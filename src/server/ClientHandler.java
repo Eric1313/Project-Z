@@ -81,7 +81,6 @@ public class ClientHandler implements Runnable {
 				break;
 			}
 		}
-
 	}
 
 	private String readString() {
