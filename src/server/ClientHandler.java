@@ -75,9 +75,9 @@ public class ClientHandler implements Runnable {
 			case 5:// Melee
 				readShort();
 				break;
-				// read UID
+			// read UID
 			case 6:// Interact
-				// read UID
+					// read UID
 				break;
 			}
 		}
