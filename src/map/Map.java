@@ -387,7 +387,6 @@ public class Map
 			map[x][y] = (short) (map[x][y] | (1 << 12));
 			map[x][y] = (short) (map[x][y] | (1 << 13));
 		}
-
 	}
 	
 	public short[][] getMap()
