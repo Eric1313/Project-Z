@@ -1,6 +1,5 @@
 package client;
 
-public class Client
-{
+public class Client {
 
 }

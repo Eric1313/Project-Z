@@ -17,7 +17,7 @@ import entities.*;
 public class Server implements Runnable {
 	private ServerSocket socket;
 	private ArrayList<ClientHandler> clientList;
-	private Player[] players; 
+	private Player[] players;
 	private int noOfClients = 0;
 	private boolean running;
 	private GameState gameState;
@@ -41,12 +41,11 @@ public class Server implements Runnable {
 			}
 		}
 		this.running = true;
-		this.gameState=GameState.LOBBY;
+		this.gameState = GameState.LOBBY;
 	}
-	
+
 	@Override
-	public void run()
-	{
+	public void run() {
 		while (this.running && this.noOfClients < 7) {
 			System.out.println("Waiting for client to connect...");
 			try {
@@ -60,34 +59,35 @@ public class Server implements Runnable {
 				System.err.println("Error connecting to client");
 				e.printStackTrace();
 			}
-		}		
+		}
 	}
-	
+
 	public boolean isRunning() {
 		return this.running;
 	}
-	
+
 	public void disconnect(ClientHandler client) {
 		this.clientList.remove(client);
 	}
-	
 	
 	public void broadcast(String msg) {
 		for (int client = 0; client < clientList.size(); client++) {
 			clientList.get(client).sendMessage(msg);
 		}
 	}
+
 	public void broadcast(byte msg) {
 		for (int client = 0; client < clientList.size(); client++) {
 			clientList.get(client).sendMessage(msg);
 		}
 	}
+
 	public void broadcast(short msg) {
 		for (int client = 0; client < clientList.size(); client++) {
 			clientList.get(client).sendMessage(msg);
 		}
 	}
-	
+
 	public int getNoOfClients() {
 		return this.noOfClients;
 	}
