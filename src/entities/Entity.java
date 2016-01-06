@@ -16,14 +16,16 @@ public abstract class Entity {
 	private Point position;
 	private double rotation;
 
-	public Entity(Point position) {
-		if (position != null) {
-			this.position = position;
-		} else {
-			this.position = new Point(0, 0);
-		}
+	public Entity() {
+		this.position = new Point(0, 0);
 		this.health = 100;
-		this.setRotation(0);
+		this.rotation = 0;
+	}
+	
+	public Entity(Point position) {
+		this.position = position;
+		this.health = 100;
+		this.rotation = 0;
 	}
 
 	public Point getPosition() {

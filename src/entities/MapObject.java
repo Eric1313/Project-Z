@@ -1,5 +1,7 @@
 package entities;
 
+import com.sun.prism.Graphics;
+
 /**
  * Abstract MapObject class for objects inside a map in Project Z.
  * 
@@ -8,5 +10,9 @@ package entities;
  * @since 1.0
  * @version 1.0
  */
-public abstract class MapObject {
+public class MapObject extends Entity {
+
+	@Override
+	public void render(Graphics g) {
+	}
 }
