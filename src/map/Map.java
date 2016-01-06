@@ -29,7 +29,7 @@ public class Map
 	final int MAX_AREA = 900;
 	final int MIN_SIDE_LENGTH = 24;
 	final int MIN_BUILD_LENGTH = 10;
-	final int MAX_BUILD_LENGTH = 20;
+	final int MAX_BUILD_LENGTH = 10;
 	
 	final double heightWidthRatio = 0.5;
 	private short[][] map;
@@ -91,7 +91,7 @@ public class Map
 		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
 		buildingStart = new Point((int)start.getX(),(int)start.getY());
 		buildingEnd = new Point((int)start.getX() + cornerWidth, (int)start.getY() + cornerHeight);
-		//generateBuilding (buildingStart, buildingEnd);	
+		generateBuilding (buildingStart, buildingEnd);	
 		
 		//Top Right Corner
 		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
@@ -104,7 +104,7 @@ public class Map
 		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
 		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
 		buildingStart = new Point((int)start.getX(),(int)end.getY()-cornerHeight);
-		buildingEnd = new Point((int)end.getX()+cornerWidth, (int)end.getY());
+		buildingEnd = new Point((int)start.getX()+cornerWidth, (int)end.getY());
 		//generateBuilding (buildingStart, buildingEnd);	
 		
 		//Bottom Right Corner
@@ -117,17 +117,11 @@ public class Map
 	
 	public void generateBuilding(Point start, Point end){
 		
-System.out.println((int)start.getX()+"  "+(int)start.getY());
-		setTile((int)start.getX(), (int)start.getY(), 201, Direction.UP);
-		setTile((int)end.getX(), (int)end.getY(), 201, Direction.UP);
-
-		/*
 		for (int i = (int) start.getX(); i <= end.getX(); i++){
 			for (int j = (int) start.getY(); j <= end.getY(); j++){
 				setTile(i,j,201,Direction.UP);
 			}
 		}
-		*/
 	}
 	
 	
