@@ -17,6 +17,7 @@ public class Game implements Runnable {
 	}
 
 	private void initialize() {
+		// Loads the tile assets
 		tiles = new Assets("res/img/tiles.png");
 	}
 
