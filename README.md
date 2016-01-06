@@ -2,9 +2,9 @@
 
 *Project Z* is a top-down maze survival game written in Java.
 
-For more information on the game, please visit the [Google Doc](https://docs.google.com/document/d/19MVbmryXxvktkHcWrKZTHJ3OWmhq6EKIO3je-vPXd7Y/edit#).
+For more information on the game, please visit the [Google Doc](https://docs.google.com/document/d/19MVbmryXxvktkHcWrKZTHJ3OWmhq6EKIO3je-vPXd7Y/edit).
 
-For a visual guide, please visit the [flowchart]() (not available at the moment).
+For a visual guide, please visit the [object map](https://docs.google.com/drawings/d/1Yz2MEXLH9DPwBb74oaUr7sL8S8pZTJ3093lIYp443Ao/edit).
 
 ## Instructions
  - TO-DO
