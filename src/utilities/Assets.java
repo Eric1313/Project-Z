@@ -36,4 +36,7 @@ public class Assets {
 			}
 		}
 	}
+	public BufferedImage[][] getSprites() {
+		return sprites;
+	}
 }
