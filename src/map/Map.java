@@ -22,14 +22,17 @@ public class Map
 
 	private int height;
 	private int width;
-	private int minSideLength = 24;
+
 	private ArrayList<Point> startingPoints = new ArrayList<Point>();
 	private ArrayList<Point> endingPoints = new ArrayList<Point>();
 
-	final int maxArea = 1;
-	final int minArea = 900;
+	final int MAX_AREA = 900;
+	final int MIN_SIDE_LENGTH = 24;
+	final int MIN_BUILD_LENGTH = 10;
+	final int MAX_BUILD_LENGTH = 20;
+	
 	final double heightWidthRatio = 0.5;
-	short[][] map;
+	private short[][] map;
 
 	/**
 	 * Creates map object
@@ -51,6 +54,11 @@ public class Map
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - 7, height - 1));
 		generateSideRoads(new Point(mainRoadX + 7, 0), new Point(height - 1,
 				width - 1));
+		
+		for(int i=0;i<startingPoints.size();i++)
+		{
+			generatePlaza(startingPoints.get(i),endingPoints.get(i));
+		}
 
 		// TEMP WRITE TO FILE FOR TESTING
 		File output = new File("map.txt");
@@ -68,6 +76,61 @@ public class Map
 
 	}
 
+	public void generatePlaza(Point start, Point end){
+
+		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
+		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
+		
+		int cornerWidth;
+		int cornerHeight;
+		Point buildingStart;
+		Point buildingEnd;
+		
+		//Top Left Corner
+		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStart = new Point((int)start.getX(),(int)start.getY());
+		buildingEnd = new Point((int)start.getX() + cornerWidth, (int)start.getY() + cornerHeight);
+		generateBuilding (buildingStart, buildingEnd);	
+		
+		//Top Right Corner
+		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStart = new Point((int) (end.getX()-cornerWidth),(int)start.getY());
+		buildingEnd = new Point((int) end.getX(),(int)start.getY() + cornerHeight);
+		//generateBuilding (buildingStart, buildingEnd);	
+		
+		//Bottom Left Corner
+		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStart = new Point((int)start.getX(),(int)end.getY()-cornerHeight);
+		buildingEnd = new Point((int)end.getX()+cornerWidth, (int)end.getY());
+		//generateBuilding (buildingStart, buildingEnd);	
+		
+		//Bottom Right Corner
+		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStart = new Point((int)end.getX()-cornerWidth, (int)end.getY()-cornerHeight);
+		buildingEnd = new Point((int)end.getX(),(int)end.getY());
+		//generateBuilding (buildingStart, buildingEnd);	
+	}
+	
+	public void generateBuilding(Point start, Point end){
+		
+System.out.println((int)start.getX()+"  "+(int)start.getY());
+		setTile((int)start.getX(), (int)start.getY(), 201, Direction.UP);
+		setTile((int)end.getX(), (int)end.getY(), 201, Direction.UP);
+
+		/*
+		for (int i = (int) start.getX(); i <= end.getX(); i++){
+			for (int j = (int) start.getY(); j <= end.getY(); j++){
+				setTile(i,j,201,Direction.UP);
+			}
+		}
+		*/
+	}
+	
+	
 	/**
 	 * Generates side road off of main road
 	 * @param start
@@ -80,16 +143,16 @@ public class Map
 		System.out.println(boxWidth + " " + boxHeight);
 		int roadX;
 		int roadY;
-		if (boxWidth * boxHeight > maxArea)
+		if (boxWidth * boxHeight > MAX_AREA)
 		{
 
-			if ((boxWidth > (2 * minSideLength + 7))
+			if ((boxWidth > (2 * MIN_SIDE_LENGTH + 7))
 					&& (((boxWidth * heightWidthRatio < boxHeight)
 							&& (boxHeight * heightWidthRatio < boxWidth) && Math
 							.random() > .5) || (boxHeight * heightWidthRatio < boxWidth)))
 			{
-				roadX = (int) ((Math.min(start.getX(), end.getX()) + minSideLength) + ((Math
-						.random() * (boxWidth - (2 * minSideLength)))));
+				roadX = (int) ((Math.min(start.getX(), end.getX()) + MIN_SIDE_LENGTH) + ((Math
+						.random() * (boxWidth - (2 * MIN_SIDE_LENGTH)))));
 				roadY = (int) Math.max(start.getY(), end.getY());
 				if (roadX == 1000 || roadY == 1000)
 				{
@@ -109,10 +172,10 @@ public class Map
 				generateSideRoads(start2, end2);
 
 			}
-			else if (boxHeight > (2 * minSideLength + 7))
+			else if (boxHeight > (2 * MIN_SIDE_LENGTH + 7))
 			{
-				roadY = (int) ((Math.min(start.getY(), end.getY()) + minSideLength) + (Math
-						.random() * (boxHeight - (2 * minSideLength))));
+				roadY = (int) ((Math.min(start.getY(), end.getY()) + MIN_SIDE_LENGTH) + (Math
+						.random() * (boxHeight - (2 * MIN_SIDE_LENGTH))));
 				roadX = (int) Math.max(start.getX(), end.getX());
 
 				generateHorizontalRoad(roadX, roadY, 7);
