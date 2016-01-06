@@ -12,9 +12,9 @@ import com.sun.prism.Graphics;
  * @version 1.0
  */
 public abstract class Entity {
-	private int health;
-	private Point position;
-	private double rotation;
+	protected int health;
+	protected Point position;
+	protected double rotation;
 
 	public Entity() {
 		this.position = new Point(0, 0);
