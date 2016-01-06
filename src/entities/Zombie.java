@@ -12,7 +12,7 @@ import com.sun.prism.Graphics;
  * @since 1.0
  * @version 1.0
  */
-public class Zombie extends Entity {
+public class Zombie extends Mob {
 
 	public Zombie(Point position) {
 		super(position);
