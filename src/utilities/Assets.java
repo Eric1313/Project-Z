@@ -8,6 +8,7 @@ package utilities;
 import java.awt.image.BufferedImage;
 
 public class Assets {
+	private String path;
 	private final int tileWidth = 32;
 	private final int tileHeight = 32;
 	private BufferedImage[][] sprites;
@@ -15,7 +16,8 @@ public class Assets {
 	/**
 	 * The constructor for the assets class
 	 */
-	public Assets() {
+	public Assets(String path) {
+		this.path = path;
 		loadAssets();
 	}
 
@@ -24,7 +26,7 @@ public class Assets {
 	 */
 	private void loadAssets() {
 		SpriteSheet sheet = new SpriteSheet(
-				ImageLoader.loadImage("res/img/tiles.png"));
+				ImageLoader.loadImage(path));
 		sprites = new BufferedImage[sheet.getHeight() / tileHeight][sheet
 				.getWidth() / tileWidth];
 		for (int row = 0; row < sprites.length; row++) {

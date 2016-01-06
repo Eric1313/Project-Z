@@ -1,9 +1,6 @@
 package main;
 
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class Display {
 	private JFrame frame;
@@ -41,14 +38,3 @@ public class Display {
 	}
 }
 
-class GamePanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-
-	public GamePanel() {
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	}
-}
