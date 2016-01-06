@@ -91,7 +91,7 @@ public class Map
 		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
 		buildingStart = new Point((int)start.getX(),(int)start.getY());
 		buildingEnd = new Point((int)start.getX() + cornerWidth, (int)start.getY() + cornerHeight);
-		generateBuilding (buildingStart, buildingEnd);	
+		//generateBuilding (buildingStart, buildingEnd);	
 		
 		//Top Right Corner
 		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;

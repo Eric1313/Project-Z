@@ -1,9 +1,11 @@
 package main;
 
-public class Game implements Runnable{
+public class Game implements Runnable {
 
 	@Override
-	public void run(){
+	public void run() {
 	}
 
+	public static void main(String[] args) {
+	}
 }
