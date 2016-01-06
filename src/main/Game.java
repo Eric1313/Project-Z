@@ -1,10 +1,12 @@
 package main;
 
 import utilities.Assets;
+import states.GameState;
 
 public class Game implements Runnable {
 	private Assets tiles;
-
+	
+	private Display display;
 	private String title;
 	private int width;
 	private int height;
@@ -19,6 +21,8 @@ public class Game implements Runnable {
 	private void initialize() {
 		// Loads the tile assets
 		tiles = new Assets("res/img/tiles.png");
+
+		display = new Display(title, width, height);
 	}
 
 	@Override
