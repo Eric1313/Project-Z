@@ -9,7 +9,7 @@ import com.sun.prism.Graphics;
 /**
  * Abstract Entity class for all entities in Project Z.
  * 
- * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @since 1.0
  * @version 1.0
  */
@@ -17,6 +17,7 @@ public abstract class Entity {
 	protected int health;
 	protected Point position;
 	protected double rotation;
+	protected Inventory inventory;
 	protected boolean solid;
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
@@ -25,23 +26,27 @@ public abstract class Entity {
 		this.position = new Point(0, 0);
 		this.health = 100;
 		this.rotation = 0;
+		this.inventory = new Inventory();
 		this.setSolid(solid);
 	}
-	
+
 	public Entity(Point position, boolean solid) {
 		this.position = position;
 		this.health = 100;
 		this.rotation = 0;
+		this.inventory = new Inventory();
 		this.setSolid(solid);
 	}
-	
-	public Entity(Point position,boolean solid, int health, double rotation, BufferedImage[] images,AudioClip[] clips) {
+
+	public Entity(Point position, boolean solid, int health, double rotation,
+			BufferedImage[] images, AudioClip[] clips) {
 		this.position = position;
 		this.health = health;
 		this.rotation = rotation;
+		this.inventory = new Inventory();
 		this.setSolid(solid);
-		this.images=images;
-		this.clips=clips;
+		this.images = images;
+		this.clips = clips;
 	}
 
 	public Point getPosition() {
@@ -78,7 +83,8 @@ public abstract class Entity {
 	}
 
 	/**
-	 * @param images the images to set
+	 * @param images
+	 *            the images to set
 	 */
 	public void setImages(BufferedImage[] images) {
 		this.images = images;
@@ -92,7 +98,8 @@ public abstract class Entity {
 	}
 
 	/**
-	 * @param solid the solid to set
+	 * @param solid
+	 *            the solid to set
 	 */
 	public void setSolid(boolean solid) {
 		this.solid = solid;
@@ -106,9 +113,18 @@ public abstract class Entity {
 	}
 
 	/**
-	 * @param clips the clips to set
+	 * @param clips
+	 *            the clips to set
 	 */
 	public void setClips(AudioClip[] clips) {
 		this.clips = clips;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 }

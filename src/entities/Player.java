@@ -7,8 +7,8 @@ import com.sun.prism.Graphics;
 /**
  * Subclass of Entity that represents a player in Project Z.
  * 
- * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
- * @see Entity
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Mob
  * @since 1.0
  * @version 1.0
  */
@@ -16,8 +16,8 @@ public class Player extends Mob {
 	public Player(boolean solid) {
 		super(solid);
 	}
-	
-	public Player(Point position,boolean solid) {
+
+	public Player(Point position, boolean solid) {
 		super(position, solid);
 	}
 
