@@ -1,5 +1,6 @@
 package items;
 
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 
 import enums.ItemEffect;
@@ -17,9 +18,9 @@ public class Throwable extends Item {
 	private int range, areaOfEffect;
 	private ItemEffect effect;
 
-	public Throwable(String name, int itemID,ItemState state, BufferedImage[] images,
+	public Throwable(int itemID,String name,ItemState state, BufferedImage[] images,AudioClip[] clips,
 			ItemEffect effect, int range, int areaOfEffect) {
-		super(name, itemID, images,state);
+		super(itemID,name, images,clips,state);
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
 		this.range=range;

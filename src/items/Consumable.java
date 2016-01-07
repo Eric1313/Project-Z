@@ -1,5 +1,6 @@
 package items;
 
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 
 import enums.ItemEffect;
@@ -15,12 +16,13 @@ import enums.ItemState;
  */
 public class Consumable extends Item {
 	private ItemEffect effect;
-	private int effectValue;
-	public Consumable(String name, int itemID, BufferedImage[] images,ItemState state,ItemEffect effect, int effectValue) {
-		super(name, itemID, images,state);
+	private int effectValue, durability;
+	public Consumable(int itemID,String name, BufferedImage[] images,AudioClip[] clips,ItemState state,ItemEffect effect, int effectValue, int durability) {
+		super(itemID,name, images,clips,state);
 		this.setEffect(effect);
 		this.setEffect(effect);
 		this.setEffectValue(effectValue);
+		this.setDurability(durability);
 	}
 	/**
 	 * @return the effect
@@ -45,6 +47,18 @@ public class Consumable extends Item {
 	 */
 	public void setEffectValue(int effectValue) {
 		this.effectValue = effectValue;
+	}
+	/**
+	 * @return the durability
+	 */
+	public int getDurability() {
+		return durability;
+	}
+	/**
+	 * @param durability the durability to set
+	 */
+	public void setDurability(int durability) {
+		this.durability = durability;
 	}
 	
 }

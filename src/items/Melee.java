@@ -1,5 +1,6 @@
 package items;
 
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 
 import enums.ItemState;
@@ -14,8 +15,8 @@ import enums.ItemState;
  */
 public class Melee extends Item {
 	private double swingSpeed,rechargeTime;
-	public Melee(String name, int itemID, BufferedImage[] images,ItemState state, double swingSpeed, double rechargeTime) {
-		super(name, itemID, images,state);
+	public Melee( int itemID,String name, BufferedImage[] images,AudioClip[] clips,ItemState state, double swingSpeed, double rechargeTime) {
+		super(itemID,name, images,clips,state);
 		this.setSwingSpeed(swingSpeed);
 		this.setRechargeTime(rechargeTime);
 	}

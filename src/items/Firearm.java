@@ -1,5 +1,6 @@
 package items;
 
+import java.applet.AudioClip;
 import java.awt.image.BufferedImage;
 
 import enums.ItemState;
@@ -16,8 +17,8 @@ public class Firearm extends Item {
 	protected int ammoID;
 	protected double rateOfFire;
 
-	public Firearm(String name, int itemID, BufferedImage[] images,ItemState state, int ammoID, double rateOfFire) {
-		super(name, itemID, images,state);
+	public Firearm(int itemID,String name, BufferedImage[] images,AudioClip[] clips,ItemState state, int ammoID, double rateOfFire) {
+		super(itemID,name, images,clips,state);
 		this.ammoID=ammoID;
 		this.rateOfFire=rateOfFire;
 	}

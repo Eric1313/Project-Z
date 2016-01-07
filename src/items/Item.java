@@ -1,6 +1,9 @@
 package items;
 
+import java.applet.AudioClip;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
+
 import enums.ItemState;
 /**
  * Abstract Item class for all items in Project Z.
@@ -15,8 +18,10 @@ public abstract class Item {
 	protected String name;
 	protected boolean held=false;
 	protected ItemState state;
+	protected AudioClip[] clips;
+	protected Point location;
 
-	public Item(String name, int itemID, BufferedImage[] images,ItemState state) {
+	public Item(int itemID, String name, BufferedImage[] images,AudioClip[] clips,ItemState state) {
 		this.name = name;
 		this.itemID = itemID;
 		this.images = images;
@@ -80,6 +85,48 @@ public abstract class Item {
 	 */
 	public void setHeld(boolean held) {
 		this.held = held;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public ItemState getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(ItemState state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the clips
+	 */
+	public AudioClip[] getClips() {
+		return clips;
+	}
+
+	/**
+	 * @param clips the clips to set
+	 */
+	public void setClips(AudioClip[] clips) {
+		this.clips = clips;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public Point getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Point location) {
+		this.location = location;
 	}
 	
 
