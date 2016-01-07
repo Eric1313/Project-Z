@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 	private String path;
-	private final int tileWidth = 32;
-	private final int tileHeight = 32;
+	public static final int tileWidth = 32;
+	public static final int tileHeight = 32;
 	private BufferedImage[][] sprites;
 
 	/**

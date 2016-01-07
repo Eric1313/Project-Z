@@ -15,7 +15,7 @@ public class Inventory {
 	private Item[] items;
 
 	public Inventory() {
-		this.items = new Item[this.NO_OF_ITEMS];
+		this.items = new Item[Inventory.NO_OF_ITEMS];
 	}
 
 	/**
@@ -26,7 +26,7 @@ public class Inventory {
 	 * @return the Item in the item number's slot. Returns null if it is empty.
 	 */
 	public Item get(int itemNo) {
-		if (itemNo < 0 || itemNo > this.NO_OF_ITEMS) {
+		if (itemNo < 0 || itemNo > this.items.length) {
 			return this.items[itemNo];
 		} else {
 			return null;
@@ -42,7 +42,7 @@ public class Inventory {
 	 *         not found.
 	 */
 	public int get(Item item) {
-		for (int itemNo = 0; itemNo < this.NO_OF_ITEMS; itemNo++) {
+		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
 			if (this.items[itemNo] == item) {
 				return itemNo;
 			}
@@ -99,7 +99,7 @@ public class Inventory {
 	 *         removed.
 	 */
 	public Item remove(int itemNo) {
-		if (itemNo >= this.NO_OF_ITEMS || itemNo < 0
+		if (itemNo >= this.items.length || itemNo < 0
 				|| this.items[itemNo] == null) {
 			return null;
 		} else {

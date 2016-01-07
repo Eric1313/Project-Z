@@ -1,8 +1,8 @@
 package enums;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
-import utilities.Assets;
 import utilities.World;
 
 /**
@@ -45,7 +45,7 @@ public class GameState {
 		return gameState;
 	}
 
-	public void setGameState(State gameState, Assets assets) {
+	public void setGameState(State gameState, BufferedImage[][] assets){
 		this.gameState = gameState;
 		if (gameState == State.INGAME) {
 			world = new World(assets);

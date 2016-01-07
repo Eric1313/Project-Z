@@ -1,0 +1,17 @@
+// 100-199 = Consumable
+// 200-299 = Melee
+// 300-399 = Firearm
+// 400-499 = Throwable
+
+1
+1
+1
+1
+
+// Swing speed = 
+
+100~Health Pack~res/img/items/ground/100-0.png`res/img/items/ground/100-1.png~res/img/items/inhand/100-0~res/img/inhand/100-0.png~res/sfx/100-0.wav~0~20~5
+
+200~Baseball Bat~res/img/items/ground/100-0.png~res/img/items/inhand/100-0~res/img/inhand/100-0.png~res/sfx/200-0.wav`res/sfx/200-1.wav~
+
+300~Pistol~

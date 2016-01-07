@@ -3,8 +3,7 @@ package entities;
 import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-
-import com.sun.prism.Graphics;
+import java.awt.Graphics;
 
 import enums.MapObjectType;
 

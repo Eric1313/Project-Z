@@ -3,8 +3,7 @@ package entities;
 import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-
-import com.sun.prism.Graphics;
+import java.awt.Graphics;
 
 /**
  * Abstract Entity class for all entities in Project Z.

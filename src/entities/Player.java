@@ -1,8 +1,7 @@
 package entities;
 
 import java.awt.Point;
-
-import com.sun.prism.Graphics;
+import java.awt.Graphics;
 
 /**
  * Subclass of Entity that represents a player in Project Z.
