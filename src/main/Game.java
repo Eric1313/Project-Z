@@ -2,13 +2,14 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import utilities.Assets;
 import enums.GameState;
 import enums.GameState.State;
 
 public class Game implements Runnable {
-	private Assets tiles;
+	private BufferedImage[][] tiles;
 
 	private Display display;
 	private String title;
@@ -28,14 +29,14 @@ public class Game implements Runnable {
 
 	private void initialize() {
 		// Loads the tile assets
-		tiles = new Assets("res/img/tiles.png");
+		tiles = new Assets("res/img/tiles.png").getSprites();
 
 		// Loads the display
 		display = new Display(title, width, height);
 
 		// Sets the state of the game
 		state = new GameState();
-		state.setGameState(State.INGAME, tiles);
+			state.setGameState(State.INGAME, tiles);
 		display.getFrame().createBufferStrategy(2);
 		bs = display.getFrame().getBufferStrategy();
 	}
