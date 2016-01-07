@@ -26,10 +26,10 @@ public class Map
 	private ArrayList<Point> startingPoints = new ArrayList<Point>();
 	private ArrayList<Point> endingPoints = new ArrayList<Point>();
 
-	final int MAX_AREA = 900;
-	final int MIN_SIDE_LENGTH = 24;
+	final int MAX_AREA = 1000;
+	final int MIN_SIDE_LENGTH = 36;
 	final int MIN_BUILD_LENGTH = 10;
-	final int MAX_BUILD_LENGTH = 20;
+	final int MAX_BUILD_LENGTH = 10;
 	
 	final double heightWidthRatio = 0.5;
 	private short[][] map;
@@ -81,53 +81,68 @@ public class Map
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
 		
-		int cornerWidth;
-		int cornerHeight;
-		Point buildingStart;
-		Point buildingEnd;
+		int[] cornerWidths = new int[4];
+		int[] cornerHeights = new int[4];
+		Point[] buildingStarts = new Point[4];
+		Point[] buildingEnds = new Point[4];
 		
 		//Top Left Corner
-		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		buildingStart = new Point((int)start.getX(),(int)start.getY());
-		buildingEnd = new Point((int)start.getX() + cornerWidth, (int)start.getY() + cornerHeight);
-		//generateBuilding (buildingStart, buildingEnd);	
+		cornerWidths[0] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeights[0] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStarts[0] = new Point((int)start.getX(),(int)start.getY());
+		buildingEnds[0] = new Point((int)start.getX() + cornerWidths[0], (int)start.getY() + cornerHeights[0]);
+		generateBuilding (buildingStarts[0], buildingEnds[0]);
+		
 		
 		//Top Right Corner
-		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		buildingStart = new Point((int) (end.getX()-cornerWidth),(int)start.getY());
-		buildingEnd = new Point((int) end.getX(),(int)start.getY() + cornerHeight);
-		//generateBuilding (buildingStart, buildingEnd);	
+		cornerWidths[1] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeights[1] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStarts[1] = new Point((int) (end.getX()-cornerWidths[1]),(int)start.getY());
+		buildingEnds[1] = new Point((int) end.getX(),(int)start.getY() + cornerHeights[1]);
+		generateBuilding (buildingStarts[1], buildingEnds[1]);	
+		
+		//Top Row
+		int sideLength = boxHeight - cornerHeights[0] - cornerHeights[1];
+		int sideBuildingLength = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		
+		if (sideLength > MIN_BUILD_LENGTH*2){
+			while (sideLength - sideBuildingLength < MIN_BUILD_LENGTH)
+				sideBuildingLength = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;          
+			Point sideBuildingStart = new Point((int)buildingStarts[0].getX(),(int)buildingEnds[0].getY());
+
+		}
 		
 		//Bottom Left Corner
-		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		buildingStart = new Point((int)start.getX(),(int)end.getY()-cornerHeight);
-		buildingEnd = new Point((int)end.getX()+cornerWidth, (int)end.getY());
-		//generateBuilding (buildingStart, buildingEnd);	
+		cornerWidths[2] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeights[2] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStarts[2] = new Point((int)start.getX(),(int)end.getY()-cornerHeights[2]);
+		buildingEnds[2] = new Point((int)start.getX()+cornerWidths[2], (int)end.getY());
+		generateBuilding (buildingStarts[2], buildingEnds[2]);	
+		
+		//Left Row
 		
 		//Bottom Right Corner
-		cornerWidth = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		cornerHeight = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
-		buildingStart = new Point((int)end.getX()-cornerWidth, (int)end.getY()-cornerHeight);
-		buildingEnd = new Point((int)end.getX(),(int)end.getY());
-		//generateBuilding (buildingStart, buildingEnd);	
+		cornerWidths[3] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		cornerHeights[3] = (int)(Math.random()*MAX_BUILD_LENGTH)+MIN_BUILD_LENGTH;
+		buildingStarts[3] = new Point((int)end.getX()-cornerWidths[3], (int)end.getY()-cornerHeights[3]);
+		buildingEnds[3] = new Point((int)end.getX(),(int)end.getY());
+		generateBuilding (buildingStarts[3], buildingEnds[3]);	
+		
+		//Bottom Row
+		
+		//Right Row
 	}
 	
 	public void generateBuilding(Point start, Point end){
 		
-System.out.println((int)start.getX()+"  "+(int)start.getY());
-		setTile((int)start.getX(), (int)start.getY(), 201, Direction.UP);
-		setTile((int)end.getX(), (int)end.getY(), 201, Direction.UP);
-
-		/*
 		for (int i = (int) start.getX(); i <= end.getX(); i++){
 			for (int j = (int) start.getY(); j <= end.getY(); j++){
-				setTile(i,j,201,Direction.UP);
+				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY())
+					setTile(i,j,200, Direction.UP);
+				else
+					setTile(i,j,201,Direction.UP);
 			}
 		}
-		*/
 	}
 	
 	
