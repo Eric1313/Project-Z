@@ -19,9 +19,9 @@ public class Consumable extends Item {
 	private int effectValue, durability;
 
 	public Consumable(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, ItemEffect effect,
+			AudioClip[] clips, ItemState state, int rarity, ItemEffect effect,
 			int effectValue, int durability) {
-		super(itemID, name, images, clips, state);
+		super(itemID, name, images, clips, state, rarity);
 		this.setEffect(effect);
 		this.setEffect(effect);
 		this.setEffectValue(effectValue);

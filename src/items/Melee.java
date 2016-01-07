@@ -14,12 +14,12 @@ import enums.ItemState;
  * @version 1.0
  */
 public class Melee extends Item {
-	private double swingSpeed, rechargeTime;
+	private int swingSpeed, rechargeTime;
 
 	public Melee(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, double swingSpeed,
-			double rechargeTime) {
-		super(itemID, name, images, clips, state);
+			AudioClip[] clips, ItemState state, int rarity, int swingSpeed,
+			int rechargeTime) {
+		super(itemID, name, images, clips, state, rarity);
 		this.setSwingSpeed(swingSpeed);
 		this.setRechargeTime(rechargeTime);
 	}
@@ -27,7 +27,7 @@ public class Melee extends Item {
 	/**
 	 * @return the swingSpeed
 	 */
-	public double getSwingSpeed() {
+	public int getSwingSpeed() {
 		return swingSpeed;
 	}
 
@@ -35,14 +35,14 @@ public class Melee extends Item {
 	 * @param swingSpeed
 	 *            the swingSpeed to set
 	 */
-	public void setSwingSpeed(double swingSpeed) {
+	public void setSwingSpeed(int swingSpeed) {
 		this.swingSpeed = swingSpeed;
 	}
 
 	/**
 	 * @return the rechargeTime
 	 */
-	public double getRechargeTime() {
+	public int getRechargeTime() {
 		return rechargeTime;
 	}
 
@@ -50,7 +50,7 @@ public class Melee extends Item {
 	 * @param rechargeTime
 	 *            the rechargeTime to set
 	 */
-	public void setRechargeTime(double rechargeTime) {
+	public void setRechargeTime(int rechargeTime) {
 		this.rechargeTime = rechargeTime;
 	}
 }

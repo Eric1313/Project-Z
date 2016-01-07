@@ -8,10 +8,14 @@
 1
 1
 
-// Swing speed = 
+// Swing speed: frames/swing
+// Rarity: lower = more rare
 
-100~Health Pack~res/img/items/ground/100-0.png`res/img/items/ground/100-1.png~res/img/items/inhand/100-0~res/img/inhand/100-0.png~res/sfx/100-0.wav~0~20~5
+100~Health Pack~res/img/items/ground/100.png~res/img/items/inhand/100-0.png`res/img/items/inhand/100-1.png~res/img/inventory/100.png~res/sfx/100-0.wav`res/sfx/100-1.wav~5~0~20~5
+101~Pistol Ammo~res/img/items/ground/101.png~res/img/items/inhand/101-0.png`res/img/items/inhand/101-1.png~res/img/inventory/101.png~res/sfx/101-0.wav`res/sfx/101-1.wav~3~1~8~1
 
-200~Baseball Bat~res/img/items/ground/100-0.png~res/img/items/inhand/100-0~res/img/inhand/100-0.png~res/sfx/200-0.wav`res/sfx/200-1.wav~
+200~Baseball Bat~res/img/items/ground/200.png~res/img/items/inhand/200-0.png`res/img/items/inhand/200-1.png~res/img/inventory/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~2~20~15
 
-300~Pistol~
+300~Pistol~res/img/items/ground/300.png~res/img/items/inhand/300-0.png`res/img/items/inhand/300-1.png~res/img/inventory/300.png~res/sfx/300-0.wav`res/sfx/300-1.wav~2~101~60~8
+
+400~Brick~res/img/items/ground/400.png~res/img/items/inhand/400-0.png`res/img/items/inhand/400-1.png`res/img/inventory/400.png~res/sfx/400-0.wav`res/sfx/400-1.wav~1~1~10~1
