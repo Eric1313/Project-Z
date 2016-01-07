@@ -3,7 +3,7 @@ package utilities;
 /**
  * Verifies input to check that it is valid for the specified use.
  * 
- * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @since 1.0
  * @version 1.0
  */
