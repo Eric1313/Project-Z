@@ -1,5 +1,7 @@
 package entities;
 
+import items.Item;
+
 import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -119,11 +121,15 @@ public abstract class Entity {
 		this.clips = clips;
 	}
 
-	public Inventory getInventory() {
-		return inventory;
+	public int addItem(Item item) {
+		return this.inventory.add(item);
 	}
 
-	public void setInventory(Inventory inventory) {
-		this.inventory = inventory;
+	public Item removeItem(int itemNo) {
+		return this.inventory.remove(itemNo);
+	}
+
+	public Inventory getInventory() {
+		return this.inventory;
 	}
 }

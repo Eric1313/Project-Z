@@ -26,7 +26,7 @@ public class Map {
 	private ArrayList<Point> endingPoints = new ArrayList<Point>();
 
 	final int MAX_AREA = 1000;
-	final int MIN_SIDE_LENGTH = 36;
+	final int MIN_SIDE_LENGTH = 42;
 	final int MIN_BUILD_LENGTH = 10;
 	final int BUILD_LENGTH_RANGE = 6;
 
@@ -141,17 +141,17 @@ public class Map {
 		// Bottom Row
 
 		// Right Row
-		generateVerticalBuildings(buildingEnds[1], new Point((int)buildingEnds[3].getX(), (int)buildingStarts[3].getY()), -1, 3);
+		generateVerticalBuildings(buildingEnds[1], new Point((int)buildingEnds[3].getX(), (int)buildingStarts[3].getY()), -1, 5);
 		
 		if (buildingEnds[0].getY() <= buildingEnds[1].getY())
-			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 3, cornerHeights[0]);
+			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 5, cornerHeights[0] - MIN_BUILD_LENGTH);
 		else
-			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 3, cornerHeights[1]);
+			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 5, cornerHeights[1] - MIN_BUILD_LENGTH);
 		
 		if (buildingEnds[2].getY() <= buildingEnds[3].getY())
-			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 3, cornerHeights[2]);
+			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 5, cornerHeights[2] - MIN_BUILD_LENGTH);
 		else
-			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 3, cornerHeights[3]);
+			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 5, cornerHeights[3] - MIN_BUILD_LENGTH);
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY()
 						|| j == end.getY())
-					setTile(i, j, 200, Direction.UP);
+					setTile(i, j, 200, Direction.UP);	
 				else
 					setTile(i, j, 111, Direction.UP);
 			}

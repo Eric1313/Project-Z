@@ -15,7 +15,7 @@ import enums.ItemState;
  */
 public abstract class Item {
 	protected BufferedImage[] images;
-	protected int itemID;
+	protected int itemID, rarity;
 	protected String name;
 	protected boolean held = false;
 	protected ItemState state;
@@ -23,12 +23,13 @@ public abstract class Item {
 	protected Point location;
 
 	public Item(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state) {
+			AudioClip[] clips, ItemState state, int rarity) {
 		this.name = name;
 		this.itemID = itemID;
 		this.images = images;
 		this.state = state;
 		this.clips = clips;
+		this.rarity = rarity;
 	}
 
 	/**
