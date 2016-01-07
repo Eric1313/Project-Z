@@ -23,7 +23,7 @@ public abstract class Entity {
 	protected boolean solid;
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
-	protected Rectangle bounds;
+	protected Rectangle[] bounds;
 
 	public Entity(boolean solid) {
 		this.position = new Point(0, 0);
@@ -41,7 +41,7 @@ public abstract class Entity {
 		this.setSolid(solid);
 	}
 
-	public Entity(Point position, boolean solid, int health, double rotation,Rectangle bounds,
+	public Entity(Point position, boolean solid, int health, double rotation,Rectangle[] bounds,
 			BufferedImage[] images, AudioClip[] clips) {
 		this.position = position;
 		this.health = health;

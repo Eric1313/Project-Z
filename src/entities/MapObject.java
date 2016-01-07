@@ -20,7 +20,7 @@ public class MapObject extends Entity {
 	private MapObjectType type;
 
 	public MapObject(Point position, boolean solid, int health,
-			double rotation, MapObjectType type,Rectangle bounds, BufferedImage[] images,
+			double rotation, MapObjectType type,Rectangle[] bounds, BufferedImage[] images,
 			AudioClip[] clips) {
 		super(position, solid, health, rotation,bounds, images, clips);
 		this.type = type;
