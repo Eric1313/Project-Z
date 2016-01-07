@@ -1,6 +1,8 @@
 package entities;
 
+import java.applet.AudioClip;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import com.sun.prism.Graphics;
 
@@ -15,17 +17,31 @@ public abstract class Entity {
 	protected int health;
 	protected Point position;
 	protected double rotation;
+	protected boolean solid;
+	protected BufferedImage[] images;
+	protected AudioClip[] clips;
 
-	public Entity() {
+	public Entity(boolean solid) {
 		this.position = new Point(0, 0);
 		this.health = 100;
 		this.rotation = 0;
+		this.setSolid(solid);
 	}
 	
-	public Entity(Point position) {
+	public Entity(Point position, boolean solid) {
 		this.position = position;
 		this.health = 100;
 		this.rotation = 0;
+		this.setSolid(solid);
+	}
+	
+	public Entity(Point position,boolean solid, int health, double rotation, BufferedImage[] images,AudioClip[] clips) {
+		this.position = position;
+		this.health = health;
+		this.rotation = rotation;
+		this.setSolid(solid);
+		this.images=images;
+		this.clips=clips;
 	}
 
 	public Point getPosition() {
@@ -53,4 +69,46 @@ public abstract class Entity {
 	}
 
 	public abstract void render(Graphics g);
+
+	/**
+	 * @return the images
+	 */
+	public BufferedImage[] getImages() {
+		return images;
+	}
+
+	/**
+	 * @param images the images to set
+	 */
+	public void setImages(BufferedImage[] images) {
+		this.images = images;
+	}
+
+	/**
+	 * @return the solid
+	 */
+	public boolean isSolid() {
+		return solid;
+	}
+
+	/**
+	 * @param solid the solid to set
+	 */
+	public void setSolid(boolean solid) {
+		this.solid = solid;
+	}
+
+	/**
+	 * @return the clips
+	 */
+	public AudioClip[] getClips() {
+		return clips;
+	}
+
+	/**
+	 * @param clips the clips to set
+	 */
+	public void setClips(AudioClip[] clips) {
+		this.clips = clips;
+	}
 }
