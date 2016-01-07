@@ -9,6 +9,7 @@ import com.sun.prism.Graphics;
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Mob
+ * @see main.NPC
  * @since 1.0
  * @version 1.0
  */

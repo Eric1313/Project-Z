@@ -25,8 +25,7 @@ public class Assets {
 	 * Loads in all of the assets from a sprite sheet
 	 */
 	private void loadAssets() {
-		SpriteSheet sheet = new SpriteSheet(
-				ImageLoader.loadImage(path));
+		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage(path));
 		sprites = new BufferedImage[sheet.getHeight() / tileHeight][sheet
 				.getWidth() / tileWidth];
 		for (int row = 0; row < sprites.length; row++) {
@@ -36,6 +35,7 @@ public class Assets {
 			}
 		}
 	}
+
 	public BufferedImage[][] getSprites() {
 		return sprites;
 	}
