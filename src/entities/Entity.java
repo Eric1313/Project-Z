@@ -4,6 +4,7 @@ import items.Item;
 
 import java.applet.AudioClip;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
@@ -17,30 +18,39 @@ import java.awt.Graphics;
 public abstract class Entity {
 	protected int health;
 	protected Point position;
+	protected int height, width;
 	protected double rotation;
 	protected Inventory inventory;
 	protected boolean solid;
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
+	protected Rectangle[] bounds;
 
 	public Entity(boolean solid) {
 		this.position = new Point(0, 0);
+		this.height = 32;
+		this.width = 32;
 		this.health = 100;
 		this.rotation = 0;
 		this.inventory = new Inventory();
 		this.setSolid(solid);
 	}
 
-	public Entity(Point position, boolean solid) {
+	public Entity(Point position, int height, int width, boolean solid) {
 		this.position = position;
+		this.height = height;
+		this.width = width;
 		this.health = 100;
 		this.rotation = 0;
 		this.inventory = new Inventory();
 		this.setSolid(solid);
 	}
 
-	public Entity(Point position, boolean solid, int health, double rotation,
-			BufferedImage[] images, AudioClip[] clips) {
+	public Entity(Point position, int height, int width, boolean solid,
+			int health, double rotation, BufferedImage[] images,
+			AudioClip[] clips) {
+		this.height = height;
+		this.width = width;
 		this.position = position;
 		this.health = health;
 		this.rotation = rotation;
@@ -48,6 +58,7 @@ public abstract class Entity {
 		this.setSolid(solid);
 		this.images = images;
 		this.clips = clips;
+		this.bounds=bounds;
 	}
 
 	public Point getPosition() {

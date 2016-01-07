@@ -2,6 +2,7 @@ package entities;
 
 import java.applet.AudioClip;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
@@ -18,10 +19,10 @@ import enums.MapObjectType;
 public class MapObject extends Entity {
 	private MapObjectType type;
 
-	public MapObject(Point position, boolean solid, int health,
-			double rotation, MapObjectType type, BufferedImage[] images,
-			AudioClip[] clips) {
-		super(position, solid, health, rotation, images, clips);
+	public MapObject(Point position, int height, int width, boolean solid,
+			int health, double rotation, MapObjectType type,
+			BufferedImage[] images, AudioClip[] clips) {
+		super(position, height, width, solid, health, rotation, images, clips);
 		this.type = type;
 	}
 
