@@ -1,7 +1,7 @@
 package items;
 
 import java.awt.image.BufferedImage;
-
+import enums.ItemState;
 /**
  * Abstract Item class for all items in Project Z.
  * 
@@ -14,11 +14,13 @@ public abstract class Item {
 	protected int itemID;
 	protected String name;
 	protected boolean held=false;
+	protected ItemState state;
 
-	public Item(String name, int itemID, BufferedImage[] images) {
+	public Item(String name, int itemID, BufferedImage[] images,ItemState state) {
 		this.name = name;
 		this.itemID = itemID;
 		this.images = images;
+		this.state=state;
 	}
 
 	/**

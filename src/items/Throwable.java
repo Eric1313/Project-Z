@@ -1,7 +1,9 @@
 package items;
 
 import java.awt.image.BufferedImage;
-import states.ItemEffect;
+
+import enums.ItemEffect;
+import enums.ItemState;
 
 /**
  * Subclass of Item that represents a throwable weapon item in Project Z.
@@ -15,9 +17,9 @@ public class Throwable extends Item {
 	private int range, areaOfEffect;
 	private ItemEffect effect;
 
-	public Throwable(String name, int itemID, BufferedImage[] images,
+	public Throwable(String name, int itemID,ItemState state, BufferedImage[] images,
 			ItemEffect effect, int range, int areaOfEffect) {
-		super(name, itemID, images);
+		super(name, itemID, images,state);
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
 		this.range=range;

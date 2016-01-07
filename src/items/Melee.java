@@ -2,6 +2,8 @@ package items;
 
 import java.awt.image.BufferedImage;
 
+import enums.ItemState;
+
 /**
  * Subclass of Item that represents a melee weapon item in Project Z.
  * 
@@ -12,8 +14,8 @@ import java.awt.image.BufferedImage;
  */
 public class Melee extends Item {
 	private double swingSpeed,rechargeTime;
-	public Melee(String name, int itemID, BufferedImage[] images, double swingSpeed, double rechargeTime) {
-		super(name, itemID, images);
+	public Melee(String name, int itemID, BufferedImage[] images,ItemState state, double swingSpeed, double rechargeTime) {
+		super(name, itemID, images,state);
 		this.setSwingSpeed(swingSpeed);
 		this.setRechargeTime(rechargeTime);
 	}

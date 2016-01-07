@@ -2,6 +2,8 @@ package items;
 
 import java.awt.image.BufferedImage;
 
+import enums.ItemState;
+
 /**
  * Subclass of Item that represents a firearm weapon item in Project Z.
  * 
@@ -14,8 +16,8 @@ public class Firearm extends Item {
 	protected int ammoID;
 	protected double rateOfFire;
 
-	public Firearm(String name, int itemID, BufferedImage[] images, int ammoID, double rateOfFire) {
-		super(name, itemID, images);
+	public Firearm(String name, int itemID, BufferedImage[] images,ItemState state, int ammoID, double rateOfFire) {
+		super(name, itemID, images,state);
 		this.ammoID=ammoID;
 		this.rateOfFire=rateOfFire;
 	}

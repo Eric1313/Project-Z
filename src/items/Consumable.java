@@ -1,7 +1,9 @@
 package items;
 
 import java.awt.image.BufferedImage;
-import states.ItemEffect;
+
+import enums.ItemEffect;
+import enums.ItemState;
 
 /**
  * Subclass of Item that represents a consumable item in Project Z.
@@ -14,8 +16,8 @@ import states.ItemEffect;
 public class Consumable extends Item {
 	private ItemEffect effect;
 	private int effectValue;
-	public Consumable(String name, int itemID, BufferedImage[] images,ItemEffect effect, int effectValue) {
-		super(name, itemID, images);
+	public Consumable(String name, int itemID, BufferedImage[] images,ItemState state,ItemEffect effect, int effectValue) {
+		super(name, itemID, images,state);
 		this.setEffect(effect);
 		this.setEffect(effect);
 		this.setEffectValue(effectValue);
