@@ -1,8 +1,6 @@
 package enums;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
+import main.Display;
 import utilities.World;
 
 /**
@@ -14,7 +12,11 @@ import utilities.World;
  * @version 1.0
  */
 public class GameState {
-	private World world;
+	private Display display;
+
+	public GameState(Display display) {
+		this.display = display;
+	}
 
 	public enum State {
 		LOBBY, INGAME
@@ -31,12 +33,12 @@ public class GameState {
 		}
 	}
 
-	public void render(Graphics g) {
+	public void render() {
 		switch (gameState) {
 		case LOBBY:
 			break;
 		case INGAME:
-			world.render(g);
+			display.getGamePanel().repaint();
 			break;
 		}
 	}
@@ -45,10 +47,8 @@ public class GameState {
 		return gameState;
 	}
 
-	public void setGameState(State gameState, BufferedImage[][] assets){
+	public void setGameState(State gameState) {
 		this.gameState = gameState;
-		if (gameState == State.INGAME) {
-			world = new World(assets);
-		}
+		
 	}
 }
