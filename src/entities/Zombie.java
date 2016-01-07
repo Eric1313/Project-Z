@@ -14,8 +14,8 @@ import com.sun.prism.Graphics;
  */
 public class Zombie extends Mob {
 
-	public Zombie(Point position) {
-		super(position);
+	public Zombie(Point position,boolean solid) {
+		super(position, solid);
 		// TODO Auto-generated constructor stub
 	}
 

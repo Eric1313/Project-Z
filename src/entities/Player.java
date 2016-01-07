@@ -13,12 +13,12 @@ import com.sun.prism.Graphics;
  * @version 1.0
  */
 public class Player extends Mob {
-	public Player() {
-		super();
+	public Player(boolean solid) {
+		super(solid);
 	}
 	
-	public Player(Point position) {
-		super(position);
+	public Player(Point position,boolean solid) {
+		super(position, solid);
 	}
 
 	@Override

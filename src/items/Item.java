@@ -26,6 +26,7 @@ public abstract class Item {
 		this.itemID = itemID;
 		this.images = images;
 		this.state=state;
+		this.clips=clips;
 	}
 
 	/**
