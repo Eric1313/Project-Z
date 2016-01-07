@@ -15,13 +15,16 @@ import enums.ItemState;
  */
 public class Firearm extends Item {
 	private int ammoID;
-	private double rateOfFire;
+	private int rateOfFire;
+	private int maxAmmo;
 
 	public Firearm(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int ammoID, double rateOfFire) {
-		super(itemID, name, images, clips, state);
+			AudioClip[] clips, ItemState state, int rarity, int ammoID,
+			int rateOfFire, int maxAmmo) {
+		super(itemID, name, images, clips, state, rarity);
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
+		this.maxAmmo = maxAmmo;
 	}
 
 	/**
@@ -42,7 +45,7 @@ public class Firearm extends Item {
 	/**
 	 * @return the rateOfFire
 	 */
-	public double getRateOfFire() {
+	public int getRateOfFire() {
 		return rateOfFire;
 	}
 
@@ -50,7 +53,15 @@ public class Firearm extends Item {
 	 * @param rateOfFire
 	 *            the rateOfFire to set
 	 */
-	public void setRateOfFire(double rateOfFire) {
+	public void setRateOfFire(int rateOfFire) {
 		this.rateOfFire = rateOfFire;
+	}
+
+	public int getMaxAmmo() {
+		return maxAmmo;
+	}
+
+	public void setMaxAmmo(int maxAmmo) {
+		this.maxAmmo = maxAmmo;
 	}
 }

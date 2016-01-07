@@ -19,9 +19,9 @@ public class Throwable extends Item {
 	private ItemEffect effect;
 
 	public Throwable(int itemID, String name, ItemState state,
-			BufferedImage[] images, AudioClip[] clips, ItemEffect effect,
-			int range, int areaOfEffect) {
-		super(itemID, name, images, clips, state);
+			BufferedImage[] images, AudioClip[] clips, int rarity,
+			ItemEffect effect, int range, int areaOfEffect) {
+		super(itemID, name, images, clips, state, rarity);
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;

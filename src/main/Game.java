@@ -1,8 +1,15 @@
 package main;
 
+import items.Item;
+
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import utilities.Assets;
 import enums.GameState;
@@ -39,6 +46,41 @@ public class Game implements Runnable {
 			state.setGameState(State.INGAME, tiles);
 		display.getFrame().createBufferStrategy(2);
 		bs = display.getFrame().getBufferStrategy();
+		
+		// Load all of the items
+		BufferedReader itemReader = null;
+		
+		try {
+			itemReader = new BufferedReader(new InputStreamReader(new FileInputStream("res/items.txt")));
+		} catch (FileNotFoundException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
+		
+		int noOfItems = 0;
+		
+		for (int itemType = 0; itemType < 4; itemType++) {
+			try {
+				// TODO Handle invalid input
+				noOfItems += Integer.parseInt(itemReader.readLine());
+			} catch (IOException e) {
+				// TODO Make catch block more useful
+				e.printStackTrace();
+			}
+		}
+		
+		Item[] items = new Item[noOfItems];
+		
+		for (int item = 0; item < noOfItems; item++) {
+			// TODO Different item categories = different loops
+		}
+		
+		try {
+			itemReader.close();
+		} catch (IOException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
 	}
 
 	private void update() {
