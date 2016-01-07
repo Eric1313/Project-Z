@@ -17,7 +17,7 @@ public abstract class Mob extends Entity {
 		super(solid);
 	}
 
-	public Mob(Point position, boolean solid) {
-		super(position, solid);
+	public Mob(Point position, int height, int width, boolean solid) {
+		super(position, height, width, solid);
 	}
 }

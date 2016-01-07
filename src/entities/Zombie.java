@@ -15,7 +15,7 @@ import java.awt.Graphics;
 public class Zombie extends Mob {
 
 	public Zombie(Point position, boolean solid) {
-		super(position, solid);
+		super(position, 32, 32, solid);
 	}
 
 	@Override
