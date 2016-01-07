@@ -28,7 +28,7 @@ public class Map {
 	final int MAX_AREA = 1000;
 	final int MIN_SIDE_LENGTH = 36;
 	final int MIN_BUILD_LENGTH = 10;
-	final int MAX_BUILD_LENGTH = 10;
+	final int BUILD_LENGTH_RANGE = 6;
 
 	final double heightWidthRatio = 0.5;
 	private short[][] map;
@@ -57,10 +57,9 @@ public class Map {
 		generateSideRoads(new Point(mainRoadX + 7, 0), new Point(height - 1,
 				width - 1));
 
-		// for(int i=0;i<startingPoints.size();i++)
-		// {
-		// generatePlaza(startingPoints.get(i),endingPoints.get(i));
-		// }
+		for(int i=0;i<startingPoints.size();i++){
+			generatePlaza(startingPoints.get(i),endingPoints.get(i));
+		}
 
 		// TEMP WRITE TO FILE FOR TESTING
 		File output = new File("map.txt");
@@ -87,9 +86,9 @@ public class Map {
 		Point[] buildingEnds = new Point[4];
 
 		// Top Left Corner
-		cornerWidths[0] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerWidths[0] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
-		cornerHeights[0] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerHeights[0] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
 		buildingStarts[0] = new Point((int) start.getX(), (int) start.getY());
 		buildingEnds[0] = new Point((int) start.getX() + cornerWidths[0],
@@ -97,9 +96,9 @@ public class Map {
 		generateBuilding(buildingStarts[0], buildingEnds[0]);
 
 		// Top Right Corner
-		cornerWidths[1] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerWidths[1] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
-		cornerHeights[1] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerHeights[1] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
 		buildingStarts[1] = new Point((int) (end.getX() - cornerWidths[1]),
 				(int) start.getY());
@@ -107,24 +106,11 @@ public class Map {
 				+ cornerHeights[1]);
 		generateBuilding(buildingStarts[1], buildingEnds[1]);
 
-		// Top Row
-		int sideLength = boxHeight - cornerHeights[0] - cornerHeights[1];
-		int sideBuildingLength = (int) (Math.random() * MAX_BUILD_LENGTH)
-				+ MIN_BUILD_LENGTH;
-
-		if (sideLength > MIN_BUILD_LENGTH * 2) {
-			while (sideLength - sideBuildingLength < MIN_BUILD_LENGTH)
-				sideBuildingLength = (int) (Math.random() * MAX_BUILD_LENGTH)
-						+ MIN_BUILD_LENGTH;
-			Point sideBuildingStart = new Point((int) buildingStarts[0].getX(),
-					(int) buildingEnds[0].getY());
-
-		}
 
 		// Bottom Left Corner
-		cornerWidths[2] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerWidths[2] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
-		cornerHeights[2] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerHeights[2] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
 		buildingStarts[2] = new Point((int) start.getX(), (int) end.getY()
 				- cornerHeights[2]);
@@ -133,11 +119,12 @@ public class Map {
 		generateBuilding(buildingStarts[2], buildingEnds[2]);
 
 		// Left Row
+		generateVerticalBuildings(new Point((int)buildingStarts[0].getX(), (int)buildingEnds[0].getY()), buildingStarts[2], 1, 3);
 
 		// Bottom Right Corner
-		cornerWidths[3] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerWidths[3] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
-		cornerHeights[3] = (int) (Math.random() * MAX_BUILD_LENGTH)
+		cornerHeights[3] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
 		buildingStarts[3] = new Point((int) end.getX() - cornerWidths[3],
 				(int) end.getY() - cornerHeights[3]);
@@ -147,6 +134,58 @@ public class Map {
 		// Bottom Row
 
 		// Right Row
+		generateVerticalBuildings(buildingEnds[1], new Point((int)buildingEnds[3].getX(), (int)buildingStarts[3].getY()), -1, 3);
+	}
+	
+	public void generateVerticalBuildings(Point start, Point end, int dir, int numToGenerate){
+		int sideLength = (int) (end.getY() - start.getY());
+		int sideBuildingLength = 0;
+		Point sideBuildingStart;
+		Point sideBuildingEnd;
+		
+		if (numToGenerate == 1){
+			sideBuildingLength = sideLength;
+			if (dir == 1){
+				sideBuildingStart = new Point((int) end.getX(),(int) start.getY());
+				sideBuildingEnd = new Point((int) end.getX()+dir*((int) (Math.random() * BUILD_LENGTH_RANGE)
+				+ MIN_BUILD_LENGTH), (int) start.getY()+sideBuildingLength);
+			}
+			else{
+				sideBuildingStart = new Point((int) end.getX()+dir*((int) (Math.random() * BUILD_LENGTH_RANGE)
+						+ MIN_BUILD_LENGTH),(int) start.getY());
+				sideBuildingEnd = new Point((int) end.getX(), (int) start.getY()+sideBuildingLength);
+			}
+				
+			generateBuilding(sideBuildingStart, sideBuildingEnd);
+		}
+		else if (sideLength < MIN_BUILD_LENGTH * numToGenerate){
+			generateVerticalBuildings(start, end, dir, numToGenerate-1);
+		}
+		else{	
+			do{
+				sideBuildingLength = (int) (Math.random() * BUILD_LENGTH_RANGE)
+						+ MIN_BUILD_LENGTH;
+			}while(sideLength - sideBuildingLength*(numToGenerate-1) < MIN_BUILD_LENGTH);
+			
+			if (dir == 1){
+				sideBuildingStart = new Point((int) end.getX(),(int) start.getY());
+				sideBuildingEnd = new Point((int) end.getX()+dir*((int) (Math.random() * BUILD_LENGTH_RANGE)
+				+ MIN_BUILD_LENGTH), (int) start.getY()+sideBuildingLength);
+			}
+			else{
+				sideBuildingStart = new Point((int) end.getX()+dir*((int) (Math.random() * BUILD_LENGTH_RANGE)
+						+ MIN_BUILD_LENGTH),(int) start.getY());
+				sideBuildingEnd = new Point((int) end.getX(), (int) start.getY()+sideBuildingLength);
+			}
+			
+			generateBuilding(sideBuildingStart, sideBuildingEnd);
+			
+			generateVerticalBuildings(new Point((int)sideBuildingStart.getX(),(int)sideBuildingEnd.getY()), end, dir, numToGenerate-1);
+		}
+	}
+	
+	public void generateHorizontalBuildings(Point start, Point end, int numToGenerate){
+	
 	}
 
 	public void generateBuilding(Point start, Point end) {
@@ -155,7 +194,7 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY()
 						|| j == end.getY())
-					setTile(i, j, 200, Direction.UP);
+					setTile(i, j, 199, Direction.UP);
 				else
 					setTile(i, j, 201, Direction.UP);
 			}
