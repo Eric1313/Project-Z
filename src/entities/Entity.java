@@ -9,7 +9,7 @@ import com.sun.prism.Graphics;
 /**
  * Abstract Entity class for all entities in Project Z.
  * 
- * @author Patrick Liu, Eric Chee, Allen Han, Alosha Reymer
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @since 1.0
  * @version 1.0
  */
@@ -119,7 +119,7 @@ public abstract class Entity {
 	public void setClips(AudioClip[] clips) {
 		this.clips = clips;
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
 	}
