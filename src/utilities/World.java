@@ -23,13 +23,14 @@ public class World {
 	}
 
 	public void render(Graphics g) {
-		for (int i = 0; i < tiles.length; i++) {
-			for (int j = 0; j < tiles[i].length; j++) {
+		for (int i = 0; i < 34; i++) {
+			for (int j = 0; j < 60; j++) {
 				int a = (tileId[j][i] & 0xFFF);
 				g.drawImage(tiles[(a / 100) - 1][a % 100], (a % 100)
 						* Assets.tileWidth,
 						((a / 100) - 1) * Assets.tileHeight, null);
 			}
 		}
+		System.out.println ("UPDATING");
 	}
 }
