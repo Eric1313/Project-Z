@@ -24,7 +24,7 @@ public abstract class Entity {
 	protected boolean solid;
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
-	protected Rectangle bounds;
+	protected Rectangle[] bounds;
 
 	public Entity(boolean solid) {
 		this.position = new Point(0, 0);
