@@ -4,6 +4,7 @@ import items.Item;
 
 import java.applet.AudioClip;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
@@ -23,6 +24,7 @@ public abstract class Entity {
 	protected boolean solid;
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
+	protected Rectangle bounds;
 
 	public Entity(boolean solid) {
 		this.position = new Point(0, 0);
@@ -56,6 +58,7 @@ public abstract class Entity {
 		this.setSolid(solid);
 		this.images = images;
 		this.clips = clips;
+		this.bounds=bounds;
 	}
 
 	public Point getPosition() {
