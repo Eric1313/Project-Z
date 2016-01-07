@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import enums.ItemState;
+
 /**
  * Abstract Item class for all items in Project Z.
  * 
@@ -16,17 +17,18 @@ public abstract class Item {
 	protected BufferedImage[] images;
 	protected int itemID;
 	protected String name;
-	protected boolean held=false;
+	protected boolean held = false;
 	protected ItemState state;
 	protected AudioClip[] clips;
 	protected Point location;
 
-	public Item(int itemID, String name, BufferedImage[] images,AudioClip[] clips,ItemState state) {
+	public Item(int itemID, String name, BufferedImage[] images,
+			AudioClip[] clips, ItemState state) {
 		this.name = name;
 		this.itemID = itemID;
 		this.images = images;
-		this.state=state;
-		this.clips=clips;
+		this.state = state;
+		this.clips = clips;
 	}
 
 	/**
@@ -82,7 +84,8 @@ public abstract class Item {
 	}
 
 	/**
-	 * @param held the held to set
+	 * @param held
+	 *            the held to set
 	 */
 	public void setHeld(boolean held) {
 		this.held = held;
@@ -96,7 +99,8 @@ public abstract class Item {
 	}
 
 	/**
-	 * @param state the state to set
+	 * @param state
+	 *            the state to set
 	 */
 	public void setState(ItemState state) {
 		this.state = state;
@@ -110,7 +114,8 @@ public abstract class Item {
 	}
 
 	/**
-	 * @param clips the clips to set
+	 * @param clips
+	 *            the clips to set
 	 */
 	public void setClips(AudioClip[] clips) {
 		this.clips = clips;
@@ -124,11 +129,10 @@ public abstract class Item {
 	}
 
 	/**
-	 * @param location the location to set
+	 * @param location
+	 *            the location to set
 	 */
 	public void setLocation(Point location) {
 		this.location = location;
 	}
-	
-
 }
