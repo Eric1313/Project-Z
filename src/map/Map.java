@@ -47,7 +47,8 @@ public class Map {
 		this.width = width;
 		this.height = height;
 		this.map = new short[width][height];
-
+		
+		
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
 		System.out.println(mainRoadX);
@@ -85,6 +86,12 @@ public class Map {
 		Point[] buildingStarts = new Point[4];
 		Point[] buildingEnds = new Point[4];
 
+		for (int i = (int) start.getX(); i <= end.getX(); i++) {
+			for (int j = (int) start.getY(); j <= end.getY(); j++) {
+					setTile(i, j, 108, Direction.UP);
+			}
+		}
+		
 		// Top Left Corner
 		cornerWidths[0] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
@@ -135,8 +142,26 @@ public class Map {
 
 		// Right Row
 		generateVerticalBuildings(buildingEnds[1], new Point((int)buildingEnds[3].getX(), (int)buildingStarts[3].getY()), -1, 3);
+		
+		if (buildingEnds[0].getY() <= buildingEnds[1].getY())
+			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 3, cornerHeights[0]);
+		else
+			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 3, cornerHeights[1]);
+		
+		if (buildingEnds[2].getY() <= buildingEnds[3].getY())
+			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 3, cornerHeights[2]);
+		else
+			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 3, cornerHeights[3]);
 	}
 	
+	/**
+	 * Generates buildings for a column
+	 * 
+	 * @param start The start of the column
+	 * @param end The end of the column
+	 * @param dir The direction of the column (1 = West, -1 = East)
+	 * @param numToGenerate The number of buildings to generate
+	 */
 	public void generateVerticalBuildings(Point start, Point end, int dir, int numToGenerate){
 		int sideLength = (int) (end.getY() - start.getY());
 		int sideBuildingLength = 0;
@@ -184,8 +209,65 @@ public class Map {
 		}
 	}
 	
-	public void generateHorizontalBuildings(Point start, Point end, int numToGenerate){
-	
+	/**
+	 * Generates buildings for a row
+	 * 
+	 * @param start The start of the row
+	 * @param end The end of the row
+	 * @param dir The direction (1 = North, -1 = South)
+	 * @param numToGenerate The number of buildings to generate
+	 * @param maxRange The maximum height of the buildings
+	 */
+	public void generateHorizontalBuildings(Point start, Point end, int dir, int numToGenerate, int maxRange){
+		int sideLength = (int) (end.getX() - start.getX());
+		int sideBuildingLength = 0;
+		Point sideBuildingStart;
+		Point sideBuildingEnd;
+		
+		System.out.println("Max Range: " + maxRange);
+		
+		if (numToGenerate == 1){
+			sideBuildingLength = sideLength;
+			if (dir == 1){
+				sideBuildingStart = new Point((int) start.getX(),(int) start.getY());
+				sideBuildingEnd = new Point((int) start.getX()+sideBuildingLength, (int) start.getY()+dir*((int) (Math.random() * maxRange)
+						+ MIN_BUILD_LENGTH));
+			}
+			else{
+				sideBuildingStart = new Point((int) start.getX(),(int) start.getY()+dir*((int) (Math.random() * maxRange)
+						+ MIN_BUILD_LENGTH));
+				sideBuildingEnd = new Point((int) start.getX()+sideBuildingLength, (int) start.getY());
+			}
+				
+			generateBuilding(sideBuildingStart, sideBuildingEnd);
+		}
+		else if (sideLength < MIN_BUILD_LENGTH * numToGenerate){
+			generateHorizontalBuildings(start, end, dir, numToGenerate-1, maxRange);
+		}
+		else{	
+			do{
+				sideBuildingLength = (int) (Math.random() * BUILD_LENGTH_RANGE)
+						+ MIN_BUILD_LENGTH;
+			}while(sideLength - sideBuildingLength*(numToGenerate-1) < MIN_BUILD_LENGTH);
+			
+			if (dir == 1){
+				sideBuildingStart = new Point((int) start.getX(),(int) start.getY());
+				sideBuildingEnd = new Point((int) start.getX()+sideBuildingLength, (int) start.getY()+dir*((int) (Math.random() * maxRange)
+						+ MIN_BUILD_LENGTH));
+			}
+			else{
+				sideBuildingStart = new Point((int) start.getX(),(int) start.getY()+dir*((int) (Math.random() * maxRange)
+						+ MIN_BUILD_LENGTH));
+				sideBuildingEnd = new Point((int) start.getX()+sideBuildingLength, (int) start.getY());
+			}
+			
+			generateBuilding(sideBuildingStart, sideBuildingEnd);
+			
+			if (dir == 1)
+				generateHorizontalBuildings(new Point((int)sideBuildingEnd.getX(),(int)sideBuildingStart.getY()), end, dir, numToGenerate-1, maxRange);
+			else
+				generateHorizontalBuildings(sideBuildingEnd, end, dir, numToGenerate-1, maxRange);
+		}
 	}
 
 	public void generateBuilding(Point start, Point end) {
@@ -194,9 +276,9 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY()
 						|| j == end.getY())
-					setTile(i, j, 199, Direction.UP);
+					setTile(i, j, 200, Direction.UP);
 				else
-					setTile(i, j, 201, Direction.UP);
+					setTile(i, j, 111, Direction.UP);
 			}
 		}
 	}
