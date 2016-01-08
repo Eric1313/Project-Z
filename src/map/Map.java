@@ -63,7 +63,7 @@ public class Map {
 		
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
-		System.out.println(mainRoadX);
+		// System.out.println(mainRoadX);
 		generateVerticalRoad(mainRoadX, height - 1, 13);
 
 		//Generates all other roads
@@ -230,7 +230,7 @@ public class Map {
 		Point sideBuildingStart;
 		Point sideBuildingEnd;
 		
-		System.out.println("Max Range: " + maxRange);
+//		System.out.println("Max Range: " + maxRange);
 		
 		if (numToGenerate == 1){
 			sideBuildingLength = sideLength;
@@ -330,7 +330,7 @@ public class Map {
 	public void generateSideRoads(Point start, Point end) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
-		System.out.println(boxWidth + " " + boxHeight);
+//		System.out.println(boxWidth + " " + boxHeight);
 		int roadX;
 		int roadY;
 		if (boxWidth * boxHeight > MAX_AREA) {
@@ -342,9 +342,6 @@ public class Map {
 				roadX = (int) ((Math.min(start.getX(), end.getX()) + MIN_SIDE_LENGTH) + ((Math
 						.random() * (boxWidth - (2 * MIN_SIDE_LENGTH)))));
 				roadY = (int) Math.max(start.getY(), end.getY());
-				if (roadX == 1000 || roadY == 1000) {
-					System.out.println("WTF");
-				}
 				generateVerticalRoad(roadX, roadY, 7);
 				// Recursive split new generated squares
 
@@ -618,7 +615,5 @@ public class Map {
 	// TEMP MAIN FOR TESTING
 	public static void main(String[] args) throws FileNotFoundException {
 		Map map = new Map(960, 960);
-		System.out.println("hi");
-		System.out.println("bye");
 	}
 }
