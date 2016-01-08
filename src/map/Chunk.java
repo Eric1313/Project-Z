@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import entities.Entity;
 
 public class Chunk {
-	 private ArrayList<Entity> solidEntities;
-	 private ArrayList<Entity> passibleEntities;
+	private ArrayList<Entity> solidEntities;
+	private ArrayList<Entity> passibleEntities;
 
-	public Chunk()
-	{
-		solidEntities=new ArrayList<Entity>();
-		passibleEntities= new  ArrayList<Entity>();
+	public Chunk() {
+		solidEntities = new ArrayList<Entity>();
+		passibleEntities = new ArrayList<Entity>();
 	}
-	
+
 	/**
 	 * Adds entity to chunk
-	 * @param entity entity to add
+	 * 
+	 * @param entity
+	 *            entity to add
 	 */
-	public void add(Entity entity)
-	{
+	public void add(Entity entity) {
 		if (entity.isSolid())
 			solidEntities.add(entity);
 		else
 			passibleEntities.add(entity);
 	}
-	
+
 	/**
 	 * Removes Entities from chunks
+	 * 
 	 * @param entity
 	 * @return
 	 */
-	public Entity remove(Entity entity)
-	{
+	public Entity remove(Entity entity) {
 		if (entity.isSolid())
 			solidEntities.remove(entity);
 		else
@@ -47,7 +47,8 @@ public class Chunk {
 	}
 
 	/**
-	 * @param solidEntities the solidEntities to set
+	 * @param solidEntities
+	 *            the solidEntities to set
 	 */
 	public void setSolidEntities(ArrayList<Entity> solidEntities) {
 		this.solidEntities = solidEntities;
@@ -61,10 +62,11 @@ public class Chunk {
 	}
 
 	/**
-	 * @param passibleEntities the passibleEntities to set
+	 * @param passibleEntities
+	 *            the passibleEntities to set
 	 */
 	public void setPassibleEntities(ArrayList<Entity> passibleEntities) {
 		this.passibleEntities = passibleEntities;
 	}
-	
+
 }

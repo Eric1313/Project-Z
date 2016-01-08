@@ -22,8 +22,8 @@ public class GamePanel extends JPanel {
 			player.render(g);
 		}
 	}
-	
-	public void update (){
+
+	public void update() {
 		player.update();
 	}
 
