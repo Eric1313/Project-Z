@@ -22,12 +22,17 @@ public class World {
 	}
 
 	public void render(Graphics g) {
-		for (int i = 0; i < 32; i++) {
-			for (int j = 0; j < 32; j++) {
+		int tileY = 0;
+		int tileX = 0;
+		for (int i = 32; i < 64; i++) {
+			tileX = 0;
+			for (int j = 32; j < 64; j++) {
 				int id = (tileId[j][i] & 0xFFF);
-				g.drawImage(tiles[(id / 100) - 1][(id % 100)], j
-						* Assets.TILE_WIDTH, i * Assets.TILE_HEIGHT, null);
+				g.drawImage(tiles[(id / 100) - 1][(id % 100)], tileX
+						* Assets.TILE_WIDTH, tileY * Assets.TILE_HEIGHT, null);
+				tileX++;
 			}
+			tileY++;
 		}
 	}
 }
