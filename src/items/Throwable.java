@@ -7,7 +7,7 @@ import enums.ItemEffect;
 import enums.ItemState;
 
 /**
- * Subclass of Item that represents a throwable weapon item in Project Z.
+ * Subclass of Item that represents a throwable item in Project Z.
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Item
@@ -16,12 +16,13 @@ import enums.ItemState;
  */
 public class Throwable extends Item {
 	private ItemEffect effect;
-	private int range, areaOfEffect;
+	private int range;
+	private int areaOfEffect;
 
-	public Throwable(int itemID, String name, ItemState state,
-			BufferedImage[] images, AudioClip[] clips, int rarity,
+	public Throwable(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, AudioClip[] clips,
 			ItemEffect effect, int range, int areaOfEffect) {
-		super(itemID, name, images, clips, state, rarity);
+		super(itemID, name, rarity, effectValue, state, images, clips);
 
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;

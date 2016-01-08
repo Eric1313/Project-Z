@@ -14,14 +14,14 @@ import enums.ItemState;
  * @version 1.0
  */
 public class Melee extends Item {
-	private int swingSpeed, rechargeTime;
+	private int swingSpeed;
+	private int rechargeTime;
 
-	public Melee(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int rarity, int effectValue,
+	public Melee(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, AudioClip[] clips,
 			int swingSpeed, int rechargeTime) {
-		super(itemID, name, images, clips, state, rarity);
+		super(itemID, name, rarity, effectValue, state, images, clips);
 
-		this.effectValue = effectValue;
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 	}

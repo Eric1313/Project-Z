@@ -14,12 +14,14 @@ import enums.ItemState;
  * @version 1.0
  */
 public class Firearm extends Item {
-	private int ammoID, rateOfFire, maxAmmo;
+	private int ammoID;
+	private int rateOfFire;
+	private int maxAmmo;
 
-	public Firearm(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int rarity, int ammoID,
-			int rateOfFire, int maxAmmo) {
-		super(itemID, name, images, clips, state, rarity);
+	public Firearm(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			int ammoID, int rateOfFire, int maxAmmo) {
+		super(itemID, name, rarity, effectValue, state, images, clips);
 
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;

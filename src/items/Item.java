@@ -46,8 +46,8 @@ public abstract class Item {
 	protected AudioClip[] clips;
 
 	// TODO Add effectValue?
-	public Item(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int rarity) {
+	public Item(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, AudioClip[] clips) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;

@@ -16,12 +16,12 @@ import enums.ItemState;
  */
 public class Consumable extends Item {
 	private ItemEffect effect;
-	private int effectValue, durability;
+	private int durability;
 
-	public Consumable(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int rarity, ItemEffect effect,
-			int effectValue, int durability) {
-		super(itemID, name, images, clips, state, rarity);
+	public Consumable(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			ItemEffect effect, int durability) {
+		super(itemID, name, rarity, effectValue, state, images, clips);
 
 		this.effect = effect;
 		this.effectValue = effectValue;
