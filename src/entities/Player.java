@@ -14,14 +14,16 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	public Player(Game game, boolean solid) {
-		super(game, solid);
-		this.movementSpeed = 5;
+	public static final int MOVEMENT_SPEED = 5;
+
+	public Player(boolean solid, Game game) {
+		super(solid, game);
+		this.movementSpeed = Player.MOVEMENT_SPEED;
 	}
 
 	public Player(Game game, Point position, boolean solid) {
-		super(game, position, 32, 32, solid);
-		this.movementSpeed = 5;
+		super(32, 32, position, solid, game);
+		this.movementSpeed = Player.MOVEMENT_SPEED;
 	}
 
 	@Override

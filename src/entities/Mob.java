@@ -16,15 +16,15 @@ import main.Game;
  */
 public abstract class Mob extends Entity {
 	protected int movementSpeed;
-	
-	public Mob(Game game, boolean solid) {
-		super(game, solid);
+
+	public Mob(boolean solid, Game game) {
+		super(solid, game);
 	}
 
-	public Mob(Game game, Point position, int height, int width, boolean solid) {
-		super(game, position, height, width, solid);
+	public Mob(int height, int width, Point position, boolean solid, Game game) {
+		super(height, width, position, solid, game);
 	}
-	
+
 	public int getMovementSpeed() {
 		return this.movementSpeed;
 	}

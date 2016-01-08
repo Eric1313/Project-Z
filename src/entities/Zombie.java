@@ -15,9 +15,16 @@ import main.Game;
  * @version 1.0
  */
 public class Zombie extends Mob {
-	public Zombie(Game game, Point position, boolean solid) {
-		super(game, position, 32, 32, solid);
-		this.movementSpeed = 3;
+	public static final int MOVEMENT_SPEED = 3;
+	
+	public Zombie(boolean solid, Game game) {
+		super(solid, game);
+		this.movementSpeed = Zombie.MOVEMENT_SPEED;
+	}
+
+	public Zombie(Point position, boolean solid, Game game) {
+		super(32, 32, position, solid, game);
+		this.movementSpeed = Zombie.MOVEMENT_SPEED;
 	}
 
 	@Override

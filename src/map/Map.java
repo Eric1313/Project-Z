@@ -284,35 +284,35 @@ public class Map {
 						|| j == end.getY())
 					setTile(i, j, 200, Direction.UP);	
 				else if (i == start.getX()+1 && j == start.getY()+1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 180, MapObjectType.WALL_CORNER, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32,j*32), 180, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (i == start.getX()+1 && j == end.getY()-1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 270, MapObjectType.WALL_CORNER, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 270, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (i == end.getX()-1 && j == start.getY()+1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 90, MapObjectType.WALL_CORNER, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 90, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (i == end.getX()-1 && j == end.getY()-1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 0, MapObjectType.WALL_CORNER, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 0, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (i == start.getX()+1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 270, MapObjectType.WALL, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 270, 1000, true, null, null, null, MapObjectType.WALL));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (j == start.getY()+1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 0, MapObjectType.WALL, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 0, 1000, true, null, null, null, MapObjectType.WALL));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (i == end.getX()-1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 90, MapObjectType.WALL, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 90, 1000, true, null, null, null, MapObjectType.WALL));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else if (j == end.getY()-1){
-					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 180, MapObjectType.WALL, null, null));
+					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 180, 1000, true, null, null, null, MapObjectType.WALL));
 					setTile(i, j, 111, Direction.UP);
 				}
 				else

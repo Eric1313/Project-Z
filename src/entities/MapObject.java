@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
+import main.Game;
 import enums.MapObjectType;
 
 /**
@@ -19,10 +20,13 @@ import enums.MapObjectType;
 public class MapObject extends Entity {
 	private MapObjectType type;
 
-	public MapObject(Point position, int height, int width, boolean solid,
-			int health, double rotation, MapObjectType type,
-			BufferedImage[] images, AudioClip[] clips) {
-		super(position, height, width, solid, health, rotation, images, clips);
+	// Do we need game?
+	public MapObject(int height, int width, Point position, double rotation,
+			int health, boolean solid, BufferedImage[] images,
+			AudioClip[] clips, Game game, MapObjectType type) {
+		super(height, width, position, rotation, health, solid, images, clips,
+				game);
+
 		this.type = type;
 	}
 

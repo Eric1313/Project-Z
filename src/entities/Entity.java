@@ -32,7 +32,7 @@ public abstract class Entity {
 
 	protected Game game;
 
-	public Entity(Game game, boolean solid) {
+	public Entity( boolean solid, Game game) {
 		this.height = 32;
 		this.width = 32;
 		this.position = new Point(0, 0);
@@ -46,8 +46,8 @@ public abstract class Entity {
 		this.game = game;
 	}
 
-	public Entity(Game game, Point position, int height, int width,
-			boolean solid) {
+	public Entity(int height, int width, Point position, boolean solid,
+			Game game) {
 		this.height = height;
 		this.width = width;
 		this.position = position;
@@ -61,9 +61,9 @@ public abstract class Entity {
 		this.game = game;
 	}
 
-	public Entity(Point position, int height, int width, boolean solid,
-			int health, double rotation, BufferedImage[] images,
-			AudioClip[] clips) {
+	public Entity(int height, int width, Point position, double rotation,
+			int health, boolean solid, BufferedImage[] images,
+			AudioClip[] clips, Game game) {
 		this.height = height;
 		this.width = width;
 		this.position = position;
@@ -77,7 +77,8 @@ public abstract class Entity {
 		this.images = images;
 		this.clips = clips;
 
-		// Set this.game?
+		// Parameter was not here before; reason?
+		this.game = game;
 	}
 
 	public int getHeight() {
