@@ -1,26 +1,36 @@
 package main;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Point;
 
 import javax.swing.JPanel;
 
 import utilities.World;
+import entities.Player;
 
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private World world;
-	private boolean setup;
+	private Player player;
+	private boolean setUp;
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (setup)
+		if (setUp) {
 			world.render(g);
+			player.render(g);
+		}
+	}
+	
+	public void update (){
+		player.update();
 	}
 
-	public void setup(BufferedImage[][] assets) {
-		world = new World(assets);
-		setup = true;
+	public void setup(Game game) {
+		world = new World(game.getTiles());
+		player = new Player(game, new Point(0, 0), true);
+		player.setImages(game.getPlayer()[0]);
+		setUp = true;
 	}
 }

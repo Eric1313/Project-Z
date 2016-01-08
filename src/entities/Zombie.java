@@ -3,6 +3,8 @@ package entities;
 import java.awt.Point;
 import java.awt.Graphics;
 
+import main.Game;
+
 /**
  * Subclass of Entity that represents a zombie enemy in Project Z.
  * 
@@ -14,8 +16,8 @@ import java.awt.Graphics;
  */
 public class Zombie extends Mob {
 
-	public Zombie(Point position, boolean solid) {
-		super(position, 32, 32, solid);
+	public Zombie(Game game, Point position, boolean solid) {
+		super(game, position, 32, 32, solid);
 	}
 
 	@Override

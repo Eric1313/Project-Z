@@ -5,11 +5,16 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import utilities.KeyHandler;
+import utilities.MouseHandler;
+
 public class Display {
 	private JFrame frame;
 	private GamePanel gamePanel;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
+	private MouseHandler mouseHandler;
+	private KeyHandler keyHandler;
 	private String title;
 	private int width;
 	private int height;
@@ -35,9 +40,11 @@ public class Display {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
-
+		mouseHandler = new MouseHandler();
+		frame.addMouseListener(mouseHandler);
+		keyHandler = new KeyHandler();
+		frame.addKeyListener(keyHandler);
 		frame.add(panelContainer);
-		
 		frame.setVisible(true);
 	}
 
@@ -51,5 +58,13 @@ public class Display {
 
 	public GamePanel getGamePanel() {
 		return gamePanel;
+	}
+
+	public MouseHandler getMouseHandler() {
+		return mouseHandler;
+	}
+
+	public KeyHandler getKeyHandler() {
+		return keyHandler;
 	}
 }

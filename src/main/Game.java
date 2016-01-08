@@ -8,6 +8,7 @@ import enums.GameState.State;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
+	private BufferedImage[][] player;
 
 	private Display display;
 	private String title;
@@ -24,15 +25,16 @@ public class Game implements Runnable {
 	}
 
 	private void initialize() {
-		// Loads the tile assets
+		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
+		player = new Assets("res/img/player.png").getSprites();
 
 		// Loads the display
 		display = new Display(title, width, height);
 
 		// Sets the state of the game
-		state = new GameState(display);
-		state.setGameState(State.INGAME, tiles);
+		state = new GameState(this);
+		state.setGameState(State.INGAME);
 
 		display.getFrame().createBufferStrategy(2);
 
@@ -96,27 +98,27 @@ public class Game implements Runnable {
 
 		initialize();
 
-		// int fps = 60;
-		// double timePerUpdate = 1000000000 / fps;
-		// double timeElapsed = 0;
-		// long now;
-		// // Current time of computer in nanoseconds
-		// long lastTime = System.nanoTime();
-		//
-		// // Game loop
-		// while (running) {
-		// now = System.nanoTime();
-		// timeElapsed += (now - lastTime) / timePerUpdate;
-		// lastTime = now;
-		//
-		// // If the time elapsed has been 1/60th of a second then refresh the
-		// // game
-		// if (timeElapsed >= 1) {
-		update();
-		render();
-		// timeElapsed--;
-		// }
-		// }
+		int fps = 60;
+		double timePerUpdate = 1000000000 / fps;
+		double timeElapsed = 0;
+		long now;
+		// Current time of computer in nanoseconds
+		long lastTime = System.nanoTime();
+
+		// Game loop
+		while (running) {
+			now = System.nanoTime();
+			timeElapsed += (now - lastTime) / timePerUpdate;
+			lastTime = now;
+
+			// If the time elapsed has been 1/60th of a second then refresh the
+			// game
+			if (timeElapsed >= 1) {
+				update();
+				render();
+				timeElapsed--;
+			}
+		}
 		// Stops the game
 		stop();
 	}
@@ -151,6 +153,18 @@ public class Game implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Display getDisplay() {
+		return display;
+	}
+
+	public BufferedImage[][] getTiles() {
+		return tiles;
+	}
+
+	public BufferedImage[][] getPlayer() {
+		return player;
 	}
 
 	public static void main(String[] args) {

@@ -3,10 +3,12 @@ package entities;
 import items.Item;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
+
+import main.Game;
 
 /**
  * Abstract Entity class for all entities in Project Z.
@@ -25,8 +27,10 @@ public abstract class Entity {
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
 	protected Rectangle[] bounds;
+	protected Game game;
 
-	public Entity(boolean solid) {
+	public Entity(Game game, boolean solid) {
+		this.game = game;
 		this.position = new Point(0, 0);
 		this.height = 32;
 		this.width = 32;
@@ -36,7 +40,9 @@ public abstract class Entity {
 		this.setSolid(solid);
 	}
 
-	public Entity(Point position, int height, int width, boolean solid) {
+	public Entity(Game game, Point position, int height, int width,
+			boolean solid) {
+		this.game = game;
 		this.position = position;
 		this.height = height;
 		this.width = width;
@@ -58,7 +64,7 @@ public abstract class Entity {
 		this.setSolid(solid);
 		this.images = images;
 		this.clips = clips;
-		this.bounds=bounds;
+		this.bounds = bounds;
 	}
 
 	public Point getPosition() {
@@ -143,4 +149,10 @@ public abstract class Entity {
 	public Inventory getInventory() {
 		return this.inventory;
 	}
+
+	public Game getGame() {
+		return game;
+	}
+	
+	
 }

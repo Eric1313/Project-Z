@@ -2,6 +2,8 @@ package entities;
 
 import java.awt.Point;
 
+import main.Game;
+
 /**
  * Abstract Mob class for all mobs in Project Z.<br>
  * Mobs are any entities that can move.
@@ -13,11 +15,11 @@ import java.awt.Point;
  * @version 1.0
  */
 public abstract class Mob extends Entity {
-	public Mob(boolean solid) {
-		super(solid);
+	public Mob(Game game, boolean solid) {
+		super(game, solid);
 	}
 
-	public Mob(Point position, int height, int width, boolean solid) {
-		super(position, height, width, solid);
+	public Mob(Game game, Point position, int height, int width, boolean solid) {
+		super(game, position, height, width, solid);
 	}
 }
