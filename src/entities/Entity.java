@@ -33,6 +33,7 @@ public abstract class Entity {
 	protected Game game;
 
 	public Entity(boolean solid, Game game) {
+		// TODO Add map for future features
 		this.height = 32;
 		this.width = 32;
 		this.position = new Point(0, 0);

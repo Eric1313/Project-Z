@@ -21,39 +21,40 @@ public class Player extends Mob {
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 	}
 
-	public Player(Game game, Point position, boolean solid) {
+	public Player(Point position, boolean solid, Game game) {
 		super(32, 32, position, solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.getPosition().x - game
-				.getCamera().getxOffset()), (int) (this.getPosition().y - game
-				.getCamera().getyOffset()), null);
+		g.drawImage(this.getImages()[0],
+				(int) (this.getPosition().x - this.game.getCamera()
+						.getxOffset()), (int) (this.getPosition().y - this.game
+						.getCamera().getyOffset()), null);
 	}
 
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
-		if (getGame().getDisplay().getKeyHandler().isUp()) {
+		if (this.game.getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
 					this.getPosition().getY() - this.movementSpeed);
 		}
-		if (getGame().getDisplay().getKeyHandler().isDown()) {
+		if (this.game.getDisplay().getKeyHandler().isDown()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
 					this.getPosition().getY() + this.movementSpeed);
 		}
-		if (getGame().getDisplay().getKeyHandler().isLeft()) {
+		if (this.game.getDisplay().getKeyHandler().isLeft()) {
 			this.getPosition().setLocation(
 					this.getPosition().getX() - this.movementSpeed,
 					this.getPosition().getY());
 		}
-		if (getGame().getDisplay().getKeyHandler().isRight()) {
+		if (this.game.getDisplay().getKeyHandler().isRight()) {
 			this.getPosition().setLocation(
 					this.getPosition().getX() + this.movementSpeed,
 					this.getPosition().getY());
 		}
-		game.getCamera().centerOnEntity(this);
+		this.game.getCamera().centerOnEntity(this);
 	}
 }
