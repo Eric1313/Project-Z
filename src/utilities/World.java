@@ -13,10 +13,6 @@ public class World {
 	private int width;
 	private int height;
 
-	// TEMP
-	private int col = 0;
-	private int row = 0;
-
 	public World(Game game, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -32,23 +28,25 @@ public class World {
 	public void render(Graphics g) {
 		int tileY = 0;
 		int tileX = 0;
-		for (int i = row; i < row + 38; i++) {
+		for (int i = 0; i < tileId.length; i++) {
 			tileX = 0;
-			for (int j = col; j < col + 38; j++) {
-				int id = (tileId[j][i] & 0xFFF);
-				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-								.getxOffset()), (int) (tileY
-								* Assets.TILE_HEIGHT - game.getCamera()
-								.getyOffset()), null);
+			for (int j = 0; j < tileId[i].length; j++) {
+				int id = (tileId[i][j] & 0xFFF);
+				if (tileY * Assets.TILE_HEIGHT - game.getCamera().getyOffset() > -300
+						&& tileY * Assets.TILE_HEIGHT
+								- game.getCamera().getyOffset() < 900
+						&& tileX * Assets.TILE_WIDTH
+								- game.getCamera().getxOffset() > -300
+						&& tileX * Assets.TILE_WIDTH
+								- game.getCamera().getxOffset() < 1500)
+					g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+							(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+									.getxOffset()), (int) (tileY
+									* Assets.TILE_HEIGHT - game.getCamera()
+									.getyOffset()), null);
 				tileX++;
 			}
 			tileY++;
-		}
-		//Code to move the map if the tile is too far off the map
-		if (game.getCamera().getyOffset() > 192){
-			row ++;
-			game.getCamera().setyOffset(192-32);
 		}
 	}
 
