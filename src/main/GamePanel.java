@@ -28,9 +28,17 @@ public class GamePanel extends JPanel {
 	}
 
 	public void setup(Game game) {
-		world = new World(game.getTiles());
+		world = new World(game, 1600, 1600);
 		player = new Player(game, new Point(0, 0), true);
 		player.setImages(game.getPlayer()[0]);
 		setUp = true;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }

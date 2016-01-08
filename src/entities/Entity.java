@@ -32,7 +32,7 @@ public abstract class Entity {
 
 	protected Game game;
 
-	public Entity( boolean solid, Game game) {
+	public Entity(boolean solid, Game game) {
 		this.height = 32;
 		this.width = 32;
 		this.position = new Point(0, 0);

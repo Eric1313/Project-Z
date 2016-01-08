@@ -28,8 +28,9 @@ public class Player extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], this.getPosition().x,
-				this.getPosition().y, null);
+		g.drawImage(this.getImages()[0], (int) (this.getPosition().x - game
+				.getCamera().getxOffset()), (int) (this.getPosition().y - game
+				.getCamera().getyOffset()), null);
 	}
 
 	// TODO Getters & setters VS protected?
@@ -53,5 +54,6 @@ public class Player extends Mob {
 					this.getPosition().getX() + this.movementSpeed,
 					this.getPosition().getY());
 		}
+		game.getCamera().centerOnEntity(this);
 	}
 }

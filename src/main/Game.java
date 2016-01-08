@@ -3,6 +3,7 @@ package main;
 import java.awt.image.BufferedImage;
 
 import utilities.Assets;
+import utilities.GameCamera;
 import enums.GameState;
 import enums.GameState.State;
 
@@ -16,6 +17,9 @@ public class Game implements Runnable {
 	private int height;
 	private Thread thread;
 	private GameState state;
+
+	private GameCamera camera;
+
 	private boolean running = false;
 
 	public Game(String title, int width, int height) {
@@ -36,7 +40,9 @@ public class Game implements Runnable {
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
 
-		display.getFrame().createBufferStrategy(2);
+		camera = new GameCamera(this, 0, 0);
+
+		display.getFrame().createBufferStrategy(3);
 
 		// // Load all of the items
 		// BufferedReader itemReader = null;
@@ -165,6 +171,12 @@ public class Game implements Runnable {
 
 	public BufferedImage[][] getPlayer() {
 		return player;
+	}
+	
+	
+
+	public GameCamera getCamera() {
+		return camera;
 	}
 
 	public static void main(String[] args) {
