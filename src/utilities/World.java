@@ -14,15 +14,15 @@ public class World {
 	public World(BufferedImage[][] tiles) {
 		this.tiles = tiles;
 		try {
-			map = new Map(1000, 1000);
+			map = new Map(1600, 1600);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		tileId = map.getMap();
+	tileId = map.getMap();
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g) {		
 		for (int i = 0; i < 34; i++) {
 			for (int j = 0; j < 60; j++) {
 				int a = (tileId[j][i] & 0xFFF);

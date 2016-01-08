@@ -1,15 +1,6 @@
 package main;
 
-import items.Item;
-
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import utilities.Assets;
 import enums.GameState;
@@ -25,8 +16,6 @@ public class Game implements Runnable {
 	private Thread thread;
 	private GameState state;
 	private boolean running = false;
-	private Graphics g;
-	private BufferStrategy bs;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -42,45 +31,46 @@ public class Game implements Runnable {
 		display = new Display(title, width, height);
 
 		// Sets the state of the game
-		state = new GameState();
-			state.setGameState(State.INGAME, tiles);
+		state = new GameState(display);
+		state.setGameState(State.INGAME, tiles);
+
 		display.getFrame().createBufferStrategy(2);
-		bs = display.getFrame().getBufferStrategy();
-		
-		// Load all of the items
-		BufferedReader itemReader = null;
-		
-		try {
-			itemReader = new BufferedReader(new InputStreamReader(new FileInputStream("res/items.txt")));
-		} catch (FileNotFoundException e) {
-			// TODO Make catch block more useful
-			e.printStackTrace();
-		}
-		
-		int noOfItems = 0;
-		
-		for (int itemType = 0; itemType < 4; itemType++) {
-			try {
-				// TODO Handle invalid input
-				noOfItems += Integer.parseInt(itemReader.readLine());
-			} catch (IOException e) {
-				// TODO Make catch block more useful
-				e.printStackTrace();
-			}
-		}
-		
-		Item[] items = new Item[noOfItems];
-		
-		for (int item = 0; item < noOfItems; item++) {
-			// TODO Different item categories = different loops
-		}
-		
-		try {
-			itemReader.close();
-		} catch (IOException e) {
-			// TODO Make catch block more useful
-			e.printStackTrace();
-		}
+
+		// // Load all of the items
+		// BufferedReader itemReader = null;
+		//
+		// try {
+		// itemReader = new BufferedReader(new InputStreamReader(
+		// new FileInputStream("res/items.txt")));
+		// } catch (FileNotFoundException e) {
+		// // TODO Make catch block more useful
+		// e.printStackTrace();
+		// }
+		//
+		// int noOfItems = 0;
+		//
+		// for (int itemType = 0; itemType < 4; itemType++) {
+		// try {
+		// // TODO Handle invalid input
+		// noOfItems += Integer.parseInt(itemReader.readLine());
+		// } catch (IOException e) {
+		// // TODO Make catch block more useful
+		// e.printStackTrace();
+		// }
+		// }
+		//
+		// Item[] items = new Item[noOfItems];
+		//
+		// for (int item = 0; item < noOfItems; item++) {
+		// // TODO Different item categories = different loops
+		// }
+		//
+		// try {
+		// itemReader.close();
+		// } catch (IOException e) {
+		// // TODO Make catch block more useful
+		// e.printStackTrace();
+		// }
 	}
 
 	private void update() {
@@ -93,17 +83,10 @@ public class Game implements Runnable {
 	 * Where the drawing happens in the program
 	 */
 	private void render() {
-		g = bs.getDrawGraphics();
-		// Clears the screen
-		g.clearRect(0, 0, width, height);
-
 		// Drawing
 		if (state.getGameState() != null) {
-			state.render(g);
+			state.render();
 		}
-		// End drawing
-		bs.show();
-		g.dispose();
 	}
 
 	/**
@@ -113,27 +96,27 @@ public class Game implements Runnable {
 
 		initialize();
 
-		int fps = 60;
-		double timePerUpdate = 1000000000 / fps;
-		double timeElapsed = 0;
-		long now;
-		// Current time of computer in nanoseconds
-		long lastTime = System.nanoTime();
-
-		// Game loop
-		while (running) {
-			now = System.nanoTime();
-			timeElapsed += (now - lastTime) / timePerUpdate;
-			lastTime = now;
-
-			// If the time elapsed has been 1/60th of a second then refresh the
-			// game
-			if (timeElapsed >= 1) {
-				update();
-				render();
-				timeElapsed--;
-			}
-		}
+		// int fps = 60;
+		// double timePerUpdate = 1000000000 / fps;
+		// double timeElapsed = 0;
+		// long now;
+		// // Current time of computer in nanoseconds
+		// long lastTime = System.nanoTime();
+		//
+		// // Game loop
+		// while (running) {
+		// now = System.nanoTime();
+		// timeElapsed += (now - lastTime) / timePerUpdate;
+		// lastTime = now;
+		//
+		// // If the time elapsed has been 1/60th of a second then refresh the
+		// // game
+		// if (timeElapsed >= 1) {
+		update();
+		render();
+		// timeElapsed--;
+		// }
+		// }
 		// Stops the game
 		stop();
 	}
