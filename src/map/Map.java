@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import entities.MapObject;
+import enums.MapObjectType;
+
 /**
  * Map of a game of Project Z.
  * 
@@ -30,8 +33,6 @@ public class Map {
 	final int BUILD_LENGTH_RANGE = 6;
 	final double HEIGHT_WIDTH_RATIO = 0.5;
 	//STores locations of all plazas
-	private ArrayList<Point> startingPoints = new ArrayList<Point>();
-	private ArrayList<Point> endingPoints = new ArrayList<Point>();
 
 	//Map storage
 	private short[][] tileMap;
@@ -54,6 +55,12 @@ public class Map {
 		this.tileMap = new short[width][height];
 		this.chunkMap= new Chunk[this.width/16][this.height/16];
 		
+		
+		for (int i = 0; i < this.width/16; i++)
+			for (int j = 0; j < this.height/16; j++)
+				chunkMap[i][j] = new Chunk();
+		
+		
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
 		System.out.println(mainRoadX);
@@ -63,11 +70,6 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - 7, height - 1));
 		generateSideRoads(new Point(mainRoadX + 7, 0), new Point(height - 1,
 				width - 1));
-
-		//Generates all plazas
-		for(int i=0;i<startingPoints.size();i++){
-			generatePlaza(startingPoints.get(i),endingPoints.get(i));
-		}
 
 		// TEMP WRITE TO FILE FOR TESTING
 		File output = new File("map.txt");
@@ -132,9 +134,6 @@ public class Map {
 				(int) end.getY());
 		generateBuilding(buildingStarts[2], buildingEnds[2]);
 
-		// Left Row
-		generateVerticalBuildings(new Point((int)buildingStarts[0].getX(), (int)buildingEnds[0].getY()), buildingStarts[2], 1, 3);
-
 		// Bottom Right Corner
 		cornerWidths[3] = (int) (Math.random() * BUILD_LENGTH_RANGE)
 				+ MIN_BUILD_LENGTH;
@@ -145,17 +144,17 @@ public class Map {
 		buildingEnds[3] = new Point((int) end.getX(), (int) end.getY());
 		generateBuilding(buildingStarts[3], buildingEnds[3]);
 
-		// Bottom Row
-
-		// Right Row
+		// Generates the vertical buildings
+		generateVerticalBuildings(new Point((int)buildingStarts[0].getX(), (int)buildingEnds[0].getY()), buildingStarts[2], 1, 3);
 		generateVerticalBuildings(buildingEnds[1], new Point((int)buildingEnds[3].getX(), (int)buildingStarts[3].getY()), -1, 5);
 		
+		//Generates the horizontal buildings
 		if (buildingEnds[0].getY() <= buildingEnds[1].getY())
 			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 5, cornerHeights[0] - MIN_BUILD_LENGTH);
 		else
 			generateHorizontalBuildings(new Point((int)buildingEnds[0].getX(), (int)buildingStarts[0].getY()), buildingStarts[1], 1, 5, cornerHeights[1] - MIN_BUILD_LENGTH);
 		
-		if (buildingEnds[2].getY() <= buildingEnds[3].getY())
+		if (buildingStarts[2].getY() >= buildingStarts[3].getY())
 			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 5, cornerHeights[2] - MIN_BUILD_LENGTH);
 		else
 			generateHorizontalBuildings(buildingEnds[2], new Point((int)buildingStarts[3].getX(), (int)buildingEnds[3].getY()), -1, 5, cornerHeights[3] - MIN_BUILD_LENGTH);
@@ -284,6 +283,38 @@ public class Map {
 				if (i == start.getX() || i == end.getX() || j == start.getY()
 						|| j == end.getY())
 					setTile(i, j, 200, Direction.UP);	
+				else if (i == start.getX()+1 && j == start.getY()+1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 180, MapObjectType.WALL_CORNER, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (i == start.getX()+1 && j == end.getY()-1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 270, MapObjectType.WALL_CORNER, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (i == end.getX()-1 && j == start.getY()+1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 90, MapObjectType.WALL_CORNER, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (i == end.getX()-1 && j == end.getY()-1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 0, MapObjectType.WALL_CORNER, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (i == start.getX()+1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 270, MapObjectType.WALL, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (j == start.getY()+1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 0, MapObjectType.WALL, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (i == end.getX()-1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 90, MapObjectType.WALL, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
+				else if (j == end.getY()-1){
+					chunkMap[i/16][j/16].add(new MapObject(new Point(i*32,j*32),32,32, true, 1000, 180, MapObjectType.WALL, null, null));
+					setTile(i, j, 111, Direction.UP);
+				}
 				else
 					setTile(i, j, 111, Direction.UP);
 			}
@@ -342,13 +373,11 @@ public class Map {
 				generateSideRoads(start2, end2);
 			} else {
 				// records corners of plaza
-				startingPoints.add(start);
-				endingPoints.add(end);
+				generatePlaza(start,end);
 			}
 		} else {
 			// records corners of plaza
-			startingPoints.add(start);
-			endingPoints.add(end);
+			generatePlaza(start,end);
 		}
 	}
 
@@ -588,7 +617,7 @@ public class Map {
 
 	// TEMP MAIN FOR TESTING
 	public static void main(String[] args) throws FileNotFoundException {
-		Map map = new Map(1000, 1000);
+		Map map = new Map(960, 960);
 		System.out.println("hi");
 		System.out.println("bye");
 	}
