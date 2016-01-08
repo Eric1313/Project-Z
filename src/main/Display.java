@@ -40,11 +40,14 @@ public class Display {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		
 		mouseHandler = new MouseHandler();
 		frame.addMouseListener(mouseHandler);
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 		frame.add(panelContainer);
+		
+		
 		frame.setVisible(true);
 	}
 
