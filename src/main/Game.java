@@ -32,7 +32,7 @@ public class Game implements Runnable {
 
 		// Sets the state of the game
 		state = new GameState(display);
-		state.setGameState(State.INGAME);
+		state.setGameState(State.INGAME, tiles);
 
 		display.getFrame().createBufferStrategy(2);
 
@@ -96,27 +96,27 @@ public class Game implements Runnable {
 
 		initialize();
 
-		int fps = 60;
-		double timePerUpdate = 1000000000 / fps;
-		double timeElapsed = 0;
-		long now;
-		// Current time of computer in nanoseconds
-		long lastTime = System.nanoTime();
-
-		// Game loop
-		while (running) {
-			now = System.nanoTime();
-			timeElapsed += (now - lastTime) / timePerUpdate;
-			lastTime = now;
-
-			// If the time elapsed has been 1/60th of a second then refresh the
-			// game
-			if (timeElapsed >= 1) {
-				update();
-				render();
-				timeElapsed--;
-			}
-		}
+		// int fps = 60;
+		// double timePerUpdate = 1000000000 / fps;
+		// double timeElapsed = 0;
+		// long now;
+		// // Current time of computer in nanoseconds
+		// long lastTime = System.nanoTime();
+		//
+		// // Game loop
+		// while (running) {
+		// now = System.nanoTime();
+		// timeElapsed += (now - lastTime) / timePerUpdate;
+		// lastTime = now;
+		//
+		// // If the time elapsed has been 1/60th of a second then refresh the
+		// // game
+		// if (timeElapsed >= 1) {
+		update();
+		render();
+		// timeElapsed--;
+		// }
+		// }
 		// Stops the game
 		stop();
 	}

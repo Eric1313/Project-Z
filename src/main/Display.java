@@ -23,9 +23,9 @@ public class Display {
 
 	private void createDisplay() {
 		panelContainer = new JPanel();
+		cardLayout = new CardLayout();
 		panelContainer.setLayout(cardLayout);
 
-		cardLayout = new CardLayout();
 		gamePanel = new GamePanel();
 		panelContainer.add(gamePanel, "Game");
 		cardLayout.show(panelContainer, "Game");

@@ -1,7 +1,8 @@
 package enums;
 
+import java.awt.image.BufferedImage;
+
 import main.Display;
-import utilities.World;
 
 /**
  * GameState object for storing and changing the game state of the game.
@@ -47,8 +48,15 @@ public class GameState {
 		return gameState;
 	}
 
-	public void setGameState(State gameState) {
+	public void setGameState(State gameState, BufferedImage[][] assets) {
 		this.gameState = gameState;
-		
+		switch (gameState) {
+		case LOBBY:
+			break;
+		case INGAME:
+			display.switchPanel("Game");
+			display.getGamePanel().setup(assets);
+			break;
+		}
 	}
 }
