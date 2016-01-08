@@ -14,17 +14,14 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	// *********THIS IS UGLY, ADD THIS TO ENTITIES OR SOMETHING LATER
-	// ***********GOOD LUCK PATRICK ~ALLEN HAN
-	// *********BTW THIS CONTROLS THE MOVEMENT SPEED
-	private int movementSpeed = 5;
-
 	public Player(Game game, boolean solid) {
 		super(game, solid);
+		this.movementSpeed = 5;
 	}
 
 	public Player(Game game, Point position, boolean solid) {
 		super(game, position, 32, 32, solid);
+		this.movementSpeed = 5;
 	}
 
 	@Override
@@ -36,20 +33,20 @@ public class Player extends Mob {
 	public void update() {
 		if (getGame().getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() - movementSpeed);
+					this.getPosition().getY() - this.movementSpeed);
 		}
 		if (getGame().getDisplay().getKeyHandler().isDown()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() + movementSpeed);
+					this.getPosition().getY() + this.movementSpeed);
 		}
 		if (getGame().getDisplay().getKeyHandler().isLeft()) {
 			this.getPosition().setLocation(
-					this.getPosition().getX() - movementSpeed,
+					this.getPosition().getX() - this.movementSpeed,
 					this.getPosition().getY());
 		}
 		if (getGame().getDisplay().getKeyHandler().isRight()) {
 			this.getPosition().setLocation(
-					this.getPosition().getX() + movementSpeed,
+					this.getPosition().getX() + this.movementSpeed,
 					this.getPosition().getY());
 		}
 	}

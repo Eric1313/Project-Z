@@ -171,5 +171,4 @@ public class Game implements Runnable {
 		Game game = new Game("Project Z", 1024, 768);
 		game.start();
 	}
-
 }

@@ -15,11 +15,21 @@ import main.Game;
  * @version 1.0
  */
 public abstract class Mob extends Entity {
+	protected int movementSpeed;
+	
 	public Mob(Game game, boolean solid) {
 		super(game, solid);
 	}
 
 	public Mob(Game game, Point position, int height, int width, boolean solid) {
 		super(game, position, height, width, solid);
+	}
+	
+	public int getMovementSpeed() {
+		return this.movementSpeed;
+	}
+
+	public void setMovementSpeed(int movementSpeed) {
+		this.movementSpeed = movementSpeed;
 	}
 }
