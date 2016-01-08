@@ -6,7 +6,7 @@ import java.awt.Point;
 import main.Game;
 
 /**
- * Subclass of Entity that represents a player in Project Z.
+ * Subclass of Mob that represents a player in Project Z.
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Mob
@@ -30,6 +30,8 @@ public class Player extends Mob {
 				this.getPosition().y, null);
 	}
 
+	// TODO Getters & setters VS protected?
+	// Reorganize code; looks messy
 	public void update() {
 		if (getGame().getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(),

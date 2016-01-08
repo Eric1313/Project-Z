@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import main.Game;
 
 /**
- * Subclass of Entity that represents a zombie enemy in Project Z.
+ * Subclass of Mob that represents a zombie enemy in Project Z.
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Mob

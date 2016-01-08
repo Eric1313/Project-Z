@@ -22,53 +22,32 @@ public class Consumable extends Item {
 			AudioClip[] clips, ItemState state, int rarity, ItemEffect effect,
 			int effectValue, int durability) {
 		super(itemID, name, images, clips, state, rarity);
-		this.setEffect(effect);
-		this.setEffect(effect);
-		this.setEffectValue(effectValue);
-		this.setDurability(durability);
+
+		this.effect = effect;
+		this.effectValue = effectValue;
+		this.durability = durability;
 	}
 
-	/**
-	 * @return the effect
-	 */
 	public ItemEffect getEffect() {
-		return effect;
+		return this.effect;
 	}
 
-	/**
-	 * @param effect
-	 *            the effect to set
-	 */
 	public void setEffect(ItemEffect effect) {
 		this.effect = effect;
 	}
 
-	/**
-	 * @return the effectValue
-	 */
 	public int getEffectValue() {
-		return effectValue;
+		return this.effectValue;
 	}
 
-	/**
-	 * @param effectValue
-	 *            the effectValue to set
-	 */
 	public void setEffectValue(int effectValue) {
 		this.effectValue = effectValue;
 	}
 
-	/**
-	 * @return the durability
-	 */
 	public int getDurability() {
-		return durability;
+		return this.durability;
 	}
 
-	/**
-	 * @param durability
-	 *            the durability to set
-	 */
 	public void setDurability(int durability) {
 		this.durability = durability;
 	}

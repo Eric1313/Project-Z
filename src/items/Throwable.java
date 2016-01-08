@@ -15,60 +15,40 @@ import enums.ItemState;
  * @version 1.0
  */
 public class Throwable extends Item {
-	private int range, areaOfEffect;
 	private ItemEffect effect;
+	private int range, areaOfEffect;
 
 	public Throwable(int itemID, String name, ItemState state,
 			BufferedImage[] images, AudioClip[] clips, int rarity,
 			ItemEffect effect, int range, int areaOfEffect) {
 		super(itemID, name, images, clips, state, rarity);
+
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;
 	}
 
-	/**
-	 * @return the range
-	 */
-	public int getRange() {
-		return range;
+	public ItemEffect getEffect() {
+		return this.effect;
 	}
 
-	/**
-	 * @param range
-	 *            the range to set
-	 */
+	public void setEffect(ItemEffect effect) {
+		this.effect = effect;
+	}
+
+	public int getRange() {
+		return this.range;
+	}
+
 	public void setRange(int range) {
 		this.range = range;
 	}
 
-	/**
-	 * @return the areaOfEffect
-	 */
 	public int getAreaOfEffect() {
-		return areaOfEffect;
+		return this.areaOfEffect;
 	}
 
-	/**
-	 * @param areaOfEffect
-	 *            the areaOfEffect to set
-	 */
 	public void setAreaOfEffect(int areaOfEffect) {
 		this.areaOfEffect = areaOfEffect;
-	}
-
-	/**
-	 * @return the effect
-	 */
-	public ItemEffect getEffect() {
-		return effect;
-	}
-
-	/**
-	 * @param effect
-	 *            the effect to set
-	 */
-	public void setEffect(ItemEffect effect) {
-		this.effect = effect;
 	}
 }

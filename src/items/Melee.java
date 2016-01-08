@@ -17,39 +17,27 @@ public class Melee extends Item {
 	private int swingSpeed, rechargeTime;
 
 	public Melee(int itemID, String name, BufferedImage[] images,
-			AudioClip[] clips, ItemState state, int rarity, int swingSpeed,
-			int rechargeTime) {
+			AudioClip[] clips, ItemState state, int rarity, int effectValue,
+			int swingSpeed, int rechargeTime) {
 		super(itemID, name, images, clips, state, rarity);
-		this.setSwingSpeed(swingSpeed);
-		this.setRechargeTime(rechargeTime);
+
+		this.effectValue = effectValue;
+		this.swingSpeed = swingSpeed;
+		this.rechargeTime = rechargeTime;
 	}
 
-	/**
-	 * @return the swingSpeed
-	 */
 	public int getSwingSpeed() {
-		return swingSpeed;
+		return this.swingSpeed;
 	}
 
-	/**
-	 * @param swingSpeed
-	 *            the swingSpeed to set
-	 */
 	public void setSwingSpeed(int swingSpeed) {
 		this.swingSpeed = swingSpeed;
 	}
 
-	/**
-	 * @return the rechargeTime
-	 */
 	public int getRechargeTime() {
-		return rechargeTime;
+		return this.rechargeTime;
 	}
 
-	/**
-	 * @param rechargeTime
-	 *            the rechargeTime to set
-	 */
 	public void setRechargeTime(int rechargeTime) {
 		this.rechargeTime = rechargeTime;
 	}
