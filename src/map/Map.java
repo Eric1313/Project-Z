@@ -285,38 +285,38 @@ public class Map {
 					setTile(i, j, 200, Direction.UP);	
 				else if (i == start.getX()+1 && j == start.getY()+1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32,j*32), 180, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (i == start.getX()+1 && j == end.getY()-1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 270, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (i == end.getX()-1 && j == start.getY()+1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 90, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (i == end.getX()-1 && j == end.getY()-1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 0, 1000, true, null, null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (i == start.getX()+1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 270, 1000, true, null, null, null, MapObjectType.WALL));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (j == start.getY()+1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 0, 1000, true, null, null, null, MapObjectType.WALL));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (i == end.getX()-1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 90, 1000, true, null, null, null, MapObjectType.WALL));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else if (j == end.getY()-1){
 					chunkMap[i/16][j/16].add(new MapObject(32, 32, new Point(i*32, j*32), 180, 1000, true, null, null, null, MapObjectType.WALL));
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 				}
 				else
-					setTile(i, j, 111, Direction.UP);
+					setTile(i, j, 201, Direction.UP);
 			}
 		}
 	}
@@ -384,7 +384,7 @@ public class Map {
 	 * @param x
 	 *            starting x
 	 * @param y
-	 *            staring y
+	 *            starting y
 	 * @param size
 	 *            road size in blocks
 	 */
@@ -438,6 +438,8 @@ public class Map {
 					setTile(tempx, tempy, 102, Direction.LEFT);
 				else if (i == (size + 1) / 2)
 					setTile(tempx, tempy, 104, Direction.RIGHT);
+				else if (size == 13 && (i == (((size+1)/2)+1)/2 || i == (size+1)/2 + (((size+1)/2)+1)/2-1))
+					setTile(tempx, tempy, 105, Direction.RIGHT);
 				else
 					setTile(tempx, tempy, 101, Direction.UP);
 				tempx++;
@@ -485,7 +487,7 @@ public class Map {
 	 * @param x
 	 *            starting x
 	 * @param y
-	 *            staring y
+	 *            starting y
 	 * @param size
 	 *            road size in blocks
 	 */
@@ -539,7 +541,7 @@ public class Map {
 					setTile(tempx, tempy, 102, Direction.DOWN);
 				else if (i == size - 1)
 					setTile(tempx, tempy, 102, Direction.UP);
-				else if (i == y)
+				else if (i == (size+1)/2)
 					setTile(tempx, tempy, 104, Direction.UP);
 				else
 					setTile(tempx, tempy, 101, Direction.UP);
