@@ -1,13 +1,16 @@
 package utilities;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.io.FileNotFoundException;
 
+import entities.Player;
 import main.Game;
 import map.Map;
 
 public class World {
 	private Game game;
+	private Player player;
 	private short[][] tileId;
 	private Map map;
 	private int width;
@@ -32,7 +35,10 @@ public class World {
 			e.printStackTrace();
 		}
 		tileId = map.getMap();
-
+		// TODO Randomly place the player into the world rather than putting it
+		// in the top left corner
+		player = new Player(new Point(0, 0), true, game);
+		player.setImages(game.getPlayer()[0]);
 		this.row = 0;
 		this.col = 0;
 		this.yChange = 0;
@@ -97,6 +103,7 @@ public class World {
 		}
 		previousXOffset = game.getCamera().getxOffset();
 		previousYOffset = game.getCamera().getyOffset();
+		player.render(g);
 	}
 
 	public int getWidth() {
@@ -105,5 +112,9 @@ public class World {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }
