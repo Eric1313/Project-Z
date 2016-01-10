@@ -48,9 +48,9 @@ public class World {
 				int id = (tileId[i][j] & 0xFFF);
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
 						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-								.getxOffset()) + xChange-2, (int) (tileY
+								.getxOffset()) + xChange - 3, (int) (tileY
 								* Assets.TILE_HEIGHT
-								- game.getCamera().getyOffset() + yChange-2),
+								- game.getCamera().getyOffset() + yChange - 2),
 						null);
 				tileX++;
 			}
@@ -68,7 +68,7 @@ public class World {
 			}
 		} else if (previousXOffset > game.getCamera().getxOffset()) {
 			if (xChange > 0) {
-				if ((game.getCamera().getxOffset() - xChange) <= -(renderControl-31)) {
+				if ((game.getCamera().getxOffset() - xChange) <= -(renderControl - 31)) {
 					col--;
 					xChange -= renderControl;
 				}
@@ -88,7 +88,7 @@ public class World {
 
 				// System.out.println(game.getCamera().getyOffset() +
 				// yChange);
-				if ((game.getCamera().getyOffset() - yChange) <= -(renderControl-31)) {
+				if ((game.getCamera().getyOffset() - yChange) <= -(renderControl - 31)) {
 					row--;
 					yChange -= renderControl;
 				}

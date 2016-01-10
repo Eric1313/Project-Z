@@ -35,12 +35,11 @@ public class Game implements Runnable {
 
 		// Loads the display
 		display = new Display(title, width, height);
-
+		
+		camera = new GameCamera(this, 0, 0);
 		// Sets the state of the game
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
-
-		camera = new GameCamera(this, 0, 0);
 
 		display.getFrame().createBufferStrategy(2);
 
@@ -172,8 +171,6 @@ public class Game implements Runnable {
 	public BufferedImage[][] getPlayer() {
 		return player;
 	}
-	
-	
 
 	public GameCamera getCamera() {
 		return camera;
