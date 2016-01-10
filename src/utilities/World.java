@@ -48,9 +48,9 @@ public class World {
 				int id = (tileId[i][j] & 0xFFF);
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
 						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-								.getxOffset()) + xChange, (int) (tileY
+								.getxOffset()) + xChange-2, (int) (tileY
 								* Assets.TILE_HEIGHT
-								- game.getCamera().getyOffset() + yChange),
+								- game.getCamera().getyOffset() + yChange-2),
 						null);
 				tileX++;
 			}

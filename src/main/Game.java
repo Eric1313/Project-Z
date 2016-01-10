@@ -42,7 +42,7 @@ public class Game implements Runnable {
 
 		camera = new GameCamera(this, 0, 0);
 
-		//display.getFrame().createBufferStrategy(3);
+		display.getFrame().createBufferStrategy(2);
 
 		// // Load all of the items
 		// BufferedReader itemReader = null;
