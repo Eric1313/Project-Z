@@ -14,6 +14,9 @@ public class GamePanel extends JPanel {
 	private Player player;
 	private boolean setUp;
 
+	public GamePanel(){
+		super(true);
+	}
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

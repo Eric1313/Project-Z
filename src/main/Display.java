@@ -47,7 +47,6 @@ public class Display {
 		frame.addKeyListener(keyHandler);
 		frame.add(panelContainer);
 		
-		
 		frame.setVisible(true);
 	}
 

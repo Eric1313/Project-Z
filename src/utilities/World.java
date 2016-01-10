@@ -13,6 +13,15 @@ public class World {
 	private int width;
 	private int height;
 
+	// Controls what is being rendered
+	private int row;
+	private int col;
+	private final int renderControl = 32;
+	private float previousXOffset;
+	private float previousYOffset;
+	private int yChange;
+	private int xChange;
+
 	public World(Game game, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -23,31 +32,71 @@ public class World {
 			e.printStackTrace();
 		}
 		tileId = map.getMap();
+
+		this.row = 0;
+		this.col = 0;
+		this.yChange = 0;
+		this.xChange = 0;
 	}
 
 	public void render(Graphics g) {
 		int tileY = 0;
 		int tileX = 0;
-		for (int i = 0; i < tileId.length; i++) {
+		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
-			for (int j = 0; j < tileId[i].length; j++) {
+			for (int j = col; j < col + 34; j++) {
 				int id = (tileId[i][j] & 0xFFF);
-				if (tileY * Assets.TILE_HEIGHT - game.getCamera().getyOffset() > -300
-						&& tileY * Assets.TILE_HEIGHT
-								- game.getCamera().getyOffset() < 900
-						&& tileX * Assets.TILE_WIDTH
-								- game.getCamera().getxOffset() > -300
-						&& tileX * Assets.TILE_WIDTH
-								- game.getCamera().getxOffset() < 1500)
-					g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-							(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-									.getxOffset()), (int) (tileY
-									* Assets.TILE_HEIGHT - game.getCamera()
-									.getyOffset()), null);
+				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+								.getxOffset()) + xChange, (int) (tileY
+								* Assets.TILE_HEIGHT
+								- game.getCamera().getyOffset() + yChange),
+						null);
 				tileX++;
 			}
 			tileY++;
 		}
+
+		if (previousXOffset < game.getCamera().getxOffset()) {
+			if (xChange < 0) {
+				xChange = -xChange;
+			} else {
+				if ((game.getCamera().getxOffset() - xChange) >= renderControl) {
+					col++;
+					xChange += renderControl;
+				}
+			}
+		} else if (previousXOffset > game.getCamera().getxOffset()) {
+			if (xChange > 0) {
+				if ((game.getCamera().getxOffset() - xChange) <= -(renderControl-31)) {
+					col--;
+					xChange -= renderControl;
+				}
+			}
+		}
+		if (previousYOffset < game.getCamera().getyOffset()) {
+			if (yChange < 0) {
+				yChange = -yChange;
+			} else {
+				if ((game.getCamera().getyOffset() - yChange) >= renderControl) {
+					row++;
+					yChange += renderControl;
+				}
+			}
+		} else if (previousYOffset > game.getCamera().getyOffset()) {
+			if (yChange > 0) {
+
+				// System.out.println(game.getCamera().getyOffset() +
+				// yChange);
+				if ((game.getCamera().getyOffset() - yChange) <= -(renderControl-31)) {
+					row--;
+					yChange -= renderControl;
+				}
+			}
+
+		}
+		previousXOffset = game.getCamera().getxOffset();
+		previousYOffset = game.getCamera().getyOffset();
 	}
 
 	public int getWidth() {

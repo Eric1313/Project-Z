@@ -14,7 +14,7 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 5;
+	public static final int MOVEMENT_SPEED = 3;
 
 	public Player(boolean solid, Game game) {
 		super(solid, game);
