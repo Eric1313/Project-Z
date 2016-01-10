@@ -690,6 +690,7 @@ public class Map {
 		tileMap[x][y] = (short) id;
 		// Set bit 12/ 13 to indicate direction
 		if (direction == Direction.RIGHT) {
+			tileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
 		} else if (direction == Direction.LEFT) {
 			tileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
 		} else if (direction == Direction.DOWN) {
