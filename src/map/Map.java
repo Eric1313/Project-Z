@@ -84,7 +84,7 @@ public class Map {
 
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
-				setTile(i, j, 108, Direction.UP);
+				setTile(i, j, 108, Direction.UP,false);
 			}
 		}
 
@@ -317,11 +317,11 @@ public class Map {
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY())
-					setTile(i, j, 200, Direction.UP);
+					setTile(i, j, 200, Direction.UP,false);
 				else if (i == start.getX()+1 || i == end.getX()-1 || j == start.getY()+1 || j == end.getY()-1)
-					setTile(i, j, 202, Direction.UP);
+					setTile(i, j, 202, Direction.UP,true);
 				else
-					setTile(i, j, 201, Direction.UP);
+					setTile(i, j, 201, Direction.UP,false);
 				/*
 				else if (i == start.getX() + 1 && j == start.getY() + 1) {
 					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
@@ -447,11 +447,11 @@ public class Map {
 		if (y == (height - 1)) {
 			for (int i = 1; i <= size; i++) {
 				if (i == 1)
-					setTile(tempx, tempy, 120, Direction.RIGHT);
+					setTile(tempx, tempy, 120, Direction.RIGHT,false);
 				else if (i == size)
-					setTile(tempx, tempy, 120, Direction.LEFT);
+					setTile(tempx, tempy, 120, Direction.LEFT,false);
 				else
-					setTile(tempx, tempy, 121, Direction.UP);
+					setTile(tempx, tempy, 121, Direction.UP,false);
 				tempx++;
 			}
 			tempy--;
@@ -468,14 +468,14 @@ public class Map {
 				// else if (i == size)
 				// setTile(tempx, (tempy + 1), 102, Direction.DOWN);
 				else if (i == size - 1) {
-					setTile(tempx, tempy, 107, Direction.LEFT);
-					setTile(tempx, (tempy + 1), 103, Direction.LEFT);
+					setTile(tempx, tempy, 107, Direction.LEFT,false);
+					setTile(tempx, (tempy + 1), 103, Direction.LEFT,false);
 				} else if (i == 2) {
-					setTile(tempx, tempy, 107, Direction.RIGHT);
-					setTile(tempx, (tempy + 1), 103, Direction.DOWN);
+					setTile(tempx, tempy, 107, Direction.RIGHT,false);
+					setTile(tempx, (tempy + 1), 103, Direction.DOWN,false);
 				} else {
-					setTile(tempx, tempy, 106, Direction.RIGHT);
-					setTile(tempx, (tempy + 1), 101, Direction.RIGHT);
+					setTile(tempx, tempy, 106, Direction.RIGHT,false);
+					setTile(tempx, (tempy + 1), 101, Direction.RIGHT,false);
 				}
 				tempx++;
 			}
@@ -489,19 +489,19 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size)
-					setTile(tempx, tempy, 100, Direction.UP);
+					setTile(tempx, tempy, 100, Direction.UP,false);
 				else if (i == 2)
-					setTile(tempx, tempy, 102, Direction.RIGHT);
+					setTile(tempx, tempy, 102, Direction.RIGHT,false);
 				else if (i == size - 1)
-					setTile(tempx, tempy, 102, Direction.LEFT);
+					setTile(tempx, tempy, 102, Direction.LEFT,false);
 				else if (i == (size + 1) / 2)
-					setTile(tempx, tempy, 104, Direction.RIGHT);
+					setTile(tempx, tempy, 104, Direction.RIGHT,false);
 				else if (size == MAIN_ROAD_SIZE
 						&& (i == (((size + 1) / 2) + 1) / 2 || i == (size + 1)
 								/ 2 + (((size + 1) / 2) + 1) / 2 - 1))
-					setTile(tempx, tempy, 105, Direction.RIGHT);
+					setTile(tempx, tempy, 105, Direction.RIGHT,false);
 				else
-					setTile(tempx, tempy, 101, Direction.UP);
+					setTile(tempx, tempy, 101, Direction.UP,false);
 				tempx++;
 			}
 			
@@ -513,11 +513,11 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1)
-					setTile(tempx, tempy, 120, Direction.LEFT);
+					setTile(tempx, tempy, 120, Direction.LEFT,false);
 				else if (i == size)
-					setTile(tempx, tempy, 120, Direction.RIGHT);
+					setTile(tempx, tempy, 120, Direction.RIGHT,false);
 				else
-					setTile(tempx, tempy, 121, Direction.DOWN);
+					setTile(tempx, tempy, 121, Direction.DOWN,false);
 				tempx++;
 			}
 		}
@@ -533,15 +533,15 @@ public class Map {
 				// else if (i == size)
 				// setTile(tempx, (tempy - 1), 102, Direction.RIGHT);
 				else if (i == size - 1) {
-					setTile(tempx, tempy, 107, Direction.LEFT);
-					setTile(tempx, (tempy - 1), 103, Direction.UP);
+					setTile(tempx, tempy, 107, Direction.LEFT,false);
+					setTile(tempx, (tempy - 1), 103, Direction.UP,false);
 				} else if (i == 2) {
-					setTile(tempx, tempy, 107, Direction.RIGHT);
-					setTile(tempx, (tempy - 1), 103, Direction.RIGHT);
+					setTile(tempx, tempy, 107, Direction.RIGHT,false);
+					setTile(tempx, (tempy - 1), 103, Direction.RIGHT,false);
 
 				} else {
-					setTile(tempx, tempy, 106, Direction.RIGHT);
-					setTile(tempx, (tempy - 1), 101, Direction.UP);
+					setTile(tempx, tempy, 106, Direction.RIGHT,false);
+					setTile(tempx, (tempy - 1), 101, Direction.UP,false);
 				}
 				tempx++;
 			}
@@ -567,11 +567,11 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1)
-					setTile(tempx, tempy, 120, Direction.UP);
+					setTile(tempx, tempy, 120, Direction.UP,false);
 				else if (i == size)
-					setTile(tempx, tempy, 120, Direction.DOWN);
+					setTile(tempx, tempy, 120, Direction.DOWN,false);
 				else
-					setTile(tempx, tempy, 121, Direction.RIGHT);
+					setTile(tempx, tempy, 121, Direction.RIGHT,false);
 				tempy++;
 			}
 			tempx--;
@@ -589,14 +589,14 @@ public class Map {
 				// else if (i == size)
 				// setTile((tempx + 1), tempy, 103, Direction.DOWN);
 				else if (i == size - 1) {
-					setTile(tempx, tempy, 107, Direction.UP);
-					setTile((tempx + 1), tempy, 103, Direction.RIGHT);
+					setTile(tempx, tempy, 107, Direction.UP,false);
+					setTile((tempx + 1), tempy, 103, Direction.RIGHT,false);
 				} else if (i == 2) {
-					setTile(tempx, tempy, 107, Direction.DOWN);
-					setTile((tempx + 1), tempy, 103, Direction.DOWN);
+					setTile(tempx, tempy, 107, Direction.DOWN,false);
+					setTile((tempx + 1), tempy, 103, Direction.DOWN,false);
 				} else {
-					setTile(tempx, tempy, 106, Direction.UP);
-					setTile((tempx + 1), tempy, 101, Direction.UP);
+					setTile(tempx, tempy, 106, Direction.UP,false);
+					setTile((tempx + 1), tempy, 101, Direction.UP,false);
 				}
 				tempy++;
 			}
@@ -612,15 +612,15 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size)
-					setTile(tempx, tempy, 100, Direction.UP);
+					setTile(tempx, tempy, 100, Direction.UP,false);
 				else if (i == 2)
-					setTile(tempx, tempy, 102, Direction.DOWN);
+					setTile(tempx, tempy, 102, Direction.DOWN,false);
 				else if (i == size - 1)
-					setTile(tempx, tempy, 102, Direction.UP);
+					setTile(tempx, tempy, 102, Direction.UP,false);
 				else if (i == (size + 1) / 2)
-					setTile(tempx, tempy, 104, Direction.UP);
+					setTile(tempx, tempy, 104, Direction.UP,false);
 				else
-					setTile(tempx, tempy, 101, Direction.UP);
+					setTile(tempx, tempy, 101, Direction.UP,false);
 				tempy++;
 			}
 			tempx--;
@@ -633,11 +633,11 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1)
-					setTile(tempx, tempy, 120, Direction.LEFT);
+					setTile(tempx, tempy, 120, Direction.LEFT,false);
 				else if (i == size)
-					setTile(tempx, tempy, 120, Direction.RIGHT);
+					setTile(tempx, tempy, 120, Direction.RIGHT,false);
 				else
-					setTile(tempx, tempy, 121, Direction.DOWN);
+					setTile(tempx, tempy, 121, Direction.DOWN,false);
 				tempy++;
 			}
 		}
@@ -653,14 +653,14 @@ public class Map {
 				// else if (i == size)
 				// setTile((tempx - 1), tempy, 103, Direction.RIGHT);
 				else if (i == size - 1) {
-					setTile(tempx, tempy, 107, Direction.UP);
-					setTile((tempx - 1), tempy, 103, Direction.UP);
+					setTile(tempx, tempy, 107, Direction.UP,false);
+					setTile((tempx - 1), tempy, 103, Direction.UP,false);
 				} else if (i == 2) {
-					setTile(tempx, tempy, 107, Direction.DOWN);
-					setTile((tempx - 1), tempy, 103, Direction.LEFT);
+					setTile(tempx, tempy, 107, Direction.DOWN,false);
+					setTile((tempx - 1), tempy, 103, Direction.LEFT,false);
 				} else {
-					setTile(tempx, tempy, 106, Direction.UP);
-					setTile((tempx - 1), tempy, 101, Direction.UP);
+					setTile(tempx, tempy, 106, Direction.UP,false);
+					setTile((tempx - 1), tempy, 101, Direction.UP,false);
 				}
 				tempy++;
 			}
@@ -679,7 +679,7 @@ public class Map {
 	 * @param direction
 	 *            tile direction
 	 */
-	public void setTile(int x, int y, int id, Direction direction) {
+	public void setTile(int x, int y, int id, Direction direction, boolean solid) {
 		// set id
 		tileMap[x][y] = (short) id;
 		// Set bit 12/ 13 to indicate direction
@@ -690,6 +690,11 @@ public class Map {
 		} else if (direction == Direction.UP) {
 			tileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
 			tileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+		}
+		if(solid)
+		{
+			tileMap[x][y] = (short) (tileMap[x][y] | (1 << 14));
+
 		}
 
 	}
