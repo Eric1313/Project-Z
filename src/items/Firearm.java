@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import enums.ItemState;
@@ -50,5 +51,10 @@ public class Firearm extends Item {
 
 	public void setMaxAmmo(int maxAmmo) {
 		this.maxAmmo = maxAmmo;
+	}
+	
+	@Override
+	public void render(Graphics g) {
+		// TODO
 	}
 }

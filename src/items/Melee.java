@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import enums.ItemState;
@@ -40,5 +41,10 @@ public class Melee extends Item {
 
 	public void setRechargeTime(int rechargeTime) {
 		this.rechargeTime = rechargeTime;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		// TODO
 	}
 }
