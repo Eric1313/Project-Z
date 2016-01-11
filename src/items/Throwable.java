@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import enums.ItemEffect;
@@ -51,5 +52,10 @@ public class Throwable extends Item {
 
 	public void setAreaOfEffect(int areaOfEffect) {
 		this.areaOfEffect = areaOfEffect;
+	}
+	
+	@Override
+	public void render(Graphics g) {
+		// TODO
 	}
 }

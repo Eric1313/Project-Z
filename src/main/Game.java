@@ -1,16 +1,26 @@
 package main;
 
 import java.awt.Cursor;
+
+import items.*;
+
+import java.applet.AudioClip;
+
 import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
 
 import utilities.Assets;
 import utilities.GameCamera;
 import enums.GameState;
+import enums.ItemEffect;
+import enums.ItemState;
 import enums.GameState.State;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
+	private ArrayList<Item> items;
 
 	private Display display;
 	private String title;
@@ -43,42 +53,85 @@ public class Game implements Runnable {
 		state.setGameState(State.INGAME);
 
 		display.getFrame().createBufferStrategy(4);
-		display.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		// // Load all of the items
-		// BufferedReader itemReader = null;
-		//
-		// try {
-		// itemReader = new BufferedReader(new InputStreamReader(
-		// new FileInputStream("res/items.txt")));
-		// } catch (FileNotFoundException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
-		//
-		// int noOfItems = 0;
-		//
-		// for (int itemType = 0; itemType < 4; itemType++) {
-		// try {
-		// // TODO Handle invalid input
-		// noOfItems += Integer.parseInt(itemReader.readLine());
-		// } catch (IOException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
-		// }
-		//
-		// Item[] items = new Item[noOfItems];
-		//
-		// for (int item = 0; item < noOfItems; item++) {
-		// // TODO Different item categories = different loops
-		// }
-		//
-		// try {
-		// itemReader.close();
-		// } catch (IOException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
+
+		display.getFrame().setCursor(
+				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+
+		// Load all of the items
+		BufferedReader itemReader = null;
+
+		try {
+			itemReader = new BufferedReader(new InputStreamReader(
+					new FileInputStream("res/items.txt")));
+		} catch (FileNotFoundException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
+
+		int totalItems = 0;
+		int[] noOfItems = new int[4];
+
+		for (int itemType = 0; itemType < 4; itemType++) {
+			try {
+				// TODO Handle invalid input
+				totalItems += Integer.parseInt(itemReader.readLine());
+				noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
+			} catch (IOException e) {
+				// TODO Make catch block more useful
+				e.printStackTrace();
+			}
+		}
+
+		this.items = new ArrayList<Item>();
+
+		for (int itemType = 0; itemType < 4; itemType++) {
+			for (int item = 0; item < noOfItems[itemType]; item++) {
+				try {
+					String currentItem = itemReader.readLine();
+
+					String[] stats = currentItem.split("~");
+					String[] imageLinks = stats[4].split("`");
+					String[] soundLinks = stats[5].split("`");
+
+					BufferedImage[] images = new BufferedImage[imageLinks.length];
+					AudioClip[] sounds = new AudioClip[soundLinks.length];
+
+					for (int image = 0; image < imageLinks.length; image++) {
+						// images[image]
+					}
+
+					switch (itemType) {
+					case 0:
+						this.items.add(new Consumable(Integer
+								.parseInt(stats[0]), stats[1], Integer
+								.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED,
+								images, sounds, ItemEffect.values()[Integer
+										.parseInt(stats[6])], Integer
+										.parseInt(stats[7])));
+						break;
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					}
+
+				} catch (IOException e) {
+					// TODO Make catch block more useful
+					e.printStackTrace();
+				}
+
+			}
+		}
+
+		try {
+			itemReader.close();
+		} catch (IOException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
 	}
 
 	private void update() {

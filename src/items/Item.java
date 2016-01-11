@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
@@ -38,7 +39,7 @@ public abstract class Item {
 	 */
 	protected int effectValue;
 
-	protected Point location;
+	protected Point position;
 	protected boolean held = false;
 	protected ItemState state;
 
@@ -90,12 +91,12 @@ public abstract class Item {
 		this.effectValue = effectValue;
 	}
 
-	public Point getLocation() {
-		return this.location;
+	public Point getPosition() {
+		return this.position;
 	}
 
-	public void setLocation(Point location) {
-		this.location = location;
+	public void setPosition(Point position) {
+		this.position = position;
 	}
 
 	public boolean isHeld() {
@@ -129,4 +130,6 @@ public abstract class Item {
 	public void setClips(AudioClip[] clips) {
 		this.clips = clips;
 	}
+
+	public abstract void render(Graphics g);
 }
