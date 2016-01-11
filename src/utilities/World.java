@@ -173,17 +173,18 @@ public class World {
 		}
 		previousXOffset = game.getCamera().getxOffset();
 		previousYOffset = game.getCamera().getyOffset();
-//		g2D.setTransform(originalTransform);
-//		double angle = Math.atan2(
-//				((player.getPosition().getY()) + 16)
-//						- game.getDisplay().getMouseHandler()
-//								.getMouseLocation().getY(), (player
-//						.getPosition().getX() + 16)
-//						- game.getDisplay().getMouseHandler()
-//								.getMouseLocation().getX())
-//				- Math.PI / 2;
-//		g2D.rotate(angle, player.getPosition().getX() + 16, player
-//				.getPosition().getY() + 16);
+		g2D.setTransform(originalTransform);
+		double angle = Math.atan2(
+				((player.getPosition().getY()) + 16- game.getCamera().getyOffset())
+						- game.getDisplay().getMouseHandler()
+								.getMouseLocation().getY(), (player
+						.getPosition().getX() + 16- game.getCamera().getxOffset())
+						- game.getDisplay().getMouseHandler()
+								.getMouseLocation().getX())
+				- Math.PI / 2;
+		g2D.rotate(angle, player.getPosition().getX()
+				- game.getCamera().getxOffset() + 16, player.getPosition()
+				.getY() - game.getCamera().getyOffset() + 16);
 		player.render(g);
 	}
 
