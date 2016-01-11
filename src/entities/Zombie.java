@@ -10,12 +10,13 @@ import main.Game;
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Mob
- * @see main.NPC
+ * @see entities.ZombieThread
  * @since 1.0
  * @version 1.0
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
+	private boolean hastarget=false;
 	
 	public Zombie(boolean solid, Game game) {
 		super(solid, game);
@@ -26,8 +27,9 @@ public class Zombie extends Mob {
 		super(32, 32, position, solid, game);
 		this.movementSpeed = Zombie.MOVEMENT_SPEED;
 	}
+	
 
-	@Override
-	public void render(Graphics g) {
-	}
+//	@Override
+//	public void render(Graphics g) {
+//	}
 }
