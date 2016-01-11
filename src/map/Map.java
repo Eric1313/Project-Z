@@ -27,11 +27,13 @@ public class Map {
 	private int width;
 
 	// Generation
-	final int MAX_AREA = 1000;
-	final int MIN_SIDE_LENGTH = 42;
-	final int MIN_BUILD_LENGTH = 10;
-	final int BUILD_LENGTH_RANGE = 6;
+	final int MAX_AREA = 3025;
+	final int MIN_SIDE_LENGTH = 55;
+	final int MIN_BUILD_LENGTH = 15;
+	final int BUILD_LENGTH_RANGE = 5;
+	final int MAX_BUILD_PER_SIDE = 5;
 	final double HEIGHT_WIDTH_RATIO = 0.5;
+	final int MAIN_ROAD_SIZE=17;
 	final int ROAD_WIDTH = 11;
 	// STores locations of all plazas
 
@@ -62,25 +64,12 @@ public class Map {
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
 		// System.out.println(mainRoadX);
-		generateVerticalRoad(mainRoadX, height - 1, 13);
+		generateVerticalRoad(mainRoadX, height - 1, MAIN_ROAD_SIZE);
 
 		// Generates all other roads
-		generateSideRoads(new Point(0, 0), new Point(mainRoadX - 7, height - 1));
-		generateSideRoads(new Point(mainRoadX + 7, 0), new Point(height - 1,
+		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
+		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
-
-		// TEMP WRITE TO FILE FOR TESTING
-		File output = new File("map.txt");
-		PrintWriter writer = new PrintWriter(output);
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				writer.printf("%3d ", (tileMap[j][i] & 0xFFF));
-			}
-			writer.println();
-
-		}
-		writer.close();
-
 	}
 
 	public void generatePlaza(Point start, Point end) {
@@ -143,30 +132,30 @@ public class Map {
 
 		// Generates the vertical buildings
 		generateVerticalBuildings(new Point((int) buildingStarts[0].getX(),
-				(int) buildingEnds[0].getY()), buildingStarts[2], 1, 3);
+				(int) buildingEnds[0].getY()), buildingStarts[2], 1, MAX_BUILD_PER_SIDE);
 		generateVerticalBuildings(buildingEnds[1], new Point(
 				(int) buildingEnds[3].getX(), (int) buildingStarts[3].getY()),
-				-1, 5);
+				-1, MAX_BUILD_PER_SIDE);
 
 		// Generates the horizontal buildings
 		if (buildingEnds[0].getY() <= buildingEnds[1].getY())
 			generateHorizontalBuildings(new Point((int) buildingEnds[0].getX(),
-					(int) buildingStarts[0].getY()), buildingStarts[1], 1, 5,
+					(int) buildingStarts[0].getY()), buildingStarts[1], 1, MAX_BUILD_PER_SIDE,
 					cornerHeights[0] - MIN_BUILD_LENGTH);
 		else
 			generateHorizontalBuildings(new Point((int) buildingEnds[0].getX(),
-					(int) buildingStarts[0].getY()), buildingStarts[1], 1, 5,
+					(int) buildingStarts[0].getY()), buildingStarts[1], 1, MAX_BUILD_PER_SIDE,
 					cornerHeights[1] - MIN_BUILD_LENGTH);
 
 		if (buildingStarts[2].getY() >= buildingStarts[3].getY())
 			generateHorizontalBuildings(buildingEnds[2],
 					new Point((int) buildingStarts[3].getX(),
-							(int) buildingEnds[3].getY()), -1, 5,
+							(int) buildingEnds[3].getY()), -1, MAX_BUILD_PER_SIDE,
 					cornerHeights[2] - MIN_BUILD_LENGTH);
 		else
 			generateHorizontalBuildings(buildingEnds[2],
 					new Point((int) buildingStarts[3].getX(),
-							(int) buildingEnds[3].getY()), -1, 5,
+							(int) buildingEnds[3].getY()), -1, MAX_BUILD_PER_SIDE,
 					cornerHeights[3] - MIN_BUILD_LENGTH);
 	}
 
@@ -193,20 +182,20 @@ public class Map {
 			sideBuildingLength = sideLength;
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) end.getX(),
-						(int) start.getY());
+						(int) start.getY()+1);
 				sideBuildingEnd = new Point(
 						(int) end.getX()
 								+ dir
 								* ((int) (Math.random() * BUILD_LENGTH_RANGE) + MIN_BUILD_LENGTH),
-						(int) start.getY() + sideBuildingLength);
+						(int) start.getY() + sideBuildingLength -1);
 			} else {
 				sideBuildingStart = new Point(
 						(int) end.getX()
 								+ dir
 								* ((int) (Math.random() * BUILD_LENGTH_RANGE) + MIN_BUILD_LENGTH),
-						(int) start.getY());
+						(int) start.getY()+1);
 				sideBuildingEnd = new Point((int) end.getX(),
-						(int) start.getY() + sideBuildingLength);
+						(int) start.getY() + sideBuildingLength -1);
 			}
 
 			generateBuilding(sideBuildingStart, sideBuildingEnd);
@@ -220,7 +209,7 @@ public class Map {
 
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) end.getX(),
-						(int) start.getY());
+						(int) start.getY()+1);
 				sideBuildingEnd = new Point(
 						(int) end.getX()
 								+ dir
@@ -231,7 +220,7 @@ public class Map {
 						(int) end.getX()
 								+ dir
 								* ((int) (Math.random() * BUILD_LENGTH_RANGE) + MIN_BUILD_LENGTH),
-						(int) start.getY());
+						(int) start.getY()+1);
 				sideBuildingEnd = new Point((int) end.getX(),
 						(int) start.getY() + sideBuildingLength);
 			}
@@ -269,19 +258,19 @@ public class Map {
 		if (numToGenerate == 1) {
 			sideBuildingLength = sideLength;
 			if (dir == 1) {
-				sideBuildingStart = new Point((int) start.getX(),
+				sideBuildingStart = new Point((int) start.getX()+1,
 						(int) start.getY());
 				sideBuildingEnd = new Point((int) start.getX()
-						+ sideBuildingLength, (int) start.getY() + dir
+						+ sideBuildingLength -1, (int) start.getY() + dir
 						* ((int) (Math.random() * maxRange) + MIN_BUILD_LENGTH));
 			} else {
 				sideBuildingStart = new Point(
-						(int) start.getX(),
+						(int) start.getX()+1,
 						(int) start.getY()
 								+ dir
 								* ((int) (Math.random() * maxRange) + MIN_BUILD_LENGTH));
 				sideBuildingEnd = new Point((int) start.getX()
-						+ sideBuildingLength, (int) start.getY());
+						+ sideBuildingLength - 1, (int) start.getY());
 			}
 
 			generateBuilding(sideBuildingStart, sideBuildingEnd);
@@ -295,14 +284,14 @@ public class Map {
 			} while (sideLength - sideBuildingLength * (numToGenerate - 1) < MIN_BUILD_LENGTH);
 
 			if (dir == 1) {
-				sideBuildingStart = new Point((int) start.getX(),
+				sideBuildingStart = new Point((int) start.getX()+1,
 						(int) start.getY());
 				sideBuildingEnd = new Point((int) start.getX()
 						+ sideBuildingLength, (int) start.getY() + dir
 						* ((int) (Math.random() * maxRange) + MIN_BUILD_LENGTH));
 			} else {
 				sideBuildingStart = new Point(
-						(int) start.getX(),
+						(int) start.getX()+1,
 						(int) start.getY()
 								+ dir
 								* ((int) (Math.random() * maxRange) + MIN_BUILD_LENGTH));
@@ -327,9 +316,13 @@ public class Map {
 
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
-				if (i == start.getX() || i == end.getX() || j == start.getY()
-						|| j == end.getY())
+				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY())
 					setTile(i, j, 200, Direction.UP);
+				else if (i == start.getX()+1 || i == end.getX()-1 || j == start.getY()+1 || j == end.getY()-1)
+					setTile(i, j, 202, Direction.UP);
+				else
+					setTile(i, j, 201, Direction.UP);
+				/*
 				else if (i == start.getX() + 1 && j == start.getY() + 1) {
 					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
 							new Point(i * 32, j * 32), 180, 1000, true, null,
@@ -372,6 +365,7 @@ public class Map {
 					setTile(i, j, 201, Direction.UP);
 				} else
 					setTile(i, j, 201, Direction.UP);
+					*/
 			}
 		}
 	}
@@ -502,7 +496,7 @@ public class Map {
 					setTile(tempx, tempy, 102, Direction.LEFT);
 				else if (i == (size + 1) / 2)
 					setTile(tempx, tempy, 104, Direction.RIGHT);
-				else if (size == 13
+				else if (size == MAIN_ROAD_SIZE
 						&& (i == (((size + 1) / 2) + 1) / 2 || i == (size + 1)
 								/ 2 + (((size + 1) / 2) + 1) / 2 - 1))
 					setTile(tempx, tempy, 105, Direction.RIGHT);
@@ -510,6 +504,7 @@ public class Map {
 					setTile(tempx, tempy, 101, Direction.UP);
 				tempx++;
 			}
+			
 			tempy--;
 			tempx -= size;
 		}
