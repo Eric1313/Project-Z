@@ -41,7 +41,7 @@ public class Game implements Runnable {
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
 
-		display.getFrame().createBufferStrategy(3);
+		display.getFrame().createBufferStrategy(4);
 
 		// // Load all of the items
 		// BufferedReader itemReader = null;
