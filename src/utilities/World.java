@@ -1,16 +1,19 @@
 package utilities;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.io.FileNotFoundException;
 
-import entities.Player;
 import main.Game;
 import map.Map;
+import entities.Player;
 
 public class World {
 	private Game game;
 	private Player player;
+	private AffineTransform originalTransform;
 	private short[][] tileId;
 	private Map map;
 	private int width;
@@ -46,12 +49,79 @@ public class World {
 	}
 
 	public void render(Graphics g) {
+		Graphics2D g2D = (Graphics2D) g;
+		if (originalTransform == null) {
+			originalTransform = g2D.getTransform();
+		}
 		int tileY = 0;
 		int tileX = 0;
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
-				int id = (tileId[i][j] & 0xFFF);
+				g2D.setTransform(originalTransform);
+				// if ((tileId[i][j] & (1 << 12)) != 0
+				// && ((tileId[i][j] & (1 << 13)) != 0)) {
+				// g2D.rotate(
+				// Math.toRadians(180),
+				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+				// .getxOffset()) + xChange + 13,
+				// (int) (tileY * Assets.TILE_HEIGHT
+				// - game.getCamera().getyOffset() + yChange + 14));
+				// }
+				//
+				// else if ((tileId[i][j] & (1 << 12)) != 0) {
+				// g2D.rotate(
+				// Math.toRadians(90),
+				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+				// .getxOffset()) + xChange + 13,
+				// (int) (tileY * Assets.TILE_HEIGHT
+				// - game.getCamera().getyOffset() + yChange + 14));
+				// } else if ((tileId[i][j] & (1 << 13)) != 0) {
+				// g2D.rotate(
+				// Math.toRadians(-90),
+				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+				// .getxOffset()) + xChange + 13,
+				// (int) (tileY * Assets.TILE_HEIGHT
+				// - game.getCamera().getyOffset() + yChange + 14));
+				// }
+				// int id = (tileId[i][j] & 0xFFF);
+				//
+				// g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+				// .getxOffset()) + xChange - 3, (int) (tileY
+				// * Assets.TILE_HEIGHT
+				// - game.getCamera().getyOffset() + yChange - 2),
+				// null);
+				// tileX++;
+				// }
+				// tileY++;
+				if ((tileId[j][i] & (1 << 12)) != 0
+						&& ((tileId[j][i] & (1 << 13)) != 0)) {
+					g2D.rotate(
+							Math.toRadians(180),
+							(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+									.getxOffset()) + xChange + 13,
+							(int) (tileY * Assets.TILE_HEIGHT
+									- game.getCamera().getyOffset() + yChange + 14));
+				}
+
+				else if ((tileId[j][i] & (1 << 12)) != 0) {
+					g2D.rotate(
+							Math.toRadians(90),
+							(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+									.getxOffset()) + xChange + 13,
+							(int) (tileY * Assets.TILE_HEIGHT
+									- game.getCamera().getyOffset() + yChange + 14));
+				} else if ((tileId[j][i] & (1 << 13)) != 0) {
+					g2D.rotate(
+							Math.toRadians(-90),
+							(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+									.getxOffset()) + xChange + 13,
+							(int) (tileY * Assets.TILE_HEIGHT
+									- game.getCamera().getyOffset() + yChange + 14));
+				}
+				int id = (tileId[j][i] & 0xFFF);
+
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
 						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
 								.getxOffset()) + xChange - 3, (int) (tileY
@@ -103,6 +173,7 @@ public class World {
 		}
 		previousXOffset = game.getCamera().getxOffset();
 		previousYOffset = game.getCamera().getyOffset();
+		g2D.setTransform(originalTransform);
 		player.render(g);
 	}
 
