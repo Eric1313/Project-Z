@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Cursor;
 import java.awt.image.BufferedImage;
 
 import utilities.Assets;
@@ -35,14 +36,14 @@ public class Game implements Runnable {
 
 		// Loads the display
 		display = new Display(title, width, height);
-		
+
 		camera = new GameCamera(this, 0, 0);
 		// Sets the state of the game
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
 
 		display.getFrame().createBufferStrategy(4);
-
+		display.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		// // Load all of the items
 		// BufferedReader itemReader = null;
 		//

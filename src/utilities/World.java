@@ -1,5 +1,6 @@
 package utilities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -175,10 +176,12 @@ public class World {
 		previousYOffset = game.getCamera().getyOffset();
 		g2D.setTransform(originalTransform);
 		double angle = Math.atan2(
-				((player.getPosition().getY()) + 16- game.getCamera().getyOffset())
+				((player.getPosition().getY()) + 16 - game.getCamera()
+						.getyOffset())
 						- game.getDisplay().getMouseHandler()
 								.getMouseLocation().getY(), (player
-						.getPosition().getX() + 16- game.getCamera().getxOffset())
+						.getPosition().getX() + 16 - game.getCamera()
+						.getxOffset())
 						- game.getDisplay().getMouseHandler()
 								.getMouseLocation().getX())
 				- Math.PI / 2;
@@ -186,6 +189,10 @@ public class World {
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
 		player.render(g);
+		g2D.setTransform(originalTransform);
+		g2D.setColor(new Color (0f,0f,0f,.8f));
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
 	}
 
 	public int getWidth() {
