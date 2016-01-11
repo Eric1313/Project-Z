@@ -28,6 +28,7 @@ public class Map {
 
 	// Generation
 	final int MAX_AREA = 3025;
+	final int MAX_ROOM_AREA = 100;
 	final int MIN_SIDE_LENGTH = 55;
 	final int MIN_BUILD_LENGTH = 15;
 	final int BUILD_LENGTH_RANGE = 5;
@@ -40,6 +41,9 @@ public class Map {
 	// Map storage
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
+	
+	private ArrayList<Point> buildingStarts;
+	private ArrayList<Point> buildingEnds;
 
 	/**
 	 * Creates map object
@@ -56,6 +60,9 @@ public class Map {
 		this.height = height;
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
+		
+		buildingStarts = new ArrayList<Point>();
+		buildingEnds = new ArrayList<Point>();
 
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
@@ -70,6 +77,11 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
+		
+		for (int i = 0; i < buildingStarts.size(); i++){
+			generateRooms(buildingStarts.get(i), buildingEnds.get(i));
+		}
+			
 	}
 
 	public void generatePlaza(Point start, Point end) {
@@ -368,8 +380,59 @@ public class Map {
 					*/
 			}
 		}
+		
+		buildingStarts.add(new Point((int)start.getX()+2, (int)start.getY()+2));
+		buildingEnds.add(new Point((int)end.getX()-2, (int)end.getY()-2));
+		
 	}
 
+	public void generateRooms(Point start, Point end){
+		
+		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() )));
+		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
+		//Generate middle wall
+		int direction = (int)Math.ceil((Math.random()*2));
+		
+		if (boxWidth*boxHeight > MAX_ROOM_AREA){
+			
+			if (boxWidth <= boxHeight){
+				Point midPoint = new Point((int)start.getX(), (int)start.getY()+(boxHeight/2));
+				generateWall(midPoint, new Point((int)end.getX(), (int)start.getY()+(boxHeight/2)));
+				generateRooms(start, new Point((int)end.getX(), (int)start.getY()+(boxHeight/2)));
+				generateRooms(midPoint, end);
+			}
+			else if (boxWidth > boxHeight){
+				Point midPoint = new Point((int)start.getX()+boxWidth/2, (int)start.getY());
+				generateWall(midPoint, new Point((int)start.getX()+boxWidth/2, (int)end.getY()));
+				generateRooms(start, new Point((int)start.getX()+boxWidth/2, (int)end.getY()));
+				generateRooms(midPoint, end);
+			}
+		}
+		
+	}
+	
+	public void generateWall(Point start, Point end){
+		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() )));
+		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
+		int doorLocation;
+		if (boxHeight > boxWidth){
+			doorLocation = (int)start.getY()+boxHeight/3;
+			for (int i = (int) start.getY(); i <= end.getY(); i++){
+				if (i != doorLocation)
+					setTile((int)start.getX(), i, 203, Direction.UP, true);	
+			}
+				
+		}
+		else{
+			doorLocation = (int)start.getX()+boxWidth/3;
+		for (int i = (int) start.getX(); i <= end.getX(); i++) {
+			if (i != doorLocation)
+				setTile(i, (int)start.getY(), 203, Direction.UP,true);
+		}
+		}
+	}
+	
+	
 	/**
 	 * Generates side road off of main road
 	 * 
