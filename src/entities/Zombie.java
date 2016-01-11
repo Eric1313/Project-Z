@@ -1,8 +1,13 @@
 package entities;
 
+import Mover;
+import Path;
+
 import java.awt.Point;
 import java.awt.Graphics;
+import java.util.Stack;
 
+import AStarPathFinder.Node;
 import main.Game;
 
 /**
@@ -17,6 +22,7 @@ import main.Game;
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
 	private boolean hastarget=false;
+	private Stack path;
 	
 	public Zombie(boolean solid, Game game) {
 		super(solid, game);
@@ -29,6 +35,7 @@ public class Zombie extends Mob {
 	}
 	
 
+	
 //	@Override
 //	public void render(Graphics g) {
 //	}

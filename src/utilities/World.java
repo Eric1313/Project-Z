@@ -206,4 +206,8 @@ public class World {
 	public Player getPlayer() {
 		return player;
 	}
+
+	public Map getMap() {
+		// TODO Auto-generated method stub
+return map;	}
 }

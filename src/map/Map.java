@@ -18,6 +18,8 @@ import enums.MapObjectType;
  * @version 1.0
  */
 public class Map {
+	
+
 	public enum Direction {
 		UP, DOWN, RIGHT, LEFT
 	};
@@ -808,5 +810,32 @@ public class Map {
 
 	public short[][] getMap() {
 		return tileMap;
+	}
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int width) {
+		this.width = width;
 	}
 }
