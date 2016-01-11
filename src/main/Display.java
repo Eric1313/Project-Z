@@ -42,7 +42,8 @@ public class Display {
 		frame.setResizable(false);
 		
 		mouseHandler = new MouseHandler();
-		frame.addMouseListener(mouseHandler);
+		frame.addMouseMotionListener(mouseHandler);
+		//gamePanel.addMouseListener(mouseHandler);
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 		frame.add(panelContainer);
