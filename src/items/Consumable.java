@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import enums.ItemEffect;
@@ -50,5 +51,10 @@ public class Consumable extends Item {
 
 	public void setDurability(int durability) {
 		this.durability = durability;
+	}
+	
+	@Override
+	public void render(Graphics g) {
+		// TODO
 	}
 }
