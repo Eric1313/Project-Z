@@ -59,7 +59,7 @@ public class World {
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
-				if (j >= Assets.TILE_WIDTH || i >= Assets.TILE_HEIGHT) {
+				if (j >= tileId[0].length || i >= tileId.length) {
 					break;
 				}
 				g2D.setTransform(originalTransform);
