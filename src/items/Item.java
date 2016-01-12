@@ -142,9 +142,18 @@ public abstract class Item {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0],
-				(int) (this.getPosition().x - this.game.getCamera()
-						.getxOffset()), (int) (this.getPosition().y - this.game
-						.getCamera().getyOffset()), null);
+		if (this.state == ItemState.DROPPED) {
+			g.drawImage(this.getImages()[0],
+					(int) (this.getPosition().x - this.game.getCamera()
+							.getxOffset()), (int) (this.getPosition().y - this.game
+							.getCamera().getyOffset()), null);
+		} else {
+			// TODO: Draw the item in the inventory
+			g.drawImage(this.getImages()[1], 500, 600, null);
+			if (this.state == ItemState.INHAND) {
+				g.drawImage(this.getImages()[2], 0, 0, null);
+			}
+		}
+		
 	}
 }

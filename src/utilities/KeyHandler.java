@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener {
 	private boolean down;
 	private boolean left;
 	private boolean right;
+	private boolean shift;
 
 	@Override
 	public void keyPressed(KeyEvent key) {
@@ -34,6 +35,9 @@ public class KeyHandler implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_D) {
 			right = pressed;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+			shift = pressed;
+		}
 	}
 
 	@Override
@@ -57,5 +61,8 @@ public class KeyHandler implements KeyListener {
 	public boolean isRight() {
 		return right;
 	}
-
+	
+	public boolean isShift() {
+		return shift;
+	}
 }

@@ -9,5 +9,5 @@ package enums;
  * @version 1.0
  */
 public enum ItemState {
-	DROPPED, INVENTORY; 
+	DROPPED, INVENTORY, INHAND; 
 }

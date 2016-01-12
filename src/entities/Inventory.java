@@ -1,5 +1,6 @@
 package entities;
 
+import enums.ItemState;
 import items.Item;
 
 /**
@@ -63,6 +64,7 @@ public class Inventory {
 	public int add(Item item) {
 		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
 			if (this.items[itemNo] == null) {
+				item.setState(ItemState.INVENTORY);
 				this.items[itemNo] = item;
 				return itemNo;
 			}
@@ -105,6 +107,7 @@ public class Inventory {
 		} else {
 			Item removedItem = this.items[itemNo];
 			this.items[itemNo] = null;
+			removedItem.setState(ItemState.DROPPED);
 			return removedItem;
 		}
 	}

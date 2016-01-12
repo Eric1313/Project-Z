@@ -15,16 +15,21 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 30;
+	public static final int MOVEMENT_SPEED = 2;
+	public static final int MAX_STAMINA = 500;
+	
+	private int stamina;
 
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
+		this.stamina = Player.MAX_STAMINA;
 	}
 
 	public Player(Point position, boolean solid, Game game) {
 		super(32, 32, position, solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
+		this.stamina = Player.MAX_STAMINA;
 	}
 
 	@Override
@@ -38,6 +43,14 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		if (this.game.getDisplay().getKeyHandler().isShift() && this.stamina > 4) {
+			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
+			this.stamina -= 5;
+		} else {
+			this.movementSpeed = Player.MOVEMENT_SPEED;
+			this.stamina++;
+		}
+		
 		if (this.game.getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
 					this.getPosition().getY() - this.movementSpeed);
