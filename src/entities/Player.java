@@ -16,7 +16,8 @@ import main.Game;
  */
 public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
-	public static final int MAX_STAMINA = 500;
+	public static final int MAX_STAMINA = 300;
+	public static final int SPRINT_COST = 3;
 
 	private int stamina;
 
@@ -44,9 +45,9 @@ public class Player extends Mob {
 	// Reorganize code; looks messy
 	public void update() {
 		if (this.game.getDisplay().getKeyHandler().isShift()
-				&& this.stamina > 4) {
+				&& this.stamina > Player.SPRINT_COST) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
-			this.stamina -= 5;
+			this.stamina -= Player.SPRINT_COST;
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
 			if (this.stamina < Player.MAX_STAMINA) {
