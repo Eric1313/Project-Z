@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import enums.ItemEffect;
 import enums.ItemState;
 
@@ -22,8 +23,8 @@ public class Throwable extends Item {
 
 	public Throwable(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			ItemEffect effect, int range, int areaOfEffect) {
-		super(itemID, name, rarity, effectValue, state, images, clips);
+			Game game, ItemEffect effect, int range, int areaOfEffect) {
+		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
@@ -53,7 +54,7 @@ public class Throwable extends Item {
 	public void setAreaOfEffect(int areaOfEffect) {
 		this.areaOfEffect = areaOfEffect;
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
 		// TODO
