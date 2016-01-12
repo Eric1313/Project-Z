@@ -17,7 +17,7 @@ import main.Game;
 public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
 	public static final int MAX_STAMINA = 500;
-	
+
 	private int stamina;
 
 	public Player(boolean solid, Game game) {
@@ -43,14 +43,17 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
-		if (this.game.getDisplay().getKeyHandler().isShift() && this.stamina > 4) {
+		if (this.game.getDisplay().getKeyHandler().isShift()
+				&& this.stamina > 4) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= 5;
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
-			this.stamina++;
+			if (this.stamina < Player.MAX_STAMINA) {
+				this.stamina++;
+			}
 		}
-		
+
 		if (this.game.getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(),
 					this.getPosition().getY() - this.movementSpeed);
@@ -71,7 +74,7 @@ public class Player extends Mob {
 		}
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
-		else if (position.getX()> Assets.TILE_WIDTH
+		else if (position.getX() > Assets.TILE_WIDTH
 				* (game.getDisplay().getGamePanel().getWorld().getWidth() - 1))
 			position.setLocation(
 					Assets.TILE_WIDTH
