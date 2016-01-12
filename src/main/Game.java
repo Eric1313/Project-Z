@@ -19,6 +19,7 @@ import enums.ItemState;
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
+	private BufferedImage[][] zombie;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -42,6 +43,7 @@ public class Game implements Runnable {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
+//		zombie - new Assets()
 
 		// Loads the display
 		display = new Display(title, width, height);

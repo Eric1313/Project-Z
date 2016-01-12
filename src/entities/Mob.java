@@ -16,10 +16,10 @@ import main.Game;
  */
 public abstract class Mob extends Entity {
 	protected int movementSpeed;
-	private boolean up;
-	private boolean down;
-	private boolean left;
-	private boolean right;
+	protected boolean up;
+	protected boolean down;
+	protected boolean left;
+	protected boolean right;
 
 
 	public Mob(boolean solid, Game game) {
