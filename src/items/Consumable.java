@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import enums.ItemEffect;
 import enums.ItemState;
 
@@ -21,8 +22,8 @@ public class Consumable extends Item {
 
 	public Consumable(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			ItemEffect effect, int durability) {
-		super(itemID, name, rarity, effectValue, state, images, clips);
+			Game game, ItemEffect effect, int durability) {
+		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
 		this.effectValue = effectValue;
@@ -52,7 +53,7 @@ public class Consumable extends Item {
 	public void setDurability(int durability) {
 		this.durability = durability;
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
 		// TODO
