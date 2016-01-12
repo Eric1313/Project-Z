@@ -123,6 +123,7 @@ public class Zombie extends Mob {
 	public void setPath(Stack<Node> path) {
 		this.path = path;
 	}
+	
 
 	@Override
 	public void render(Graphics g) {
