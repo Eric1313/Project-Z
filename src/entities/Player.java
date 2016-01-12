@@ -15,7 +15,7 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
+	public static final int MOVEMENT_SPEED = 30;
 	public static final int MAX_STAMINA = 300;
 	public static final int SPRINT_COST = 3;
 

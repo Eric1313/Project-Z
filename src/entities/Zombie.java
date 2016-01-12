@@ -39,6 +39,29 @@ public class Zombie extends Mob {
 		super(32, 32, position, solid, game);
 		this.movementSpeed = Zombie.MOVEMENT_SPEED;
 	}
+	
+	public void update()
+	{
+		if (this.up) {
+			this.getPosition().setLocation(this.getPosition().getX(),
+					this.getPosition().getY() - this.movementSpeed);
+		}
+		if (this.down) {
+			this.getPosition().setLocation(this.getPosition().getX(),
+					this.getPosition().getY() + this.movementSpeed);
+		}
+		if (this.left) {
+			this.getPosition().setLocation(
+					this.getPosition().getX() - this.movementSpeed,
+					this.getPosition().getY());
+		}
+		if (this.right) {
+			this.getPosition().setLocation(
+					this.getPosition().getX() + this.movementSpeed,
+					this.getPosition().getY());
+		}
+	}
+
 	public void findPath(int enemyX, int enemyY, int targetX, int targetY) {
 		openList.clear();
 		closedList.clear();
