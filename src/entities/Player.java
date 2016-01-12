@@ -58,19 +58,20 @@ public class Player extends Mob {
 		}
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
-		else if (position.getX() > Assets.TILE_WIDTH
+		else if (position.getX()> Assets.TILE_WIDTH
 				* (game.getDisplay().getGamePanel().getWorld().getWidth() - 1))
 			position.setLocation(
 					Assets.TILE_WIDTH
 							* (game.getDisplay().getGamePanel().getWorld()
-									.getWidth() - 1) - 32, position.getY());
+									.getWidth() - 1), position.getY());
 		if (position.getY() < 0)
 			position.setLocation(position.getX(), 0);
-		else if (position.getX() > Assets.TILE_HEIGHT
-				* (game.getDisplay().getGamePanel().getWorld().getHeight()-1))
-			position.setLocation(Assets.TILE_HEIGHT
-					* (game.getDisplay().getGamePanel().getWorld().getHeight()-1)
-					- 32, position.getY());
+		else if (position.getY() + 32 > Assets.TILE_HEIGHT
+				* (game.getDisplay().getGamePanel().getWorld().getHeight() - 1))
+			position.setLocation(position.getX(),
+					Assets.TILE_HEIGHT
+							* (game.getDisplay().getGamePanel().getWorld()
+									.getHeight() - 1) - 32);
 
 		this.game.getCamera().centerOnEntity(this);
 	}

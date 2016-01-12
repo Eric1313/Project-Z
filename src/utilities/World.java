@@ -59,43 +59,10 @@ public class World {
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
+				if (j >= Assets.TILE_WIDTH || i >= Assets.TILE_HEIGHT) {
+					break;
+				}
 				g2D.setTransform(originalTransform);
-				// if ((tileId[i][j] & (1 << 12)) != 0
-				// && ((tileId[i][j] & (1 << 13)) != 0)) {
-				// g2D.rotate(
-				// Math.toRadians(180),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// }
-				//
-				// else if ((tileId[i][j] & (1 << 12)) != 0) {
-				// g2D.rotate(
-				// Math.toRadians(90),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// } else if ((tileId[i][j] & (1 << 13)) != 0) {
-				// g2D.rotate(
-				// Math.toRadians(-90),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// }
-				// int id = (tileId[i][j] & 0xFFF);
-				//
-				// g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange - 3, (int) (tileY
-				// * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange - 2),
-				// null);
-				// tileX++;
-				// }
-				// tileY++;
 				if ((tileId[j][i] & (1 << 12)) != 0
 						&& ((tileId[j][i] & (1 << 13)) != 0)) {
 					g2D.rotate(
@@ -190,7 +157,7 @@ public class World {
 				.getY() - game.getCamera().getyOffset() + 16);
 		player.render(g);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color (0f,0f,0f,.8f));
+		g2D.setColor(new Color(0f, 0f, 0f, .8f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
 	}
@@ -209,5 +176,6 @@ public class World {
 
 	public Map getMap() {
 		// TODO Auto-generated method stub
-return map;	}
+		return map;
+	}
 }
