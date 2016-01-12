@@ -18,6 +18,8 @@ import enums.MapObjectType;
  * @version 1.0
  */
 public class Map {
+	
+
 	public enum Direction {
 		UP, DOWN, RIGHT, LEFT
 	};
@@ -42,8 +44,6 @@ public class Map {
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
 	
-	private ArrayList<Point> buildingStarts;
-	private ArrayList<Point> buildingEnds;
 
 	/**
 	 * Creates map object
@@ -61,8 +61,6 @@ public class Map {
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
 		
-		buildingStarts = new ArrayList<Point>();
-		buildingEnds = new ArrayList<Point>();
 
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
@@ -77,13 +75,14 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
-		
-		for (int i = 0; i < buildingStarts.size(); i++){
-			generateRooms(buildingStarts.get(i), buildingEnds.get(i));
-		}
-			
 	}
 
+	/**
+	 * Generates buildings within the plaza
+	 * 
+	 * @param start
+	 * @param end
+	 */
 	public void generatePlaza(Point start, Point end) {
 
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
@@ -169,6 +168,8 @@ public class Map {
 					new Point((int) buildingStarts[3].getX(),
 							(int) buildingEnds[3].getY()), -1, MAX_BUILD_PER_SIDE,
 					cornerHeights[3] - MIN_BUILD_LENGTH);
+		
+		generateTrees(buildingStarts[0], buildingEnds[3]);
 	}
 
 	/**
@@ -324,6 +325,12 @@ public class Map {
 		}
 	}
 
+	/**
+	 * Generates the building and its tiles
+	 * 
+	 * @param start
+	 * @param end
+	 */
 	public void generateBuilding(Point start, Point end) {
 
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
@@ -381,11 +388,16 @@ public class Map {
 			}
 		}
 		
-		buildingStarts.add(new Point((int)start.getX()+2, (int)start.getY()+2));
-		buildingEnds.add(new Point((int)end.getX()-2, (int)end.getY()-2));
+		generateRooms(new Point((int)start.getX()+2, (int)start.getY()+2), new Point((int)end.getX()-2, (int)end.getY()-2));
 		
 	}
 
+	/**
+	 * Generates Rooms in each building
+	 * 
+	 * @param start
+	 * @param end
+	 */
 	public void generateRooms(Point start, Point end){
 		
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() )));
@@ -411,6 +423,40 @@ public class Map {
 		
 	}
 	
+	/**
+	 * Generates trees in the empty plaza areas
+	 * 
+	 * @param start
+	 * @param end
+	 */
+	public void generateTrees(Point start, Point end){
+		
+		for (int i = (int) start.getX(); i <= end.getX(); i++) {
+			for (int j = (int) start.getY(); j <= end.getY(); j++) {
+				if ((tileMap[i][j] & 0xFFF) == 108){
+					if (Math.random() > 0.85 && (tileMap[i-1][j]  & 0xFFF) == 108 && (tileMap[i-1][j-1]  & 0xFFF)== 108  && (tileMap[i-1][j+1] & 0xFFF) == 108 && (tileMap[i][j-1]  & 0xFFF)== 108 && (tileMap[i][j+1] & 0xFFF) == 108 && (tileMap[i+1][j- 1] & 0xFFF) == 108 && (tileMap[i+1][j]  & 0xFFF)== 108 && (tileMap[i+1][j+1] & 0xFFF) == 108){
+						setTile(i,j,204,Direction.UP,true);
+						setTile(i-1,j-1,205,Direction.UP,false);
+						setTile(i-1,j,205,Direction.UP,false);
+						setTile(i-1,j+1,205,Direction.UP,false);
+						setTile(i,j-1,205,Direction.UP,false);
+						setTile(i,j+1,205,Direction.UP,false);
+						setTile(i+1,j-1,205,Direction.UP,false);
+						setTile(i+1,j,205,Direction.UP,false);
+						setTile(i+1,j+1,205,Direction.UP,false);
+					}
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * Sets the tiles for the walls inside the room
+	 * 
+	 * @param start
+	 * @param end
+	 */
 	public void generateWall(Point start, Point end){
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() )));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
@@ -764,5 +810,32 @@ public class Map {
 
 	public short[][] getMap() {
 		return tileMap;
+	}
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int width) {
+		this.width = width;
 	}
 }
