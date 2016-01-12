@@ -1,17 +1,25 @@
 package main;
 
+import items.*;
+import items.Throwable;
+
+import java.applet.AudioClip;
 import java.awt.Cursor;
 import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
 
 import utilities.Assets;
 import utilities.GameCamera;
 import enums.GameState;
 import enums.GameState.State;
+import enums.ItemEffect;
+import enums.ItemState;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
-	// private ArrayList<Item> items;
+	private ArrayList<Item> items;
 
 	private Display display;
 	private String title;
@@ -49,80 +57,99 @@ public class Game implements Runnable {
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
 		// Load all of the items
-		// BufferedReader itemReader = null;
-		//
-		// try {
-		// itemReader = new BufferedReader(new InputStreamReader(
-		// new FileInputStream("res/items.txt")));
-		// } catch (FileNotFoundException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
-		//
-		// int totalItems = 0;
-		// int[] noOfItems = new int[4];
-		//
-		// for (int itemType = 0; itemType < 4; itemType++) {
-		// try {
-		// // TODO Handle invalid input
-		// totalItems += Integer.parseInt(itemReader.readLine());
-		// noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
-		// } catch (IOException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
-		// }
-		//
-		// this.items = new ArrayList<Item>();
-		//
-		// for (int itemType = 0; itemType < 4; itemType++) {
-		// for (int item = 0; item < noOfItems[itemType]; item++) {
-		// try {
-		// String currentItem = itemReader.readLine();
-		//
-		// String[] stats = currentItem.split("~");
-		// String[] imageLinks = stats[4].split("`");
-		// String[] soundLinks = stats[5].split("`");
-		//
-		// BufferedImage[] images = new BufferedImage[imageLinks.length];
-		// AudioClip[] sounds = new AudioClip[soundLinks.length];
-		//
-		// for (int image = 0; image < imageLinks.length; image++) {
-		// // images[image]
-		// }
-		//
-		// switch (itemType) {
-		// case 0:
-		// this.items.add(new Consumable(Integer
-		// .parseInt(stats[0]), stats[1], Integer
-		// .parseInt(stats[2]),
-		// Integer.parseInt(stats[3]), ItemState.DROPPED,
-		// images, sounds, ItemEffect.values()[Integer
-		// .parseInt(stats[6])], Integer
-		// .parseInt(stats[7])));
-		// break;
-		// case 1:
-		// break;
-		// case 2:
-		// break;
-		// case 3:
-		// break;
-		// }
-		//
-		// } catch (IOException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
-		//
-		// }
-		// }
-		//
-		// try {
-		// itemReader.close();
-		// } catch (IOException e) {
-		// // TODO Make catch block more useful
-		// e.printStackTrace();
-		// }
+		BufferedReader itemReader = null;
+
+		try {
+			itemReader = new BufferedReader(new InputStreamReader(
+					new FileInputStream("res/items.txt")));
+		} catch (FileNotFoundException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
+
+		int totalItems = 0;
+		int[] noOfItems = new int[4];
+
+		for (int itemType = 0; itemType < 4; itemType++) {
+			try {
+				// TODO Handle invalid input
+				noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
+				totalItems += noOfItems[itemType];
+			} catch (IOException e) {
+				// TODO Make catch block more useful
+				e.printStackTrace();
+			}
+		}
+
+		this.items = new ArrayList<Item>();
+
+		for (int itemType = 0; itemType < 4; itemType++) {
+			for (int item = 0; item < noOfItems[itemType]; item++) {
+				try {
+					String currentItem = itemReader.readLine();
+
+					String[] stats = currentItem.split("~");
+					BufferedImage[] images = new Assets(stats[4]).getSprites()[0];
+					String[] soundLinks = stats[5].split("`");
+
+					AudioClip[] sounds = new AudioClip[soundLinks.length];
+					
+					// TODO: Add AudioClips to the sounds array
+
+					switch (itemType) {
+					case 0:
+						this.items
+								.add(new Consumable(Integer.parseInt(stats[0]),
+										stats[1], Integer.parseInt(stats[2]),
+										Integer.parseInt(stats[3]),
+										ItemState.DROPPED, images, sounds,
+										this, ItemEffect.values()[Integer
+												.parseInt(stats[6])], Integer
+												.parseInt(stats[7])));
+						break;
+					case 1:
+						this.items.add(new Melee(Integer.parseInt(stats[0]),
+								stats[1], Integer.parseInt(stats[2]), Integer
+										.parseInt(stats[3]), ItemState.DROPPED,
+								images, sounds, this, Integer
+										.parseInt(stats[6]), Integer
+										.parseInt(stats[7])));
+						break;
+					case 2:
+						this.items.add(new Firearm(Integer.parseInt(stats[0]),
+								stats[1], Integer.parseInt(stats[2]), Integer
+										.parseInt(stats[3]), ItemState.DROPPED,
+								images, sounds, this, Integer
+										.parseInt(stats[6]), Integer
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8])));
+						break;
+					case 3:
+						this.items
+						.add(new Throwable(Integer.parseInt(stats[0]),
+								stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]),
+								ItemState.DROPPED, images, sounds,
+								this, ItemEffect.values()[Integer
+										.parseInt(stats[6])], Integer
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8])));
+					}
+
+				} catch (IOException e) {
+					// TODO Make catch block more useful
+					e.printStackTrace();
+				}
+
+			}
+		}
+
+		try {
+			itemReader.close();
+		} catch (IOException e) {
+			// TODO Make catch block more useful
+			e.printStackTrace();
+		}
 	}
 
 	private void update() {
