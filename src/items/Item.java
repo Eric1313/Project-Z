@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import enums.ItemState;
 
 /**
@@ -46,9 +47,12 @@ public abstract class Item {
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
 
+	protected Game game;
+
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips) {
+			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;
@@ -57,6 +61,8 @@ public abstract class Item {
 
 		this.images = images;
 		this.clips = clips;
+
+		this.game = game;
 	}
 
 	public int getItemID() {
@@ -131,5 +137,14 @@ public abstract class Item {
 		this.clips = clips;
 	}
 
-	public abstract void render(Graphics g);
+	public Game getGame() {
+		return this.game;
+	}
+
+	public void render(Graphics g) {
+		g.drawImage(this.getImages()[0],
+				(int) (this.getPosition().x - this.game.getCamera()
+						.getxOffset()), (int) (this.getPosition().y - this.game
+						.getCamera().getyOffset()), null);
+	}
 }

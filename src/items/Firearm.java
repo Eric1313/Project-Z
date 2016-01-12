@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import enums.ItemState;
 
 /**
@@ -21,8 +22,8 @@ public class Firearm extends Item {
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			int ammoID, int rateOfFire, int maxAmmo) {
-		super(itemID, name, rarity, effectValue, state, images, clips);
+			Game game, int ammoID, int rateOfFire, int maxAmmo) {
+		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
@@ -52,7 +53,7 @@ public class Firearm extends Item {
 	public void setMaxAmmo(int maxAmmo) {
 		this.maxAmmo = maxAmmo;
 	}
-	
+
 	@Override
 	public void render(Graphics g) {
 		// TODO

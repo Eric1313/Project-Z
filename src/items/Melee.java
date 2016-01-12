@@ -4,6 +4,7 @@ import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.Game;
 import enums.ItemState;
 
 /**
@@ -20,8 +21,8 @@ public class Melee extends Item {
 
 	public Melee(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			int swingSpeed, int rechargeTime) {
-		super(itemID, name, rarity, effectValue, state, images, clips);
+			Game game, int swingSpeed, int rechargeTime) {
+		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
