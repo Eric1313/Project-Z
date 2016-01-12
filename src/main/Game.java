@@ -51,7 +51,7 @@ public class Game implements Runnable {
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
 
-		display.getFrame().createBufferStrategy(4);
+		display.getFrame().createBufferStrategy(2);
 
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));

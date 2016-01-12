@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 import java.io.FileNotFoundException;
 
 import main.Game;
@@ -14,6 +15,7 @@ import entities.Player;
 public class World {
 	private Game game;
 	private Player player;
+	Arc2D flashLight;
 	private AffineTransform originalTransform;
 	private short[][] tileId;
 	private Map map;
@@ -59,43 +61,10 @@ public class World {
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
+				if (j >= tileId[0].length || i >= tileId.length) {
+					break;
+				}
 				g2D.setTransform(originalTransform);
-				// if ((tileId[i][j] & (1 << 12)) != 0
-				// && ((tileId[i][j] & (1 << 13)) != 0)) {
-				// g2D.rotate(
-				// Math.toRadians(180),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// }
-				//
-				// else if ((tileId[i][j] & (1 << 12)) != 0) {
-				// g2D.rotate(
-				// Math.toRadians(90),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// } else if ((tileId[i][j] & (1 << 13)) != 0) {
-				// g2D.rotate(
-				// Math.toRadians(-90),
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange + 13,
-				// (int) (tileY * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange + 14));
-				// }
-				// int id = (tileId[i][j] & 0xFFF);
-				//
-				// g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-				// (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				// .getxOffset()) + xChange - 3, (int) (tileY
-				// * Assets.TILE_HEIGHT
-				// - game.getCamera().getyOffset() + yChange - 2),
-				// null);
-				// tileX++;
-				// }
-				// tileY++;
 				if ((tileId[j][i] & (1 << 12)) != 0
 						&& ((tileId[j][i] & (1 << 13)) != 0)) {
 					g2D.rotate(
@@ -189,10 +158,17 @@ public class World {
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
 		player.render(g);
+		flashLight = new Arc2D.Double(player.getPosition().getX() - 184, player
+				.getPosition().getY() - 190, 400, 400, 40, 140, Arc2D.PIE);
+		g2D.clip(flashLight);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color (0f,0f,0f,.8f));
+		g2D.setColor(new Color(0f, 0f, 0f, .8f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
+		g2D.fill(flashLight);
+		g2D.draw(flashLight);
+		g2D.setClip(null);
+
 	}
 
 	public int getWidth() {
@@ -209,5 +185,6 @@ public class World {
 
 	public Map getMap() {
 		// TODO Auto-generated method stub
-return map;	}
+		return map;
+	}
 }
