@@ -369,11 +369,15 @@ public class Map {
 		//Creates the doors
 		if (direction == Direction.UP || direction == Direction.DOWN){
 			setTile((int)start.getX()+boxWidth/3, (int) start.getY()+1, 201, Direction.UP, false);
+			setTile((int)start.getX()+boxWidth/3-1, (int) start.getY()+1, 201, Direction.UP, false);
 			setTile((int)end.getX()-boxWidth/3, (int) end.getY()-1, 201, Direction.UP, false);
+			setTile((int)end.getX()-boxWidth/3+1, (int) end.getY()-1, 201, Direction.UP, false);
 		}
 		else if (direction == Direction.RIGHT || direction == Direction.LEFT){
 			setTile((int)end.getX()-1, (int) start.getY()+boxHeight/3, 201, Direction.UP, false);
+			setTile((int)end.getX()-1, (int) start.getY()+boxHeight/3-1, 201, Direction.UP, false);
 			setTile((int)start.getX()+1, (int) end.getY()-boxHeight/3, 201, Direction.UP, false);
+			setTile((int)start.getX()+1, (int) end.getY()-boxHeight/3+1, 201, Direction.UP, false);
 		}
 		
 		generateRooms(new Point((int)start.getX()+2, (int)start.getY()+2), new Point((int)end.getX()-2, (int)end.getY()-2));
@@ -452,7 +456,7 @@ public class Map {
 		if (boxHeight > boxWidth){
 			doorLocation = (int)start.getY()+boxHeight/3;
 			for (int i = (int) start.getY(); i <= end.getY(); i++){
-				if (i != doorLocation)
+				if (i != doorLocation && i != doorLocation -1)
 					setTile((int)start.getX(), i, 204, Direction.UP, true);	
 			}
 				
@@ -460,7 +464,7 @@ public class Map {
 		else{
 			doorLocation = (int)start.getX()+boxWidth/3;
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
-			if (i != doorLocation)
+			if (i != doorLocation && i != doorLocation -1)
 				setTile(i, (int)start.getY(), 204, Direction.UP,true);
 		}
 		}
