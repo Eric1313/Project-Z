@@ -67,14 +67,12 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 
-		int totalItems = 0;
 		int[] noOfItems = new int[4];
 
 		for (int itemType = 0; itemType < 4; itemType++) {
 			try {
 				// TODO Handle invalid input
 				noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
-				totalItems += noOfItems[itemType];
 			} catch (IOException e) {
 				// TODO Make catch block more useful
 				e.printStackTrace();
@@ -93,7 +91,7 @@ public class Game implements Runnable {
 					String[] soundLinks = stats[5].split("`");
 
 					AudioClip[] sounds = new AudioClip[soundLinks.length];
-					
+
 					// TODO: Add AudioClips to the sounds array
 
 					switch (itemType) {
@@ -126,14 +124,14 @@ public class Game implements Runnable {
 						break;
 					case 3:
 						this.items
-						.add(new Throwable(Integer.parseInt(stats[0]),
-								stats[1], Integer.parseInt(stats[2]),
-								Integer.parseInt(stats[3]),
-								ItemState.DROPPED, images, sounds,
-								this, ItemEffect.values()[Integer
-										.parseInt(stats[6])], Integer
-										.parseInt(stats[7]), Integer
-										.parseInt(stats[8])));
+								.add(new Throwable(Integer.parseInt(stats[0]),
+										stats[1], Integer.parseInt(stats[2]),
+										Integer.parseInt(stats[3]),
+										ItemState.DROPPED, images, sounds,
+										this, ItemEffect.values()[Integer
+												.parseInt(stats[6])], Integer
+												.parseInt(stats[7]), Integer
+												.parseInt(stats[8])));
 					}
 
 				} catch (IOException e) {
