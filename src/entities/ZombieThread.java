@@ -13,24 +13,24 @@ import main.Game;
  * @since 1.0
  * @version 1.0
  */
-public class ZombieThread implements Runnable {
-
-	Game game;
-	ArrayList<Zombie> zombies;
-
-	public ZombieThread(Game game) {
-		this.game = game;
-	}
-
-	@Override
-	public void run() {
-		while (true) {
-
-			for (Iterator<Zombie> iterator = zombies.iterator(); iterator
-					.hasNext();) {
-				Zombie zombie = iterator.next();
-				if()
-			}
-		}
-	}
-}
+//public class ZombieThread implements Runnable {
+//
+//	Game game;
+//	ArrayList<Zombie> zombies;
+//
+//	public ZombieThread(Game game) {
+//		this.game = game;
+//	}
+//
+//	@Override
+//	public void run() {
+//		while (true) {
+//
+//			for (Iterator<Zombie> iterator = zombies.iterator(); iterator
+//					.hasNext();) {
+//				Zombie zombie = iterator.next();
+//				if()
+//			}
+//		}
+//	}
+//}
