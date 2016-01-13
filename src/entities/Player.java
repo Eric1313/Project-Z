@@ -91,5 +91,15 @@ public class Player extends Mob {
 									.getHeight() - 1) - 32);
 
 		this.game.getCamera().centerOnEntity(this);
+
+		if (this.game.getDisplay().getKeyHandler().isUp()
+				|| this.game.getDisplay().getKeyHandler().isDown()
+				|| this.game.getDisplay().getKeyHandler().isRight()
+				|| this.game.getDisplay().getKeyHandler().isLeft()) {
+			if (this.game.getDisplay().getKeyHandler().isShift())
+				makeNoise(250);
+			else
+				makeNoise(100);
+		}
 	}
 }

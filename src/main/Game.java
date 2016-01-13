@@ -43,6 +43,7 @@ public class Game implements Runnable {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
+		zombie= new Assets("res/img/zombie.png").getSprites();
 //		zombie - new Assets()
 
 		// Loads the display
@@ -246,6 +247,21 @@ public class Game implements Runnable {
 
 	public GameCamera getCamera() {
 		return camera;
+	}
+	
+
+	/**
+	 * @return the zombie
+	 */
+	public BufferedImage[][] getZombie() {
+		return zombie;
+	}
+
+	/**
+	 * @param zombie the zombie to set
+	 */
+	public void setZombie(BufferedImage[][] zombie) {
+		this.zombie = zombie;
 	}
 
 	public static void main(String[] args) {
