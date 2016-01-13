@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import main.Game;
 import entities.MapObject;
+import entities.Zombie;
 import enums.MapObjectType;
 
 /**
@@ -43,6 +45,7 @@ public class Map {
 	// Map storage
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
+	private Game game;
 	
 
 	/**
@@ -55,9 +58,10 @@ public class Map {
 	 * @throws FileNotFoundException
 	 *             temp file writer
 	 */
-	public Map(int height, int width) throws FileNotFoundException {
+	public Map(int height, int width, Game game) throws FileNotFoundException {
 		this.width = width;
 		this.height = height;
+		this.game=game;
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
 		
@@ -75,6 +79,23 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
+		spawnZombies(200);
+		
+	}
+	
+	public void spawnZombies(int noZombies)
+	{
+		for (int i=0;i<noZombies;i++)
+		{
+			int randomX=(int) (Math.random()*width);
+			int randomY=(int) (Math.random()*height);
+			while((tileMap[randomX][randomY]& (1 << 14)) != 0 )
+			{
+				randomX=(int) (Math.random()*width);
+				randomY=(int) (Math.random()*height);
+			}
+			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game));
+		}
 	}
 
 	/**

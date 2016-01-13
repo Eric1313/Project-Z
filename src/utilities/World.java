@@ -7,10 +7,13 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 
 import main.Game;
+import map.Chunk;
 import map.Map;
 import entities.Player;
+import entities.Zombie;
 
 public class World {
 	private Game game;
@@ -18,6 +21,7 @@ public class World {
 	Arc2D flashLight;
 	private AffineTransform originalTransform;
 	private short[][] tileId;
+	private Chunk[][] chunkMap; 
 	private Map map;
 	private int width;
 	private int height;
@@ -36,7 +40,8 @@ public class World {
 		this.height = height;
 		this.game = game;
 		try {
-			map = new Map(width, height);
+			map = new Map(width, height,this.game);
+			chunkMap=map.getChunkMap();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -169,6 +174,20 @@ public class World {
 		g2D.draw(flashLight);
 		g2D.setClip(null);
 
+		int chunkX =  Math.max((int)player.getPosition().getX() / 512,2);
+		int chunkY =  Math.max((int)player.getPosition().getY() / 512,2);
+		for (int x = chunkX - 2; x < chunkX + 3; x++) {
+			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
+						.hasNext();) {
+					Zombie zombie = iterator.next();
+					zombie.render(g);
+				}
+			}
+		}
+		
+		
+		
 	}
 
 	public int getWidth() {

@@ -79,7 +79,7 @@ public class Chunk {
 	/**
 	 * @param zombies the zombies to set
 	 */
-	public void setZombies(ArrayList<Zombie> zombies) {
-		this.zombies = zombies;
+	public void addZombie(Zombie zombie) {
+		zombies.add(zombie);
 	}
 }

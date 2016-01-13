@@ -12,7 +12,6 @@ import java.util.Stack;
 
 import main.Game;
 
-
 /**
  * Subclass of Mob that represents a zombie enemy in Project Z.
  * 
@@ -28,14 +27,12 @@ public class Zombie extends Mob {
 	private Stack<Node> path;
 	private short[][] map;
 	private boolean[][] tiles;
-	private Node[][]graph;
+	private Node[][] graph;
 	PriorityQueue<Node> openList = new PriorityQueue<Node>();
 	ArrayList<Node> closedList = new ArrayList<Node>();
-	
 
-	public Zombie( Point position,
-			int health, BufferedImage[] images,
-			AudioClip[] clips, Game game){
+	public Zombie(Point position, int health, BufferedImage[] images,
+			AudioClip[] clips, Game game) {
 		super(32, 32, position, 0, health, true, images, clips, game);
 		this.map = game.getDisplay().getGamePanel().getWorld().getMap()
 				.getMap();
@@ -48,13 +45,11 @@ public class Zombie extends Mob {
 				tiles[x][y] = ((map[x][y] & (1 << 14)) != 0);
 				graph[x][y] = new Node(y, x);
 			}
-		}	
-		hasTarget=false;
+		}
+		hasTarget = false;
 	}
 
-	
-	public void update()
-	{
+	public void update() {
 		if (this.up) {
 			this.getPosition().setLocation(this.getPosition().getX(),
 					this.getPosition().getY() - this.movementSpeed);
@@ -73,8 +68,7 @@ public class Zombie extends Mob {
 					this.getPosition().getX() + this.movementSpeed,
 					this.getPosition().getY());
 		}
-		if(this.right||this.left||this.up||this.down)
-		{
+		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100);
 		}
 	}
@@ -119,7 +113,8 @@ public class Zombie extends Mob {
 						// if one of the two collisions is blocked then skip
 						// this case
 						if (tiles[current.locationY + i][current.locationX] == true
-								|| tiles[current.locationY][current.locationX + j] == true)
+								|| tiles[current.locationY][current.locationX
+										+ j] == true)
 							continue;
 					}
 					// in closed List, then skip
@@ -158,23 +153,20 @@ public class Zombie extends Mob {
 	}
 
 	/**
-	 * @param path the path to set
+	 * @param path
+	 *            the path to set
 	 */
 	public void setPath(Stack<Node> path) {
 		this.path = path;
 	}
-	
 
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		g.drawImage(this.getImages()[0], (int) (this.getPosition().x),
+				(int) (this.getPosition().y), null);
 	}
-	
-	
 
-	
-//	@Override
-//	public void render(Graphics g) {
-//	}
+	// @Override
+	// public void render(Graphics g) {
+	// }
 }
