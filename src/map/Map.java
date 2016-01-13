@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import main.Game;
 import entities.MapObject;
+import entities.Zombie;
 import enums.MapObjectType;
 
 /**
@@ -43,6 +45,7 @@ public class Map {
 	// Map storage
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
+	private Game game;
 	
 
 	/**
@@ -55,13 +58,12 @@ public class Map {
 	 * @throws FileNotFoundException
 	 *             temp file writer
 	 */
-	public Map(int height, int width) throws FileNotFoundException {
+	public Map(int height, int width, Game game) throws FileNotFoundException {
 		this.width = width;
 		this.height = height;
+		this.game=game;
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
-		
-
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
 				chunkMap[i][j] = new Chunk();
@@ -75,6 +77,21 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
+		spawnZombies(1);
+		
+	}
+	
+	public void spawnZombies(int noZombies)
+	{
+		for (int i=0;i<noZombies;i++)
+		{
+//			int randomX=(int) (Math.random()*(width-5));
+//			int randomY=(int) (Math.random()*(height-5));
+//			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
+//			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
+			chunkMap[1][1].addZombie(new Zombie(new Point(43, 52), 100, game.getZombie()[0], null, this.game, this));
+
+		}
 	}
 
 	/**
@@ -339,65 +356,45 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY())
 					setTile(i, j, 200, Direction.UP,false);
+				/*
 				else if (i == start.getX()+1 || i == end.getX()-1 || j == start.getY()+1 || j == end.getY()-1)
 					setTile(i, j, 202, Direction.UP,true);
 				else
 					setTile(i, j, 201, Direction.UP,false);
-				/*
-				else if (i == start.getX() + 1 && j == start.getY() + 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 180, 1000, true, null,
-							null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 201, Direction.UP);
-				} else if (i == start.getX() + 1 && j == end.getY() - 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 270, 1000, true, null,
-							null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 201, Direction.UP);
-				} else if (i == end.getX() - 1 && j == start.getY() + 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 90, 1000, true, null,
-							null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 201, Direction.UP);
-				} else if (i == end.getX() - 1 && j == end.getY() - 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 0, 1000, true, null,
-							null, null, MapObjectType.WALL_CORNER));
-					setTile(i, j, 201, Direction.UP);
-				} else if (i == start.getX() + 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 270, 1000, true, null,
-							null, null, MapObjectType.WALL));
-					setTile(i, j, 201, Direction.UP);
-				} else if (j == start.getY() + 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 0, 1000, true, null,
-							null, null, MapObjectType.WALL));
-					setTile(i, j, 201, Direction.UP);
-				} else if (i == end.getX() - 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 90, 1000, true, null,
-							null, null, MapObjectType.WALL));
-					setTile(i, j, 201, Direction.UP);
-				} else if (j == end.getY() - 1) {
-					chunkMap[i / 16][j / 16].add(new MapObject(32, 32,
-							new Point(i * 32, j * 32), 180, 1000, true, null,
-							null, null, MapObjectType.WALL));
-					setTile(i, j, 201, Direction.UP);
-				} else
-					setTile(i, j, 201, Direction.UP);
 					*/
+				else if (i == start.getX() + 1 && j == start.getY() + 1) {
+					setTile(i, j, 203, Direction.DOWN,true);
+				} else if (i == start.getX() + 1 && j == end.getY() - 1) {
+					setTile(i, j, 203, Direction.RIGHT,true);
+				} else if (i == end.getX() - 1 && j == start.getY() + 1) {
+					setTile(i, j, 203, Direction.LEFT,true);
+				} else if (i == end.getX() - 1 && j == end.getY() - 1) {
+					setTile(i, j, 203, Direction.UP,true);
+				} else if (i == start.getX() + 1) {
+					setTile(i, j, 202, Direction.DOWN,true);
+				} else if (j == start.getY() + 1) {
+					setTile(i, j, 202, Direction.LEFT,true);
+				} else if (i == end.getX() - 1) {
+					setTile(i, j, 202, Direction.UP,true);
+				} else if (j == end.getY() - 1) {
+					setTile(i, j, 202, Direction.RIGHT,true);
+				} else
+					setTile(i, j, 201, Direction.UP,false);
 			}
 		}
 		
 		//Creates the doors
 		if (direction == Direction.UP || direction == Direction.DOWN){
 			setTile((int)start.getX()+boxWidth/3, (int) start.getY()+1, 201, Direction.UP, false);
+			setTile((int)start.getX()+boxWidth/3-1, (int) start.getY()+1, 201, Direction.UP, false);
 			setTile((int)end.getX()-boxWidth/3, (int) end.getY()-1, 201, Direction.UP, false);
+			setTile((int)end.getX()-boxWidth/3+1, (int) end.getY()-1, 201, Direction.UP, false);
 		}
 		else if (direction == Direction.RIGHT || direction == Direction.LEFT){
 			setTile((int)end.getX()-1, (int) start.getY()+boxHeight/3, 201, Direction.UP, false);
+			setTile((int)end.getX()-1, (int) start.getY()+boxHeight/3-1, 201, Direction.UP, false);
 			setTile((int)start.getX()+1, (int) end.getY()-boxHeight/3, 201, Direction.UP, false);
+			setTile((int)start.getX()+1, (int) end.getY()-boxHeight/3+1, 201, Direction.UP, false);
 		}
 		
 		generateRooms(new Point((int)start.getX()+2, (int)start.getY()+2), new Point((int)end.getX()-2, (int)end.getY()-2));
@@ -476,16 +473,16 @@ public class Map {
 		if (boxHeight > boxWidth){
 			doorLocation = (int)start.getY()+boxHeight/3;
 			for (int i = (int) start.getY(); i <= end.getY(); i++){
-				if (i != doorLocation)
-					setTile((int)start.getX(), i, 203, Direction.UP, true);	
+				if (i != doorLocation && i != doorLocation -1)
+					setTile((int)start.getX(), i, 204, Direction.UP, true);	
 			}
 				
 		}
 		else{
 			doorLocation = (int)start.getX()+boxWidth/3;
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
-			if (i != doorLocation)
-				setTile(i, (int)start.getY(), 203, Direction.UP,true);
+			if (i != doorLocation && i != doorLocation -1)
+				setTile(i, (int)start.getY(), 204, Direction.UP,true);
 		}
 		}
 	}
@@ -849,5 +846,19 @@ public class Map {
 	 */
 	public void setWidth(int width) {
 		this.width = width;
+	}
+
+	/**
+	 * @return the chunkMap
+	 */
+	public Chunk[][] getChunkMap() {
+		return chunkMap;
+	}
+
+	/**
+	 * @param chunkMap the chunkMap to set
+	 */
+	public void setChunkMap(Chunk[][] chunkMap) {
+		this.chunkMap = chunkMap;
 	}
 }

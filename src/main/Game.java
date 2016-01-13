@@ -19,6 +19,7 @@ import enums.ItemState;
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
+	private BufferedImage[][] zombie;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -42,6 +43,8 @@ public class Game implements Runnable {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
+		zombie= new Assets("res/img/zombie.png").getSprites();
+//		zombie - new Assets()
 
 		// Loads the display
 		display = new Display(title, width, height);
@@ -244,6 +247,21 @@ public class Game implements Runnable {
 
 	public GameCamera getCamera() {
 		return camera;
+	}
+	
+
+	/**
+	 * @return the zombie
+	 */
+	public BufferedImage[][] getZombie() {
+		return zombie;
+	}
+
+	/**
+	 * @param zombie the zombie to set
+	 */
+	public void setZombie(BufferedImage[][] zombie) {
+		this.zombie = zombie;
 	}
 
 	public static void main(String[] args) {

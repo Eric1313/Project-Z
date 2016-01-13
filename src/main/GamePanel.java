@@ -9,6 +9,7 @@ import utilities.World;
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private World world;
+	private HUD hud;
 	private boolean setUp;
 
 	public GamePanel() {
@@ -20,15 +21,19 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		if (setUp) {
 			world.render(g);
+			hud.render(g);
 		}
 	}
 
 	public void update() {
 		world.getPlayer().update();
+		//Update Zombies
 	}
 
 	public void setup(Game game) {
 		world = new World(game, 1600, 1600);
+		
+		hud = new HUD(world.getPlayer());
 
 		setUp = true;
 	}

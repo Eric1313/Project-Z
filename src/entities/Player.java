@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import utilities.Assets;
 import main.Game;
+import map.Map;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -15,7 +16,7 @@ import main.Game;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
+	public static final int MOVEMENT_SPEED = 30;
 	public static final int MAX_STAMINA = 300;
 	public static final int SPRINT_COST = 3;
 
@@ -27,8 +28,8 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 	}
 
-	public Player(Point position, boolean solid, Game game) {
-		super(32, 32, position, solid, game);
+	public Player(Point position, boolean solid, Game game, Map map) {
+		super(32, 32, position, solid, game,map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 	}
@@ -91,5 +92,15 @@ public class Player extends Mob {
 									.getHeight() - 1) - 32);
 
 		this.game.getCamera().centerOnEntity(this);
+
+		if (this.game.getDisplay().getKeyHandler().isUp()
+				|| this.game.getDisplay().getKeyHandler().isDown()
+				|| this.game.getDisplay().getKeyHandler().isRight()
+				|| this.game.getDisplay().getKeyHandler().isLeft()) {
+			if (this.game.getDisplay().getKeyHandler().isShift())
+				makeNoise(250);
+			else
+				makeNoise(100);
+		}
 	}
 }
