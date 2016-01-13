@@ -1,6 +1,7 @@
 package entities;
 
 import utilities.Node;
+import map.Map;
 
 import java.applet.AudioClip;
 import java.awt.Point;
@@ -11,6 +12,7 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 import main.Game;
+import map.Chunk;
 
 /**
  * Subclass of Mob that represents a zombie enemy in Project Z.
@@ -32,17 +34,16 @@ public class Zombie extends Mob {
 	ArrayList<Node> closedList = new ArrayList<Node>();
 
 	public Zombie(Point position, int health, BufferedImage[] images,
-			AudioClip[] clips, Game game) {
-		super(32, 32, position, 0, health, true, images, clips, game);
-		this.map = game.getDisplay().getGamePanel().getWorld().getMap()
-				.getMap();
-		this.tiles = new boolean[game.getDisplay().getGamePanel().getWorld()
-				.getMap().getWidth()][game.getDisplay().getGamePanel()
-				.getWorld().getMap().getHeight()];
+			AudioClip[] clips, Game game, Map map) {
+		super(32, 32, position, 0, health, true, images, clips, game, map);
+		this.map=map.getMap();
+				
+		this.tiles = new boolean[map.getWidth()][map.getHeight()];
+		this.graph = new Node [map.getWidth()][map.getHeight()];
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 
-				tiles[x][y] = ((map[x][y] & (1 << 14)) != 0);
+				tiles[x][y] = ((this.map[x][y] & (1 << 14)) != 0);
 				graph[x][y] = new Node(y, x);
 			}
 		}

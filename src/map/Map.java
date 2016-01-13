@@ -64,8 +64,6 @@ public class Map {
 		this.game=game;
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
-		
-
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
 				chunkMap[i][j] = new Chunk();
@@ -87,14 +85,10 @@ public class Map {
 	{
 		for (int i=0;i<noZombies;i++)
 		{
-			int randomX=(int) (Math.random()*width);
-			int randomY=(int) (Math.random()*height);
-			while((tileMap[randomX][randomY]& (1 << 14)) != 0 )
-			{
-				randomX=(int) (Math.random()*width);
-				randomY=(int) (Math.random()*height);
-			}
-			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game));
+			int randomX=(int) (Math.random()*(width-5));
+			int randomY=(int) (Math.random()*(height-5));
+			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
+			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
 		}
 	}
 

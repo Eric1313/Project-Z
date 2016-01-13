@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import utilities.Assets;
 import main.Game;
+import map.Map;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -27,8 +28,8 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 	}
 
-	public Player(Point position, boolean solid, Game game) {
-		super(32, 32, position, solid, game);
+	public Player(Point position, boolean solid, Game game, Map map) {
+		super(32, 32, position, solid, game,map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 	}

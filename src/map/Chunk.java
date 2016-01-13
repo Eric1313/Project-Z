@@ -16,6 +16,7 @@ public class Chunk {
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
 		this.passibleEntities = new ArrayList<Entity>();
+		this.zombies= new ArrayList<Zombie>();
 		this.items = new ArrayList<Item>();
 	}
 
