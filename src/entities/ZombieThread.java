@@ -40,7 +40,7 @@ public class ZombieThread implements Runnable {
 			for (int y = 0; y < map[0].length; y++) {
 
 				map[x][y] = ((tiles[x][y] & (1 << 14)) != 0);
-				graph[x][y] = new Node(y, x);
+//				graph[x][y] = new Node(y, x);
 			}
 		}
 	}

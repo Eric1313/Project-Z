@@ -15,6 +15,8 @@ import map.Chunk;
 import map.Map;
 import entities.Player;
 import entities.Zombie;
+import items.Item;
+import entities.ZombieThread;
 
 public class World {
 	private Game game;
@@ -205,6 +207,11 @@ public class World {
 						.iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					zombie.render(g);
+				}
+				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
+						.iterator(); iterator.hasNext();) {
+					Item item = iterator.next();
+					item.render(g);
 				}
 			}
 		}
