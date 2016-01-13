@@ -116,6 +116,9 @@ public class World {
 							(int) (tileY * Assets.TILE_HEIGHT
 									- game.getCamera().getyOffset() + yChange + 14));
 				}
+				if ((tileId[j][i] & (1 << 14)) != 0) {
+					// SOLID
+				}
 				int id = (tileId[j][i] & 0xFFF);
 
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
