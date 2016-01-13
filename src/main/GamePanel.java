@@ -10,6 +10,7 @@ import utilities.World;
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private World world;
+	private HUD hud;
 	private boolean setUp;
 
 	public GamePanel() {
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel {
 		super.paintComponent(g);
 		if (setUp) {
 			world.render(g);
+			hud.render(g);
 		}
 	}
 
@@ -31,9 +33,7 @@ public class GamePanel extends JPanel {
 
 	public void setup(Game game) {
 		world = new World(game, 1600, 1600);
-		ZombieThread zombies=new ZombieThread(game);
-		 Thread thread = new Thread(zombies);
-		 thread.start();
+		hud = new HUD(world.getPlayer());
 		setUp = true;
 	}
 

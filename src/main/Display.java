@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,6 +33,7 @@ public class Display {
 		panelContainer.setLayout(cardLayout);
 
 		gamePanel = new GamePanel();
+		gamePanel.setBackground(Color.BLACK);
 		panelContainer.add(gamePanel, "Game");
 		cardLayout.show(panelContainer, "Game");
 
@@ -40,14 +42,14 @@ public class Display {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
-		
+
 		mouseHandler = new MouseHandler();
 		frame.addMouseMotionListener(mouseHandler);
-		//gamePanel.addMouseListener(mouseHandler);
+		// gamePanel.addMouseListener(mouseHandler);
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 		frame.add(panelContainer);
-		
+
 		frame.setVisible(true);
 	}
 
