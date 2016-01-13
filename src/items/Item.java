@@ -1,8 +1,11 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import main.Game;
@@ -43,6 +46,7 @@ public abstract class Item {
 	protected Point position;
 	protected boolean held = false;
 	protected ItemState state;
+	protected boolean hover = true;
 
 	protected BufferedImage[] images;
 	protected AudioClip[] clips;
@@ -50,9 +54,8 @@ public abstract class Item {
 	protected Game game;
 
 	// TODO Add effectValue?
-	public Item(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			Game game) {
+	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
+			AudioClip[] clips, Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;
@@ -143,10 +146,32 @@ public abstract class Item {
 
 	public void render(Graphics g) {
 		if (this.state == ItemState.DROPPED) {
-			g.drawImage(this.getImages()[0],
-					(int) (this.getPosition().x - this.game.getCamera()
-							.getxOffset()), (int) (this.getPosition().y - this.game
-							.getCamera().getyOffset()), null);
+			g.drawImage(this.getImages()[0], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
+					(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
+			if (this.hover) {
+				switch (this.rarity) {
+				case 1:
+					g.setColor(Color.GREEN);
+					break;
+				case 2:
+					g.setColor(Color.ORANGE);
+					break;
+				case 3:
+					g.setColor(Color.YELLOW);
+					break;
+				case 4:
+					g.setColor(Color.BLUE);
+					break;
+				case 5:
+					g.setColor(Color.GRAY);
+					break;
+				}
+				
+				FontMetrics fm = g.getFontMetrics();
+				
+				g.drawString(this.name, (int) (this.getPosition().x - this.game.getCamera().getxOffset()) - fm.stringWidth(this.name) / 4,
+						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 15);
+			}
 		} else {
 			// TODO: Draw the item in the inventory
 			g.drawImage(this.getImages()[1], 500, 600, null);
@@ -154,6 +179,5 @@ public abstract class Item {
 				g.drawImage(this.getImages()[2], 0, 0, null);
 			}
 		}
-		
 	}
 }

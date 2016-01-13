@@ -53,9 +53,4 @@ public class Consumable extends Item {
 	public void setDurability(int durability) {
 		this.durability = durability;
 	}
-
-	@Override
-	public void render(Graphics g) {
-		// TODO
-	}
 }
