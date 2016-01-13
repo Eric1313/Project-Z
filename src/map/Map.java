@@ -472,17 +472,32 @@ public class Map {
 		int doorLocation;
 		if (boxHeight > boxWidth){
 			doorLocation = (int)start.getY()+boxHeight/3;
+			setTile((int)start.getX(), (int)start.getY()-1, 204,Direction.LEFT,true);
+			setTile((int)start.getX(), (int)end.getY()+1, 204,Direction.RIGHT,true);
 			for (int i = (int) start.getY(); i <= end.getY(); i++){
 				if (i != doorLocation && i != doorLocation -1)
-					setTile((int)start.getX(), i, 204, Direction.UP, true);	
+					setTile((int)start.getX(), i, 205, Direction.UP, true);	
 			}
 				
 		}
 		else{
 			doorLocation = (int)start.getX()+boxWidth/3;
+				
+			if ((tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 205)
+				setTile((int)start.getX()-1, (int)start.getY(),204, Direction.DOWN,true);
+			else
+				setTile((int)start.getX(), (int)start.getY(),206, Direction.DOWN,true);
+				
+			
+			if ((tileMap[(int)end.getX()][(int)start.getY()] & 0xFFF) != 205)
+				setTile((int)end.getX()+1, (int)start.getY(),204, Direction.UP,true);
+			else
+				setTile((int)end.getX(), (int)start.getY(),206, Direction.UP,true);
+		
+		
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			if (i != doorLocation && i != doorLocation -1)
-				setTile(i, (int)start.getY(), 204, Direction.UP,true);
+				setTile(i, (int)start.getY(), 205, Direction.RIGHT,true);
 		}
 		}
 	}
