@@ -18,7 +18,7 @@ import entities.Zombie;
 public class World {
 	private Game game;
 	private Player player;
-	private Arc2D flashLight;
+	Arc2D flashLight;
 	private AffineTransform originalTransform;
 	private short[][] tileId;
 	private Chunk[][] chunkMap; 
@@ -48,13 +48,12 @@ public class World {
 		tileId = map.getMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
-		player = new Player(new Point(0, 0), true, game);
+		player = new Player(new Point(0, 0), true, game,map);
 		player.setImages(game.getPlayer()[0]);
 		this.row = 0;
 		this.col = 0;
 		this.yChange = 0;
 		this.xChange = 0;
-		flashLight = new Arc2D.Double();
 	}
 
 	public void render(Graphics g) {
@@ -164,15 +163,15 @@ public class World {
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
 		player.render(g);
-		flashLight.setArcByCenter(player.getPosition().getX(), player
-				.getPosition().getY(), 500, 80, 80, Arc2D.PIE);
+		flashLight = new Arc2D.Double(player.getPosition().getX() - 184, player
+				.getPosition().getY() - 190, 400, 400, 40, 140, Arc2D.PIE);
 		g2D.clip(flashLight);
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .8f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
-//		g2D.fill(flashLight);
-//		g2D.draw(flashLight);
+		g2D.fill(flashLight);
+		g2D.draw(flashLight);
 		g2D.setClip(null);
 
 		int chunkX =  Math.max((int)player.getPosition().getX() / 512,2);
