@@ -179,10 +179,10 @@ public class World {
 				.getPosition().getY() - game.getCamera().getyOffset() + 16,
 				new Color(0, 0, 0, 0),
 				(float) (player.getPosition().getX()
-						- game.getCamera().getxOffset() + 400 * (float) Math
+						- game.getCamera().getxOffset() + 350 * (float) Math
 						.cos(Math.toRadians(90))),
 				(float) (player.getPosition().getY()
-						- game.getCamera().getyOffset() - 400 * (float) Math
+						- game.getCamera().getyOffset() - 350 * (float) Math
 						.sin(Math.toRadians(90))), new Color(0, 0, 0));
 		g2D.setPaint(gp);
 		g2D.fill(flashLight);
