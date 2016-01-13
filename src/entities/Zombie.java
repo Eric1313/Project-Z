@@ -26,7 +26,7 @@ import map.Chunk;
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
 	private boolean hasTarget;
-	private Stack<Node> path=new Stack<Node>();
+	private Stack<Node> path = new Stack<Node>();
 	private short[][] map;
 	private boolean[][] tiles;
 	private Node[][] graph;
@@ -36,10 +36,10 @@ public class Zombie extends Mob {
 	public Zombie(Point position, int health, BufferedImage[] images,
 			AudioClip[] clips, Game game, Map map) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
-		this.map=map.getMap();
-				
+		this.map = map.getMap();
+
 		this.tiles = new boolean[map.getWidth()][map.getHeight()];
-		this.graph = new Node [map.getWidth()][map.getHeight()];
+		this.graph = new Node[map.getWidth()][map.getHeight()];
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 
@@ -163,8 +163,8 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.position.x),
-				(int) (this.position.y), null);
+		g.drawImage(this.getImages()[0], (int) (this.position.x-game.getCamera().getxOffset()),
+				(int) (this.position.y-game.getCamera().getyOffset()), null);
 	}
 
 	// @Override
