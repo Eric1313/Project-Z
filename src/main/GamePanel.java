@@ -27,6 +27,7 @@ public class GamePanel extends JPanel {
 
 	public void update() {
 		world.getPlayer().update();
+		//Update Zombies
 	}
 
 	public void setup(Game game) {
