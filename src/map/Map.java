@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import main.Game;
 import entities.MapObject;
 import entities.Zombie;
+import entities.ZombieThread;
 import enums.MapObjectType;
 
 /**
@@ -77,18 +78,21 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
-		spawnZombies(200);
+		spawnZombies(1);
 		
 	}
 	
 	public void spawnZombies(int noZombies)
 	{
+
 		for (int i=0;i<noZombies;i++)
 		{
-			int randomX=(int) (Math.random()*(width-5));
-			int randomY=(int) (Math.random()*(height-5));
-			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
-			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
+//			int randomX=(int) (Math.random()*(width-5));
+//			int randomY=(int) (Math.random()*(height-5));
+//			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
+//			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
+			chunkMap[1][1].addZombie(new Zombie(new Point(43, 52), 100, game.getZombie()[0], null, this.game, this));
+
 		}
 	}
 

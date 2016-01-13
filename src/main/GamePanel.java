@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import entities.ZombieThread;
 import utilities.World;
 
 public class GamePanel extends JPanel {
@@ -30,7 +31,9 @@ public class GamePanel extends JPanel {
 
 	public void setup(Game game) {
 		world = new World(game, 1600, 1600);
-
+		ZombieThread zombies=new ZombieThread(game);
+		 Thread thread = new Thread(zombies);
+		 thread.start();
 		setUp = true;
 	}
 

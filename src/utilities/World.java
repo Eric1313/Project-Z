@@ -14,6 +14,7 @@ import map.Chunk;
 import map.Map;
 import entities.Player;
 import entities.Zombie;
+import entities.ZombieThread;
 
 public class World {
 	private Game game;
