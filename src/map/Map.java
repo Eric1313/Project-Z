@@ -830,4 +830,18 @@ public class Map {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
+	/**
+	 * @return the chunkMap
+	 */
+	public Chunk[][] getChunkMap() {
+		return chunkMap;
+	}
+
+	/**
+	 * @param chunkMap the chunkMap to set
+	 */
+	public void setChunkMap(Chunk[][] chunkMap) {
+		this.chunkMap = chunkMap;
+	}
 }

@@ -2,8 +2,10 @@ package entities;
 
 import utilities.Node;
 
+import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -22,23 +24,34 @@ import main.Game;
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
-	private boolean hastarget=false;
+	private boolean hasTarget;
 	private Stack<Node> path;
-	private short[][] tiles;
-	private boolean[][] map;
+	private short[][] map;
+	private boolean[][] tiles;
 	private Node[][]graph;
 	PriorityQueue<Node> openList = new PriorityQueue<Node>();
 	ArrayList<Node> closedList = new ArrayList<Node>();
 	
-	public Zombie(boolean solid, Game game) {
-		super(solid, game);
-		this.movementSpeed = Zombie.MOVEMENT_SPEED;
+
+	public Zombie( Point position,
+			int health, BufferedImage[] images,
+			AudioClip[] clips, Game game){
+		super(32, 32, position, 0, health, true, images, clips, game);
+		this.map = game.getDisplay().getGamePanel().getWorld().getMap()
+				.getMap();
+		this.tiles = new boolean[game.getDisplay().getGamePanel().getWorld()
+				.getMap().getWidth()][game.getDisplay().getGamePanel()
+				.getWorld().getMap().getHeight()];
+		for (int x = 0; x < tiles.length; x++) {
+			for (int y = 0; y < tiles[0].length; y++) {
+
+				tiles[x][y] = ((map[x][y] & (1 << 14)) != 0);
+				graph[x][y] = new Node(y, x);
+			}
+		}	
+		hasTarget=false;
 	}
 
-	public Zombie(Point position, boolean solid, Game game) {
-		super(32, 32, position, solid, game);
-		this.movementSpeed = Zombie.MOVEMENT_SPEED;
-	}
 	
 	public void update()
 	{
@@ -60,13 +73,17 @@ public class Zombie extends Mob {
 					this.getPosition().getX() + this.movementSpeed,
 					this.getPosition().getY());
 		}
+		if(this.right||this.left||this.up||this.down)
+		{
+			makeNoise(100);
+		}
 	}
 
-	public void findPath(int enemyX, int enemyY, int targetX, int targetY) {
+	public void findPath(int startX, int startY, int targetX, int targetY) {
 		openList.clear();
 		closedList.clear();
 		path.clear();
-		Node start = graph[enemyY][enemyX];
+		Node start = graph[startY][startX];
 		Node current = start;
 		openList.add(start);
 		while (!openList.isEmpty()) {
@@ -84,10 +101,10 @@ public class Zombie extends Mob {
 				for (int j = -1; j < 2; j++) {
 					// out of bounds
 					if (current.locationY + i < 0 || current.locationX + j < 0
-							|| current.locationY + i > map.length - 1
-							|| current.locationX + j > map[0].length - 1)
+							|| current.locationY + i > tiles.length - 1
+							|| current.locationX + j > tiles[0].length - 1)
 						continue;
-					if (map[current.locationY + i][current.locationX + j] == true)
+					if (tiles[current.locationY + i][current.locationX + j] == true)
 						continue;
 
 					if (i == 0 && j == 0)
@@ -101,8 +118,8 @@ public class Zombie extends Mob {
 						add = 14;
 						// if one of the two collisions is blocked then skip
 						// this case
-						if (map[current.locationY + i][current.locationX] == true
-								|| map[current.locationY][current.locationX + j] == true)
+						if (tiles[current.locationY + i][current.locationX] == true
+								|| tiles[current.locationY][current.locationX + j] == true)
 							continue;
 					}
 					// in closed List, then skip

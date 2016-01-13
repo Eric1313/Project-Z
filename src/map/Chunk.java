@@ -5,11 +5,13 @@ import items.Item;
 import java.util.ArrayList;
 
 import entities.Entity;
+import entities.Zombie;
 
 public class Chunk {
 	private ArrayList<Entity> solidEntities;
 	private ArrayList<Entity> passibleEntities;
 	private ArrayList<Item> items;
+	private ArrayList<Zombie>zombies;
 
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
@@ -65,5 +67,19 @@ public class Chunk {
 
 	public void setPassibleEntities(ArrayList<Entity> passibleEntities) {
 		this.passibleEntities = passibleEntities;
+	}
+
+	/**
+	 * @return the zombies
+	 */
+	public ArrayList<Zombie> getZombies() {
+		return zombies;
+	}
+
+	/**
+	 * @param zombies the zombies to set
+	 */
+	public void setZombies(ArrayList<Zombie> zombies) {
+		this.zombies = zombies;
 	}
 }
