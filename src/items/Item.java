@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.Game;
@@ -148,7 +148,9 @@ public abstract class Item {
 		if (this.state == ItemState.DROPPED) {
 			g.drawImage(this.getImages()[0], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
 					(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
-			if (this.hover) {
+			if (new Rectangle((int) (this.getPosition().x - this.game.getCamera().getxOffset()),
+					(int) (this.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
+							.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
 				switch (this.rarity) {
 				case 1:
 					g.setColor(Color.GREEN);
@@ -166,10 +168,12 @@ public abstract class Item {
 					g.setColor(Color.GRAY);
 					break;
 				}
-				
+
 				FontMetrics fm = g.getFontMetrics();
-				
-				g.drawString(this.name, (int) (this.getPosition().x - this.game.getCamera().getxOffset()) - fm.stringWidth(this.name) / 4,
+
+				g.drawString(this.name,
+						(int) (this.getPosition().x - this.game.getCamera().getxOffset())
+								- fm.stringWidth(this.name) / 4,
 						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 15);
 			}
 		} else {
