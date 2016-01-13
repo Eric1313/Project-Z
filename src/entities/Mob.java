@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import main.Game;
 import map.Chunk;
+import map.Map;
 
 /**
  * Abstract Mob class for all mobs in Project Z.<br>
@@ -29,20 +30,20 @@ public abstract class Mob extends Entity {
 
 	public Mob(boolean solid, Game game) {
 		super(solid, game);
-		this.chunkMap=game.getDisplay().getGamePanel().getWorld().getMap().getChunkMap();
 	}
 
-	public Mob(int height, int width, Point position, boolean solid, Game game) {
+	public Mob(int height, int width, Point position, boolean solid, Game game,Map map) {
 		super(height, width, position, solid, game);
-		this.chunkMap=game.getDisplay().getGamePanel().getWorld().getMap().getChunkMap();
+		this.chunkMap=map.getChunkMap();
 	}
 
 	public Mob(int height, int width, Point position, double rotation,
 			int health, boolean solid, BufferedImage[] images,
-			AudioClip[] clips, Game game) {
+			AudioClip[] clips, Game game,Map map) {
 		super(height, width, position, rotation, health, solid, images, clips,
 				game);
-		this.chunkMap=game.getDisplay().getGamePanel().getWorld().getMap().getChunkMap();
+//		this.chunkMap=game.getDisplay().getGamePanel().getWorld().getMap().getChunkMap();
+	this.chunkMap=map.getChunkMap();
 	}
 
 	public void makeNoise(int range) {
