@@ -54,9 +54,4 @@ public class Throwable extends Item {
 	public void setAreaOfEffect(int areaOfEffect) {
 		this.areaOfEffect = areaOfEffect;
 	}
-
-	@Override
-	public void render(Graphics g) {
-		// TODO
-	}
 }

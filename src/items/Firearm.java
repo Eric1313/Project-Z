@@ -53,9 +53,4 @@ public class Firearm extends Item {
 	public void setMaxAmmo(int maxAmmo) {
 		this.maxAmmo = maxAmmo;
 	}
-
-	@Override
-	public void render(Graphics g) {
-		// TODO
-	}
 }

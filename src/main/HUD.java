@@ -3,8 +3,11 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
+import entities.Inventory;
 import entities.Player;
+import items.Item;
 
 public class HUD {
 	private Player player;
@@ -14,8 +17,36 @@ public class HUD {
 	}
 	
 	public void render(Graphics g) {
-		Graphics2D g2D = (Graphics2D) g;
-		g2D.setColor(new Color(112, 112, 112));
-		g2D.drawRect(300, 1200, 1000, 200);
+		g.setColor(new Color(112, 112, 112));
+		// g.drawRect(200, 650, 600, 60);
+		for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
+			g.drawRect(200 + item * 60, 650, 60, 60);
+			
+			Item currentItem = player.getInventory().get(item);
+			
+			if (currentItem != null) {
+				g.drawImage(currentItem.getImages()[1], 200 + item * 60 + 14, 664, null, null);
+			}
+		}
+		
+		g.drawRect(940, 20, 20, 100);
+		g.drawRect(980, 20, 20, 100);
+		
+		g.setColor(Color.RED);
+		g.fillRect(940, 120 - player.getHealth(), 20, player.getHealth());
+
+		
+		g.setColor(Color.WHITE);
+		for (int letter = 0; letter < "HEALTH".length(); letter++) {
+			g.drawString("HEALTH".substring(letter, letter + 1), 945, 32 + letter * 12);
+		}
+		
+		g.setColor(Color.GREEN);
+		g.fillRect(980, 120 - player.getStamina() / 3, 20, player.getStamina() / 3);
+		
+		g.setColor(Color.WHITE);
+		for (int letter = 0; letter < "STAMINA".length(); letter++) {
+			g.drawString("STAMINA".substring(letter, letter + 1), 985, 32 + letter * 12);
+		}
 	}
 }
