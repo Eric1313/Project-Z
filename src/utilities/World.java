@@ -16,6 +16,7 @@ import map.Map;
 import entities.Player;
 import entities.Zombie;
 import items.Item;
+import entities.ZombieThread;
 
 public class World {
 	private Game game;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import main.Game;
 import entities.MapObject;
 import entities.Zombie;
+import entities.ZombieThread;
 import enums.MapObjectType;
 import items.*;
 
@@ -90,6 +91,7 @@ public class Map {
 	
 	public void spawnZombies(int noZombies)
 	{
+
 		for (int i=0;i<noZombies;i++)
 		{
 //			int randomX=(int) (Math.random()*(width-5));
