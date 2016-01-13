@@ -170,9 +170,24 @@ public class World {
 		previousXOffset = game.getCamera().getxOffset();
 		previousYOffset = game.getCamera().getyOffset();
 		g2D.setTransform(originalTransform);
+
 		g2D.rotate(angle, player.getPosition().getX()
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
+		GradientPaint gp = new GradientPaint((float) player.getPosition()
+				.getX() - game.getCamera().getxOffset() + 16, (float) player
+				.getPosition().getY() - game.getCamera().getyOffset() + 16,
+				new Color(0, 0, 0, 0),
+				(float) (player.getPosition().getX()
+						- game.getCamera().getxOffset() + 400 * (float) Math
+						.cos(Math.toRadians(90))),
+				(float) (player.getPosition().getY()
+						- game.getCamera().getyOffset() - 400 * (float) Math
+						.sin(Math.toRadians(90))), new Color(0, 0, 0));
+		g2D.setPaint(gp);
+		g2D.fill(flashLight);
+		g2D.draw(flashLight);
+
 		g2D.setClip(null);
 		player.render(g);
 		g2D.setTransform(originalTransform);
