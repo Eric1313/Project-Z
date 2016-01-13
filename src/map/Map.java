@@ -10,6 +10,7 @@ import main.Game;
 import entities.MapObject;
 import entities.Zombie;
 import enums.MapObjectType;
+import items.*;
 
 /**
  * Map of a game of Project Z.
@@ -47,6 +48,8 @@ public class Map {
 	private Chunk[][] chunkMap;
 	private Game game;
 	
+	private ArrayList<Item> items;
+	
 
 	/**
 	 * Creates map object
@@ -62,6 +65,9 @@ public class Map {
 		this.width = width;
 		this.height = height;
 		this.game=game;
+		
+		this.items = this.game.getItems();
+		
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
 		for (int i = 0; i < this.width / 16; i++)
@@ -78,6 +84,7 @@ public class Map {
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
 		spawnZombies(1);
+		spawnItems();
 		
 	}
 	
@@ -92,6 +99,24 @@ public class Map {
 			chunkMap[1][1].addZombie(new Zombie(new Point(43, 52), 100, game.getZombie()[0], null, this.game, this));
 
 		}
+	}
+	
+	public void spawnItems()
+	{
+//		for (int i=0;i<noZombies;i++)
+//		{
+//			int randomX=(int) (Math.random()*(width-5));
+//			int randomY=(int) (Math.random()*(height-5));
+//			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
+//			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
+//			chunkMap[1][1].addZombie(new Zombie(new Point(43, 52), 100, game.getZombie()[0], null, this.game, this));
+			
+			Item item = this.items.get(0);
+			item.setPosition(new Point(128, 128));
+			
+			chunkMap[1][1].add(item);
+
+//		}
 	}
 
 	/**
