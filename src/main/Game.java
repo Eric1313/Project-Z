@@ -43,22 +43,7 @@ public class Game implements Runnable {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
-		zombie= new Assets("res/img/zombie.png").getSprites();
-//		zombie - new Assets()
-
-		// Loads the display
-		display = new Display(title, width, height);
-
-		camera = new GameCamera(this, 0, 0);
-		// Sets the state of the game
-		state = new GameState(this);
-		state.setGameState(State.INGAME);
-
-		display.getFrame().createBufferStrategy(2);
-
-		display.getFrame().setCursor(
-				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-
+		zombie = new Assets("res/img/zombie.png").getSprites();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -151,6 +136,19 @@ public class Game implements Runnable {
 			// TODO Make catch block more useful
 			e.printStackTrace();
 		}
+		// Loads the display
+		display = new Display(title, width, height);
+
+		camera = new GameCamera(this, 0, 0);
+		// Sets the state of the game
+		state = new GameState(this);
+		state.setGameState(State.INGAME);
+
+		display.getFrame().createBufferStrategy(2);
+
+		display.getFrame().setCursor(
+				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+
 	}
 
 	private void update() {
@@ -248,7 +246,6 @@ public class Game implements Runnable {
 	public GameCamera getCamera() {
 		return camera;
 	}
-	
 
 	/**
 	 * @return the zombie
@@ -258,10 +255,15 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * @param zombie the zombie to set
+	 * @param zombie
+	 *            the zombie to set
 	 */
 	public void setZombie(BufferedImage[][] zombie) {
 		this.zombie = zombie;
+	}
+
+	public ArrayList<Item> getItems() {
+		return this.items;
 	}
 
 	public static void main(String[] args) {

@@ -26,6 +26,7 @@ import map.Chunk;
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
 	private boolean hasTarget;
+
 	private Stack<Node> path = new Stack<Node>();
 	private short[][] map;
 	private boolean[][] tiles;

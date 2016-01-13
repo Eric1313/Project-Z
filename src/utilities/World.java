@@ -15,6 +15,8 @@ import map.Chunk;
 import map.Map;
 import entities.Player;
 import entities.Zombie;
+import items.Item;
+import entities.ZombieThread;
 
 public class World {
 	private Game game;
@@ -116,6 +118,9 @@ public class World {
 							(int) (tileY * Assets.TILE_HEIGHT
 									- game.getCamera().getyOffset() + yChange + 14));
 				}
+				if ((tileId[j][i] & (1 << 14)) != 0) {
+					// SOLID
+				}
 				int id = (tileId[j][i] & 0xFFF);
 
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
@@ -202,6 +207,11 @@ public class World {
 						.iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					zombie.render(g);
+				}
+				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
+						.iterator(); iterator.hasNext();) {
+					Item item = iterator.next();
+					item.render(g);
 				}
 			}
 		}
