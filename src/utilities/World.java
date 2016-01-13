@@ -1,5 +1,7 @@
 package utilities;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -168,12 +170,15 @@ public class World {
 		previousXOffset = game.getCamera().getxOffset();
 		previousYOffset = game.getCamera().getyOffset();
 		g2D.setTransform(originalTransform);
-		g2D.setClip(null);
 		g2D.rotate(angle, player.getPosition().getX()
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
+		g2D.setClip(null);
 		player.render(g);
 		g2D.setTransform(originalTransform);
+		g2D.setColor(new Color(0f, 0f, 0f, .5f));
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
