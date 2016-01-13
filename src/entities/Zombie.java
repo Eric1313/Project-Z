@@ -26,7 +26,7 @@ import map.Chunk;
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
 	private boolean hasTarget;
-	private Stack<Node> path;
+	private Stack<Node> path=new Stack<Node>();
 	private short[][] map;
 	private boolean[][] tiles;
 	private Node[][] graph;
@@ -163,8 +163,8 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.getPosition().x),
-				(int) (this.getPosition().y), null);
+		g.drawImage(this.getImages()[0], (int) (this.position.x),
+				(int) (this.position.y), null);
 	}
 
 	// @Override
