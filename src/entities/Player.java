@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import utilities.Assets;
 import main.Game;
 import map.Map;
+import utilities.Assets;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -17,8 +17,7 @@ import map.Map;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
-
+	public static final int MOVEMENT_SPEED = 3;
 	public static final int MAX_STAMINA = 300;
 	public static final int SPRINT_COST = 3;
 	// *************THIS SHOULD BE PUT SOMEWHERE MORE APPROPRIATE***************
@@ -26,7 +25,7 @@ public class Player extends Mob {
 	// - ALLEN
 	private Rectangle hitbox;
 	private int stamina;
-	
+
 	private int selectedItem = 0;
 
 	public Player(boolean solid, Game game) {
@@ -68,8 +67,9 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
-		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
-		
+		this.selectedItem = this.game.getDisplay().getKeyHandler()
+				.getLastNumber();
+
 		if (this.game.getDisplay().getKeyHandler().isShift()
 				&& this.stamina > Player.SPRINT_COST) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
@@ -123,13 +123,47 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(600);
+				makeNoise(400);
 			else
-				makeNoise(300);
+				makeNoise(200);
 		}
-		hitbox = new Rectangle((int) (this.getPosition().x - this.game
-				.getCamera().getxOffset()),
-				(int) (this.getPosition().y - this.game.getCamera()
-						.getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		collision();
+	}
+
+	private void collision() {
+		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+
+		for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
+				.getSolid().length; i++) {
+			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
+					.getSolid()[0].length; j++) {
+				if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] != null) {
+					if (hitbox.intersects(game.getDisplay().getGamePanel()
+							.getWorld().getSolid()[i][j])) {
+						int xOverlap = (int) (game.getDisplay().getGamePanel()
+								.getWorld().getSolid()[i][j].getX() - this
+								.getPosition().getX());
+						int yOverlap = (int) (game.getDisplay().getGamePanel()
+								.getWorld().getSolid()[i][j].getY() - this
+								.getPosition().getY());
+						if (xOverlap < -16) {
+							position.setLocation(position.getX() - xOverlap,
+									position.getY());
+						} else {
+							position.setLocation(position.getX()
+									+ (32 + xOverlap), position.getY());
+						}
+						if (yOverlap < -16) {
+							position.setLocation(position.getX(),
+									position.getY() - xOverlap);
+						} else {
+							position.setLocation(position.getX(),
+									position.getY() + (32+ xOverlap));
+						}
+					}
+				}
+			}
+		}
 	}
 }

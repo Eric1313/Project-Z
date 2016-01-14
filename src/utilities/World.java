@@ -1,10 +1,13 @@
 package utilities;
 
+import items.Item;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.io.FileNotFoundException;
@@ -16,12 +19,14 @@ import map.Map;
 import entities.Player;
 import entities.Zombie;
 import items.Item;
-import entities.ZombieThread;
+import entities.Zombie;
+
 
 public class World {
 	private Game game;
 	private Player player;
-	Arc2D flashLight;
+	private Arc2D flashLight;
+	private Rectangle[][] solid;
 	private AffineTransform originalTransform;
 	private short[][] tileId;
 	private Chunk[][] chunkMap;
@@ -58,6 +63,7 @@ public class World {
 		this.yChange = 0;
 		this.xChange = 0;
 		flashLight = new Arc2D.Double();
+		solid = new Rectangle[26][34];
 	}
 
 	public void render(Graphics g) {
@@ -119,7 +125,9 @@ public class World {
 									- game.getCamera().getyOffset() + yChange + 14));
 				}
 				if ((tileId[j][i] & (1 << 14)) != 0) {
-					// SOLID
+					solid[tileY][tileX] = new Rectangle(j * Assets.TILE_WIDTH,
+							i * Assets.TILE_HEIGHT, Assets.TILE_HEIGHT,
+							Assets.TILE_WIDTH);
 				}
 				int id = (tileId[j][i] & 0xFFF);
 
@@ -162,9 +170,6 @@ public class World {
 			}
 		} else if (previousYOffset > game.getCamera().getyOffset()) {
 			if (yChange > 0) {
-
-				// System.out.println(game.getCamera().getyOffset() +
-				// yChange);
 				if ((game.getCamera().getyOffset() - yChange) <= -(renderControl - 31)) {
 					row--;
 					yChange -= renderControl;
@@ -179,26 +184,26 @@ public class World {
 		g2D.rotate(angle, player.getPosition().getX()
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
-		GradientPaint gp = new GradientPaint((float) player.getPosition()
-				.getX() - game.getCamera().getxOffset() + 16, (float) player
-				.getPosition().getY() - game.getCamera().getyOffset() + 16,
-				new Color(0, 0, 0, 0),
-				(float) (player.getPosition().getX()
-						- game.getCamera().getxOffset() + 350 * (float) Math
-						.cos(Math.toRadians(90))),
-				(float) (player.getPosition().getY()
-						- game.getCamera().getyOffset() - 350 * (float) Math
-						.sin(Math.toRadians(90))), new Color(0, 0, 0));
-		g2D.setPaint(gp);
-		g2D.fill(flashLight);
-		g2D.draw(flashLight);
+		 GradientPaint gp = new GradientPaint((float) player.getPosition()
+		 .getX() - game.getCamera().getxOffset() + 16, (float) player
+		 .getPosition().getY() - game.getCamera().getyOffset() + 16,
+		 new Color(0, 0, 0, 0),
+		 (float) (player.getPosition().getX()
+		 - game.getCamera().getxOffset() + 350 * (float) Math
+		 .cos(Math.toRadians(90))),
+		 (float) (player.getPosition().getY()
+		 - game.getCamera().getyOffset() - 350 * (float) Math
+		 .sin(Math.toRadians(90))), new Color(0, 0, 0));
+		 g2D.setPaint(gp);
+		 g2D.fill(flashLight);
+		 g2D.draw(flashLight);
 
 		g2D.setClip(null);
 		player.render(g);
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .5f));
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		 g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+		 .getDisplay().getFrame().getHeight());
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
@@ -233,5 +238,9 @@ public class World {
 	public Map getMap() {
 		// TODO Auto-generated method stub
 		return map;
+	}
+
+	public Rectangle[][] getSolid() {
+		return solid;
 	}
 }
