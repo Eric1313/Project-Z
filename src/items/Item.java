@@ -172,8 +172,8 @@ public abstract class Item {
 				FontMetrics fm = g.getFontMetrics();
 
 				g.drawString(this.name,
-						(int) (this.getPosition().x - this.game.getCamera().getxOffset())
-								- fm.stringWidth(this.name) / 4,
+						(int) (this.getPosition().x - this.game.getCamera().getxOffset()) + 15
+								- fm.stringWidth(this.name) / 2,
 						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 15);
 			}
 		} else {
