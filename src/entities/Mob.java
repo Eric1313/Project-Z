@@ -22,7 +22,7 @@ import map.Map;
  */
 public abstract class Mob extends Entity {
 	protected int movementSpeed;
-	private Chunk[][]chunkMap;
+	protected Chunk[][]chunkMap;
 	protected boolean up;
 	protected boolean down;
 	protected boolean left;

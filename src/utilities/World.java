@@ -18,6 +18,9 @@ import map.Chunk;
 import map.Map;
 import entities.Player;
 import entities.Zombie;
+import items.Item;
+import entities.Zombie;
+
 
 public class World {
 	private Game game;
