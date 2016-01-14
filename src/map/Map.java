@@ -117,10 +117,20 @@ public class Map {
 	
 	public void spawnItems()
 	{
-			Item item = this.items.get(0);
-			item.setPosition(new Point(320, 320));
+		ArrayList<Item> itemSpawns = new ArrayList<Item>();
+		for (int item = 0; item < this.items.size(); item++) {
+			Item currentItem = this.items.get(item);
+			for (int rarity = 0; rarity < currentItem.getRarity(); rarity++) {
+				itemSpawns.add(currentItem);
+			}
 			
-			chunkMap[1][1].add(item);
+		}
+			
+		for (int item = 0; item < (int) Math.random() * 1000 + 10; item++) {
+			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns.size()));
+			itemSpawned.setPosition(new Point((int) (Math.random() * this.width) / 32 * 32, (int) (Math.random() * this.height) / 32 * 32));
+			chunkMap[1][1].add(itemSpawned);
+		}
 	}
 
 	/**
