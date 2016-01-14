@@ -94,7 +94,7 @@ public class Map {
 		for (int i = 1; i < plazaStarts.size() - 1; i++)
 			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 
-		spawnZombies(200);
+		spawnZombies(50);
 		spawnItems();
 
 	}
