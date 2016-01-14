@@ -64,9 +64,6 @@ public class Player extends Mob {
 	// Reorganize code; looks messy
 	public void update() {
 		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
-		if (this.selectedItem < 0) {
-			this.selectedItem = 9;
-		}
 		
 		if (this.game.getDisplay().getKeyHandler().isShift()
 				&& this.stamina > Player.SPRINT_COST) {

@@ -39,9 +39,12 @@ public class KeyHandler implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			shift = pressed;
 		}
-		
-		if (e.getKeyCode() >= 48 && e.getKeyCode() <= 57) {
-			this.lastNumber = e.getKeyCode() - 49;
+		if (e.getKeyCode() >= 48 && e.getKeyCode() <= 57 && pressed) {
+			if (e.getKeyCode() == 48) {
+				this.lastNumber = 9;
+			} else {
+				this.lastNumber = e.getKeyCode() - 49;
+			}
 		}
 	}
 
@@ -66,11 +69,11 @@ public class KeyHandler implements KeyListener {
 	public boolean isRight() {
 		return right;
 	}
-	
+
 	public boolean isShift() {
 		return shift;
 	}
-	
+
 	public int getLastNumber() {
 		return this.lastNumber;
 	}
