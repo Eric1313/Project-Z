@@ -4,9 +4,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import utilities.Assets;
 import main.Game;
 import map.Map;
+import utilities.Assets;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -141,16 +141,26 @@ public class Player extends Mob {
 				if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] != null) {
 					if (hitbox.intersects(game.getDisplay().getGamePanel()
 							.getWorld().getSolid()[i][j])) {
-						System.out.println("collided "
-								+ hitbox.getX()
-								+ " "
-								+ hitbox.getY()
-								+ " HIT "
-								+ game.getDisplay().getGamePanel().getWorld()
-										.getSolid()[i][j].getX()
-								+ " "
-								+ game.getDisplay().getGamePanel().getWorld()
-										.getSolid()[i][j].getY());
+						int xOverlap = (int) (game.getDisplay().getGamePanel()
+								.getWorld().getSolid()[i][j].getX() - this
+								.getPosition().getX());
+						int yOverlap = (int) (game.getDisplay().getGamePanel()
+								.getWorld().getSolid()[i][j].getY() - this
+								.getPosition().getY());
+						if (xOverlap < -16) {
+							position.setLocation(position.getX() - xOverlap,
+									position.getY());
+						} else {
+							position.setLocation(position.getX()
+									+ (32 + xOverlap), position.getY());
+						}
+						if (yOverlap < -16) {
+							position.setLocation(position.getX(),
+									position.getY() - xOverlap);
+						} else {
+							position.setLocation(position.getX(),
+									position.getY() + (32+ xOverlap));
+						}
 					}
 				}
 			}
