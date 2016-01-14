@@ -170,33 +170,80 @@ public class Game implements Runnable {
 	/**
 	 * The main game loop of the game
 	 */
+	// public void run() {
+	//
+	// initialize();
+	//
+	// int fps = 60;
+	// double timePerUpdate = 1000000000 / fps;
+	// double timeElapsed = 0;
+	// long now;
+	// // Current time of computer in nanoseconds
+	// long lastTime = System.nanoTime();
+	//
+	// // Game loop
+	// while (running) {
+	// now = System.nanoTime();
+	// timeElapsed += (now - lastTime) / timePerUpdate;
+	// lastTime = now;
+	//
+	// // If the time elapsed has been 1/60th of a second then refresh the
+	// // game
+	// if (timeElapsed >= 1) {
+	// update();
+	// render();
+	// timeElapsed--;
+	// }
+	// }
+	// // Stops the game
+	// stop();
+	// }
+
 	public void run() {
-
 		initialize();
+		int frames = 0;
 
-		int fps = 60;
-		double timePerUpdate = 1000000000 / fps;
-		double timeElapsed = 0;
-		long now;
-		// Current time of computer in nanoseconds
+		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
+		double secondsPerTick = 1 / 60.0;
+		int tickCount = 0;
 
-		// Game loop
 		while (running) {
-			now = System.nanoTime();
-			timeElapsed += (now - lastTime) / timePerUpdate;
+			long now = System.nanoTime();
+			long passedTime = now - lastTime;
 			lastTime = now;
+			if (passedTime < 0)
+				passedTime = 0;
+			if (passedTime > 100000000)
+				passedTime = 100000000;
 
-			// If the time elapsed has been 1/60th of a second then refresh the
-			// game
-			if (timeElapsed >= 1) {
+			unprocessedSeconds += passedTime / 1000000000.0;
+
+			boolean ticked = false;
+			while (unprocessedSeconds > secondsPerTick) {
 				update();
-				render();
-				timeElapsed--;
+				unprocessedSeconds -= secondsPerTick;
+				ticked = true;
+
+				tickCount++;
+				if (tickCount % 60 == 0) {
+					lastTime += 1000;
+					frames = 0;
+				}
 			}
+
+			if (ticked) {
+				render();
+				frames++;
+			} else {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
-		// Stops the game
-		stop();
 	}
 
 	/**
