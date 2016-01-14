@@ -29,6 +29,14 @@ public class Firearm extends Item {
 		this.rateOfFire = rateOfFire;
 		this.maxAmmo = maxAmmo;
 	}
+	
+	public Firearm(Firearm item) {
+		super(item);
+		
+		this.ammoID = item.getAmmoID();
+		this.rateOfFire = item.getRateOfFire();
+		this.maxAmmo = item.getMaxAmmo();
+	}
 
 	public int getAmmoID() {
 		return this.ammoID;

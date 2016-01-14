@@ -27,6 +27,13 @@ public class Melee extends Item {
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 	}
+	
+	public Melee(Melee item) {
+		super(item);
+		
+		this.swingSpeed = item.getSwingSpeed();
+		this.rechargeTime = item.getRechargeTime();
+	}
 
 	public int getSwingSpeed() {
 		return this.swingSpeed;

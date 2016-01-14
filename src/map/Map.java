@@ -10,6 +10,7 @@ import entities.MapObject;
 import entities.Zombie;
 import enums.MapObjectType;
 import items.*;
+import items.Throwable;
 
 /**
  * Map of a game of Project Z.
@@ -121,17 +122,26 @@ public class Map {
 			}
 		}
 
-		for (int item = 0; item < (int) Math.random() * 1 + 1; item++) {
+		for (int item = 0; item < (int) Math.random() * 100 + 100; item++) {
+			// Clone the item
 			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns.size()));
+			if (itemSpawned instanceof Consumable) {
+				itemSpawned = new Consumable((Consumable) itemSpawned);
+			} else if (itemSpawned instanceof Melee) {
+				itemSpawned = new Melee((Melee) itemSpawned);
+			} else if (itemSpawned instanceof Firearm) {
+				itemSpawned = new Firearm((Firearm) itemSpawned);
+			} else if (itemSpawned instanceof Throwable) {
+				itemSpawned = new Throwable((Throwable) itemSpawned);
+			}
 
 			int randomX = (int) (1 + Math.random() * (width - 5));
 			int randomY = (int) (1 + Math.random() * (height - 5));
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0) {
-				itemSpawned.setPosition(new Point(128, 128));
-				chunkMap[1][1].add(itemSpawned);
-				// itemSpawned.setPosition(new Point(randomX * 32, randomY *
-				// 32));
-				// chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
+				// itemSpawned.setPosition(new Point(128, 128));
+				// chunkMap[1][1].add(itemSpawned);
+				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
+				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
 			}
 		}
 	}

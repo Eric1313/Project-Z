@@ -29,6 +29,13 @@ public class Consumable extends Item {
 		this.effectValue = effectValue;
 		this.durability = durability;
 	}
+	
+	public Consumable(Consumable item) {
+		super(item);
+		
+		this.effect = item.getEffect();
+		this.durability = item.getDurability();
+	}
 
 	public ItemEffect getEffect() {
 		return this.effect;

@@ -67,6 +67,19 @@ public abstract class Item {
 
 		this.game = game;
 	}
+	
+	public Item(Item item) {
+		this.itemID = item.getItemID();
+		this.name = item.getName();
+		this.rarity = item.getRarity();
+
+		this.state = item.getState();
+
+		this.images = item.getImages();
+		this.clips = item.getClips();
+
+		this.game = item.getGame();
+	}
 
 	public int getItemID() {
 		return this.itemID;
