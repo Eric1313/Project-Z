@@ -1,7 +1,7 @@
 package utilities;
 
 
-public class Node implements Comparable<Object> {
+public class Node implements Comparable<Node> {
 	public int locationX;
 	public int locationY;
 	public Node prev;
@@ -17,17 +17,8 @@ public class Node implements Comparable<Object> {
 		prev = p;
 	}
 
-	public int compareTo(Object arg) {
-		double af = g + h;
-		Node b = (Node) arg;
-		double bf = b.g + b.h;
-		if (af < bf) {
-			return -1;
-		} else if (af > bf) {
-			return 1;
-		} else {
-			return 0;
-		}
+	public int compareTo(Node node) {
+return (int) ((g+h)-(node.g+node.h));
 	}
 
 }

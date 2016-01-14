@@ -91,7 +91,7 @@ public class Map {
 //			int randomY=(int) (Math.random()*(height-5));
 //			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
 //			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
-			chunkMap[1][1].addZombie(new Zombie(new Point(43, 52), 100, game.getZombie()[0], null, this.game, this));
+			chunkMap[0][0].addZombie(new Zombie(new Point(152, 152), 100, game.getZombie()[0], null, this.game, this));
 
 		}
 	}
