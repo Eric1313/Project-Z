@@ -69,6 +69,10 @@ public class Chunk {
 	public void setPassibleEntities(ArrayList<Entity> passibleEntities) {
 		this.passibleEntities = passibleEntities;
 	}
+	
+	public ArrayList<Item> getItems() {
+		return this.items;
+	}
 
 	/**
 	 * @return the zombies

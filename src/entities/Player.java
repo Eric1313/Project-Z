@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import utilities.Assets;
 import main.Game;
@@ -17,10 +18,16 @@ import map.Map;
  */
 public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
+
 	public static final int MAX_STAMINA = 300;
 	public static final int SPRINT_COST = 3;
-
+	// *************THIS SHOULD BE PUT SOMEWHERE MORE APPROPRIATE***************
+	// WHAT IS BOUNDS IN ENTITY? G
+	// - ALLEN
+	private Rectangle hitbox;
 	private int stamina;
+	
+	private int selectedItem = 0;
 
 	public Player(boolean solid, Game game) {
 		super(solid, game);
@@ -29,9 +36,25 @@ public class Player extends Mob {
 	}
 
 	public Player(Point position, boolean solid, Game game, Map map) {
-		super(32, 32, position, solid, game,map);
+		super(32, 32, position, solid, game, map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
+	}
+
+	public int getStamina() {
+		return this.stamina;
+	}
+
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 
 	@Override
@@ -45,6 +68,8 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
+		
 		if (this.game.getDisplay().getKeyHandler().isShift()
 				&& this.stamina > Player.SPRINT_COST) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
@@ -102,5 +127,9 @@ public class Player extends Mob {
 			else
 				makeNoise(300);
 		}
+		hitbox = new Rectangle((int) (this.getPosition().x - this.game
+				.getCamera().getxOffset()),
+				(int) (this.getPosition().y - this.game.getCamera()
+						.getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 	}
 }

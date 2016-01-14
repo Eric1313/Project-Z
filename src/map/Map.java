@@ -11,6 +11,7 @@ import entities.MapObject;
 import entities.Zombie;
 import entities.ZombieThread;
 import enums.MapObjectType;
+import items.*;
 
 /**
  * Map of a game of Project Z.
@@ -47,6 +48,11 @@ public class Map {
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
 	private Game game;
+	private int plazaNum = 1;
+	
+	private ArrayList<Item> items;
+	private ArrayList<Point> plazaStarts;
+	private ArrayList<Point> plazaEnds;
 	
 
 	/**
@@ -63,11 +69,18 @@ public class Map {
 		this.width = width;
 		this.height = height;
 		this.game=game;
+		
+		this.items = this.game.getItems();
+		
 		this.tileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
+		
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
 				chunkMap[i][j] = new Chunk();
+		
+		plazaStarts = new ArrayList<Point>();
+		plazaEnds = new ArrayList<Point>();
 
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
@@ -78,7 +91,15 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE+1)/2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE+1)/2, 0), new Point(height - 1,
 				width - 1));
+		
+		generateSafehousePlaza(plazaStarts.get(0), plazaEnds.get(0));
+		generateSafehousePlaza(plazaStarts.get(plazaStarts.size()-1), plazaEnds.get(plazaEnds.size()-1));
+		
+		for (int i = 1; i < plazaStarts.size()-1;i++)
+			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
+		
 		spawnZombies(1);
+		spawnItems();
 		
 	}
 	
@@ -94,6 +115,14 @@ public class Map {
 			chunkMap[0][0].addZombie(new Zombie(new Point(152, 152), 100, game.getZombie()[0], null, this.game, this));
 
 		}
+	}
+	
+	public void spawnItems()
+	{
+			Item item = this.items.get(0);
+			item.setPosition(new Point(320, 320));
+			
+			chunkMap[1][1].add(item);
 	}
 
 	/**
@@ -343,6 +372,31 @@ public class Map {
 						numToGenerate - 1, maxRange);
 		}
 	}
+	
+	/**
+	 * Generates the plaza for the safehouse
+	 * 
+	 * @param start
+	 * @param end
+	 */
+	public void generateSafehousePlaza(Point start, Point end){
+		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() )));
+		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
+		
+		//Fills the plaza with grass
+		for (int i = (int) start.getX(); i <= end.getX(); i++) {
+			for (int j = (int) start.getY(); j <= end.getY(); j++) {
+				setTile(i,j,108, Direction.UP, false);
+			}
+		}
+		
+		//Generates the safehouse
+		generateBuilding(new Point((int)start.getX()+boxWidth/3, (int)start.getY()+boxHeight/3), new Point((int)end.getX()-boxWidth/3, (int)end.getY()-boxHeight/3), Direction.UP);
+		
+		//Generates the Trees inside the plaza
+		generateTrees(new Point((int)start.getX()+1, (int)start.getY()+1), new Point((int)end.getX()-1, (int)end.getY()-1));
+		
+	}
 
 	/**
 	 * Generates the building and its tiles
@@ -474,18 +528,52 @@ public class Map {
 		int doorLocation;
 		if (boxHeight > boxWidth){
 			doorLocation = (int)start.getY()+boxHeight/3;
-			for (int i = (int) start.getY(); i <= end.getY(); i++){
+			
+			if ((tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 205 && (tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 206){
+				setTile((int)start.getX(), (int)start.getY()-1, 204,Direction.LEFT,true);
+				setTile((int)start.getX(), (int)start.getY(), 205,Direction.UP,true);
+			}
+			else
+				setTile((int)start.getX(), (int)start.getY(), 206,Direction.LEFT,true);
+			
+			if ((tileMap[(int)start.getX()][(int)end.getY()] & 0xFFF) != 205 && (tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 206){
+				setTile((int)start.getX(), (int)end.getY()+1, 204,Direction.RIGHT,true);
+				setTile((int)start.getX(), (int)end.getY(), 205,Direction.UP,true);
+			}
+			else
+				setTile((int)start.getX(), (int)end.getY(), 206,Direction.LEFT,true);
+			
+			for (int i = (int) start.getY()+1; i < end.getY(); i++){
 				if (i != doorLocation && i != doorLocation -1)
-					setTile((int)start.getX(), i, 204, Direction.UP, true);	
+					setTile((int)start.getX(), i, 205, Direction.UP, true);	
 			}
 				
 		}
 		else{
 			doorLocation = (int)start.getX()+boxWidth/3;
-		for (int i = (int) start.getX(); i <= end.getX(); i++) {
-			if (i != doorLocation && i != doorLocation -1)
-				setTile(i, (int)start.getY(), 204, Direction.UP,true);
-		}
+				
+			if ((tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 205 && (tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 206){
+				setTile((int)start.getX(), (int)start.getY(),205, Direction.RIGHT,true);
+				setTile((int)start.getX()-1, (int)start.getY(),204, Direction.DOWN,true);
+			}
+			else{
+				setTile((int)start.getX(), (int)start.getY(),206, Direction.DOWN,true);
+			}
+				
+			
+			if ((tileMap[(int)end.getX()][(int)start.getY()] & 0xFFF) != 205 && (tileMap[(int)start.getX()][(int)start.getY()] & 0xFFF) != 206){
+				setTile((int)end.getX(), (int)start.getY(),205, Direction.RIGHT,true);
+				setTile((int)end.getX()+1, (int)start.getY(),204, Direction.UP,true);
+			}
+			else{
+				setTile((int)end.getX(), (int)start.getY(),206, Direction.UP,true);
+			}
+		
+		
+			for (int i = (int) start.getX()+1; i < end.getX(); i++) {
+				if (i != doorLocation && i != doorLocation -1)
+					setTile(i, (int)start.getY(), 205, Direction.RIGHT,true);
+			}
 		}
 	}
 	
@@ -541,11 +629,14 @@ public class Map {
 				generateSideRoads(start2, end2);
 			} else {
 				// records corners of plaza
-				generatePlaza(start, end);
+					plazaStarts.add(start);
+					plazaEnds.add(end);
+					
 			}
 		} else {
 			// records corners of plaza
-			generatePlaza(start, end);
+			plazaStarts.add(start);
+			plazaEnds.add(end);
 		}
 	}
 
