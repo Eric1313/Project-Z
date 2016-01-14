@@ -25,7 +25,7 @@ public class Player extends Mob {
 	// - ALLEN
 	private Rectangle hitbox;
 	private int stamina;
-	
+
 	private int selectedItem = 0;
 
 	public Player(boolean solid, Game game) {
@@ -67,8 +67,9 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
-		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
-		
+		this.selectedItem = this.game.getDisplay().getKeyHandler()
+				.getLastNumber();
+
 		if (this.game.getDisplay().getKeyHandler().isShift()
 				&& this.stamina > Player.SPRINT_COST) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
@@ -126,9 +127,33 @@ public class Player extends Mob {
 			else
 				makeNoise(100);
 		}
-		hitbox = new Rectangle((int) (this.getPosition().x - this.game
-				.getCamera().getxOffset()),
-				(int) (this.getPosition().y - this.game.getCamera()
-						.getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		// hitbox = new Rectangle((int) (this.getPosition().x - this.game
+		// .getCamera().getxOffset()),
+		// (int) (this.getPosition().y - this.game.getCamera()
+		// .getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+
+		for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
+				.getSolid().length; i++) {
+			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
+					.getSolid()[0].length; j++) {
+				if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] != null) {
+					if (hitbox.intersects(game.getDisplay().getGamePanel()
+							.getWorld().getSolid()[i][j])) {
+						System.out.println("collided "
+								+ hitbox.getX()
+								+ " "
+								+ hitbox.getY()
+								+ " HIT "
+								+ game.getDisplay().getGamePanel().getWorld()
+										.getSolid()[i][j].getX()
+								+ " "
+								+ game.getDisplay().getGamePanel().getWorld()
+										.getSolid()[i][j].getY());
+					}
+				}
+			}
+		}
 	}
 }
