@@ -87,4 +87,9 @@ public class Chunk {
 	public void addZombie(Zombie zombie) {
 		zombies.add(zombie);
 	}
+	public Zombie removeZombie(Zombie zombie)
+	{
+		zombies.remove(zombie);
+		return zombie;
+	}
 }

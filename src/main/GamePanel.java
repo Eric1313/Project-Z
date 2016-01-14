@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.Graphics;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import map.Chunk;
+import entities.Zombie;
 import entities.ZombieThread;
 import utilities.World;
 
@@ -12,6 +15,7 @@ public class GamePanel extends JPanel {
 	private World world;
 	private HUD hud;
 	private boolean setUp;
+	private Chunk[][] chunkMap;
 
 	public GamePanel() {
 		super(true);
@@ -28,13 +32,24 @@ public class GamePanel extends JPanel {
 
 	public void update() {
 		world.getPlayer().update();
-		//Update Zombies
+		int chunkX = Math.max((int) world.getPlayer().getPosition().getX() / 512, 2);
+		int chunkY = Math.max((int) world.getPlayer().getPosition().getY() / 512, 2);
+		for (int x = chunkX - 2; x < chunkX + 3; x++) {
+			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
+						.iterator(); iterator.hasNext();) {
+					Zombie zombie = iterator.next();
+					zombie.update();
+				}
+			}
+		}
 	}
 
 	public void setup(Game game) {
 		world = new World(game, 1600, 1600);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
+		chunkMap=world.getMap().getChunkMap();
 	}
 
 	public World getWorld() {
