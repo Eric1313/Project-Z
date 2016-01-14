@@ -122,7 +122,7 @@ public class Map {
 			}
 		}
 
-		for (int item = 0; item < (int) Math.random() * 100 + 100; item++) {
+		for (int item = 0; item < (int) Math.random() * 100 + 500; item++) {
 			// Clone the item
 			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns.size()));
 			if (itemSpawned instanceof Consumable) {

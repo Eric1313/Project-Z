@@ -28,9 +28,9 @@ public class Inventory {
 	 */
 	public Item get(int itemNo) {
 		if (itemNo < 0 || itemNo > this.items.length) {
-			return this.items[itemNo];
-		} else {
 			return null;
+		} else {
+			return this.items[itemNo];
 		}
 	}
 

@@ -38,6 +38,7 @@ public class Player extends Mob {
 		super(32, 32, position, solid, game, map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
+		addItem(this.game.getItems().get(0));
 	}
 
 	public int getStamina() {

@@ -138,6 +138,10 @@ public abstract class Entity {
 		return this.inventory.remove(itemNo);
 	}
 
+	public Item getItem(int itemNo) {
+		return this.inventory.get(itemNo);
+	}
+	
 	public boolean isSolid() {
 		return this.solid;
 	}

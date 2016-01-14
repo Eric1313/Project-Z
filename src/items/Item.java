@@ -104,6 +104,23 @@ public abstract class Item {
 	public void setRarity(int rarity) {
 		this.rarity = rarity;
 	}
+	
+	public Color getColour() {
+		switch (this.rarity) {
+		case 5:
+			return Color.GRAY;
+		case 4:
+			return Color.BLUE;
+		case 3:
+			return Color.YELLOW;
+		case 2:
+			return Color.ORANGE;
+		case 1:
+			return Color.GREEN;
+		}
+		
+		return null;
+	}
 
 	public int getEffectValue() {
 		return this.effectValue;
@@ -164,23 +181,8 @@ public abstract class Item {
 			if (new Rectangle((int) (this.getPosition().x - this.game.getCamera().getxOffset()),
 					(int) (this.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
 							.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
-				switch (this.rarity) {
-				case 1:
-					g.setColor(Color.GREEN);
-					break;
-				case 2:
-					g.setColor(Color.ORANGE);
-					break;
-				case 3:
-					g.setColor(Color.YELLOW);
-					break;
-				case 4:
-					g.setColor(Color.BLUE);
-					break;
-				case 5:
-					g.setColor(Color.GRAY);
-					break;
-				}
+				
+				g.setColor(getColour());
 
 				FontMetrics fm = g.getFontMetrics();
 
