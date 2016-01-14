@@ -34,6 +34,14 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 	}
 
+	public int getStamina() {
+		return this.stamina;
+	}
+
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(this.getImages()[0],
