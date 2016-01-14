@@ -1,9 +1,12 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
+import java.io.File;
 
 import entities.Inventory;
 import entities.Player;
@@ -30,23 +33,32 @@ public class HUD {
 				g.drawImage(currentItem.getImages()[1], 200 + item * 60 + 14, 664, null, null);
 			}
 		}
-		
+
 		g.setColor(Color.YELLOW);
 		g.drawRect(200 + player.getSelectedItem() * 60, 650, 60, 60);
 
 		g.setColor(new Color(112, 112, 112));
-		g.drawRect(940, 20, 20, 100);
-		g.drawRect(980, 20, 20, 100);
+		g.drawRect(939, 19, 21, 101);
+		g.drawRect(979, 19, 21, 101);
 
 		g.setColor(Color.RED);
 		g.fillRect(940, 120 - player.getHealth(), 20, player.getHealth());
+		
+		try {
+			Font f25font = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/VCR_OSD_MONO_1.001.ttf")).deriveFont(12f);
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(f25font);
+			g.setFont(f25font);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "HEALTH".length(); letter++) {
 			g.drawString("HEALTH".substring(letter, letter + 1), 945, 32 + letter * 12);
 		}
 
-		g.setColor(Color.GREEN);
+		g.setColor(new Color(0, 200, 50));
 		g.fillRect(980, 120 - player.getStamina() / 3, 20, player.getStamina() / 3);
 
 		g.setColor(Color.WHITE);
