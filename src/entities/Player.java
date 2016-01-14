@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import utilities.Assets;
 import main.Game;
@@ -19,7 +20,10 @@ public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 3;
 	public static final int MAX_STAMINA = 300;
 	public static final int SPRINT_COST = 3;
-
+	// *************THIS SHOULD BE PUT SOMEWHERE MORE APPROPRIATE***************
+	// WHAT IS BOUNDS IN ENTITY? G
+	// - ALLEN
+	private Rectangle hitbox;
 	private int stamina;
 
 	public Player(boolean solid, Game game) {
@@ -29,7 +33,7 @@ public class Player extends Mob {
 	}
 
 	public Player(Point position, boolean solid, Game game, Map map) {
-		super(32, 32, position, solid, game,map);
+		super(32, 32, position, solid, game, map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 	}
@@ -110,5 +114,9 @@ public class Player extends Mob {
 			else
 				makeNoise(100);
 		}
+		hitbox = new Rectangle((int) (this.getPosition().x - this.game
+				.getCamera().getxOffset()),
+				(int) (this.getPosition().y - this.game.getCamera()
+						.getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 	}
 }
