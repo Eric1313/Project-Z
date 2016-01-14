@@ -55,7 +55,7 @@ public class HUD {
 
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "HEALTH".length(); letter++) {
-			g.drawString("HEALTH".substring(letter, letter + 1), 945, 32 + letter * 12);
+			g.drawString("HEALTH".substring(letter, letter + 1), 943, 32 + letter * 12);
 		}
 
 		g.setColor(new Color(0, 200, 50));
@@ -63,7 +63,7 @@ public class HUD {
 
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "STAMINA".length(); letter++) {
-			g.drawString("STAMINA".substring(letter, letter + 1), 985, 32 + letter * 12);
+			g.drawString("STAMINA".substring(letter, letter + 1), 983, 32 + letter * 12);
 		}
 	}
 }
