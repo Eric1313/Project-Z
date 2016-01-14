@@ -5,11 +5,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import main.Game;
 import entities.MapObject;
 import entities.Zombie;
-import entities.ZombieThread;
 import enums.MapObjectType;
 import items.*;
 
@@ -98,7 +96,7 @@ public class Map {
 		for (int i = 1; i < plazaStarts.size()-1;i++)
 			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 		
-		spawnZombies(1);
+		spawnZombies(200);
 		spawnItems();
 		
 	}
@@ -108,11 +106,11 @@ public class Map {
 
 		for (int i=0;i<noZombies;i++)
 		{
-//			int randomX=(int) (Math.random()*(width-5));
-//			int randomY=(int) (Math.random()*(height-5));
-//			if((tileMap[randomX][randomY]& (1 << 14)) != 0 )
-//			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
-			chunkMap[0][0].addZombie(new Zombie(new Point(152, 152), 100, game.getZombie()[0], null, this.game, this));
+			int randomX=(int) (1+Math.random()*(width-5));
+			int randomY=(int) (1+Math.random()*(height-5));
+			if((tileMap[randomX][randomY]& (1 << 14)) == 0 )
+			chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100, game.getZombie()[0], null, this.game, this));
+//			chunkMap[0][0].addZombie(new Zombie(new Point(152, 152), 100, game.getZombie()[0], null, this.game, this));
 
 		}
 	}

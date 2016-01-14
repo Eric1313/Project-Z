@@ -31,7 +31,6 @@ public class Zombie extends Mob {
 	private short[][] map;
 	private boolean[][] tiles;
 	private Node[][] graph;
-	private Chunk[][]chunkMap;
 	PriorityQueue<Node> openList = new PriorityQueue<Node>();
 	ArrayList<Node> closedList = new ArrayList<Node>();
 
@@ -129,7 +128,7 @@ public class Zombie extends Mob {
 		openList.add(start);
 		int maxSteps=0;
 		if (tiles[targetX][targetY] == false)
-			while (!openList.isEmpty()&&maxSteps<3000) {
+			while (!openList.isEmpty()&&maxSteps<1000) {
 				maxSteps++;
 				current = openList.peek();
 				openList.remove(current);

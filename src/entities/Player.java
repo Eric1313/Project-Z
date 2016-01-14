@@ -123,9 +123,9 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(600);
+				makeNoise(400);
 			else
-				makeNoise(300);
+				makeNoise(200);
 		}
 		hitbox = new Rectangle((int) (this.getPosition().x - this.game
 				.getCamera().getxOffset()),
