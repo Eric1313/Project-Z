@@ -25,6 +25,8 @@ public class Player extends Mob {
 	// - ALLEN
 	private Rectangle hitbox;
 	private int stamina;
+	
+	private int selectedItem = 0;
 
 	public Player(boolean solid, Game game) {
 		super(solid, game);
@@ -46,6 +48,14 @@ public class Player extends Mob {
 		this.stamina = stamina;
 	}
 
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
+	}
+
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(this.getImages()[0],
@@ -57,6 +67,11 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
+		if (this.selectedItem < 0) {
+			this.selectedItem = 9;
+		}
+		
 		if (this.game.getDisplay().getKeyHandler().isShift()
 				&& this.stamina > Player.SPRINT_COST) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
