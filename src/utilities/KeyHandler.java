@@ -10,6 +10,7 @@ public class KeyHandler implements KeyListener {
 	private boolean left;
 	private boolean right;
 	private boolean shift;
+	private int lastNumber;
 
 	@Override
 	public void keyPressed(KeyEvent key) {
@@ -38,6 +39,10 @@ public class KeyHandler implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			shift = pressed;
 		}
+		
+		if (e.getKeyCode() >= 48 && e.getKeyCode() <= 57) {
+			this.lastNumber = e.getKeyCode() - 49;
+		}
 	}
 
 	@Override
@@ -64,5 +69,9 @@ public class KeyHandler implements KeyListener {
 	
 	public boolean isShift() {
 		return shift;
+	}
+	
+	public int getLastNumber() {
+		return this.lastNumber;
 	}
 }

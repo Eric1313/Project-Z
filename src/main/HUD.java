@@ -11,39 +11,44 @@ import items.Item;
 
 public class HUD {
 	private Player player;
-	
+
 	public HUD(Player player) {
 		this.player = player;
 	}
-	
+
 	public void render(Graphics g) {
 		g.setColor(new Color(112, 112, 112));
 		// g.drawRect(200, 650, 600, 60);
 		for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
-			g.drawRect(200 + item * 60, 650, 60, 60);
-			
+			if (item != player.getSelectedItem()) {
+				g.drawRect(200 + item * 60, 650, 60, 60);
+			}
+
 			Item currentItem = player.getInventory().get(item);
-			
+
 			if (currentItem != null) {
 				g.drawImage(currentItem.getImages()[1], 200 + item * 60 + 14, 664, null, null);
 			}
 		}
 		
+		g.setColor(Color.YELLOW);
+		g.drawRect(200 + player.getSelectedItem() * 60, 650, 60, 60);
+
+		g.setColor(new Color(112, 112, 112));
 		g.drawRect(940, 20, 20, 100);
 		g.drawRect(980, 20, 20, 100);
-		
+
 		g.setColor(Color.RED);
 		g.fillRect(940, 120 - player.getHealth(), 20, player.getHealth());
 
-		
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "HEALTH".length(); letter++) {
 			g.drawString("HEALTH".substring(letter, letter + 1), 945, 32 + letter * 12);
 		}
-		
+
 		g.setColor(Color.GREEN);
 		g.fillRect(980, 120 - player.getStamina() / 3, 20, player.getStamina() / 3);
-		
+
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "STAMINA".length(); letter++) {
 			g.drawString("STAMINA".substring(letter, letter + 1), 985, 32 + letter * 12);
