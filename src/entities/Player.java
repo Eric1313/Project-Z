@@ -127,10 +127,10 @@ public class Player extends Mob {
 			else
 				makeNoise(300);
 		}
-		// hitbox = new Rectangle((int) (this.getPosition().x - this.game
-		// .getCamera().getxOffset()),
-		// (int) (this.getPosition().y - this.game.getCamera()
-		// .getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		collision();
+	}
+
+	private void collision() {
 		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 
