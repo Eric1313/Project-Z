@@ -24,7 +24,7 @@ public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
 	public static final int MAX_STAMINA = 300;
 	public static final int MIN_STAMINA = MAX_STAMINA / 10;
-	public static final int SPRINT_COST = Player.MAX_STAMINA / 100;
+	public static final int SPRINT_COST = Player.MAX_STAMINA / 300;
 
 	private boolean exhausted = false;
 	private int stamina;
