@@ -191,12 +191,8 @@ public abstract class Item {
 								- fm.stringWidth(this.name) / 2,
 						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 15);
 			}
-		} else {
-			// TODO: Draw the item in the inventory
-			g.drawImage(this.getImages()[1], 500, 600, null);
-			if (this.state == ItemState.INHAND) {
+		} else if (this.state == ItemState.INHAND) {
 				g.drawImage(this.getImages()[2], 0, 0, null);
-			}
 		}
 	}
 }

@@ -111,6 +111,10 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
+<<<<<<< HEAD
+=======
+		spawnZombies(10000);
+>>>>>>> 4e0ca80b257caf1f0fece8c8f3be8ad5eb6927e6
 		spawnItems();
 
 	}

@@ -314,7 +314,7 @@ public class Player extends Mob {
 
 	public void dropItem() {
 		Item item = getItem(this.selectedItem);
-		item.setPosition(this.position);
+		item.setPosition(new Point(this.position.x, this.position.y));
 		item.setState(ItemState.DROPPED);
 		removeItem(this.selectedItem);
 		this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
