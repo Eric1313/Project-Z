@@ -120,7 +120,8 @@ public class Map {
 		ArrayList<Item> itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
-			for (int rarity = 0; rarity < currentItem.getRarity(); rarity++) {
+			int chance = (int) Math.pow(2, currentItem.getRarity());
+			for (int rarity = 0; rarity < chance; rarity++) {
 				itemSpawns.add(currentItem);
 			}
 		}
