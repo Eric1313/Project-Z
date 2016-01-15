@@ -128,9 +128,9 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(400,true);
+				makeNoise(600,true);
 			else
-				makeNoise(200,true);
+				makeNoise(300,true);
 		}
 		collision();
 	}

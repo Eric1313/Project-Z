@@ -67,7 +67,7 @@ public class PathFinder {
 			openList.add(start);
 			int maxSteps = 0;
 			if (tiles[targetX][targetY] == false)
-				while (!openList.isEmpty() && maxSteps < 1000) {
+				while (!openList.isEmpty() && maxSteps < 2000) {
 					maxSteps++;
 					current = openList.peek();
 					openList.remove(current);
