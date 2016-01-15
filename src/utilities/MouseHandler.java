@@ -5,10 +5,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MouseHandler extends MouseAdapter {
+	private boolean click;
 	private Point mouseLocation;
 
 	public MouseHandler() {
 		mouseLocation = new Point(0, 0);
+	}
+	
+	public void mousePressed(MouseEvent e) {
+		this.click = true;
 	}
 
 	public void mouseMoved(MouseEvent e) {
@@ -23,4 +28,11 @@ public class MouseHandler extends MouseAdapter {
 		return mouseLocation;
 	}
 
+	public boolean isClick() {
+		return click;
+	}
+
+	public void setClick(boolean click) {
+		this.click = click;
+	}
 }
