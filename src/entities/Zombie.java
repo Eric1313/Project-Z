@@ -25,23 +25,38 @@ import map.Chunk;
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
-	private Stack<Node> path = new Stack<Node>();
 
 
+	/**
+	 * Zombie constructor
+	 * 
+	 * @param position pixel based position
+	 * @param health zombie health
+	 * @param images images for render
+	 * @param clips requited audio clips
+	 * @param game game that it is in
+	 * @param map map that it is in
+	 */
 	public Zombie(Point position, int health, BufferedImage[] images,
 			AudioClip[] clips, Game game,Map map) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
 	}
 
+	/**
+	 * Updates zombie's position based on current path
+	 */
 	public void update() {
-
+		//Reset movement
 		this.setDown(false);
 		this.setUp(false);
 		this.setRight(false);
 		this.setLeft(false);
-		chunkMap[this.position.x/512][this.position.y/512].removeZombie(this);
-		
+		//Remove from chunk
+		int chunkX= this.position.x/512;
+		int chunkY=this.position.y/512;
+		//Follow the path
 		if (!this.getPath().isEmpty()) {
+			//If path contains null clear
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
@@ -55,20 +70,21 @@ public class Zombie extends Mob {
 				} else {
 					if (this.getPosition().y > targetY)
 						this.setUp(true);
-
 					else if (this.getPosition().y < targetY)
 						this.setDown(true);
-
 					if (this.getPosition().x > targetX)
 						this.setLeft(true);
 					else if (this.getPosition().x < targetX)
 						this.setRight(true);
 
-//					}
 				}
 			}
 		}
+		if(chunkX!=this.position.x/512||chunkY!=this.position.y/512)
+		{
+		chunkMap[chunkX][chunkY].removeZombie(this);
 		chunkMap[this.position.x/512][this.position.y/512].addZombie(this);
+		}
 		// System.out.println(this.getPosition().x+" "+this.getPosition().y);
 		if (this.up) {
 			this.getPosition().setLocation(this.getPosition().getX(),
@@ -89,7 +105,7 @@ public class Zombie extends Mob {
 					this.getPosition().getY());
 		}
 		if (this.right || this.left || this.up || this.down) {
-//			makeNoise(100);
+			makeNoise(300,false);
 		}
 	}
 

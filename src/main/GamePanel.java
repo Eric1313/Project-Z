@@ -35,10 +35,6 @@ public class GamePanel extends JPanel {
 		int chunkY = Math.max((int) world.getPlayer().getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
 			for (int y = chunkY - 2; y < chunkY + 3; y++) {
-//				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
-//						.iterator(); iterator.hasNext();) {
-//					Zombie zombie= iterator.next();
-//					zombie.update();
 				for (int i=0;i<chunkMap[x][y].getZombies().size();i++)
 				{
 					chunkMap[x][y].getZombies().get(i).update();
@@ -48,7 +44,7 @@ public class GamePanel extends JPanel {
 	}
 
 	public void setup(Game game) {
-		world = new World(game, 400, 400);
+		world = new World(game, 1600, 1600);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
 		chunkMap=world.getMap().getChunkMap();

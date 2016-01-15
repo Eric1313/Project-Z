@@ -137,6 +137,10 @@ public abstract class Entity {
 	public Item removeItem(int itemNo) {
 		return this.inventory.remove(itemNo);
 	}
+	
+	public int removeItem(Item item) {
+		return this.inventory.remove(item);
+	}
 
 	public Item getItem(int itemNo) {
 		return this.inventory.get(itemNo);

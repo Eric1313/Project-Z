@@ -1,9 +1,11 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
+import map.Chunk;
 import map.Map;
 import utilities.Node;
 
@@ -13,13 +15,16 @@ public class PathFinder {
 	private short[][] map;
 	private boolean[][] tiles;
 	private Node[][] graph;
+	private Chunk[][] chunkMap;
+	private Chunk currentChunk;
 	PriorityQueue<Node> openList = new PriorityQueue<Node>();
 	ArrayList<Node> closedList = new ArrayList<Node>();
 
 	public PathFinder(Map map) {
 		this.tiles = new boolean[map.getWidth()][map.getHeight()];
 		this.graph = new Node[map.getWidth()][map.getHeight()];
-		this.map=map.getMap();
+		this.map = map.getMap();
+		this.chunkMap = map.getChunkMap();
 		for (int x = 0; x < tiles.length; x++) {
 			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[y][x] = ((this.map[x][y] & (1 << 14)) != 0);
@@ -30,15 +35,29 @@ public class PathFinder {
 
 	public Stack<Node> findPath(Stack<Node> oldPath, int startX, int startY,
 			int targetX, int targetY) {
-		if (!oldPath.isEmpty()&&oldPath.get(0).locationX == targetX
+		if (!oldPath.isEmpty() && oldPath.get(0).locationX == targetX
 				&& oldPath.get(0).locationY == targetY) {
 			return oldPath;
 
-//		} else if (!oldPath.isEmpty()&&(Math.abs(targetX - oldPath.get(0).locationX) == 1 || Math.abs(targetY - oldPath.get(0).locationY) == 1)) {
-//			path.add(0, new Node(targetX, targetY));
-//			return oldPath;
-
 		} else {
+			if (!oldPath.isEmpty()) {
+				currentChunk = chunkMap[oldPath.peek().locationX / 16][oldPath
+						.peek().locationY / 16];
+				if (currentChunk.getZombies().size() > 5)
+					for (Iterator<Zombie> iterator = currentChunk.getZombies()
+							.iterator(); iterator.hasNext();) {
+						Zombie zombie = iterator.next();
+						Stack<Node> checkPath = zombie.getPath();
+						if (!checkPath.isEmpty()&& (Math.abs(checkPath.peek().locationX
+								- targetX) > 2)
+						&& (Math.abs(checkPath.peek().locationY
+								- targetY) > 2)
+								&& checkPath.get(0).locationX == targetX
+								&& checkPath.get(0).locationY == targetY
+								)
+							return (checkPath);
+					}
+			}
 			this.path = new Stack<Node>();
 			openList.clear();
 			closedList.clear();
@@ -48,7 +67,7 @@ public class PathFinder {
 			openList.add(start);
 			int maxSteps = 0;
 			if (tiles[targetX][targetY] == false)
-				while (!openList.isEmpty() && maxSteps < 1000) {
+				while (!openList.isEmpty() && maxSteps < 1500) {
 					maxSteps++;
 					current = openList.peek();
 					openList.remove(current);
@@ -121,5 +140,4 @@ public class PathFinder {
 		}
 		return path;
 	}
-
 }
