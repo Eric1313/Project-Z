@@ -33,13 +33,13 @@ public class PathFinder {
 		}
 	}
 
-	public Stack<Node> findPath(Stack<Node> oldPath,int startX, int startY, 
-			int targetX, int targetY) {
+	public Stack<Node> findPath(Stack<Node> oldPath,int startX, int startY,int targetX, int targetY) {
 		if (!oldPath.isEmpty() && oldPath.get(0).locationX == targetX
 				&& oldPath.get(0).locationY == targetY) {
 			return oldPath;
 
 		} else {
+		
 //			if (!oldPath.isEmpty()) {
 //				currentChunk = chunkMap[oldPath.peek().locationX / 16][oldPath
 //						.peek().locationY / 16];
@@ -62,19 +62,19 @@ public class PathFinder {
 			openList.clear();
 			closedList.clear();
 			path.clear();
-			Node start = graph[startY][startX];
+			Node start = graph[targetY][targetX];
 			Node current = start;
 			openList.add(start);
 			int maxSteps = 0;
-			if (tiles[targetX][targetY] == false)
+			if (tiles[startX][startY] == false)
 				while (!openList.isEmpty() && maxSteps < 1500) {
 					maxSteps++;
 					current = openList.peek();
 					openList.remove(current);
 					closedList.add(current);
 					// if is destination
-					if (current.locationX == targetX
-							&& current.locationY == targetY) {
+					if (current.locationX == startX
+							&& current.locationY == startY) {
 						while (current != start) {
 							path.add(current);
 							current = current.prev;
@@ -131,18 +131,18 @@ public class PathFinder {
 								nextNode.setParent(current);
 								nextNode.g = g;
 								nextNode.h = Math.abs(nextNode.locationX
-										- targetX)
-										+ Math.abs(nextNode.locationY - targetY);
+										- startX)
+										+ Math.abs(nextNode.locationY - startY);
 								openList.add(nextNode);
 							}
 						}
 				}
 		}
-//		oldPath.clear();
-//		while(!path.empty()&&path.peek()!=null)
-//		{
-//			oldPath.push(path.pop());
-//		}
+		oldPath.clear();
+		while(!path.empty()&&path.peek()!=null)
+		{
+			oldPath.push(path.pop());
+		}
 		return path;
 	}
 }
