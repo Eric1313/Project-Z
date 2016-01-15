@@ -41,16 +41,16 @@ public class Map {
 	final int ROAD_WIDTH = 11;
 	
 	final int MAX_ZOMBIE_PER_ROOM = 2;
-	final int MAX_ZOMBIE_PER_FOREST = 10;
-	final int MAX_ZOMBIE_PER_ROAD = 20;
+	final int MAX_ZOMBIE_PER_FOREST = 5;
 	// STores locations of all plazas
 
 	// Map storage
 	private short[][] tileMap;
+	private short[][] upperTileMap;
 	private Chunk[][] chunkMap;
 	private Game game;
 	private PathFinder pathFinder;
-	
+	public static int zombieCount;
 	private Point playerStart;
 
 	private ArrayList<Item> items;
@@ -111,7 +111,12 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
+<<<<<<< HEAD
+		
+		spawnItems();
+=======
 
+>>>>>>> ff42e8350a6b4956edd207e5590a4949e8836c11
 
 	}
 
@@ -422,9 +427,11 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY()){
 					setTile(i, j, 200, Direction.UP, false);
-					if (Math.random() > 0.95)
+					if (Math.random() > 0.99){
 							chunkMap[i/16][j/16].addZombie(new Zombie(new Point(i*32, j*32), 100,
 								game.getZombie()[0], null, this.game, this));
+							zombieCount++;
+					}
 				}
 				/*
 				 * else if (i == start.getX()+1 || i == end.getX()-1 || j ==
@@ -502,9 +509,11 @@ public class Map {
 			int randomX = (int) (Math.random()*boxWidth + start.getX());
 			int randomY = (int) (Math.random() *boxHeight + start.getY());
 			
-			if (Math.random() > 0.25 && (tileMap[randomX][randomY] & 0xFFF) == 201)
+			if (Math.random() > 0.25 && (tileMap[randomX][randomY] & 0xFFF) == 201){
 				chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100,
 					game.getZombie()[0], null, this.game, this));
+				zombieCount++;
+			}
 		}
 
 	}
@@ -546,9 +555,11 @@ public class Map {
 			int randomX = (int) (Math.random()*boxWidth + start.getX());
 			int randomY = (int) (Math.random() *boxHeight + start.getY());
 			
-			if (Math.random() > 0.10 && (tileMap[randomX][randomY] & 0xFFF) == 108 || (tileMap[randomX][randomY] & 0xFFF) >= 110)
+			if (Math.random() > 0.10 && (tileMap[randomX][randomY] & 0xFFF) == 108 || (tileMap[randomX][randomY] & 0xFFF) >= 110){
 				chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100,
 					game.getZombie()[0], null, this.game, this));
+				zombieCount++;
+			}
 		}
 
 	}
@@ -744,9 +755,11 @@ public class Map {
 					setTile(tempx, tempy, 101, Direction.UP, false);
 				
 				//Spawns zombies on roads
-				if (Math.random() > 0.95)
+				if (Math.random() > 0.99){
 					chunkMap[tempx/16][tempy/16].addZombie(new Zombie(new Point(tempx*32, tempy*32), 100,
 						game.getZombie()[0], null, this.game, this));
+					zombieCount++;
+				}
 				tempx++;
 			}
 
@@ -941,6 +954,35 @@ public class Map {
 		}
 
 	}
+	
+	/**
+	 * Sets tile to tile id and sets direction
+	 * 
+	 * @param x
+	 *            x position
+	 * @param y
+	 *            y position
+	 * @param id
+	 *            tile ID
+	 * @param direction
+	 *            tile direction
+	 */
+	public void setUpperTile(int x, int y, int id, Direction direction) {
+		// set id
+		upperTileMap[x][y] = (short) id;
+		// Set bit 12/ 13 to indicate direction
+		if (direction == Direction.RIGHT) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+		} else if (direction == Direction.LEFT) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
+		} else if (direction == Direction.UP) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+		}
+
+	}
+	
+	
 
 	public short[][] getMap() {
 		return tileMap;
@@ -989,6 +1031,13 @@ public class Map {
 	public Point getPlayerCoordinate() {
 		return playerStart;
 	}
+	
+	/**
+	 * @return the number of zombies
+	 */
+	public int getZombieCount(){
+		return zombieCount;
+	}
 
 	/**
 	 * @param chunkMap
@@ -1010,6 +1059,20 @@ public class Map {
 	 */
 	public void setPathFinder(PathFinder pathFinder) {
 		this.pathFinder = pathFinder;
+	}
+
+	/**
+	 * @return the upperTileMap
+	 */
+	public short[][] getUpperTileMap() {
+		return upperTileMap;
+	}
+
+	/**
+	 * @param upperTileMap the upperTileMap to set
+	 */
+	public void setUpperTileMap(short[][] upperTileMap) {
+		this.upperTileMap = upperTileMap;
 	}
 	
 }

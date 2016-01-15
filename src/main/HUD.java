@@ -9,6 +9,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
+import map.Map;
 import entities.Inventory;
 import entities.Player;
 import items.Item;
@@ -76,5 +77,8 @@ public class HUD {
 		for (int letter = 0; letter < "STAMINA".length(); letter++) {
 			g.drawString("STAMINA".substring(letter, letter + 1), 983, 32 + letter * 12);
 		}
+		
+		g.setColor(Color.RED);
+		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
 	}
 }
