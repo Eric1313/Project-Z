@@ -41,10 +41,10 @@ public class Player extends Mob {
 		super(32, 32, position, solid, game, map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
-		addItem(this.game.getItems().get(0));
-		addItem(this.game.getItems().get(1));
-		addItem(this.game.getItems().get(0));
-		addItem(this.game.getItems().get(0));
+		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
+		addItem(new Consumable((Consumable) this.game.getItems().get(1)));
+		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
+		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
 	}
 
 	public int getStamina() {
@@ -94,7 +94,6 @@ public class Player extends Mob {
 						|| this.game.getDisplay().getKeyHandler().isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
-			this.health = 99;
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
 			if (this.stamina < Player.MAX_STAMINA) {
