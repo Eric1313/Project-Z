@@ -46,6 +46,7 @@ public class Map {
 
 	// Map storage
 	private short[][] tileMap;
+	private short[][] upperTileMap;
 	private Chunk[][] chunkMap;
 	private Game game;
 	private PathFinder pathFinder;
@@ -110,8 +111,12 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
+<<<<<<< HEAD
 		
 		spawnItems();
+=======
+
+>>>>>>> ff42e8350a6b4956edd207e5590a4949e8836c11
 
 	}
 
@@ -949,6 +954,35 @@ public class Map {
 		}
 
 	}
+	
+	/**
+	 * Sets tile to tile id and sets direction
+	 * 
+	 * @param x
+	 *            x position
+	 * @param y
+	 *            y position
+	 * @param id
+	 *            tile ID
+	 * @param direction
+	 *            tile direction
+	 */
+	public void setUpperTile(int x, int y, int id, Direction direction) {
+		// set id
+		upperTileMap[x][y] = (short) id;
+		// Set bit 12/ 13 to indicate direction
+		if (direction == Direction.RIGHT) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+		} else if (direction == Direction.LEFT) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
+		} else if (direction == Direction.UP) {
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
+			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+		}
+
+	}
+	
+	
 
 	public short[][] getMap() {
 		return tileMap;
@@ -1025,6 +1059,20 @@ public class Map {
 	 */
 	public void setPathFinder(PathFinder pathFinder) {
 		this.pathFinder = pathFinder;
+	}
+
+	/**
+	 * @return the upperTileMap
+	 */
+	public short[][] getUpperTileMap() {
+		return upperTileMap;
+	}
+
+	/**
+	 * @param upperTileMap the upperTileMap to set
+	 */
+	public void setUpperTileMap(short[][] upperTileMap) {
+		this.upperTileMap = upperTileMap;
 	}
 	
 }
