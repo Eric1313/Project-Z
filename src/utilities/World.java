@@ -132,8 +132,6 @@ public class World {
 							(int) (tileY * Assets.TILE_HEIGHT
 									- game.getCamera().getyOffset() + yChange - 2),
 							32, 32);
-					g2D.draw(solid[tileY][tileX]);
-					g2D.setTransform(originalTransform);
 				} else {
 					solid[tileY][tileX] = null;
 				}
