@@ -111,13 +111,7 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
-<<<<<<< HEAD
-		
 		spawnItems();
-=======
-
->>>>>>> ff42e8350a6b4956edd207e5590a4949e8836c11
-
 	}
 
 	/*
