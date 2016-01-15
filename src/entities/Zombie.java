@@ -25,23 +25,37 @@ import map.Chunk;
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
-	private Stack<Node> path = new Stack<Node>();
 
 
+	/**
+	 * Zombie constructor
+	 * 
+	 * @param position pixel based position
+	 * @param health zombie health
+	 * @param images images for render
+	 * @param clips requited audio clips
+	 * @param game game that it is in
+	 * @param map map that it is in
+	 */
 	public Zombie(Point position, int health, BufferedImage[] images,
 			AudioClip[] clips, Game game,Map map) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
 	}
 
+	/**
+	 * Updates zombie's position based on current path
+	 */
 	public void update() {
-
+		//Reset movement
 		this.setDown(false);
 		this.setUp(false);
 		this.setRight(false);
 		this.setLeft(false);
+		//Remove from chunk
 		chunkMap[this.position.x/512][this.position.y/512].removeZombie(this);
-		
+		//Follow the path
 		if (!this.getPath().isEmpty()) {
+			//If path contains null clear
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
@@ -89,7 +103,7 @@ public class Zombie extends Mob {
 					this.getPosition().getY());
 		}
 		if (this.right || this.left || this.up || this.down) {
-//			makeNoise(100);
+			makeNoise(300,false);
 		}
 	}
 

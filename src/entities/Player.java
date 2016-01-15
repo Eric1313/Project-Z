@@ -91,7 +91,8 @@ public class Player extends Mob {
 				this.stamina++;
 			}
 		}
-
+		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y, Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		boolean collision = false;
 		if (this.game.getDisplay().getKeyHandler().isUp()) {
 			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() - this.movementSpeed);
 		}
@@ -102,8 +103,39 @@ public class Player extends Mob {
 			this.getPosition().setLocation(this.getPosition().getX() - this.movementSpeed, this.getPosition().getY());
 		}
 		if (this.game.getDisplay().getKeyHandler().isRight()) {
+			// collision = false;
+			// for (int i = (int) ((this.getPosition().x - this.game.getCamera()
+			// .getxOffset()) / 32); i < game.getDisplay().getGamePanel()
+			// .getWorld().getSolid()[0].length; i++) {
+			// if (game.getDisplay().getGamePanel().getWorld().getSolid()[(int)
+			// ((this
+			// .getPosition().y - this.game.getCamera().getyOffset()) / 32)][i]
+			// != null) {
+			// if (position.getX() + Assets.TILE_WIDTH
+			// + this.movementSpeed > game.getDisplay()
+			// .getGamePanel().getWorld().getSolid()[(int) ((this
+			// .getPosition().y - this.game.getCamera()
+			// .getyOffset()) / 32)][i].getX()
+			// && position.getX() + Assets.TILE_WIDTH
+			// + this.movementSpeed < game.getDisplay()
+			// .getGamePanel().getWorld().getSolid()[(int) ((this
+			// .getPosition().y - this.game.getCamera()
+			// .getyOffset()) / 32)][i].getX()
+			// + Assets.TILE_WIDTH) {
+			// position.setLocation(
+			// game.getDisplay().getGamePanel().getWorld()
+			// .getSolid()[(int) ((this.getPosition().y - this.game
+			// .getCamera().getyOffset()) / 32)][i]
+			// .getX()
+			// - Assets.TILE_WIDTH, position.getY());
+			// collision = true;
+			// }
+			// }
+			// }
+			// if (!collision)
 			this.getPosition().setLocation(this.getPosition().getX() + this.movementSpeed, this.getPosition().getY());
 		}
+
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
 		else if (position.getX() > Assets.TILE_WIDTH * (game.getDisplay().getGamePanel().getWorld().getWidth() - 1))
@@ -122,9 +154,9 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(400);
+				makeNoise(600, true);
 			else
-				makeNoise(200);
+				makeNoise(300, true);
 		}
 		collision();
 	}

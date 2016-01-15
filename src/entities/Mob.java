@@ -5,7 +5,9 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.Stack;
 
+import utilities.Node;
 import main.Game;
 import map.Chunk;
 import map.Map;
@@ -28,6 +30,8 @@ public abstract class Mob extends Entity {
 	protected boolean left;
 	protected boolean right;
 	protected Map map;
+	protected Stack<Node> path = new Stack<Node>();
+
 
 	public Mob(boolean solid, Game game) {
 		super(solid, game);
@@ -48,8 +52,7 @@ public abstract class Mob extends Entity {
 	this.chunkMap=map.getChunkMap();
 	}
 
-	public void makeNoise(int range) {
-//		Ellipse2D.Double audibleArea= new Ellipse2D.Double(position.x,position.y,range,range);
+	public void makeNoise(int range, boolean player) {
 		int chunkX = Math.max(position.x / 512,2);
 		int chunkY = Math.max(position.y / 512,2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
@@ -57,12 +60,12 @@ public abstract class Mob extends Entity {
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
 						.hasNext();) {
 					Zombie zombie = iterator.next();
-					if(Math.sqrt(    Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range)
+					if(Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2)<range*range)
 					{
-System.out.println("hi");
+						if(player)
 						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32));
-
-						//						zombie.findPath(zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32);
+						else if (!path.isEmpty())
+							zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), zombie.position.x/32, zombie.position.y/32, path.get(0).locationX,path.get(0).locationY));
 					}
 				}
 			}

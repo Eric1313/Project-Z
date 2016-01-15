@@ -98,7 +98,7 @@ public class Map {
 			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 
 		pathFinder=new PathFinder(this);
-		spawnZombies(200);
+		spawnZombies(10000);
 		spawnItems();
 
 	}
@@ -111,8 +111,7 @@ public class Map {
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0)
 				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new Point(randomX * 32, randomY * 32), 100,
 						game.getZombie()[0], null, this.game, this));
-			// chunkMap[0][0].addZombie(new Zombie(new Point(152, 152), 100,
-			// game.getZombie()[0], null, this.game, this));
+
 
 		}
 	}
