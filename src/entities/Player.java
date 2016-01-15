@@ -19,11 +19,10 @@ import utilities.Assets;
 public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
 	public static final int MAX_STAMINA = 300;
-	public static final int SPRINT_COST = 3;
-	// *************THIS SHOULD BE PUT SOMEWHERE MORE APPROPRIATE***************
-	// WHAT IS BOUNDS IN ENTITY? G
-	// - ALLEN
-	private Rectangle hitbox;
+	public static final int MIN_STAMINA = MAX_STAMINA / 10;
+	public static final int SPRINT_COST = Player.MAX_STAMINA / 100;
+
+	private boolean exhausted = false;
 	private int stamina;
 
 	private int selectedItem = 0;
@@ -68,11 +67,25 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		int col = (int) ((this.getPosition().x - this.game.getCamera()
+				.getxOffset()) / 32);
+		int row = (int) ((this.getPosition().y - this.game.getCamera()
+				.getyOffset()) / 32);
 		this.selectedItem = this.game.getDisplay().getKeyHandler()
 				.getLastNumber();
 
+		if (this.stamina < Player.SPRINT_COST) {
+			this.exhausted = true;
+		} else if (this.stamina > Player.MIN_STAMINA) {
+			this.exhausted = false;
+		}
+
 		if (this.game.getDisplay().getKeyHandler().isShift()
-				&& this.stamina > Player.SPRINT_COST) {
+				&& !exhausted
+				&& (this.game.getDisplay().getKeyHandler().isUp()
+						|| this.game.getDisplay().getKeyHandler().isDown()
+						|| this.game.getDisplay().getKeyHandler().isLeft() || this.game
+						.getDisplay().getKeyHandler().isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
 		} else {
@@ -81,56 +94,10 @@ public class Player extends Mob {
 				this.stamina++;
 			}
 		}
-		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
-				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-		boolean collision = false;
-		if (this.game.getDisplay().getKeyHandler().isUp()) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() - this.movementSpeed);
-		}
-		if (this.game.getDisplay().getKeyHandler().isDown()) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() + this.movementSpeed);
-		}
-		if (this.game.getDisplay().getKeyHandler().isLeft()) {
-			this.getPosition().setLocation(
-					this.getPosition().getX() - this.movementSpeed,
-					this.getPosition().getY());
-		}
-		if (this.game.getDisplay().getKeyHandler().isRight()) {
-//			collision = false;
-//			for (int i = (int) ((this.getPosition().x - this.game.getCamera()
-//					.getxOffset()) / 32); i < game.getDisplay().getGamePanel()
-//					.getWorld().getSolid()[0].length; i++) {
-//				if (game.getDisplay().getGamePanel().getWorld().getSolid()[(int) ((this
-//						.getPosition().y - this.game.getCamera().getyOffset()) / 32)][i] != null) {
-//					if (position.getX() + Assets.TILE_WIDTH
-//							+ this.movementSpeed > game.getDisplay()
-//							.getGamePanel().getWorld().getSolid()[(int) ((this
-//							.getPosition().y - this.game.getCamera()
-//							.getyOffset()) / 32)][i].getX()
-//							&& position.getX() + Assets.TILE_WIDTH
-//									+ this.movementSpeed < game.getDisplay()
-//									.getGamePanel().getWorld().getSolid()[(int) ((this
-//									.getPosition().y - this.game.getCamera()
-//									.getyOffset()) / 32)][i].getX()
-//									+ Assets.TILE_WIDTH) {
-//						position.setLocation(
-//								game.getDisplay().getGamePanel().getWorld()
-//										.getSolid()[(int) ((this.getPosition().y - this.game
-//										.getCamera().getyOffset()) / 32)][i]
-//										.getX()
-//										- Assets.TILE_WIDTH, position.getY());
-//						collision = true;
-//					}
-//				}
-//			}
-//			if (!collision)
-				this.getPosition().setLocation(
-						this.getPosition().getX() + this.movementSpeed,
-						this.getPosition().getY());
-		}
-
+		this.getPosition().setLocation(this.getPosition().getX(),
+				this.getPosition().getY() + yMove());
+		this.getPosition().setLocation(this.getPosition().getX() + xMove(),
+				this.getPosition().getY());
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
 		else if (position.getX() > Assets.TILE_WIDTH
@@ -155,48 +122,40 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(600,true);
+				makeNoise(400, true);
 			else
 				makeNoise(200,true);
+
 		}
-		collision();
 	}
 
-	private void collision() {
-		// hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
-		// Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-		//
-		// for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-		// .getSolid().length; i++) {
-		// for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-		// .getSolid()[0].length; j++) {
-		// if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] !=
-		// null) {
-		// if (hitbox.intersects(game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j])) {
-		// int xOverlap = (int) (game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j].getX() - this
-		// .getPosition().getX());
-		// int yOverlap = (int) (game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j].getY() - this
-		// .getPosition().getY());
-		// if (xOverlap < -16) {
-		// position.setLocation(position.getX() - xOverlap,
-		// position.getY());
-		// } else {
-		// position.setLocation(position.getX()
-		// + (32 + xOverlap), position.getY());
-		// }
-		// if (yOverlap < -16) {
-		// position.setLocation(position.getX(),
-		// position.getY() - xOverlap);
-		// } else {
-		// position.setLocation(position.getX(),
-		// position.getY() + (32 + xOverlap));
-		// }
-		// }
-		// }
-		// }
-		// }
+	private int xMove() {
+		int xMove = 0;
+		if (this.game.getDisplay().getKeyHandler().isLeft()) {
+			xMove = -this.movementSpeed;
+		}
+		if (this.game.getDisplay().getKeyHandler().isRight()) {
+			xMove = this.movementSpeed;
+		}
+		if (xMove > 0) {// Moving right
+			if (game.getDisplay().getGamePanel().getWorld().getSolid()[(int) ((this
+					.getPosition().y - this.game.getCamera().getyOffset()) / 32)][(int) ((this
+					.getPosition().x - this.game.getCamera().getxOffset()) / 32) + 1] != null) {
+
+			}
+		} else if (xMove < 0) {// Moving Left
+
+		}
+		return xMove;
+	}
+
+	private int yMove() {
+		if (this.game.getDisplay().getKeyHandler().isUp()) {
+			return -this.movementSpeed;
+		}
+		if (this.game.getDisplay().getKeyHandler().isDown()) {
+			return this.movementSpeed;
+		}
+		return 0;
 	}
 }
