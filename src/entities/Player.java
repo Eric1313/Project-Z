@@ -68,6 +68,10 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		int col = (int) ((this.getPosition().x - this.game.getCamera()
+				.getxOffset()) / 32);
+		int row = (int) ((this.getPosition().y - this.game.getCamera()
+				.getyOffset()) / 32);
 		this.selectedItem = this.game.getDisplay().getKeyHandler()
 				.getLastNumber();
 
@@ -161,7 +165,7 @@ public class Player extends Mob {
 		// position.getY() - xOverlap);
 		// } else {
 		// position.setLocation(position.getX(),
-		// position.getY() + (32+ xOverlap));
+		// position.getY() + (32 + xOverlap));
 		// }
 		// }
 		// }
