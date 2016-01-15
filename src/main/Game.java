@@ -167,37 +167,37 @@ public class Game implements Runnable {
 		}
 	}
 
-	/**
-	 * The main game loop of the game
-	 */
-	// public void run() {
-	//
-	// initialize();
-	//
-	// int fps = 60;
-	// double timePerUpdate = 1000000000 / fps;
-	// double timeElapsed = 0;
-	// long now;
-	// // Current time of computer in nanoseconds
-	// long lastTime = System.nanoTime();
-	//
-	// // Game loop
-	// while (running) {
-	// now = System.nanoTime();
-	// timeElapsed += (now - lastTime) / timePerUpdate;
-	// lastTime = now;
-	//
-	// // If the time elapsed has been 1/60th of a second then refresh the
-	// // game
-	// if (timeElapsed >= 1) {
-	// update();
-	// render();
-	// timeElapsed--;
-	// }
-	// }
-	// // Stops the game
-	// stop();
-	// }
+//	/**
+//	 * The main game loop of the game
+//	 */
+//	 public void run() {
+//	
+//	 initialize();
+//	
+//	 int fps = 30;
+//	 double timePerUpdate = 1000000000 / fps;
+//	 double timeElapsed = 0;
+//	 long now;
+//	 // Current time of computer in nanoseconds
+//	 long lastTime = System.nanoTime();
+//	
+//	 // Game loop
+//	 while (running) {
+//	 now = System.nanoTime();
+//	 timeElapsed += (now - lastTime) / timePerUpdate;
+//	 lastTime = now;
+//	
+//	 // If the time elapsed has been 1/60th of a second then refresh the
+//	 // game
+//	 if (timeElapsed >= 1) {
+//	 update();
+//	 render();
+//	 timeElapsed--;
+//	 }
+//	 }
+//	 // Stops the game
+//	 stop();
+//	 }
 
 	public void run() {
 		initialize();
@@ -235,6 +235,7 @@ public class Game implements Runnable {
 
 			if (ticked) {
 				render();
+//				update();
 				frames++;
 			} else {
 				try {

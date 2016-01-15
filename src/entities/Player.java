@@ -157,7 +157,7 @@ public class Player extends Mob {
 			if (this.game.getDisplay().getKeyHandler().isShift())
 				makeNoise(600,true);
 			else
-				makeNoise(300,true);
+				makeNoise(200,true);
 		}
 		collision();
 	}

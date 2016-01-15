@@ -52,7 +52,8 @@ public class Zombie extends Mob {
 		this.setRight(false);
 		this.setLeft(false);
 		//Remove from chunk
-		chunkMap[this.position.x/512][this.position.y/512].removeZombie(this);
+		int chunkX= this.position.x/512;
+		int chunkY=this.position.y/512;
 		//Follow the path
 		if (!this.getPath().isEmpty()) {
 			//If path contains null clear
@@ -69,20 +70,21 @@ public class Zombie extends Mob {
 				} else {
 					if (this.getPosition().y > targetY)
 						this.setUp(true);
-
 					else if (this.getPosition().y < targetY)
 						this.setDown(true);
-
 					if (this.getPosition().x > targetX)
 						this.setLeft(true);
 					else if (this.getPosition().x < targetX)
 						this.setRight(true);
 
-//					}
 				}
 			}
 		}
+		if(chunkX!=this.position.x/512||chunkY!=this.position.y/512)
+		{
+		chunkMap[chunkX][chunkY].removeZombie(this);
 		chunkMap[this.position.x/512][this.position.y/512].addZombie(this);
+		}
 		// System.out.println(this.getPosition().x+" "+this.getPosition().y);
 		if (this.up) {
 			this.getPosition().setLocation(this.getPosition().getX(),
