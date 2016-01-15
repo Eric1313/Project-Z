@@ -67,8 +67,8 @@ public class Zombie extends Mob {
 			} else {
 				int targetX = path.peek().locationX * 32 ;
 				int targetY = path.peek().locationY * 32 ;
-				System.out.println(this.position.x+" "+this.position.y);
-				System.out.println(path.peek().locationX*32 +" "+path.peek().locationY * 32);
+//				System.out.println(this.position.x+" "+this.position.y);
+//				System.out.println(path.peek().locationX*32 +" "+path.peek().locationY * 32);
 
 				if ((this.getPosition().x == targetX)
 						&& (this.getPosition().y == targetY)) {

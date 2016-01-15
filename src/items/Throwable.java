@@ -30,6 +30,14 @@ public class Throwable extends Item {
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;
 	}
+	
+	public Throwable(Throwable item) {
+		super(item);
+		
+		this.effect = item.getEffect();
+		this.range = item.getRange();
+		this.areaOfEffect = item.getAreaOfEffect();
+	}
 
 	public ItemEffect getEffect() {
 		return this.effect;

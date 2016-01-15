@@ -57,12 +57,12 @@ public abstract class Mob extends Entity {
 					Zombie zombie = iterator.next();
 //					System.out.println(audibleArea.contains(zombie.position.x,zombie.position.y));
 //					if(audibleArea.contains(zombie.position.x,zombie.position.y))
-					System.out.println(( Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range);
-					System.out.println(zombie.position.x+" "+zombie.position.y);
+//					System.out.println(( Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range);
+//					System.out.println(zombie.position.x+" "+zombie.position.y);
 					if(Math.sqrt(    Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range)
 					{
-						System.out.println(x+" "+y);
-						System.out.println(zombie.position.x/32+" "+ zombie.position.y/32+" "+ this.position.x/32+" "+ this.position.y/32);
+//						System.out.println(x+" "+y);
+//						System.out.println(zombie.position.x/32+" "+ zombie.position.y/32+" "+ this.position.x/32+" "+ this.position.y/32);
 						zombie.getPath().clear();
 						zombie.findPath(zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32);
 					}

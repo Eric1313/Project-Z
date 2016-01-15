@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
@@ -27,15 +28,24 @@ public class HUD {
 				g.drawRect(200 + item * 60, 650, 60, 60);
 			}
 
-			Item currentItem = player.getInventory().get(item);
+			Item currentItem = player.getItem(item);
 
 			if (currentItem != null) {
-				g.drawImage(currentItem.getImages()[1], 200 + item * 60 + 14, 664, null, null);
+				g.drawImage(currentItem.getImages()[0], 200 + item * 60 + 14, 664, null, null);
 			}
 		}
 
 		g.setColor(Color.YELLOW);
 		g.drawRect(200 + player.getSelectedItem() * 60, 650, 60, 60);
+
+		Item selectedItem = player.getItem(player.getSelectedItem());
+		if (selectedItem != null) {
+			g.setColor(selectedItem.getColour());
+			String itemName = selectedItem.getName();
+			FontMetrics fm = g.getFontMetrics();
+
+			g.drawString(itemName, 500 - fm.stringWidth(itemName) / 2, 625);
+		}
 
 		g.setColor(new Color(112, 112, 112));
 		g.drawRect(939, 19, 21, 101);
@@ -43,9 +53,10 @@ public class HUD {
 
 		g.setColor(Color.RED);
 		g.fillRect(940, 120 - player.getHealth(), 20, player.getHealth());
-		
+
 		try {
-			Font f25font = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/VCR_OSD_MONO_1.001.ttf")).deriveFont(12f);
+			Font f25font = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/VCR_OSD_MONO_1.001.ttf"))
+					.deriveFont(12f);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(f25font);
 			g.setFont(f25font);
@@ -55,7 +66,7 @@ public class HUD {
 
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "HEALTH".length(); letter++) {
-			g.drawString("HEALTH".substring(letter, letter + 1), 945, 32 + letter * 12);
+			g.drawString("HEALTH".substring(letter, letter + 1), 943, 32 + letter * 12);
 		}
 
 		g.setColor(new Color(0, 200, 50));
@@ -63,7 +74,7 @@ public class HUD {
 
 		g.setColor(Color.WHITE);
 		for (int letter = 0; letter < "STAMINA".length(); letter++) {
-			g.drawString("STAMINA".substring(letter, letter + 1), 985, 32 + letter * 12);
+			g.drawString("STAMINA".substring(letter, letter + 1), 983, 32 + letter * 12);
 		}
 	}
 }
