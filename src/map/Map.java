@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
 import main.Game;
 import entities.MapObject;
+import entities.PathFinder;
 import entities.Zombie;
 import enums.MapObjectType;
 import items.*;
@@ -47,6 +49,7 @@ public class Map {
 	private Chunk[][] chunkMap;
 	private Game game;
 	private int plazaNum = 1;
+	private PathFinder pathFinder;
 
 	private ArrayList<Item> items;
 	private ArrayList<Point> plazaStarts;
@@ -94,7 +97,8 @@ public class Map {
 		for (int i = 1; i < plazaStarts.size() - 1; i++)
 			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 
-		spawnZombies(50);
+		pathFinder=new PathFinder(this);
+		spawnZombies(200);
 		spawnItems();
 
 	}
@@ -924,4 +928,19 @@ public class Map {
 	public void setChunkMap(Chunk[][] chunkMap) {
 		this.chunkMap = chunkMap;
 	}
+
+	/**
+	 * @return the pathFinder
+	 */
+	public PathFinder getPathFinder() {
+		return pathFinder;
+	}
+
+	/**
+	 * @param pathFinder the pathFinder to set
+	 */
+	public void setPathFinder(PathFinder pathFinder) {
+		this.pathFinder = pathFinder;
+	}
+	
 }
