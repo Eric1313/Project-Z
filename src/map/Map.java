@@ -146,6 +146,8 @@ public class Map {
 				// chunkMap[1][1].add(itemSpawned);
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
+			} else {
+				item--;
 			}
 		}
 	}
