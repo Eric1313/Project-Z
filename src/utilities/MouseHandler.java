@@ -28,9 +28,6 @@ public class MouseHandler extends MouseAdapter {
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		this.mouseWheel = e.getWheelRotation();
-		if (this.mouseWheel != 0) {
-			System.out.println("Scroll");
-		}
 	}
 
 	public Point getMouseLocation() {
