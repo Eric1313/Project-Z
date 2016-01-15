@@ -27,6 +27,7 @@ public abstract class Mob extends Entity {
 	protected boolean down;
 	protected boolean left;
 	protected boolean right;
+	protected Map map;
 
 	public Mob(boolean solid, Game game) {
 		super(solid, game);
@@ -34,6 +35,7 @@ public abstract class Mob extends Entity {
 
 	public Mob(int height, int width, Point position, boolean solid, Game game,Map map) {
 		super(height, width, position, solid, game);
+		this.map=map;
 		this.chunkMap=map.getChunkMap();
 	}
 
@@ -42,7 +44,7 @@ public abstract class Mob extends Entity {
 			AudioClip[] clips, Game game,Map map) {
 		super(height, width, position, rotation, health, solid, images, clips,
 				game);
-//		this.chunkMap=game.getDisplay().getGamePanel().getWorld().getMap().getChunkMap();
+		this.map=map;
 	this.chunkMap=map.getChunkMap();
 	}
 
@@ -55,16 +57,12 @@ public abstract class Mob extends Entity {
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
 						.hasNext();) {
 					Zombie zombie = iterator.next();
-//					System.out.println(audibleArea.contains(zombie.position.x,zombie.position.y));
-//					if(audibleArea.contains(zombie.position.x,zombie.position.y))
-//					System.out.println(( Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range);
-//					System.out.println(zombie.position.x+" "+zombie.position.y);
 					if(Math.sqrt(    Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range)
 					{
-//						System.out.println(x+" "+y);
-//						System.out.println(zombie.position.x/32+" "+ zombie.position.y/32+" "+ this.position.x/32+" "+ this.position.y/32);
-						zombie.getPath().clear();
-						zombie.findPath(zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32);
+System.out.println("hi");
+						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32));
+
+						//						zombie.findPath(zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32);
 					}
 				}
 			}
