@@ -3,6 +3,7 @@ package utilities;
 import items.Item;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.io.FileNotFoundException;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import main.Game;
 import map.Chunk;
@@ -220,6 +222,24 @@ public class World {
 		// }
 		// }
 
+		Item selectedItem = hoverItem();
+		
+		if (selectedItem != null) {
+			FontMetrics fm = g.getFontMetrics();
+
+			g.setColor(new Color(100, 100, 100, 150));
+			g.fillRect(
+					(int) (selectedItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
+							- fm.stringWidth(selectedItem.getName()) / 2 - 15,
+					(int) (selectedItem.getPosition().y - this.game.getCamera().getyOffset()) - 30,
+					fm.stringWidth(selectedItem.getName()) + 30, 20);
+
+			g.setColor(selectedItem.getColour());
+			g.drawString(selectedItem.getName(),
+					(int) (selectedItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
+							- fm.stringWidth(selectedItem.getName()) / 2,
+					(int) (selectedItem.getPosition().y - this.game.getCamera().getyOffset()) - 15);
+		}
 	}
 
 	public int getWidth() {
@@ -241,5 +261,24 @@ public class World {
 
 	public Rectangle[][] getSolid() {
 		return solid;
+	}
+
+	public Item hoverItem() {
+		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
+		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
+		for (int x = chunkX - 2; x < chunkX + 3; x++) {
+			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+				for (ListIterator<Item> iterator = chunkMap[x][y].getItems().listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
+					Item item = iterator.previous();
+					if (new Rectangle((int) (item.getPosition().x - this.game.getCamera().getxOffset()),
+							(int) (item.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
+									.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
+						return item;
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 }
