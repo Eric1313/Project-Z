@@ -38,6 +38,7 @@ public class Player extends Mob {
 		super(32, 32, position, solid, game, map);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
+		addItem(this.game.getItems().get(0));
 	}
 
 	public int getStamina() {
@@ -131,39 +132,40 @@ public class Player extends Mob {
 	}
 
 	private void collision() {
-		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
-				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-
-		for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-				.getSolid().length; i++) {
-			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-					.getSolid()[0].length; j++) {
-				if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] != null) {
-					if (hitbox.intersects(game.getDisplay().getGamePanel()
-							.getWorld().getSolid()[i][j])) {
-						int xOverlap = (int) (game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[i][j].getX() - this
-								.getPosition().getX());
-						int yOverlap = (int) (game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[i][j].getY() - this
-								.getPosition().getY());
-						if (xOverlap < -16) {
-							position.setLocation(position.getX() - xOverlap,
-									position.getY());
-						} else {
-							position.setLocation(position.getX()
-									+ (32 + xOverlap), position.getY());
-						}
-						if (yOverlap < -16) {
-							position.setLocation(position.getX(),
-									position.getY() - xOverlap);
-						} else {
-							position.setLocation(position.getX(),
-									position.getY() + (32+ xOverlap));
-						}
-					}
-				}
-			}
-		}
+		// hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
+		// Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		//
+		// for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
+		// .getSolid().length; i++) {
+		// for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
+		// .getSolid()[0].length; j++) {
+		// if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] !=
+		// null) {
+		// if (hitbox.intersects(game.getDisplay().getGamePanel()
+		// .getWorld().getSolid()[i][j])) {
+		// int xOverlap = (int) (game.getDisplay().getGamePanel()
+		// .getWorld().getSolid()[i][j].getX() - this
+		// .getPosition().getX());
+		// int yOverlap = (int) (game.getDisplay().getGamePanel()
+		// .getWorld().getSolid()[i][j].getY() - this
+		// .getPosition().getY());
+		// if (xOverlap < -16) {
+		// position.setLocation(position.getX() - xOverlap,
+		// position.getY());
+		// } else {
+		// position.setLocation(position.getX()
+		// + (32 + xOverlap), position.getY());
+		// }
+		// if (yOverlap < -16) {
+		// position.setLocation(position.getX(),
+		// position.getY() - xOverlap);
+		// } else {
+		// position.setLocation(position.getX(),
+		// position.getY() + (32+ xOverlap));
+		// }
+		// }
+		// }
+		// }
+		// }
 	}
 }
