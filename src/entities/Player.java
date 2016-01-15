@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import enums.ItemEffect;
+import enums.ItemState;
 import items.*;
 import items.Throwable;
 import main.Game;
@@ -41,7 +42,7 @@ public class Player extends Mob {
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 		addItem(this.game.getItems().get(0));
-		addItem(this.game.getItems().get(0));
+		addItem(this.game.getItems().get(1));
 		addItem(this.game.getItems().get(0));
 		addItem(this.game.getItems().get(0));
 	}
@@ -76,10 +77,15 @@ public class Player extends Mob {
 		} else if (this.stamina > Player.MIN_STAMINA) {
 			this.exhausted = false;
 		}
-		
+
 		if (this.game.getDisplay().getMouseHandler().isClick()) {
 			useItem();
 			this.game.getDisplay().getMouseHandler().setClick(false);
+		}
+
+		if (this.game.getDisplay().getKeyHandler().isQ()) {
+			dropItem();
+			this.game.getDisplay().getKeyHandler().setQ(false);
 		}
 
 		if (this.game.getDisplay().getKeyHandler().isShift() && !exhausted
@@ -95,6 +101,10 @@ public class Player extends Mob {
 				this.stamina++;
 			}
 		}
+
+		this.game.getDisplay().getKeyHandler().setLastNumber(this.game.getDisplay().getKeyHandler().getLastNumber()
+				+ this.game.getDisplay().getMouseHandler().getMouseWheel());
+		this.game.getDisplay().getMouseHandler().setMouseWheel(0);
 
 		this.selectedItem = this.game.getDisplay().getKeyHandler().getLastNumber();
 
@@ -138,26 +148,22 @@ public class Player extends Mob {
 			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld().getSolid().length; j++) {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld().getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerX + xMove + Assets.TILE_WIDTH >= game
-								.getDisplay().getGamePanel().getWorld()
-								.getSolid()[j][i].getX()
-								&& playerX + xMove + Assets.TILE_WIDTH <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX() + 32
-								&& ((playerY >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() && playerY <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() + 32))) {
+						if (playerX + xMove
+								+ Assets.TILE_WIDTH >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+										.getX()
+								&& playerX + xMove
+										+ Assets.TILE_WIDTH <= game.getDisplay().getGamePanel().getWorld()
+												.getSolid()[j][i].getX() + 32
+								&& ((playerY >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY()
+										&& playerY <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+												.getY() + 32)
+										|| (playerY
+												+ Assets.TILE_HEIGHT >= game.getDisplay().getGamePanel().getWorld()
+														.getSolid()[j][i].getY()
+												&& playerY + Assets.TILE_HEIGHT <= game.getDisplay().getGamePanel()
+														.getWorld().getSolid()[j][i].getY() + 32))) {
 							this.getPosition().setLocation(
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getX() - 33,
+									game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX() - 33,
 									this.getPosition().getY());
 							return 0;
 						}
@@ -168,22 +174,18 @@ public class Player extends Mob {
 			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld().getSolid().length; j++) {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld().getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerX + xMove >= game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[j][i].getX()
-								&& playerX + xMove <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + 32
-								&& ((playerY >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() && playerY <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() + 32))) {
+						if (playerX + xMove >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX()
+								&& playerX
+										+ xMove <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX()
+												+ 32
+								&& ((playerY >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY()
+										&& playerY <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+												.getY() + 32)
+										|| (playerY
+												+ Assets.TILE_HEIGHT >= game.getDisplay().getGamePanel().getWorld()
+														.getSolid()[j][i].getY()
+												&& playerY + Assets.TILE_HEIGHT <= game.getDisplay().getGamePanel()
+														.getWorld().getSolid()[j][i].getY() + 32))) {
 							this.getPosition().setLocation(
 									game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX() + 64,
 									this.getPosition().getY());
@@ -210,27 +212,20 @@ public class Player extends Mob {
 			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld().getSolid().length; j++) {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld().getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY + yMove >= game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[j][i].getY()
-								&& playerY + yMove <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() + Assets.TILE_HEIGHT
-								&& ((playerX >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() && playerX <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX() && playerX
-										+ Assets.TILE_WIDTH <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH))) {
-							this.getPosition().setLocation(
-									this.getPosition().getX(),
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() + 33);
+						if (playerY + yMove >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY()
+								&& playerY
+										+ yMove <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY()
+												+ Assets.TILE_HEIGHT
+								&& ((playerX >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX()
+										&& playerX <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+												.getX() + Assets.TILE_WIDTH)
+										|| (playerX
+												+ Assets.TILE_WIDTH >= game.getDisplay().getGamePanel().getWorld()
+														.getSolid()[j][i].getX()
+												&& playerX + Assets.TILE_WIDTH <= game.getDisplay().getGamePanel()
+														.getWorld().getSolid()[j][i].getX() + Assets.TILE_WIDTH))) {
+							this.getPosition().setLocation(this.getPosition().getX(),
+									game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY() + 33);
 							return 0;
 						}
 					}
@@ -240,29 +235,22 @@ public class Player extends Mob {
 			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld().getSolid().length; j++) {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld().getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY + yMove + Assets.TILE_HEIGHT >= game
-								.getDisplay().getGamePanel().getWorld()
-								.getSolid()[j][i].getY()
-								&& playerY + yMove + Assets.TILE_HEIGHT <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY()
-										+ Assets.TILE_HEIGHT
-								&& ((playerX >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() && playerX <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX() && playerX
-										+ Assets.TILE_WIDTH <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH))) {
-							this.getPosition().setLocation(
-									this.getPosition().getX(),
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() - 33);
+						if (playerY + yMove
+								+ Assets.TILE_HEIGHT >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+										.getY()
+								&& playerY + yMove
+										+ Assets.TILE_HEIGHT <= game.getDisplay().getGamePanel().getWorld()
+												.getSolid()[j][i].getY() + Assets.TILE_HEIGHT
+								&& ((playerX >= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getX()
+										&& playerX <= game.getDisplay().getGamePanel().getWorld().getSolid()[j][i]
+												.getX() + Assets.TILE_WIDTH)
+										|| (playerX
+												+ Assets.TILE_WIDTH >= game.getDisplay().getGamePanel().getWorld()
+														.getSolid()[j][i].getX()
+												&& playerX + Assets.TILE_WIDTH <= game.getDisplay().getGamePanel()
+														.getWorld().getSolid()[j][i].getX() + Assets.TILE_WIDTH))) {
+							this.getPosition().setLocation(this.getPosition().getX(),
+									game.getDisplay().getGamePanel().getWorld().getSolid()[j][i].getY() - 33);
 							return 0;
 						}
 					}
@@ -272,7 +260,9 @@ public class Player extends Mob {
 		return yMove;
 	}
 
-	private void useItem(Item item) {
+	public void useItem() {
+		Item item = getItem(this.selectedItem);
+
 		if (item == null) {
 			return;
 		}
@@ -284,7 +274,7 @@ public class Player extends Mob {
 					this.health = Math.min(100, this.health + newItem.getEffectValue());
 					newItem.removeDurability();
 					if (newItem.getDurability() <= 0) {
-						this.removeItem(item);
+						this.removeItem(this.selectedItem);
 					}
 				}
 				break;
@@ -292,15 +282,19 @@ public class Player extends Mob {
 				break;
 			}
 		} else if (item instanceof Melee) {
-			
+
 		} else if (item instanceof Firearm) {
-			
+
 		} else if (item instanceof Throwable) {
-			
+
 		}
 	}
-	
-	public void useItem() {
-		useItem(getItem(this.selectedItem));
+
+	public void dropItem() {
+		Item item = getItem(this.selectedItem);
+		item.setPosition(this.position);
+		item.setState(ItemState.DROPPED);
+		removeItem(this.selectedItem);
+		this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
 	}
 }

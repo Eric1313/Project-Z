@@ -8,6 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import enums.ItemState;
 import main.Game;
 
 /**
@@ -131,6 +132,7 @@ public abstract class Entity {
 	}
 
 	public int addItem(Item item) {
+		item.setState(ItemState.INVENTORY);
 		return this.inventory.add(item);
 	}
 
