@@ -59,7 +59,6 @@ public abstract class Mob extends Entity {
 					Zombie zombie = iterator.next();
 					if(Math.sqrt(    Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2))<range)
 					{
-System.out.println("hi");
 						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32));
 
 						//						zombie.findPath(zombie.position.x/32, zombie.position.y/32, this.position.x/32, this.position.y/32);
