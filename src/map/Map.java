@@ -41,8 +41,7 @@ public class Map {
 	final int ROAD_WIDTH = 11;
 	
 	final int MAX_ZOMBIE_PER_ROOM = 2;
-	final int MAX_ZOMBIE_PER_FOREST = 10;
-	final int MAX_ZOMBIE_PER_ROAD = 20;
+	final int MAX_ZOMBIE_PER_FOREST = 5;
 	// STores locations of all plazas
 
 	// Map storage
@@ -50,7 +49,7 @@ public class Map {
 	private Chunk[][] chunkMap;
 	private Game game;
 	private PathFinder pathFinder;
-	
+	public static int zombieCount;
 	private Point playerStart;
 
 	private ArrayList<Item> items;
@@ -111,10 +110,7 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
-<<<<<<< HEAD
-=======
-		spawnZombies(10000);
->>>>>>> 4e0ca80b257caf1f0fece8c8f3be8ad5eb6927e6
+		
 		spawnItems();
 
 	}
@@ -426,9 +422,11 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY()){
 					setTile(i, j, 200, Direction.UP, false);
-					if (Math.random() > 0.95)
+					if (Math.random() > 0.99){
 							chunkMap[i/16][j/16].addZombie(new Zombie(new Point(i*32, j*32), 100,
 								game.getZombie()[0], null, this.game, this));
+							zombieCount++;
+					}
 				}
 				/*
 				 * else if (i == start.getX()+1 || i == end.getX()-1 || j ==
@@ -506,9 +504,11 @@ public class Map {
 			int randomX = (int) (Math.random()*boxWidth + start.getX());
 			int randomY = (int) (Math.random() *boxHeight + start.getY());
 			
-			if (Math.random() > 0.25 && (tileMap[randomX][randomY] & 0xFFF) == 201)
+			if (Math.random() > 0.25 && (tileMap[randomX][randomY] & 0xFFF) == 201){
 				chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100,
 					game.getZombie()[0], null, this.game, this));
+				zombieCount++;
+			}
 		}
 
 	}
@@ -550,9 +550,11 @@ public class Map {
 			int randomX = (int) (Math.random()*boxWidth + start.getX());
 			int randomY = (int) (Math.random() *boxHeight + start.getY());
 			
-			if (Math.random() > 0.10 && (tileMap[randomX][randomY] & 0xFFF) == 108 || (tileMap[randomX][randomY] & 0xFFF) >= 110)
+			if (Math.random() > 0.10 && (tileMap[randomX][randomY] & 0xFFF) == 108 || (tileMap[randomX][randomY] & 0xFFF) >= 110){
 				chunkMap[randomX/16][randomY/16].addZombie(new Zombie(new Point(randomX*32, randomY*32), 100,
 					game.getZombie()[0], null, this.game, this));
+				zombieCount++;
+			}
 		}
 
 	}
@@ -748,9 +750,11 @@ public class Map {
 					setTile(tempx, tempy, 101, Direction.UP, false);
 				
 				//Spawns zombies on roads
-				if (Math.random() > 0.95)
+				if (Math.random() > 0.99){
 					chunkMap[tempx/16][tempy/16].addZombie(new Zombie(new Point(tempx*32, tempy*32), 100,
 						game.getZombie()[0], null, this.game, this));
+					zombieCount++;
+				}
 				tempx++;
 			}
 
@@ -992,6 +996,13 @@ public class Map {
 	 */
 	public Point getPlayerCoordinate() {
 		return playerStart;
+	}
+	
+	/**
+	 * @return the number of zombies
+	 */
+	public int getZombieCount(){
+		return zombieCount;
 	}
 
 	/**
