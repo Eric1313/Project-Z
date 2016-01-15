@@ -273,7 +273,10 @@ public class World {
 					if (new Rectangle((int) (item.getPosition().x - this.game.getCamera().getxOffset()),
 							(int) (item.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
 									.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
+						item.setHover(true);
 						return item;
+					} else {
+						item.setHover(false);
 					}
 				}
 			}
