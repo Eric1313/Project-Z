@@ -105,7 +105,7 @@ public class Zombie extends Mob {
 					this.getPosition().getY());
 		}
 		if (this.right || this.left || this.up || this.down) {
-			makeNoise(300,false);
+			makeNoise(100,false);
 		}
 	}
 
