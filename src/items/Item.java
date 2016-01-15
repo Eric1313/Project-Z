@@ -154,6 +154,14 @@ public abstract class Item {
 		this.state = state;
 	}
 
+	public boolean isHover() {
+		return hover;
+	}
+
+	public void setHover(boolean hover) {
+		this.hover = hover;
+	}
+
 	public BufferedImage[] getImages() {
 		return images;
 	}
@@ -176,25 +184,12 @@ public abstract class Item {
 
 	public void render(Graphics g) {
 		if (this.state == ItemState.DROPPED) {
-			g.drawImage(this.getImages()[0], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
-					(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
-			if (new Rectangle((int) (this.getPosition().x - this.game.getCamera().getxOffset()),
-					(int) (this.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
-							.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
-				FontMetrics fm = g.getFontMetrics();
-
-				g.setColor(new Color(100, 100, 100, 150));
-				g.fillRect(
-						(int) (this.getPosition().x - this.game.getCamera().getxOffset()) + 15
-								- fm.stringWidth(this.name) / 2 - 15,
-						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 30,
-						fm.stringWidth(this.name) + 30, 20);
-
-				g.setColor(getColour());
-				g.drawString(this.name,
-						(int) (this.getPosition().x - this.game.getCamera().getxOffset()) + 15
-								- fm.stringWidth(this.name) / 2,
-						(int) (this.getPosition().y - this.game.getCamera().getyOffset()) - 15);
+			if (!hover) {
+				g.drawImage(this.getImages()[0], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
+						(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
+			} else {
+				g.drawImage(this.getImages()[1], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
+						(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
 			}
 		} else if (this.state == ItemState.INHAND) {
 			g.drawImage(this.getImages()[2], 0, 0, null);

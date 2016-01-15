@@ -114,7 +114,6 @@ public class Map {
 		pathFinder=new PathFinder(this);
 		
 		spawnItems();
-
 	}
 
 	/*
