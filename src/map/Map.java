@@ -110,7 +110,7 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
-		spawnZombies(10);
+		spawnZombies(10000);
 		spawnItems();
 
 	}
