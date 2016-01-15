@@ -48,8 +48,9 @@ public class Map {
 	private short[][] tileMap;
 	private Chunk[][] chunkMap;
 	private Game game;
-	private int plazaNum = 1;
 	private PathFinder pathFinder;
+	
+	private Point playerStart;
 
 	private ArrayList<Item> items;
 	private ArrayList<Point> plazaStarts;
@@ -91,14 +92,25 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE + 1) / 2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE + 1) / 2, 0), new Point(height - 1, width - 1));
 
-		generateSafehousePlaza(plazaStarts.get(0), plazaEnds.get(0));
-		generateSafehousePlaza(plazaStarts.get(plazaStarts.size() - 1), plazaEnds.get(plazaEnds.size() - 1));
+		int startHouse = (int) Math.ceil(Math.random()*plazaStarts.size());
+		int endHouse;
+		
+		do{
+			endHouse = (int) Math.ceil(Math.random()*plazaStarts.size());
+		}while (Math.abs(plazaStarts.get(startHouse).getX() - plazaStarts.get(endHouse).getX()) < 250 && Math.abs(plazaStarts.get(startHouse).getY() - plazaStarts.get(endHouse).getY()) < 250);
 
-		for (int i = 1; i < plazaStarts.size() - 1; i++)
-			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
+		
+		for (int i = 0; i < plazaStarts.size(); i++){
+			if (i == startHouse)
+				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i),true);
+			else if (i == endHouse)
+				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i), false);
+			else
+				generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
+		}
 
 		pathFinder=new PathFinder(this);
-		spawnZombies(10000);
+		spawnZombies(10);
 		spawnItems();
 
 	}
@@ -120,7 +132,8 @@ public class Map {
 		ArrayList<Item> itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
-			for (int rarity = 0; rarity < currentItem.getRarity(); rarity++) {
+			int chance = (int) Math.pow(2, currentItem.getRarity());
+			for (int rarity = 0; rarity < chance; rarity++) {
 				itemSpawns.add(currentItem);
 			}
 		}
@@ -145,6 +158,8 @@ public class Map {
 				// chunkMap[1][1].add(itemSpawned);
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
+			} else {
+				item--;
 			}
 		}
 	}
@@ -352,7 +367,7 @@ public class Map {
 	 * @param start
 	 * @param end
 	 */
-	public void generateSafehousePlaza(Point start, Point end) {
+	public void generateSafehousePlaza(Point start, Point end, boolean isStart) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 
@@ -366,6 +381,24 @@ public class Map {
 		// Generates the safehouse
 		generateBuilding(new Point((int) start.getX() + boxWidth / 3, (int) start.getY() + boxHeight / 3),
 				new Point((int) end.getX() - boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP);
+		
+		int playerX;
+		int playerY;
+		
+		do{
+			int xRange = boxWidth - 2*(boxWidth/3);
+			int yRange = boxHeight - 2*(boxHeight/3);
+			
+			int startX = (int) (start.getX()+boxWidth/3);
+			int startY = (int) (start.getY() + boxHeight/3);
+			
+			playerX = (int) (Math.random()*xRange+startX);
+			playerY = (int) (Math.random()*yRange+startY);
+			System.out.println(start.getX() + " " + start.getY() +" : " +playerX + " " + playerY);
+		}while((tileMap[playerX][playerY] & 0xFFF) != 201);
+		
+		if (isStart)
+			playerStart = new Point(playerX,playerY);
 
 		// Generates the Trees inside the plaza
 		generateTrees(new Point((int) start.getX() + 1, (int) start.getY() + 1),
@@ -918,6 +951,13 @@ public class Map {
 	 */
 	public Chunk[][] getChunkMap() {
 		return chunkMap;
+	}
+	
+	/**
+	 * @return the player starting point
+	 */
+	public Point getPlayerCoordinate() {
+		return playerStart;
 	}
 
 	/**
