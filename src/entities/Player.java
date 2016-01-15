@@ -19,11 +19,10 @@ import utilities.Assets;
 public class Player extends Mob {
 	public static final int MOVEMENT_SPEED = 2;
 	public static final int MAX_STAMINA = 300;
-	public static final int SPRINT_COST = 3;
-	// *************THIS SHOULD BE PUT SOMEWHERE MORE APPROPRIATE***************
-	// WHAT IS BOUNDS IN ENTITY? G
-	// - ALLEN
-	private Rectangle hitbox;
+	public static final int MIN_STAMINA = MAX_STAMINA / 10;
+	public static final int SPRINT_COST = Player.MAX_STAMINA / 100;
+
+	private boolean exhausted = false;
 	private int stamina;
 
 	private int selectedItem = 0;
@@ -68,11 +67,25 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		int col = (int) ((this.getPosition().x - this.game.getCamera()
+				.getxOffset()) / 32);
+		int row = (int) ((this.getPosition().y - this.game.getCamera()
+				.getyOffset()) / 32);
 		this.selectedItem = this.game.getDisplay().getKeyHandler()
 				.getLastNumber();
 
+		if (this.stamina < Player.SPRINT_COST) {
+			this.exhausted = true;
+		} else if (this.stamina > Player.MIN_STAMINA) {
+			this.exhausted = false;
+		}
+
 		if (this.game.getDisplay().getKeyHandler().isShift()
-				&& this.stamina > Player.SPRINT_COST) {
+				&& !exhausted
+				&& (this.game.getDisplay().getKeyHandler().isUp()
+						|| this.game.getDisplay().getKeyHandler().isDown()
+						|| this.game.getDisplay().getKeyHandler().isLeft() || this.game
+						.getDisplay().getKeyHandler().isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
 		} else {
@@ -81,13 +94,10 @@ public class Player extends Mob {
 				this.stamina++;
 			}
 		}
-		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
-				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		this.getPosition().setLocation(this.getPosition().getX(),
 				this.getPosition().getY() + yMove());
 		this.getPosition().setLocation(this.getPosition().getX() + xMove(),
 				this.getPosition().getY());
-
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
 		else if (position.getX() > Assets.TILE_WIDTH
@@ -114,7 +124,7 @@ public class Player extends Mob {
 			if (this.game.getDisplay().getKeyHandler().isShift())
 				makeNoise(400, true);
 			else
-				makeNoise(200, true);
+				makeNoise(600, true);
 		}
 	}
 
