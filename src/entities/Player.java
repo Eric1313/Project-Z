@@ -17,7 +17,7 @@ import utilities.Assets;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
+	public static final int MOVEMENT_SPEED = 1;
 	public static final int MAX_STAMINA = 300;
 	public static final int MIN_STAMINA = MAX_STAMINA / 10;
 	public static final int SPRINT_COST = Player.MAX_STAMINA / 100;
@@ -124,7 +124,7 @@ public class Player extends Mob {
 			if (this.game.getDisplay().getKeyHandler().isShift())
 				makeNoise(400, true);
 			else
-				makeNoise(200,true);
+				makeNoise(300,true);
 
 		}
 	}
