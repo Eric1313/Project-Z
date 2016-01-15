@@ -55,7 +55,7 @@ public class World {
 		tileId = map.getMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
-		player = new Player(new Point(0, 0), true, game, map);
+		player = new Player(new Point((int)map.getPlayerCoordinate().getX()*32,(int) map.getPlayerCoordinate().getY()*32), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		this.row = 0;
 		this.col = 0;
