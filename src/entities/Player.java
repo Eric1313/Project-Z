@@ -139,25 +139,26 @@ public class Player extends Mob {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
 						.getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerX + xMove + Assets.TILE_WIDTH > game
+						if (playerX + xMove + Assets.TILE_WIDTH >= game
 								.getDisplay().getGamePanel().getWorld()
 								.getSolid()[j][i].getX()
-								&& playerX + xMove + Assets.TILE_WIDTH < game
+								&& playerX + xMove + Assets.TILE_WIDTH <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getX() + 32
-								&& ((playerY > game.getDisplay().getGamePanel()
-										.getWorld().getSolid()[j][i].getY() && playerY < game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT > game
+								&& ((playerY >= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getY() && playerY <= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getY() + 32) || (playerY
+										+ Assets.TILE_HEIGHT >= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT < game
+										+ Assets.TILE_HEIGHT <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getY() + 32))) {
 							this.getPosition().setLocation(
 									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getX() - 32,
+											.getSolid()[j][i].getX() - 33,
 									this.getPosition().getY());
 							return 0;
 						}
@@ -170,19 +171,20 @@ public class Player extends Mob {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
 						.getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerX - xMove > game.getDisplay().getGamePanel()
+						if (playerX + xMove >= game.getDisplay().getGamePanel()
 								.getWorld().getSolid()[j][i].getX()
-								&& playerX - xMove < game.getDisplay()
+								&& playerX + xMove <= game.getDisplay()
 										.getGamePanel().getWorld().getSolid()[j][i]
 										.getX() + 32
-								&& ((playerY > game.getDisplay().getGamePanel()
-										.getWorld().getSolid()[j][i].getY() && playerY < game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT > game
+								&& ((playerY >= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getY() && playerY <= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getY() + 32) || (playerY
+										+ Assets.TILE_HEIGHT >= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT < game
+										+ Assets.TILE_HEIGHT <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getY() + 32))) {
 							this.getPosition().setLocation(
@@ -216,26 +218,27 @@ public class Player extends Mob {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
 						.getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY > game.getDisplay().getGamePanel()
+						if (playerY + yMove >= game.getDisplay().getGamePanel()
 								.getWorld().getSolid()[j][i].getY()
-								&& playerY < game.getDisplay().getGamePanel()
-										.getWorld().getSolid()[j][i].getY()
-										+ Assets.TILE_HEIGHT
-								&& ((playerX > game.getDisplay().getGamePanel()
-										.getWorld().getSolid()[j][i].getX() && playerX < game
+								&& playerY + yMove <= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getY() + Assets.TILE_HEIGHT
+								&& ((playerX >= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getX() && playerX <= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getX() + Assets.TILE_WIDTH) || (playerX
+										+ Assets.TILE_WIDTH >= game
+										.getDisplay().getGamePanel().getWorld()
+										.getSolid()[j][i].getX() && playerX
+										+ Assets.TILE_WIDTH <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH > game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-											.getX() && playerX
-										+ Assets.TILE_WIDTH < game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH))) {
+										+ Assets.TILE_WIDTH))) {
 							this.getPosition().setLocation(
 									this.getPosition().getX(),
 									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() + 32);
+											.getSolid()[j][i].getY() + 33);
 							return 0;
 						}
 					}
@@ -247,28 +250,29 @@ public class Player extends Mob {
 				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
 						.getSolid()[0].length; i++) {
 					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY + Assets.TILE_HEIGHT > game.getDisplay()
-								.getGamePanel().getWorld().getSolid()[j][i]
-								.getY()
-								&& playerY + Assets.TILE_HEIGHT < game
+						if (playerY + yMove + Assets.TILE_HEIGHT >= game
+								.getDisplay().getGamePanel().getWorld()
+								.getSolid()[j][i].getY()
+								&& playerY + yMove + Assets.TILE_HEIGHT <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getY()
 										+ Assets.TILE_HEIGHT
-								&& ((playerX > game.getDisplay().getGamePanel()
-										.getWorld().getSolid()[j][i].getX() && playerX < game
+								&& ((playerX >= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getX() && playerX <= game.getDisplay()
+										.getGamePanel().getWorld().getSolid()[j][i]
+										.getX() + Assets.TILE_WIDTH) || (playerX
+										+ Assets.TILE_WIDTH >= game
+										.getDisplay().getGamePanel().getWorld()
+										.getSolid()[j][i].getX() && playerX
+										+ Assets.TILE_WIDTH <= game
 										.getDisplay().getGamePanel().getWorld()
 										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH > game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-											.getX() && playerX
-										+ Assets.TILE_WIDTH < game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH))) {
+										+ Assets.TILE_WIDTH))) {
 							this.getPosition().setLocation(
 									this.getPosition().getX(),
 									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() - 64);
+											.getSolid()[j][i].getY() - 33);
 							return 0;
 						}
 					}

@@ -98,7 +98,7 @@ public class Map {
 			generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 
 		pathFinder=new PathFinder(this);
-		spawnZombies(10000);
+		spawnZombies(10);
 		spawnItems();
 
 	}
