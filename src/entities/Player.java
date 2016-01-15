@@ -83,53 +83,10 @@ public class Player extends Mob {
 		}
 		hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-		boolean collision = false;
-		if (this.game.getDisplay().getKeyHandler().isUp()) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() - this.movementSpeed);
-		}
-		if (this.game.getDisplay().getKeyHandler().isDown()) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() + this.movementSpeed);
-		}
-		if (this.game.getDisplay().getKeyHandler().isLeft()) {
-			this.getPosition().setLocation(
-					this.getPosition().getX() - this.movementSpeed,
-					this.getPosition().getY());
-		}
-		if (this.game.getDisplay().getKeyHandler().isRight()) {
-//			collision = false;
-//			for (int i = (int) ((this.getPosition().x - this.game.getCamera()
-//					.getxOffset()) / 32); i < game.getDisplay().getGamePanel()
-//					.getWorld().getSolid()[0].length; i++) {
-//				if (game.getDisplay().getGamePanel().getWorld().getSolid()[(int) ((this
-//						.getPosition().y - this.game.getCamera().getyOffset()) / 32)][i] != null) {
-//					if (position.getX() + Assets.TILE_WIDTH
-//							+ this.movementSpeed > game.getDisplay()
-//							.getGamePanel().getWorld().getSolid()[(int) ((this
-//							.getPosition().y - this.game.getCamera()
-//							.getyOffset()) / 32)][i].getX()
-//							&& position.getX() + Assets.TILE_WIDTH
-//									+ this.movementSpeed < game.getDisplay()
-//									.getGamePanel().getWorld().getSolid()[(int) ((this
-//									.getPosition().y - this.game.getCamera()
-//									.getyOffset()) / 32)][i].getX()
-//									+ Assets.TILE_WIDTH) {
-//						position.setLocation(
-//								game.getDisplay().getGamePanel().getWorld()
-//										.getSolid()[(int) ((this.getPosition().y - this.game
-//										.getCamera().getyOffset()) / 32)][i]
-//										.getX()
-//										- Assets.TILE_WIDTH, position.getY());
-//						collision = true;
-//					}
-//				}
-//			}
-//			if (!collision)
-				this.getPosition().setLocation(
-						this.getPosition().getX() + this.movementSpeed,
-						this.getPosition().getY());
-		}
+		this.getPosition().setLocation(this.getPosition().getX(),
+				this.getPosition().getY() + yMove());
+		this.getPosition().setLocation(this.getPosition().getX() + xMove(),
+				this.getPosition().getY());
 
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
@@ -155,48 +112,39 @@ public class Player extends Mob {
 				|| this.game.getDisplay().getKeyHandler().isRight()
 				|| this.game.getDisplay().getKeyHandler().isLeft()) {
 			if (this.game.getDisplay().getKeyHandler().isShift())
-				makeNoise(400,true);
+				makeNoise(400, true);
 			else
-				makeNoise(200,true);
+				makeNoise(200, true);
 		}
-		collision();
 	}
 
-	private void collision() {
-		// hitbox = new Rectangle(this.getPosition().x, this.getPosition().y,
-		// Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-		//
-		// for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-		// .getSolid().length; i++) {
-		// for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-		// .getSolid()[0].length; j++) {
-		// if (game.getDisplay().getGamePanel().getWorld().getSolid()[i][j] !=
-		// null) {
-		// if (hitbox.intersects(game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j])) {
-		// int xOverlap = (int) (game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j].getX() - this
-		// .getPosition().getX());
-		// int yOverlap = (int) (game.getDisplay().getGamePanel()
-		// .getWorld().getSolid()[i][j].getY() - this
-		// .getPosition().getY());
-		// if (xOverlap < -16) {
-		// position.setLocation(position.getX() - xOverlap,
-		// position.getY());
-		// } else {
-		// position.setLocation(position.getX()
-		// + (32 + xOverlap), position.getY());
-		// }
-		// if (yOverlap < -16) {
-		// position.setLocation(position.getX(),
-		// position.getY() - xOverlap);
-		// } else {
-		// position.setLocation(position.getX(),
-		// position.getY() + (32 + xOverlap));
-		// }
-		// }
-		// }
-		// }
-		// }
+	private int xMove() {
+		int xMove = 0;
+		if (this.game.getDisplay().getKeyHandler().isLeft()) {
+			xMove = -this.movementSpeed;
+		}
+		if (this.game.getDisplay().getKeyHandler().isRight()) {
+			xMove = this.movementSpeed;
+		}
+		if (xMove > 0) {// Moving right
+			if (game.getDisplay().getGamePanel().getWorld().getSolid()[(int) ((this
+					.getPosition().y - this.game.getCamera().getyOffset()) / 32)][(int) ((this
+					.getPosition().x - this.game.getCamera().getxOffset()) / 32) + 1] != null) {
+
+			}
+		} else if (xMove < 0) {// Moving Left
+
+		}
+		return xMove;
+	}
+
+	private int yMove() {
+		if (this.game.getDisplay().getKeyHandler().isUp()) {
+			return -this.movementSpeed;
+		}
+		if (this.game.getDisplay().getKeyHandler().isDown()) {
+			return this.movementSpeed;
+		}
+		return 0;
 	}
 }
