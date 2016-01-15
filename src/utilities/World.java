@@ -81,6 +81,7 @@ public class World {
 		if (originalTransform == null) {
 			originalTransform = g2D.getTransform();
 		}
+
 		g2D.rotate(angle, player.getPosition().getX()
 				- game.getCamera().getxOffset() + 16, player.getPosition()
 				.getY() - game.getCamera().getyOffset() + 16);
@@ -89,6 +90,7 @@ public class World {
 				.getY() - game.getCamera().getyOffset() + 16, 500, 50, 80,
 				Arc2D.PIE);
 		g2D.clip(flashLight);
+
 		int tileY = 0;
 		int tileX = 0;
 		for (int i = row; i < row + 26; i++) {
@@ -137,12 +139,12 @@ public class World {
 				}
 				int id = (tileId[j][i] & 0xFFF);
 
-				 g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-				 (int) (tileX * Assets.TILE_WIDTH - game.getCamera()
-				 .getxOffset()) + xChange - 3, (int) (tileY
-				 * Assets.TILE_HEIGHT
-				 - game.getCamera().getyOffset() + yChange - 2),
-				 null);
+				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+						(int) (tileX * Assets.TILE_WIDTH - game.getCamera()
+								.getxOffset()) + xChange - 3, (int) (tileY
+								* Assets.TILE_HEIGHT
+								- game.getCamera().getyOffset() + yChange - 2),
+						null);
 				tileX++;
 			}
 			tileY++;
@@ -187,29 +189,7 @@ public class World {
 		previousYOffset = game.getCamera().getyOffset();
 		g2D.setTransform(originalTransform);
 
-		g2D.rotate(angle, player.getPosition().getX()
-				- game.getCamera().getxOffset() + 16, player.getPosition()
-				.getY() - game.getCamera().getyOffset() + 16);
-		 GradientPaint gp = new GradientPaint((float) player.getPosition()
-		 .getX() - game.getCamera().getxOffset() + 16, (float) player
-		 .getPosition().getY() - game.getCamera().getyOffset() + 16,
-		 new Color(0, 0, 0, 0),
-		 (float) (player.getPosition().getX()
-		 - game.getCamera().getxOffset() + 350 * (float) Math
-		 .cos(Math.toRadians(90))),
-		 (float) (player.getPosition().getY()
-		 - game.getCamera().getyOffset() - 350 * (float) Math
-		 .sin(Math.toRadians(90))), new Color(0, 0, 0));
-		 g2D.setPaint(gp);
-		 g2D.fill(flashLight);
-		 g2D.draw(flashLight);
-
-		g2D.setClip(null);
-		player.render(g);
-		g2D.setTransform(originalTransform);
-		 g2D.setColor(new Color(0f, 0f, 0f, .5f));
-		 g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-		 .getDisplay().getFrame().getHeight());
+		// draw Zombies
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
@@ -226,6 +206,48 @@ public class World {
 				}
 			}
 		}
+
+		g2D.rotate(angle, player.getPosition().getX()
+				- game.getCamera().getxOffset() + 16, player.getPosition()
+				.getY() - game.getCamera().getyOffset() + 16);
+		GradientPaint gp = new GradientPaint((float) player.getPosition()
+				.getX() - game.getCamera().getxOffset() + 16, (float) player
+				.getPosition().getY() - game.getCamera().getyOffset() + 16,
+				new Color(0, 0, 0, 0),
+				(float) (player.getPosition().getX()
+						- game.getCamera().getxOffset() + 350 * (float) Math
+						.cos(Math.toRadians(90))),
+				(float) (player.getPosition().getY()
+						- game.getCamera().getyOffset() - 350 * (float) Math
+						.sin(Math.toRadians(90))), new Color(0, 0, 0));
+		g2D.setPaint(gp);
+		g2D.fill(flashLight);
+		g2D.draw(flashLight);
+
+		g2D.setClip(null);
+		player.render(g);
+
+		g2D.setTransform(originalTransform);
+		g2D.setColor(new Color(0f, 0f, 0f, .5f));
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
+		// //draw Zombies
+		// int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
+		// int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
+		// for (int x = chunkX - 2; x < chunkX + 3; x++) {
+		// for (int y = chunkY - 2; y < chunkY + 3; y++) {
+		// for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
+		// .iterator(); iterator.hasNext();) {
+		// Zombie zombie = iterator.next();
+		// zombie.render(g);
+		// }
+		// for (Iterator<Item> iterator = chunkMap[x][y].getItems()
+		// .iterator(); iterator.hasNext();) {
+		// Item item = iterator.next();
+		// item.render(g);
+		// }
+		// }
+		// }
 
 	}
 
