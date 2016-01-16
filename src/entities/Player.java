@@ -364,4 +364,8 @@ public class Player extends Mob {
 		}
 		return null;
 	}
+
+	public Point playerCenter() {
+		return new Point((int) hitbox.getCenterX(), (int) hitbox.getCenterY());
+	}
 }
