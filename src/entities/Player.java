@@ -42,8 +42,9 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
 		addItem(new Consumable((Consumable) this.game.getItems().get(1)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
+		addItem(new Melee((Melee) this.game.getItems().get(2)));
+		addItem(new Firearm((Firearm) this.game.getItems().get(3)));
+		addItem(new Throwable((Throwable) this.game.getItems().get(4)));
 	}
 
 	public int getStamina() {
@@ -312,6 +313,5 @@ public class Player extends Mob {
 			this.chunkMap[hoverItem.getPosition().x / 512][hoverItem.getPosition().y / 512].remove(hoverItem);
 			addItem(hoverItem);
 		}
-
 	}
 }
