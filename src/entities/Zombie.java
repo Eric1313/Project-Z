@@ -90,12 +90,6 @@ public class Zombie extends Mob {
 				}
 			}
 		}
-		if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
-			chunkMap[chunkX][chunkY].removeZombie(this);
-			chunkX = this.position.x / 512;
-			chunkY = this.position.y / 512;
-			chunkMap[chunkX][chunkY].addZombie(this);
-		}
 
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
 				map.getWidth() - 1); x++) {
@@ -103,42 +97,46 @@ public class Zombie extends Mob {
 					map.getHeight() - 1); y++) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
-					
-			
-					
-								if ((Math.pow(
+
+					if ((Math.pow(
 							checkZombie.getPosition().x - this.position.x, 2) + Math
 							.pow(checkZombie.getPosition().y - this.position.y,
 									2)) < 1100) {
 						if (checkZombie.getPosition().y > this.position.y) {
-//							if (collideDown)
-								this.up = true;
-//							else
-								collideDown = true;
+							// if (collideDown)
+							this.up = true;
+							// else
+							collideDown = true;
 						} else
 							collideDown = false;
 						if (checkZombie.getPosition().y < this.position.y) {
-//							if (collideUp)
-								this.down = true;
-//							else
-								collideUp = true;
+							// if (collideUp)
+							this.down = true;
+							// else
+							collideUp = true;
 						} else
 							collideUp = false;
 						if (checkZombie.getPosition().x > this.position.x) {
-//							if (collideRight)
-								this.left = true;
-//							else
-								collideRight = true;
+							// if (collideRight)
+							this.left = true;
+							// else
+							collideRight = true;
 						} else
 							collideRight = false;
-						if (checkZombie.getPosition().x < this.position.x)
-						{
-//							if (collideLeft)
-								this.right = true;
-//							else
-								collideLeft = true;
+						if (checkZombie.getPosition().x < this.position.x) {
+							// if (collideLeft)
+							this.right = true;
+							// else
+							collideLeft = true;
 						} else
-							collideLeft = false;					}
+							collideLeft = false;
+					}
+					if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
+						chunkMap[chunkX][chunkY].removeZombie(this);
+						chunkX = this.position.x / 512;
+						chunkY = this.position.y / 512;
+						chunkMap[chunkX][chunkY].addZombie(this);
+					}
 				}
 			}
 		}
