@@ -46,6 +46,8 @@ public class Zombie extends Mob {
 	public Zombie(Point position, int health, BufferedImage[] images,
 			AudioClip[] clips, Game game, Map map) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
+		rotation=Math.random()*(2*Math.PI);
+
 	}
 
 	/**
@@ -62,9 +64,10 @@ public class Zombie extends Mob {
 		boolean collideDown = false;
 		boolean collideRight = false;
 		boolean collideLeft = false;
-		// Remove from chunk
 		int chunkX = this.position.x / 512;
 		int chunkY = this.position.y / 512;
+		int targetX = 0;
+		int targetY =0;
 		// Follow the path
 		if (!this.getPath().isEmpty()) {
 			// If path contains null clear
@@ -73,8 +76,8 @@ public class Zombie extends Mob {
 					this.path.clear();
 				}
 			} else {
-				int targetX = path.peek().locationX * 32;
-				int targetY = path.peek().locationY * 32;
+				targetX = path.peek().locationX * 32;
+				targetY= path.peek().locationY * 32;
 				if ((this.getPosition().x == targetX)
 						&& (this.getPosition().y == targetY)) {
 					path.pop();
@@ -91,7 +94,9 @@ public class Zombie extends Mob {
 				}
 			}
 		}
-
+		if(targetX!=0&&targetY!=0)
+		this.rotation=Math.atan2(this.position.y-targetY,this.position.x-targetX)
+				- Math.PI / 2;
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
 				map.getWidth() - 1); x++) {
 			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
