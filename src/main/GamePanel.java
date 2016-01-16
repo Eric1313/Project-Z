@@ -44,7 +44,7 @@ public class GamePanel extends JPanel {
 	}
 
 	public void setup(Game game) {
-		world = new World(game, 1600, 1600);
+		world = new World(game, 4000, 4000);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
 		chunkMap=world.getMap().getChunkMap();
