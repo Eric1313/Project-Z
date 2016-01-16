@@ -293,13 +293,17 @@ public class World {
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
 			for (int y = chunkY - 2; y < chunkY + 3; y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
-						.listIterator(chunkMap[x][y].getItems().size()); iterator
-						.hasPrevious();) {
+						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
-					if (new Rectangle(
-							(int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()) + 32,
-							32, 32).contains(mouse.getMouseLocation())) {
+					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
+							(int) (item.getPosition().y - camera.getyOffset()) + 32, 32, 32);
+					if (itemHitbox.contains(mouse.getMouseLocation())
+							&& Math.sqrt(Math.pow((player.getPosition().x - item.getPosition().x), 2)
+									+ Math.pow((player.getPosition().y - item.getPosition().y), 2)) <= 8 * 32) {
+						item.setHover(true);
+						return item;
+					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
+							(int) (player.getPosition().y - camera.getyOffset()) + 32, 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {
