@@ -9,6 +9,7 @@ import items.Throwable;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Line2D;
 
 import main.Game;
 import map.Map;
@@ -303,10 +304,23 @@ public class Player extends Mob {
 									.getMouseLocation().x)
 					- Math.PI / 2;
 
+			// System.out.println(angle);
+
 			if (!newItem.isEmpty()) {
 				long currentTick = this.game.getTickCount();
 				if (currentTick - this.lastItemTick > newItem.getRateOfFire()) {
 					this.lastItemTick = currentTick;
+
+					int d = 32 * 16;
+
+					Line2D.Double line = new Line2D.Double(this.position,
+							new Point((int) (this.position.x + d
+									* Math.sin(angle)),
+									(int) (this.position.y + d
+											* Math.cos(angle))));
+					// System.out.println(line.x1 + " " + line.y1 + " " +
+					// line.x2 + " " + line.y2);
+					// bulletCollision(line);
 					newItem.removeAmmo();
 				}
 			}
@@ -342,5 +356,12 @@ public class Player extends Mob {
 					.getPosition().y / 512].remove(hoverItem);
 			addItem(hoverItem);
 		}
+	}
+
+	public Point bulletCollision(Line2D.Double line) {
+		for (int x = (int) line.getX1(); x < line.getX2(); x++) {
+
+		}
+		return null;
 	}
 }
