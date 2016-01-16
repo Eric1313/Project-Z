@@ -109,7 +109,7 @@ public class Zombie extends Mob {
 								if ((Math.pow(
 							checkZombie.getPosition().x - this.position.x, 2) + Math
 							.pow(checkZombie.getPosition().y - this.position.y,
-									2)) < 1030) {
+									2)) < 1100) {
 						if (checkZombie.getPosition().y > this.position.y) {
 //							if (collideDown)
 								this.up = true;
