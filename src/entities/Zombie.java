@@ -46,7 +46,7 @@ public class Zombie extends Mob {
 	public Zombie(Point position, int health, BufferedImage[] images,
 			AudioClip[] clips, Game game, Map map) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
-		rotation=Math.random()*(2*Math.PI);
+		rotation = Math.random() * (2 * Math.PI);
 
 	}
 
@@ -67,7 +67,7 @@ public class Zombie extends Mob {
 		int chunkX = this.position.x / 512;
 		int chunkY = this.position.y / 512;
 		int targetX = 0;
-		int targetY =0;
+		int targetY = 0;
 		// Follow the path
 		if (!this.getPath().isEmpty()) {
 			// If path contains null clear
@@ -77,7 +77,7 @@ public class Zombie extends Mob {
 				}
 			} else {
 				targetX = path.peek().locationX * 32;
-				targetY= path.peek().locationY * 32;
+				targetY = path.peek().locationY * 32;
 				if ((this.getPosition().x == targetX)
 						&& (this.getPosition().y == targetY)) {
 					path.pop();
@@ -94,50 +94,44 @@ public class Zombie extends Mob {
 				}
 			}
 		}
-		if(targetX!=0&&targetY!=0)
-		this.rotation=Math.atan2(this.position.y-targetY,this.position.x-targetX)
-				- Math.PI / 2;
+		if (targetX != 0 && targetY != 0)
+			this.rotation = Math.atan2(this.position.y - targetY,
+					this.position.x - targetX) - Math.PI / 2;
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
 				map.getWidth() - 1); x++) {
 			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
 					map.getHeight() - 1); y++) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
-					Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
+					if (1 < chunkMap[x][y].getZombies().size()) {
+						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
 
-					if ((Math.pow(
-							checkZombie.getPosition().x - this.position.x, 2) + Math
-							.pow(checkZombie.getPosition().y - this.position.y,
-									2)) < 1100) {
-						if (checkZombie.getPosition().y > this.position.y) {
-							// if (collideDown)
-							this.up = true;
-							// else
-							collideDown = true;
-						} else
-							collideDown = false;
-						if (checkZombie.getPosition().y < this.position.y) {
-							// if (collideUp)
-							this.down = true;
-							// else
-							collideUp = true;
-						} else
-							collideUp = false;
-						if (checkZombie.getPosition().x > this.position.x) {
-							// if (collideRight)
-							this.left = true;
-							// else
-							collideRight = true;
-						} else
-							collideRight = false;
-						if (checkZombie.getPosition().x < this.position.x) {
-							// if (collideLeft)
-							this.right = true;
-							// else
-							collideLeft = true;
-						} else
-							collideLeft = false;
+						if ((Math.pow(checkZombie.getPosition().x
+								- this.position.x, 2) + Math.pow(
+								checkZombie.getPosition().y - this.position.y,
+								2)) < 1100) {
+							if (checkZombie.getPosition().y > this.position.y) {
+								this.up = true;
+								collideDown = true;
+							} else
+								collideDown = false;
+							if (checkZombie.getPosition().y < this.position.y) {
+								this.down = true;
+								collideUp = true;
+							} else
+								collideUp = false;
+							if (checkZombie.getPosition().x > this.position.x) {
+								this.left = true;
+								collideRight = true;
+							} else
+								collideRight = false;
+							if (checkZombie.getPosition().x < this.position.x) {
+								this.right = true;
+								collideLeft = true;
+							} else
+								collideLeft = false;
+						}
+
 					}
-
 				}
 			}
 		}
@@ -164,7 +158,7 @@ public class Zombie extends Mob {
 		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100, false);
 		}
-		if (chunkX != this.position.x/ 512 || chunkY != this.position.y/ 512) {
+		if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
 			chunkMap[chunkX][chunkY].removeZombie(this);
 			chunkX = this.position.x / 512;
 			chunkY = this.position.y / 512;
@@ -189,8 +183,8 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.position.x- game
-				.getCamera().getxOffset()), (int) (this.position.y- game
+		g.drawImage(this.getImages()[0], (int) (this.position.x - game
+				.getCamera().getxOffset()), (int) (this.position.y - game
 				.getCamera().getyOffset()), null);
 	}
 
