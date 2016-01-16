@@ -7,6 +7,7 @@ import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Stack;
@@ -72,8 +73,8 @@ public class Zombie extends Mob {
 					this.path.clear();
 				}
 			} else {
-				int targetX = path.peek().locationX * 32 + 16;
-				int targetY = path.peek().locationY * 32 + 16;
+				int targetX = path.peek().locationX * 32;
+				int targetY = path.peek().locationY * 32;
 				if ((this.getPosition().x == targetX)
 						&& (this.getPosition().y == targetY)) {
 					path.pop();
@@ -131,12 +132,7 @@ public class Zombie extends Mob {
 						} else
 							collideLeft = false;
 					}
-					if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
-						chunkMap[chunkX][chunkY].removeZombie(this);
-						chunkX = this.position.x / 512;
-						chunkY = this.position.y / 512;
-						chunkMap[chunkX][chunkY].addZombie(this);
-					}
+
 				}
 			}
 		}
@@ -163,6 +159,12 @@ public class Zombie extends Mob {
 		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100, false);
 		}
+		if (chunkX != this.position.x/ 512 || chunkY != this.position.y/ 512) {
+			chunkMap[chunkX][chunkY].removeZombie(this);
+			chunkX = this.position.x / 512;
+			chunkY = this.position.y / 512;
+			chunkMap[chunkX][chunkY].addZombie(this);
+		}
 	}
 
 	/**
@@ -182,9 +184,12 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.position.x - 16 - game
-				.getCamera().getxOffset()), (int) (this.position.y - 16 - game
+		g.drawImage(this.getImages()[0], (int) (this.position.x- game
+				.getCamera().getxOffset()), (int) (this.position.y- game
 				.getCamera().getyOffset()), null);
+		g.drawString(this.toString(), (int) (this.position.x - game
+				.getCamera().getxOffset()), (int) (this.position.y - game
+				.getCamera().getyOffset()));
 	}
 
 	// @Override

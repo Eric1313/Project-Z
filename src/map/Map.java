@@ -488,9 +488,9 @@ public class Map {
 						|| j == end.getY()) {
 					setTile(i, j, 200, Direction.UP, false);
 					if (Math.random() > 0.99) {
-						chunkMap[i / 16][j / 16]
+						chunkMap[j / 16][i / 16]
 								.addZombie(new Zombie(
-										new Point(i * 32, j * 32), 100, game
+										new Point(j * 32, i * 32), 100, game
 												.getZombie()[0], null,
 										this.game, this));
 						zombieCount++;
@@ -596,8 +596,8 @@ public class Map {
 
 			if (Math.random() > 0.25
 					&& (tileMap[randomX][randomY] & 0xFFF) == 201) {
-				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
-						new Point(randomX * 32, randomY * 32), 100, game
+				chunkMap[randomY / 16][randomX / 16].addZombie(new Zombie(
+						new Point(randomY * 32, randomX * 32), 100, game
 								.getZombie()[0], null, this.game, this));
 				zombieCount++;
 			}
@@ -649,8 +649,8 @@ public class Map {
 			if (Math.random() > 0.10
 					&& (tileMap[randomX][randomY] & 0xFFF) == 108
 					|| (tileMap[randomX][randomY] & 0xFFF) >= 110) {
-				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
-						new Point(randomX * 32, randomY * 32), 100, game
+				chunkMap[randomY / 16][randomX / 16].addZombie(new Zombie(
+						new Point(randomY * 32, randomX* 32), 100, game
 								.getZombie()[0], null, this.game, this));
 				zombieCount++;
 			}
@@ -868,8 +868,8 @@ public class Map {
 
 				// Spawns zombies on roads
 				if (Math.random() > 0.99) {
-					chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(
-							new Point(tempx * 32, tempy * 32), 100, game
+					chunkMap[tempy / 16][tempx / 16].addZombie(new Zombie(
+							new Point(tempy * 32, tempx * 32), 100, game
 									.getZombie()[0], null, this.game, this));
 					zombieCount++;
 				}
@@ -994,8 +994,8 @@ public class Map {
 				tempy++;
 			}
 			if (Math.random() > 0.99) {
-				chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(
-						new Point(tempx * 32, tempy * 32), 100, game
+				chunkMap[tempy / 16][tempx / 16].addZombie(new Zombie(
+						new Point(tempy * 32, tempx * 32), 100, game
 								.getZombie()[0], null, this.game, this));
 				zombieCount++;
 			}
