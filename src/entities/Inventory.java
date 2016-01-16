@@ -15,9 +15,11 @@ import items.Item;
 public class Inventory {
 	public static final int NO_OF_ITEMS = 10;
 	private Item[] items;
+	private int noOfItems;
 
 	public Inventory() {
 		this.items = new Item[Inventory.NO_OF_ITEMS];
+		this.noOfItems = 0;
 	}
 
 	/**
@@ -53,6 +55,10 @@ public class Inventory {
 		return -1;
 	}
 
+	public int getNoOfItems() {
+		return noOfItems;
+	}
+
 	/**
 	 * Adds an Item to the Inventory.<br>
 	 * Adds the Item to the first available slot (lowest item number available).
@@ -67,6 +73,7 @@ public class Inventory {
 			if (this.items[itemNo] == null) {
 				item.setState(ItemState.INVENTORY);
 				this.items[itemNo] = item;
+				this.noOfItems++;
 				return itemNo;
 			}
 		}
@@ -86,6 +93,7 @@ public class Inventory {
 		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
 			if (this.items[itemNo] == item) {
 				this.items[itemNo] = null;
+				this.noOfItems--;
 				return itemNo;
 			}
 		}
@@ -109,6 +117,7 @@ public class Inventory {
 			Item removedItem = this.items[itemNo];
 			this.items[itemNo] = null;
 			removedItem.setState(ItemState.DROPPED);
+			this.noOfItems--;
 			return removedItem;
 		}
 	}

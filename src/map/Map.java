@@ -76,6 +76,7 @@ public class Map {
 		this.items = this.game.getItems();
 
 		this.tileMap = new short[width][height];
+		this.upperTileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
 
 		for (int i = 0; i < this.width / 16; i++)
@@ -464,15 +465,15 @@ public class Map {
 			doorDivider = 3;
 		
 		if (direction == Direction.UP || direction == Direction.DOWN) {
-			setTile((int) start.getX() + boxWidth / doorDivider, (int) start.getY() + 1, 201, Direction.UP, false);
-			setTile((int) start.getX() + boxWidth / doorDivider - 1, (int) start.getY() + 1, 201, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / doorDivider, (int) end.getY() - 1, 201, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / doorDivider + 1, (int) end.getY() - 1, 201, Direction.UP, false);
+			setTile((int) start.getX() + boxWidth / doorDivider, (int) start.getY() + 1, 207, Direction.UP, false);
+			setTile((int) start.getX() + boxWidth / doorDivider - 1, (int) start.getY() + 1, 207, Direction.UP, false);
+			setTile((int) end.getX() - boxWidth / doorDivider, (int) end.getY() - 1, 207, Direction.UP, false);
+			setTile((int) end.getX() - boxWidth / doorDivider + 1, (int) end.getY() - 1, 207, Direction.UP, false);
 		} else if (direction == Direction.RIGHT || direction == Direction.LEFT) {
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider, 201, Direction.UP, false);
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider - 1, 201, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider, 201, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider + 1, 201, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider, 207, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider - 1, 207, Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider, 207, Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider + 1, 207, Direction.UP, false);
 		}
 
 		generateRooms(new Point((int) start.getX() + 2, (int) start.getY() + 2),
@@ -540,14 +541,14 @@ public class Map {
 							&& (tileMap[i + 1][j - 1] & 0xFFF) == 108 && (tileMap[i + 1][j] & 0xFFF) == 108
 							&& (tileMap[i + 1][j + 1] & 0xFFF) == 108) {
 						setTile(i, j, 109, Direction.UP, true);
-						setTile(i - 1, j - 1, 111, Direction.RIGHT, false);
-						setTile(i - 1, j, 110, Direction.UP, false);
-						setTile(i - 1, j + 1, 111, Direction.UP, false);
-						setTile(i, j - 1, 110, Direction.UP, false);
-						setTile(i, j + 1, 110, Direction.UP, false);
-						setTile(i + 1, j - 1, 111, Direction.DOWN, false);
-						setTile(i + 1, j, 110, Direction.UP, false);
-						setTile(i + 1, j + 1, 111, Direction.LEFT, false);
+						setUpperTile(i - 1, j - 1, 111, Direction.RIGHT);
+						setUpperTile(i - 1, j, 110, Direction.UP);
+						setUpperTile(i - 1, j + 1, 111, Direction.UP);
+						setUpperTile(i, j - 1, 110, Direction.UP);
+						setUpperTile(i, j + 1, 110, Direction.UP);
+						setUpperTile(i + 1, j - 1, 111, Direction.DOWN);
+						setUpperTile(i + 1, j, 110, Direction.UP);
+						setUpperTile(i + 1, j + 1, 111, Direction.LEFT);
 					}
 				}
 			}
@@ -596,6 +597,8 @@ public class Map {
 			for (int i = (int) start.getY() + 1; i < end.getY(); i++) {
 				if (i != doorLocation && i != doorLocation - 1)
 					setTile((int) start.getX(), i, 205, Direction.UP, true);
+				else
+					setTile((int) start.getX(), i, 207, Direction.UP, false);
 			}
 
 		} else {
