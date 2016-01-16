@@ -149,7 +149,7 @@ public class Player extends Mob {
 					Assets.TILE_HEIGHT * (world.getHeight() - 1) - 32);
 
 		this.game.getCamera().centerOnEntity(this);
-
+		System.out.println("RUN");
 		if (key.isUp() || key.isDown() || key.isRight() || key.isLeft()) {
 			if (key.isShift())
 				makeNoise(400, true);

@@ -280,6 +280,7 @@ public class World {
 	}
 
 	private void initializeOffsets() {
+		camera.centerOnEntity(player);
 		while ((camera.getxOffset() - xChange) >= renderControl) {
 			col++;
 			xChange += renderControl;
