@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.io.FileNotFoundException;
@@ -59,9 +60,9 @@ public class World {
 		tileId = map.getMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
-		player = new Player(new Point(
-				(int) map.getPlayerCoordinate().getX() * 32, (int) map
-						.getPlayerCoordinate().getY() * 32), true, game, map);
+		player = new Player(
+				new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
+				true, game, map);
 		// player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		// this.row = (int) (player.getPosition().getY() / 32);
@@ -85,23 +86,22 @@ public class World {
 
 		}
 		double angle = Math.atan2(
-				((player.getPosition().getY()) + 16 - camera.getyOffset())
-						- mouse.getMouseLocation().getY(), (player
-						.getPosition().getX() + 16 - camera.getxOffset())
-						- mouse.getMouseLocation().getX())
+				((player.getPosition().getY()) + 16 - camera.getyOffset()) - mouse.getMouseLocation().getY(),
+				(player.getPosition().getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX())
 				- Math.PI / 2;
 
 		Graphics2D g2D = (Graphics2D) g;
+
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		if (originalTransform == null) {
 			originalTransform = g2D.getTransform();
 		}
 
-		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
-				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
-		flashLight.setArcByCenter(
-				player.getPosition().getX() - camera.getxOffset() + 16, player
-						.getPosition().getY() - camera.getyOffset() + 16, 500,
-				50, 80, Arc2D.PIE);
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
+				player.getPosition().getY() - camera.getyOffset() + 16);
+		flashLight.setArcByCenter(player.getPosition().getX() - camera.getxOffset() + 16,
+				player.getPosition().getY() - camera.getyOffset() + 16, 500, 50, 80, Arc2D.PIE);
 		g2D.clip(flashLight);
 
 		int tileY = 0;
@@ -113,30 +113,25 @@ public class World {
 					break;
 				}
 				g2D.setTransform(originalTransform);
-				if ((tileId[j][i] & (1 << 12)) != 0
-						&& ((tileId[j][i] & (1 << 13)) != 0)) {
-					g2D.rotate(Math.toRadians(180), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+				if ((tileId[j][i] & (1 << 12)) != 0 && ((tileId[j][i] & (1 << 13)) != 0)) {
+					g2D.rotate(Math.toRadians(180),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				}
 
 				else if ((tileId[j][i] & (1 << 12)) != 0) {
-					g2D.rotate(Math.toRadians(90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+					g2D.rotate(Math.toRadians(90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				} else if ((tileId[j][i] & (1 << 13)) != 0) {
-					g2D.rotate(Math.toRadians(-90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+					g2D.rotate(Math.toRadians(-90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				}
 				if ((tileId[j][i] & (1 << 14)) != 0) {
-					solid[tileY][tileX] = new Rectangle((int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange), 32, 32);
+					solid[tileY][tileX] = new Rectangle(
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), 32, 32);
 					// g2D.draw(solid[tileY][tileX]);
 					// g2D.setTransform(originalTransform);
 					// g2D.drawString(tileY + "," + tileX,
@@ -147,9 +142,8 @@ public class World {
 				}
 				int id = (tileId[j][i] & 0xFFF);
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
-								+ xChange, (int) (tileY * Assets.TILE_HEIGHT
-								- camera.getyOffset() + yChange), null);
+						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+						(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), null);
 				tileX++;
 			}
 			tileY++;
@@ -199,29 +193,26 @@ public class World {
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
 		for (int x = chunkX - 3; x < chunkX + 4; x++) {
 			for (int y = chunkY - 3; y < chunkY + 4; y++) {
-				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
-						.iterator(); iterator.hasNext();) {
+				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					zombie.render(g);
 				}
-				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
-						.iterator(); iterator.hasNext();) {
+				for (Iterator<Item> iterator = chunkMap[x][y].getItems().iterator(); iterator.hasNext();) {
 					Item item = iterator.next();
 					item.render(g);
 				}
 			}
 		}
 
-		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
-				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
-		GradientPaint gp = new GradientPaint((float) player.getPosition()
-				.getX() - camera.getxOffset() + 16, (float) player
-				.getPosition().getY() - camera.getyOffset() + 16, new Color(0,
-				0, 0, 0), (float) (player.getPosition().getX()
-				- camera.getxOffset() + 350 * (float) Math.cos(Math
-				.toRadians(90))), (float) (player.getPosition().getY()
-				- camera.getyOffset() - 350 * (float) Math.sin(Math
-				.toRadians(90))), new Color(0, 0, 0));
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
+				player.getPosition().getY() - camera.getyOffset() + 16);
+		GradientPaint gp = new GradientPaint((float) player.getPosition().getX() - camera.getxOffset() + 16,
+				(float) player.getPosition().getY() - camera.getyOffset() + 16, new Color(0, 0, 0, 0),
+				(float) (player.getPosition().getX() - camera.getxOffset()
+						+ 350 * (float) Math.cos(Math.toRadians(90))),
+				(float) (player.getPosition().getY() - camera.getyOffset()
+						- 350 * (float) Math.sin(Math.toRadians(90))),
+				new Color(0, 0, 0));
 		g2D.setPaint(gp);
 		g2D.fill(flashLight);
 		g2D.draw(flashLight);
@@ -231,8 +222,7 @@ public class World {
 
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .5f));
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		this.hoverItem = hoverItem();
 
@@ -241,19 +231,15 @@ public class World {
 
 			g.setColor(new Color(100, 100, 100, 150));
 			g.fillRect(
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15
-							- fm.stringWidth(this.hoverItem.getName())
-							/ 2
-							- 15,
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2 - 15,
 					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
 					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
 
 			g.setColor(this.hoverItem.getColour());
-			g.drawString(
-					this.hoverItem.getName(),
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
+			g.drawString(this.hoverItem.getName(),
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2,
 					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
 		}
 	}
@@ -296,26 +282,17 @@ public class World {
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
 			for (int y = chunkY - 2; y < chunkY + 3; y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
-						.listIterator(chunkMap[x][y].getItems().size()); iterator
-						.hasPrevious();) {
+						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
-					Rectangle itemHitbox = new Rectangle(
-							(int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()) + 32,
-							32, 32);
+					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
+							(int) (item.getPosition().y - camera.getyOffset()) + 32, 32, 32);
 					if (itemHitbox.contains(mouse.getMouseLocation())
-							&& Math.sqrt(Math.pow(
-									(player.getPosition().x - item
-											.getPosition().x), 2)
-									+ Math.pow((player.getPosition().y - item
-											.getPosition().y), 2)) <= 8 * 32) {
+							&& Math.sqrt(Math.pow((player.getPosition().x - item.getPosition().x), 2)
+									+ Math.pow((player.getPosition().y - item.getPosition().y), 2)) <= 8 * 32) {
 						item.setHover(true);
 						return item;
-					} else if (itemHitbox
-							.intersects(new Rectangle((int) (player
-									.getPosition().x - camera.getxOffset()),
-									(int) (player.getPosition().y - camera
-											.getyOffset()) + 32, 32, 32))) {
+					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
+							(int) (player.getPosition().y - camera.getyOffset()) + 32, 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {
