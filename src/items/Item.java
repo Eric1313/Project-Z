@@ -108,15 +108,15 @@ public abstract class Item {
 	public Color getColour() {
 		switch (this.rarity) {
 		case 5:
-			return Color.GRAY;
+			return new Color(173, 173, 173);
 		case 4:
-			return Color.BLUE;
+			return new Color(0, 54, 255);
 		case 3:
-			return Color.YELLOW;
+			return new Color(246, 195, 72);
 		case 2:
-			return Color.ORANGE;
+			return new Color(246, 146, 72);
 		case 1:
-			return Color.GREEN;
+			return new Color(0, 225, 0);
 		}
 
 		return null;
