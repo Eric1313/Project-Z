@@ -2,7 +2,6 @@ package entities;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import enums.ItemEffect;
 import enums.ItemState;
@@ -87,7 +86,7 @@ public class Player extends Mob {
 			dropItem();
 			this.game.getDisplay().getKeyHandler().setQ(false);
 		}
-		
+
 		if (this.game.getDisplay().getKeyHandler().isE()) {
 			pickUpItem();
 			this.game.getDisplay().getKeyHandler().setE(false);
@@ -307,14 +306,12 @@ public class Player extends Mob {
 	public void pickUpItem() {
 		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld().getHoverItem();
 
-		if (hoverItem != null && !isFull()) {
-			if (new Rectangle((int) (hoverItem.getPosition().x - this.game.getCamera().getxOffset()),
-					(int) (hoverItem.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
-							.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
-				hoverItem.setState(ItemState.INVENTORY);
-				this.chunkMap[this.position.x / 512][this.position.y / 512].remove(hoverItem);
-				addItem(hoverItem);
-			}
+		if (hoverItem != null && !isFull() && Math.sqrt(Math.pow((this.position.x - hoverItem.getPosition().x), 2)
+				+ Math.pow((this.position.y - hoverItem.getPosition().y), 2)) <= 1 * 32) {
+			hoverItem.setState(ItemState.INVENTORY);
+			this.chunkMap[hoverItem.getPosition().x / 512][hoverItem.getPosition().y / 512].remove(hoverItem);
+			addItem(hoverItem);
 		}
+
 	}
 }
