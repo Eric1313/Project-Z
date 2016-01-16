@@ -171,10 +171,10 @@ public class World {
 		g2D.setTransform(originalTransform);
 
 		// draw Zombies
-		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
-		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < chunkX + 3; x++) {
-			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+		int chunkX = Math.max((int) player.getPosition().getX() / 512, 3);
+		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
+		for (int x = chunkX - 3; x < chunkX + 4; x++) {
+			for (int y = chunkY - 3; y < chunkY + 4; y++) {
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					zombie.render(g);
