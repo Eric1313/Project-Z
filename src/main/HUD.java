@@ -51,7 +51,7 @@ public class HUD {
 
 			String itemNo;
 			if (item < 9) {
-				itemNo = item + "";
+				itemNo = item + 1 + "";
 			} else {
 				itemNo = "0";
 			}

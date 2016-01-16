@@ -73,7 +73,15 @@ public class Firearm extends Item {
 		this.currentAmmo = currentAmmo;
 	}
 	
+	public void removeAmmo() {
+		this.currentAmmo--;
+	}
+	
 	public boolean isFull() {
 		return this.currentAmmo == this.maxAmmo;
+	}
+	
+	public boolean isEmpty() {
+		return this.currentAmmo == 0;
 	}
 }
