@@ -43,7 +43,7 @@ public class Game implements Runnable {
 	private void initialize() {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
-//		upperTiles = new Assets("res/img/upperTiles.png").getSprites();dddddd
+//		upperTiles = new Assets("res/img/upperTiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
 		zombie = new Assets("res/img/zombie.png").getSprites();
 		// Load all of the items
