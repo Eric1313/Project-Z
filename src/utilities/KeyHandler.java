@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {
 	private boolean right;
 	private boolean shift;
 	private boolean q;
+	private boolean e;
 	private int lastNumber;
 
 	@Override
@@ -42,6 +43,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			q = pressed;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_E) {
+			this.e = pressed;
 		}
 		if (e.getKeyCode() >= 48 && e.getKeyCode() <= 57 && pressed) {
 			if (e.getKeyCode() == 48) {
@@ -84,6 +88,14 @@ public class KeyHandler implements KeyListener {
 
 	public void setQ(boolean q) {
 		this.q = q;
+	}
+
+	public boolean isE() {
+		return e;
+	}
+
+	public void setE(boolean e) {
+		this.e = e;
 	}
 
 	public int getLastNumber() {

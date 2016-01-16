@@ -87,6 +87,11 @@ public class Player extends Mob {
 			dropItem();
 			this.game.getDisplay().getKeyHandler().setQ(false);
 		}
+		
+		if (this.game.getDisplay().getKeyHandler().isE()) {
+			pickUpItem();
+			this.game.getDisplay().getKeyHandler().setE(false);
+		}
 
 		if (this.game.getDisplay().getKeyHandler().isShift() && !exhausted
 				&& (this.game.getDisplay().getKeyHandler().isUp() || this.game.getDisplay().getKeyHandler().isDown()
@@ -296,6 +301,20 @@ public class Player extends Mob {
 			item.setState(ItemState.DROPPED);
 			removeItem(this.selectedItem);
 			this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
+		}
+	}
+
+	public void pickUpItem() {
+		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld().getHoverItem();
+
+		if (hoverItem != null && !isFull()) {
+			if (new Rectangle((int) (hoverItem.getPosition().x - this.game.getCamera().getxOffset()),
+					(int) (hoverItem.getPosition().y - this.game.getCamera().getyOffset()) + 32, 32, 32)
+							.contains(this.game.getDisplay().getMouseHandler().getMouseLocation())) {
+				hoverItem.setState(ItemState.INVENTORY);
+				this.chunkMap[this.position.x / 512][this.position.y / 512].remove(hoverItem);
+				addItem(hoverItem);
+			}
 		}
 	}
 }
