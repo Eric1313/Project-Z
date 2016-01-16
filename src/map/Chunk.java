@@ -3,6 +3,7 @@ package map;
 import items.Item;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entities.Entity;
 import entities.Zombie;
@@ -37,6 +38,10 @@ public class Chunk {
 	public void add(Item item) {
 		this.items.add(item);
 		// TODO Make sure the chunk isn't full
+	}
+	
+	public void remove(Item item) {
+		this.items.remove(item);
 	}
 
 	/**

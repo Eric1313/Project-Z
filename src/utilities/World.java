@@ -34,6 +34,7 @@ public class World {
 	private Map map;
 	private int width;
 	private int height;
+	private Item hoverItem;
 
 	// Controls what is being rendered
 	private int row;
@@ -222,23 +223,23 @@ public class World {
 		// }
 		// }
 
-		Item selectedItem = hoverItem();
+		this.hoverItem = hoverItem();
 		
-		if (selectedItem != null) {
+		if (this.hoverItem != null) {
 			FontMetrics fm = g.getFontMetrics();
 
 			g.setColor(new Color(100, 100, 100, 150));
 			g.fillRect(
-					(int) (selectedItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
-							- fm.stringWidth(selectedItem.getName()) / 2 - 15,
-					(int) (selectedItem.getPosition().y - this.game.getCamera().getyOffset()) - 30,
-					fm.stringWidth(selectedItem.getName()) + 30, 20);
+					(int) (this.hoverItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2 - 15,
+					(int) (this.hoverItem.getPosition().y - this.game.getCamera().getyOffset()) - 30,
+					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
 
-			g.setColor(selectedItem.getColour());
-			g.drawString(selectedItem.getName(),
-					(int) (selectedItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
-							- fm.stringWidth(selectedItem.getName()) / 2,
-					(int) (selectedItem.getPosition().y - this.game.getCamera().getyOffset()) - 15);
+			g.setColor(this.hoverItem.getColour());
+			g.drawString(this.hoverItem.getName(),
+					(int) (this.hoverItem.getPosition().x - this.game.getCamera().getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2,
+					(int) (this.hoverItem.getPosition().y - this.game.getCamera().getyOffset()) - 15);
 		}
 	}
 
@@ -283,5 +284,9 @@ public class World {
 		}
 		
 		return null;
+	}
+
+	public Item getHoverItem() {
+		return hoverItem;
 	}
 }

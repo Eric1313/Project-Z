@@ -130,6 +130,10 @@ public abstract class Entity {
 	public Inventory getInventory() {
 		return this.inventory;
 	}
+	
+	public boolean isFull() {
+		return this.inventory.getNoOfItems() == Inventory.NO_OF_ITEMS;
+	}
 
 	public int addItem(Item item) {
 		item.setState(ItemState.INVENTORY);
