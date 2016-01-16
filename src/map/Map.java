@@ -51,6 +51,7 @@ public class Map {
 	private Game game;
 	private PathFinder pathFinder;
 	public static int zombieCount;
+	private int doorDivider;
 	private Point playerStart;
 
 	private ArrayList<Item> items;
@@ -111,6 +112,7 @@ public class Map {
 		}
 
 		pathFinder=new PathFinder(this);
+		
 		spawnItems();
 	}
 
@@ -454,17 +456,23 @@ public class Map {
 			}
 		}
 
+		
 		// Creates the doors
+		if (boxWidth > 30 && boxHeight > 30)
+			doorDivider = 4;
+		else
+			doorDivider = 3;
+		
 		if (direction == Direction.UP || direction == Direction.DOWN) {
-			setTile((int) start.getX() + boxWidth / 3, (int) start.getY() + 1, 201, Direction.UP, false);
-			setTile((int) start.getX() + boxWidth / 3 - 1, (int) start.getY() + 1, 201, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / 3, (int) end.getY() - 1, 201, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / 3 + 1, (int) end.getY() - 1, 201, Direction.UP, false);
+			setTile((int) start.getX() + boxWidth / doorDivider, (int) start.getY() + 1, 201, Direction.UP, false);
+			setTile((int) start.getX() + boxWidth / doorDivider - 1, (int) start.getY() + 1, 201, Direction.UP, false);
+			setTile((int) end.getX() - boxWidth / doorDivider, (int) end.getY() - 1, 201, Direction.UP, false);
+			setTile((int) end.getX() - boxWidth / doorDivider + 1, (int) end.getY() - 1, 201, Direction.UP, false);
 		} else if (direction == Direction.RIGHT || direction == Direction.LEFT) {
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / 3, 201, Direction.UP, false);
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / 3 - 1, 201, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / 3, 201, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / 3 + 1, 201, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider, 201, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight / doorDivider - 1, 201, Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider, 201, Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight / doorDivider + 1, 201, Direction.UP, false);
 		}
 
 		generateRooms(new Point((int) start.getX() + 2, (int) start.getY() + 2),
@@ -579,7 +587,7 @@ public class Map {
 				setTile((int) start.getX(), (int) start.getY(), 206, Direction.LEFT, true);
 
 			if ((tileMap[(int) start.getX()][(int) end.getY()] & 0xFFF) != 205
-					&& (tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 206) {
+					&& (tileMap[(int) start.getX()][(int) end.getY()] & 0xFFF) != 206) {
 				setTile((int) start.getX(), (int) end.getY() + 1, 204, Direction.RIGHT, true);
 				setTile((int) start.getX(), (int) end.getY(), 205, Direction.UP, true);
 			} else
@@ -602,7 +610,7 @@ public class Map {
 			}
 
 			if ((tileMap[(int) end.getX()][(int) start.getY()] & 0xFFF) != 205
-					&& (tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 206) {
+					&& (tileMap[(int) end.getX()][(int) start.getY()] & 0xFFF) != 206) {
 				setTile((int) end.getX(), (int) start.getY(), 205, Direction.RIGHT, true);
 				setTile((int) end.getX() + 1, (int) start.getY(), 204, Direction.UP, true);
 			} else {
@@ -873,6 +881,11 @@ public class Map {
 				else
 					setTile(tempx, tempy, 101, Direction.UP, false);
 				tempy++;
+			}
+			if (Math.random() > 0.99){
+				chunkMap[tempx/16][tempy/16].addZombie(new Zombie(new Point(tempx*32, tempy*32), 100,
+					game.getZombie()[0], null, this.game, this));
+				zombieCount++;
 			}
 			tempx--;
 			tempy -= size;
