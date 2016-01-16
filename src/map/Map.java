@@ -41,7 +41,7 @@ public class Map {
 	final int ROAD_WIDTH = 11;
 	
 	final int MAX_ZOMBIE_PER_ROOM = 2;
-	final int MAX_ZOMBIE_PER_FOREST = 5;
+	final int MAX_ZOMBIE_PER_FOREST = 2;
 	// STores locations of all plazas
 
 	// Map storage
