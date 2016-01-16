@@ -59,13 +59,15 @@ public class World {
 		tileId = map.getMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
-		// player = new Player(new Point(
-		// (int) map.getPlayerCoordinate().getX() * 32, (int) map
-		// .getPlayerCoordinate().getY() * 32), true, game, map);
-		player = new Player(new Point(0, 0), true, game, map);
+		player = new Player(new Point(
+				(int) map.getPlayerCoordinate().getX() * 32, (int) map
+						.getPlayerCoordinate().getY() * 32), true, game, map);
+		// player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
-		this.row = (int) (player.getPosition().getY() / 32);
-		this.col = (int) (player.getPosition().getX() / 32);
+		// this.row = (int) (player.getPosition().getY() / 32);
+		// this.col = (int) (player.getPosition().getX() / 32);
+		this.row = 0;
+		this.col = 0;
 		// this.yChange = (int) (player.getPosition().getY() - 500);
 		// this.xChange = (int) (player.getPosition().getX() - 500);
 		this.yChange = 0;
@@ -278,11 +280,13 @@ public class World {
 	}
 
 	private void initializeOffsets() {
-		if ((camera.getyOffset() - yChange) >= renderControl) {
-			yChange += camera.getyOffset() - 32;
+		while ((camera.getxOffset() - xChange) >= renderControl) {
+			col++;
+			xChange += renderControl;
 		}
-		if ((camera.getxOffset() - xChange) >= renderControl) {
-			xChange += camera.getxOffset() - 32;
+		while ((camera.getyOffset() - yChange) >= renderControl) {
+			row++;
+			yChange += renderControl;
 		}
 	}
 
