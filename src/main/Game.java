@@ -33,6 +33,8 @@ public class Game implements Runnable {
 	private GameCamera camera;
 
 	private boolean running = false;
+	
+	private long tickCount;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -208,7 +210,7 @@ public class Game implements Runnable {
 		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
 		double secondsPerTick = 1 / 60.0;
-		int tickCount = 0;
+		tickCount = 0;
 
 		while (running) {
 			long now = System.nanoTime();
@@ -315,6 +317,10 @@ public class Game implements Runnable {
 
 	public ArrayList<Item> getItems() {
 		return this.items;
+	}
+
+	public long getTickCount() {
+		return tickCount;
 	}
 
 	public static void main(String[] args) {

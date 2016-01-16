@@ -40,6 +40,8 @@ public class Player extends Mob {
 
 	private int selectedItem = 0;
 
+	private long lastItemTick = 0;
+
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -339,7 +341,18 @@ public class Player extends Mob {
 				break;
 			}
 		} else if (item instanceof Melee) {
+			Melee newItem = (Melee) item;
+			double angle = Math.atan2(
+					(position.y + 16 - game.getCamera().getyOffset())
+							- game.getDisplay().getMouseHandler().getMouseLocation().y,
+					(position.x + 16 - game.getCamera().getxOffset())
+							- game.getDisplay().getMouseHandler().getMouseLocation().x)
+					- Math.PI / 2;
 
+			long currentTick = this.game.getTickCount();
+			if (currentTick - this.lastItemTick > newItem.getRechargeTime()) {
+				this.lastItemTick = currentTick;
+			}
 		} else if (item instanceof Firearm) {
 			Firearm newItem = (Firearm) item;
 			double angle = Math.atan2((position.y + 16 - game.getCamera()
@@ -351,7 +364,11 @@ public class Player extends Mob {
 					- Math.PI / 2;
 
 			if (!newItem.isEmpty()) {
-				newItem.removeAmmo();
+				long currentTick = this.game.getTickCount();
+				if (currentTick - this.lastItemTick > newItem.getRateOfFire()) {
+					this.lastItemTick = currentTick;
+					newItem.removeAmmo();
+				}
 			}
 		} else if (item instanceof Throwable) {
 
