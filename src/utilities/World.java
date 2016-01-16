@@ -62,7 +62,7 @@ public class World {
 		// player = new Player(new Point(
 		// (int) map.getPlayerCoordinate().getX() * 32, (int) map
 		// .getPlayerCoordinate().getY() * 32), true, game, map);
-		player = new Player(new Point(50, 50), true, game, map);
+		player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		this.row = (int) (player.getPosition().getY() / 32);
 		this.col = (int) (player.getPosition().getX() / 32);
@@ -133,15 +133,13 @@ public class World {
 				if ((tileId[j][i] & (1 << 14)) != 0) {
 					solid[tileY][tileX] = new Rectangle((int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange - 3, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange - 2), 32, 32);
-
-					 g2D.draw(solid[tileY][tileX]);
-					 g2D.setTransform(originalTransform);
-					 g2D.drawString(tileY + "," + tileX,
-					 (int) solid[tileY][tileX].getX(),
-					 (int) solid[tileY][tileX].getY());
-
+							+ xChange, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange), 32, 32);
+					// g2D.draw(solid[tileY][tileX]);
+					// g2D.setTransform(originalTransform);
+					// g2D.drawString(tileY + "," + tileX,
+					// (int) solid[tileY][tileX].getX(),
+					// (int) solid[tileY][tileX].getY());
 				} else {
 					solid[tileY][tileX] = null;
 				}
@@ -199,14 +197,10 @@ public class World {
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
 		for (int x = chunkX - 3; x < chunkX + 4; x++) {
 			for (int y = chunkY - 3; y < chunkY + 4; y++) {
-//				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
-//						.iterator(); iterator.hasNext();) {
-//					Zombie zombie = iterator.next();
-//					zombie.render(g);
-//				}
-				for (int i=0;i<chunkMap[x][y].getZombies().size();i++)
-				{
-					chunkMap[x][y].getZombies().get(i).render(g);
+				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
+						.iterator(); iterator.hasNext();) {
+					Zombie zombie = iterator.next();
+					zombie.render(g);
 				}
 				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
 						.iterator(); iterator.hasNext();) {
