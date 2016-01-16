@@ -187,6 +187,12 @@ public class Zombie extends Mob {
 		g.drawImage(this.getImages()[0], (int) (this.position.x- game
 				.getCamera().getxOffset()), (int) (this.position.y- game
 				.getCamera().getyOffset()), null);
+		g.drawString(this.toString(), (int) (this.position.x - game
+				.getCamera().getxOffset()), (int) (this.position.y - game
+				.getCamera().getyOffset()));
 	}
 
+	// @Override
+	// public void render(Graphics g) {
+	// }
 }

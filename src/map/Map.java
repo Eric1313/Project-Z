@@ -442,7 +442,7 @@ public class Map {
 		}
 
 		// Generates the safehouse
-		generateSafeBuilding(new Point((int) start.getX() + boxWidth / 3,
+		generateBuilding(new Point((int) start.getX() + boxWidth / 3,
 				(int) start.getY() + boxHeight / 3), new Point((int) end.getX()
 				- boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP);
 
@@ -551,82 +551,7 @@ public class Map {
 
 		generateRooms(
 				new Point((int) start.getX() + 2, (int) start.getY() + 2),
-				new Point((int) end.getX() - 2, (int) end.getY() - 2), false);
-
-	}
-	
-	/**
-	 * Generates the building and its tiles
-	 * 
-	 * @param start
-	 * @param end
-	 */
-	public void generateSafeBuilding(Point start, Point end, Direction direction) {
-		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
-		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
-
-		for (int i = (int) start.getX(); i <= end.getX(); i++) {
-			for (int j = (int) start.getY(); j <= end.getY(); j++) {
-				if (i == start.getX() || i == end.getX() || j == start.getY()
-						|| j == end.getY()) {
-					setTile(i, j, 200, Direction.UP, false);
-				}
-				/*
-				 * else if (i == start.getX()+1 || i == end.getX()-1 || j ==
-				 * start.getY()+1 || j == end.getY()-1) setTile(i, j, 202,
-				 * Direction.UP,true); else setTile(i, j, 201,
-				 * Direction.UP,false);
-				 */
-				else if (i == start.getX() + 1 && j == start.getY() + 1) {
-					setTile(i, j, 209, Direction.DOWN, true);
-				} else if (i == start.getX() + 1 && j == end.getY() - 1) {
-					setTile(i, j, 209, Direction.RIGHT, true);
-				} else if (i == end.getX() - 1 && j == start.getY() + 1) {
-					setTile(i, j, 209, Direction.LEFT, true);
-				} else if (i == end.getX() - 1 && j == end.getY() - 1) {
-					setTile(i, j, 209, Direction.UP, true);
-				} else if (i == start.getX() + 1) {
-					setTile(i, j, 208, Direction.DOWN, true);
-				} else if (j == start.getY() + 1) {
-					setTile(i, j, 208, Direction.LEFT, true);
-				} else if (i == end.getX() - 1) {
-					setTile(i, j, 208, Direction.UP, true);
-				} else if (j == end.getY() - 1) {
-					setTile(i, j, 208, Direction.RIGHT, true);
-				} else
-					setTile(i, j, 201, Direction.UP, false);
-			}
-		}
-
-		// Creates the doors
-		if (boxWidth > 30 && boxHeight > 30)
-			doorDivider = 4;
-		else
-			doorDivider = 3;
-
-		if (direction == Direction.UP || direction == Direction.DOWN) {
-			setTile((int) start.getX() + boxWidth / doorDivider,
-					(int) start.getY() + 1, 207, Direction.UP, false);
-			setTile((int) start.getX() + boxWidth / doorDivider - 1,
-					(int) start.getY() + 1, 207, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / doorDivider,
-					(int) end.getY() - 1, 207, Direction.UP, false);
-			setTile((int) end.getX() - boxWidth / doorDivider + 1,
-					(int) end.getY() - 1, 207, Direction.UP, false);
-		} else if (direction == Direction.RIGHT || direction == Direction.LEFT) {
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight
-					/ doorDivider, 207, Direction.UP, false);
-			setTile((int) end.getX() - 1, (int) start.getY() + boxHeight
-					/ doorDivider - 1, 207, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight
-					/ doorDivider, 207, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - boxHeight
-					/ doorDivider + 1, 207, Direction.UP, false);
-		}
-
-		generateRooms(
-				new Point((int) start.getX() + 2, (int) start.getY() + 2),
-				new Point((int) end.getX() - 2, (int) end.getY() - 2), true);
+				new Point((int) end.getX() - 2, (int) end.getY() - 2));
 
 	}
 
@@ -636,7 +561,7 @@ public class Map {
 	 * @param start
 	 * @param end
 	 */
-	public void generateRooms(Point start, Point end, boolean safe) {
+	public void generateRooms(Point start, Point end) {
 
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
@@ -650,19 +575,19 @@ public class Map {
 						(int) start.getY() + (boxHeight / 2));
 				generateWall(midPoint,
 						new Point((int) end.getX(), (int) start.getY()
-								+ (boxHeight / 2)),safe);
+								+ (boxHeight / 2)));
 				generateRooms(start,
 						new Point((int) end.getX(), (int) start.getY()
-								+ (boxHeight / 2)),safe);
-				generateRooms(midPoint, end,safe);
+								+ (boxHeight / 2)));
+				generateRooms(midPoint, end);
 			} else if (boxWidth > boxHeight) {
 				Point midPoint = new Point((int) start.getX() + boxWidth / 2,
 						(int) start.getY());
 				generateWall(midPoint, new Point((int) start.getX() + boxWidth
-						/ 2, (int) end.getY()),safe);
+						/ 2, (int) end.getY()));
 				generateRooms(start, new Point((int) start.getX() + boxWidth
-						/ 2, (int) end.getY()),safe);
-				generateRooms(midPoint, end,safe);
+						/ 2, (int) end.getY()));
+				generateRooms(midPoint, end);
 			}
 		}
 		for (int z = 0; z < MAX_ZOMBIE_PER_ROOM; z++) {
@@ -739,7 +664,7 @@ public class Map {
 	 * @param start
 	 * @param end
 	 */
-	public void generateWall(Point start, Point end, boolean safe) {
+	public void generateWall(Point start, Point end) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 		int doorLocation;
@@ -748,12 +673,8 @@ public class Map {
 
 			if ((tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 205
 					&& (tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 206) {
-				if (!safe)
-					setTile((int) start.getX(), (int) start.getY() - 1, 204,
+				setTile((int) start.getX(), (int) start.getY() - 1, 204,
 						Direction.LEFT, true);
-				else
-					setTile((int) start.getX(), (int) start.getY() - 1, 210,
-							Direction.LEFT, true);
 				setTile((int) start.getX(), (int) start.getY(), 205,
 						Direction.UP, true);
 			} else
@@ -762,12 +683,8 @@ public class Map {
 
 			if ((tileMap[(int) start.getX()][(int) end.getY()] & 0xFFF) != 205
 					&& (tileMap[(int) start.getX()][(int) end.getY()] & 0xFFF) != 206) {
-				if (!safe)
-					setTile((int) start.getX(), (int) end.getY() + 1, 204,
-							Direction.RIGHT, true);
-				else
-					setTile((int) start.getX(), (int) end.getY() + 1, 210,
-							Direction.RIGHT, true);
+				setTile((int) start.getX(), (int) end.getY() + 1, 204,
+						Direction.RIGHT, true);
 				setTile((int) start.getX(), (int) end.getY(), 205,
 						Direction.UP, true);
 			} else
@@ -788,12 +705,8 @@ public class Map {
 					&& (tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 206) {
 				setTile((int) start.getX(), (int) start.getY(), 205,
 						Direction.RIGHT, true);
-				if (!safe)
-					setTile((int) start.getX() - 1, (int) start.getY(), 204,
-							Direction.DOWN, true);
-				else
-					setTile((int) start.getX() - 1, (int) start.getY(), 210,
-							Direction.DOWN, true);
+				setTile((int) start.getX() - 1, (int) start.getY(), 204,
+						Direction.DOWN, true);
 			} else {
 				setTile((int) start.getX(), (int) start.getY(), 206,
 						Direction.DOWN, true);
@@ -803,10 +716,8 @@ public class Map {
 					&& (tileMap[(int) end.getX()][(int) start.getY()] & 0xFFF) != 206) {
 				setTile((int) end.getX(), (int) start.getY(), 205,
 						Direction.RIGHT, true);
-				if (!safe)
-					setTile((int) end.getX() + 1, (int) start.getY(), 204, Direction.UP, true);
-				else
-					setTile((int) end.getX() + 1, (int) start.getY(), 210, Direction.UP, true);
+				setTile((int) end.getX() + 1, (int) start.getY(), 204,
+						Direction.UP, true);
 			} else {
 				setTile((int) end.getX(), (int) start.getY(), 206,
 						Direction.UP, true);
