@@ -100,7 +100,7 @@ public class World {
 				player.getPosition().getX() - camera.getxOffset() + 16, player
 						.getPosition().getY() - camera.getyOffset() + 16, 500,
 				50, 80, Arc2D.PIE);
-		// g2D.clip(flashLight);
+		 g2D.clip(flashLight);
 
 		int tileY = 0;
 		int tileX = 0;
@@ -135,20 +135,21 @@ public class World {
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange - 3, (int) (tileY * Assets.TILE_HEIGHT
 							- camera.getyOffset() + yChange - 2), 32, 32);
-					g2D.draw(solid[tileY][tileX]);
-					g2D.setTransform(originalTransform);
-					g2D.drawString(j + "," + i,
-							(int) solid[tileY][tileX].getX(),
-							(int) solid[tileY][tileX].getY());
+
+					 g2D.draw(solid[tileY][tileX]);
+					 g2D.setTransform(originalTransform);
+					 g2D.drawString(tileY + "," + tileX,
+					 (int) solid[tileY][tileX].getX(),
+					 (int) solid[tileY][tileX].getY());
 				} else {
 					solid[tileY][tileX] = null;
 				}
 				int id = (tileId[j][i] & 0xFFF);
-				// g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
-				// (int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
-				// + xChange - 3, (int) (tileY
-				// * Assets.TILE_HEIGHT - camera.getyOffset()
-				// + yChange - 2), null);
+				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
+								+ xChange - 3, (int) (tileY
+								* Assets.TILE_HEIGHT - camera.getyOffset()
+								+ yChange - 2), null);
 				tileX++;
 			}
 			tileY++;
@@ -217,25 +218,25 @@ public class World {
 
 		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
 				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
-		// GradientPaint gp = new GradientPaint((float) player.getPosition()
-		// .getX() - camera.getxOffset() + 16, (float) player
-		// .getPosition().getY() - camera.getyOffset() + 16, new Color(0,
-		// 0, 0, 0), (float) (player.getPosition().getX()
-		// - camera.getxOffset() + 350 * (float) Math.cos(Math
-		// .toRadians(90))), (float) (player.getPosition().getY()
-		// - camera.getyOffset() - 350 * (float) Math.sin(Math
-		// .toRadians(90))), new Color(0, 0, 0));
-		// g2D.setPaint(gp);
-		// g2D.fill(flashLight);
-		// g2D.draw(flashLight);
+		GradientPaint gp = new GradientPaint((float) player.getPosition()
+				.getX() - camera.getxOffset() + 16, (float) player
+				.getPosition().getY() - camera.getyOffset() + 16, new Color(0,
+				0, 0, 0), (float) (player.getPosition().getX()
+				- camera.getxOffset() + 350 * (float) Math.cos(Math
+				.toRadians(90))), (float) (player.getPosition().getY()
+				- camera.getyOffset() - 350 * (float) Math.sin(Math
+				.toRadians(90))), new Color(0, 0, 0));
+		g2D.setPaint(gp);
+		g2D.fill(flashLight);
+		g2D.draw(flashLight);
 
 		g2D.setClip(null);
 		player.render(g);
 
 		g2D.setTransform(originalTransform);
-		// g2D.setColor(new Color(0f, 0f, 0f, .5f));
-		// g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-		// .getDisplay().getFrame().getHeight());
+		g2D.setColor(new Color(0f, 0f, 0f, .5f));
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
 
 		this.hoverItem = hoverItem();
 
@@ -297,13 +298,17 @@ public class World {
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
 			for (int y = chunkY - 2; y < chunkY + 3; y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
-						.listIterator(chunkMap[x][y].getItems().size()); iterator
-						.hasPrevious();) {
+						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
-					if (new Rectangle(
-							(int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()) + 32,
-							32, 32).contains(mouse.getMouseLocation())) {
+					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
+							(int) (item.getPosition().y - camera.getyOffset()) + 32, 32, 32);
+					if (itemHitbox.contains(mouse.getMouseLocation())
+							&& Math.sqrt(Math.pow((player.getPosition().x - item.getPosition().x), 2)
+									+ Math.pow((player.getPosition().y - item.getPosition().y), 2)) <= 8 * 32) {
+						item.setHover(true);
+						return item;
+					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
+							(int) (player.getPosition().y - camera.getyOffset()) + 32, 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {
