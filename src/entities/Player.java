@@ -8,6 +8,7 @@ import items.Throwable;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import main.Game;
 import map.Map;
@@ -35,6 +36,7 @@ public class Player extends Mob {
 	private GameCamera camera;
 	private KeyHandler key;
 	private World world;
+	private Rectangle hitbox;
 	private boolean exhausted = false;
 	private int stamina;
 
@@ -90,6 +92,7 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		world = game.getDisplay().getGamePanel().getWorld();
 		if (this.stamina < Player.SPRINT_COST) {
 			this.exhausted = true;
 		} else if (this.stamina > Player.MIN_STAMINA) {
@@ -155,6 +158,7 @@ public class Player extends Mob {
 	}
 
 	private int xMove() {
+
 		int xMove = 0;
 		if (key.isLeft()) {
 			xMove = -this.movementSpeed;
@@ -162,57 +166,32 @@ public class Player extends Mob {
 		if (key.isRight()) {
 			xMove = this.movementSpeed;
 		}
-		int playerX = (int) (this.getPosition().x - camera.getxOffset());
-		int playerY = (int) (this.getPosition().y - camera.getyOffset());
+		hitbox = new Rectangle(
+				(int) (this.position.getX() - camera.getxOffset()) + xMove,
+				(int) (this.position.getY() - camera.getyOffset()),
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0) + 0.5));
+		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
 		if (xMove > 0) {// Moving right
-			for (int j = 0; j < world.getSolid().length; j++) {
-				for (int i = 0; i < world.getSolid()[0].length; i++) {
-					if (world.getSolid()[j][i] != null) {
-						if (playerX + xMove + Assets.TILE_WIDTH >= world
-								.getSolid()[j][i].getX()
-								&& playerX + xMove + Assets.TILE_WIDTH <= world
-										.getSolid()[j][i].getX() + 32
-								&& ((playerY >= world.getSolid()[j][i].getY() && playerY <= world
-										.getSolid()[j][i].getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT >= world
-											.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT <= world
-										.getSolid()[j][i].getY() + 32))) {
-							this.getPosition().setLocation(
-									world.getSolid()[j][i].getX() - 40,
-									this.getPosition().getY());
-							xMove = 0;
+			if (row != 0)
+				row -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
 						}
 					}
 				}
 			}
 		} else if (xMove < 0) {// Moving Left
-			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-					.getSolid().length; j++) {
-				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-						.getSolid()[0].length; i++) {
-					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerX + xMove >= game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[j][i].getX()
-								&& playerX + xMove <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + 32
-								&& ((playerY >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() && playerY <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() + 32) || (playerY
-										+ Assets.TILE_HEIGHT >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() && playerY
-										+ Assets.TILE_HEIGHT <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY() + 32))) {
-							this.getPosition().setLocation(
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getX() + 40,
-									this.getPosition().getY());
-							xMove = 0;
+			if (row != 0)
+				row -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j >= 0; j--) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
 						}
 					}
 				}
@@ -229,72 +208,32 @@ public class Player extends Mob {
 		if (this.game.getDisplay().getKeyHandler().isDown()) {
 			yMove = this.movementSpeed;
 		}
-		int playerX = (int) (this.getPosition().x - this.game.getCamera()
-				.getxOffset());
-		int playerY = (int) (this.getPosition().y - this.game.getCamera()
-				.getyOffset());
+		hitbox = new Rectangle(
+				(int) (this.position.getX() - camera.getxOffset()),
+				(int) (this.position.getY() - camera.getyOffset() + yMove),
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		int row = (int) (((this.getPosition().y - camera.getyOffset()) / 32));
+		int col = (int) (((this.getPosition().x - camera.getxOffset()) / 32.0) + 0.5);
 		if (yMove < 0) {// Moving up
-			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-					.getSolid().length; j++) {
-				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-						.getSolid()[0].length; i++) {
-					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY + yMove >= game.getDisplay().getGamePanel()
-								.getWorld().getSolid()[j][i].getY()
-								&& playerY + yMove <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getY() + Assets.TILE_HEIGHT
-								&& ((playerX >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() && playerX <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX() && playerX
-										+ Assets.TILE_WIDTH <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH))) {
-							this.getPosition().setLocation(
-									this.getPosition().getX(),
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() + 40);
-							yMove = 0;
+			if (col != 0)
+				col -= 1;
+			for (int i = row; i >= 0; i--) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
 						}
 					}
 				}
 			}
 		} else if (yMove > 0) {// Moving down
-			for (int j = 0; j < game.getDisplay().getGamePanel().getWorld()
-					.getSolid().length; j++) {
-				for (int i = 0; i < game.getDisplay().getGamePanel().getWorld()
-						.getSolid()[0].length; i++) {
-					if (game.getDisplay().getGamePanel().getWorld().getSolid()[j][i] != null) {
-						if (playerY + yMove + Assets.TILE_HEIGHT >= game
-								.getDisplay().getGamePanel().getWorld()
-								.getSolid()[j][i].getY()
-								&& playerY + yMove + Assets.TILE_HEIGHT <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getY()
-										+ Assets.TILE_HEIGHT
-								&& ((playerX >= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() && playerX <= game.getDisplay()
-										.getGamePanel().getWorld().getSolid()[j][i]
-										.getX() + Assets.TILE_WIDTH) || (playerX
-										+ Assets.TILE_WIDTH >= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX() && playerX
-										+ Assets.TILE_WIDTH <= game
-										.getDisplay().getGamePanel().getWorld()
-										.getSolid()[j][i].getX()
-										+ Assets.TILE_WIDTH))) {
-							this.getPosition().setLocation(
-									this.getPosition().getX(),
-									game.getDisplay().getGamePanel().getWorld()
-											.getSolid()[j][i].getY() - 40);
-							yMove = 0;
+			if (col != 0)
+				col -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
 						}
 					}
 				}
@@ -342,11 +281,12 @@ public class Player extends Mob {
 			}
 		} else if (item instanceof Melee) {
 			Melee newItem = (Melee) item;
-			double angle = Math.atan2(
-					(position.y + 16 - game.getCamera().getyOffset())
-							- game.getDisplay().getMouseHandler().getMouseLocation().y,
+			double angle = Math.atan2((position.y + 16 - game.getCamera()
+					.getyOffset())
+					- game.getDisplay().getMouseHandler().getMouseLocation().y,
 					(position.x + 16 - game.getCamera().getxOffset())
-							- game.getDisplay().getMouseHandler().getMouseLocation().x)
+							- game.getDisplay().getMouseHandler()
+									.getMouseLocation().x)
 					- Math.PI / 2;
 
 			long currentTick = this.game.getTickCount();
