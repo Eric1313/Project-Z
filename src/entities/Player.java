@@ -228,17 +228,17 @@ public class Player extends Mob {
 				}
 			}
 		} else if (yMove > 0) {// Moving down
-		 if (col != 0)
-		 col -= 1;
-		 for (int i = row; i < world.getSolid().length; i++) {
-		 for (int j = col; j < world.getSolid()[0].length; j++) {
-		 if (world.getSolid()[i][j] != null) {
-		 if (hitbox.intersects(world.getSolid()[i][j])) {
-		 return 0;
-		 }
-		 }
-		 }
-		 }
+			if (col != 0)
+				col -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
+						}
+					}
+				}
+			}
 		}
 		return yMove;
 	}
