@@ -12,6 +12,8 @@ import java.io.File;
 import map.Map;
 import entities.Inventory;
 import entities.Player;
+import items.Consumable;
+import items.Firearm;
 import items.Item;
 
 public class HUD {
@@ -33,7 +35,27 @@ public class HUD {
 
 			if (currentItem != null) {
 				g.drawImage(currentItem.getImages()[0], 200 + item * 60 + 14, 664, null, null);
+				
+				FontMetrics fm = g.getFontMetrics();
+				
+				if (currentItem instanceof Consumable) {
+					String amount = ((Consumable) currentItem).getDurability() + "";
+					
+					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+				} else if (currentItem instanceof Firearm) {
+					String amount = ((Firearm) currentItem).getCurrentAmmo() + "";
+					
+					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+				}
 			}
+
+			String itemNo;
+			if (item < 9) {
+				itemNo = item + "";
+			} else {
+				itemNo = "0";
+			}
+			g.drawString(itemNo, 200 + item * 60 + 5, 665);
 		}
 
 		g.setColor(Color.YELLOW);
@@ -77,7 +99,7 @@ public class HUD {
 		for (int letter = 0; letter < "STAMINA".length(); letter++) {
 			g.drawString("STAMINA".substring(letter, letter + 1), 983, 32 + letter * 12);
 		}
-		
+
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
 	}

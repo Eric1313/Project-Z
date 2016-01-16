@@ -19,6 +19,7 @@ public class Firearm extends Item {
 	private int ammoID;
 	private int rateOfFire;
 	private int maxAmmo;
+	private int currentAmmo;
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
@@ -28,6 +29,7 @@ public class Firearm extends Item {
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
 		this.maxAmmo = maxAmmo;
+		this.currentAmmo = maxAmmo;
 	}
 	
 	public Firearm(Firearm item) {
@@ -36,6 +38,7 @@ public class Firearm extends Item {
 		this.ammoID = item.getAmmoID();
 		this.rateOfFire = item.getRateOfFire();
 		this.maxAmmo = item.getMaxAmmo();
+		this.currentAmmo = maxAmmo;
 	}
 
 	public int getAmmoID() {
@@ -60,5 +63,17 @@ public class Firearm extends Item {
 
 	public void setMaxAmmo(int maxAmmo) {
 		this.maxAmmo = maxAmmo;
+	}
+
+	public int getCurrentAmmo() {
+		return this.currentAmmo;
+	}
+
+	public void setCurrentAmmo(int currentAmmo) {
+		this.currentAmmo = currentAmmo;
+	}
+	
+	public boolean isFull() {
+		return this.currentAmmo == this.maxAmmo;
 	}
 }

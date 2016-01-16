@@ -337,6 +337,20 @@ public class Player extends Mob {
 				}
 				break;
 			case AMMO:
+				for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
+					Item currentItem = getItem(itemNo);
+					if (currentItem instanceof Firearm) {
+						Firearm firearm = (Firearm) currentItem;
+						
+						if (firearm.getAmmoID() == newItem.getItemID() && !firearm.isFull()) {
+							firearm.setCurrentAmmo(firearm.getMaxAmmo());
+							newItem.removeDurability();
+							if (newItem.getDurability() <= 0) {
+								this.removeItem(this.selectedItem);
+							}
+						}
+					}
+				}
 				break;
 			}
 		} else if (item instanceof Melee) {
