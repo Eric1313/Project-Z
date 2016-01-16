@@ -171,32 +171,32 @@ public class Player extends Mob {
 				(int) (this.position.getX() - camera.getxOffset()) + xMove,
 				(int) (this.position.getY() - camera.getyOffset()),
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
-		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0) + 0.5));
+		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0)));
 		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
 		if (xMove > 0) {// Moving right
-//			if (row != 0)
-//				row -= 1;
-//			for (int i = row; i < world.getSolid().length; i++) {
-//				for (int j = col; j < world.getSolid()[0].length; j++) {
-//					if (world.getSolid()[i][j] != null) {
-//						if (hitbox.intersects(world.getSolid()[i][j])) {
-//							return 0;
-//						}
-//					}
-//				}
-//			}
+			if (row != 0)
+				row -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
+						}
+					}
+				}
+			}
 		} else if (xMove < 0) {// Moving Left
-//			if (row != 0)
-//				row -= 1;
-//			for (int i = row; i < world.getSolid().length; i++) {
-//				for (int j = col; j >= 0; j--) {
-//					if (world.getSolid()[i][j] != null) {
-//						if (hitbox.intersects(world.getSolid()[i][j])) {
-//							return 0;
-//						}
-//					}
-//				}
-//			}
+			if (row != 0)
+				row -= 1;
+			for (int i = row; i < world.getSolid().length; i++) {
+				for (int j = col; j >= 0; j--) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
+						}
+					}
+				}
+			}
 		}
 		return xMove;
 	}
@@ -214,31 +214,31 @@ public class Player extends Mob {
 				(int) (this.position.getY() - camera.getyOffset() + yMove),
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		int row = (int) (((this.getPosition().y - camera.getyOffset()) / 32));
-		int col = (int) (((this.getPosition().x - camera.getxOffset()) / 32.0) + 0.5);
+		int col = (int) (((this.getPosition().x - camera.getxOffset()) / 32.0));
 		if (yMove < 0) {// Moving up
-//			if (col != 0)
-//				col -= 1;
-//			for (int i = row; i >= 0; i--) {
-//				for (int j = col; j < world.getSolid()[0].length; j++) {
-//					if (world.getSolid()[i][j] != null) {
-//						if (hitbox.intersects(world.getSolid()[i][j])) {
-//							return 0;
-//						}
-//					}
-//				}
-//			}
+			if (col != 0)
+				col -= 1;
+			for (int i = row; i >= 0; i--) {
+				for (int j = col; j < world.getSolid()[0].length; j++) {
+					if (world.getSolid()[i][j] != null) {
+						if (hitbox.intersects(world.getSolid()[i][j])) {
+							return 0;
+						}
+					}
+				}
+			}
 		} else if (yMove > 0) {// Moving down
-		// if (col != 0)
-		// col -= 1;
-		// for (int i = row; i < world.getSolid().length; i++) {
-		// for (int j = col; j < world.getSolid()[0].length; j++) {
-		// if (world.getSolid()[i][j] != null) {
-		// if (hitbox.intersects(world.getSolid()[i][j])) {
-		// return 0;
-		// }
-		// }
-		// }
-		// }
+		 if (col != 0)
+		 col -= 1;
+		 for (int i = row; i < world.getSolid().length; i++) {
+		 for (int j = col; j < world.getSolid()[0].length; j++) {
+		 if (world.getSolid()[i][j] != null) {
+		 if (hitbox.intersects(world.getSolid()[i][j])) {
+		 return 0;
+		 }
+		 }
+		 }
+		 }
 		}
 		return yMove;
 	}
