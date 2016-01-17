@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import enums.GameState.State;
+
 public class MainPanel extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;
@@ -16,12 +18,17 @@ public class MainPanel extends Canvas {
 		Graphics2D g2D = (Graphics2D) g;
 		g.drawImage(game.getMainMenu(), 0, 0, null);
 
-		g.setFont(game.getFont());
 		if (hover) {
 			g2D.setPaint(Color.WHITE);
 			g2D.fill(play);
 		}
 		g2D.draw(play);
+		if (hover) {
+			g.setColor(Color.RED);
+			g.setFont(game.getZombieFont());
+			g.drawString("}", 477, 378);
+		}
+		g.setFont(game.getUiFont());
 		if (hover) {
 			g.setColor(Color.BLACK);
 		} else {
@@ -34,6 +41,9 @@ public class MainPanel extends Canvas {
 		if (play.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hover = true;
+			if (game.getDisplay().getMouseHandler().isClick()){
+				game.getState().setGameState(State.INGAME);
+			}
 		} else {
 			hover = false;
 		}

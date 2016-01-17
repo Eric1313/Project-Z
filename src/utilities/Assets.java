@@ -32,16 +32,16 @@ public class Assets {
 		loadAssets(path);
 	}
 
-	public Assets(String path, int Font) {
+	public Assets(String path, int fontSize) {
 		this.path = path;
-		loadFont(path);
+		loadFont(path, fontSize);
 	}
 
-	private void loadFont(String path) {
+	private void loadFont(String path, int fontSize) {
 		try {
 			// create the font to use. Specify the size!
 			font = Font.createFont(Font.TRUETYPE_FONT, new File(path))
-					.deriveFont(Font.PLAIN, 50);
+					.deriveFont(Font.PLAIN, fontSize);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (FontFormatException e) {

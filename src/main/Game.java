@@ -31,7 +31,8 @@ public class Game implements Runnable {
 	private BufferedImage[][] player;
 	private BufferedImage[][] zombie;
 	private BufferedImage mainMenu;
-	private Font font;
+	private Font uiFont;
+	private Font zombieFont;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -61,8 +62,8 @@ public class Game implements Runnable {
 		player = new Assets("res/img/player.png", 1, 1).getSprites();
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
-		font = new Assets("res/fonts/BEBASNEUE.ttf",1).getFont();
-
+		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 100).getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -171,8 +172,11 @@ public class Game implements Runnable {
 
 	}
 
-	public Font getFont() {
-		return font;
+	public Font getUiFont() {
+		return uiFont;
+	}
+	public Font getZombieFont() {
+		return zombieFont;
 	}
 
 	public BufferedImage getMainMenu() {
@@ -360,6 +364,10 @@ public class Game implements Runnable {
 
 	public long getTickCount() {
 		return tickCount;
+	}
+	
+	public GameState getState() {
+		return state;
 	}
 
 	public static void main(String[] args) {
