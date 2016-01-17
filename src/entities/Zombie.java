@@ -218,7 +218,7 @@ public class Zombie extends Mob {
 			g2D.fillRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 5,
 					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 34,
 					(int) (42 * (this.health / 100.0)), 5);
-			g2D.setColor(null);
+			g2D.setColor(Color.BLACK);
 		}
 
 	}

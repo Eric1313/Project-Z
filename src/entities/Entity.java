@@ -138,6 +138,8 @@ public abstract class Entity {
 			}
 			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
 		}
+		
+		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
 	}
 
 	public Inventory getInventory() {
