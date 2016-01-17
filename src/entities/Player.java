@@ -339,7 +339,7 @@ public class Player extends Mob {
 		}
 	}
 
-	public Zombie bulletCollision(Line2D.Double line, int damage) {
+	public Entity bulletCollision(Line2D.Double line, int damage) {
 		ArrayList<Entity> entitiesCollided = new ArrayList<Entity>();
 		ArrayList<Zombie> zombiesCollided = new ArrayList<Zombie>();
 
@@ -377,12 +377,31 @@ public class Player extends Mob {
 				closestZombie = zombie;
 			}
 		}
+		
+		Entity closestEntity = null;
+		double entityDistance = 100 * 32;
+		
+		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator.hasNext();) {
+			Entity entity = iterator.next();
 
-		if (closestZombie != null) {
-			closestZombie.damage(damage);
+			double distance = Point.distance(this.position.x, this.position.y, entity.getPosition().x,
+					entity.getPosition().y);
+
+			if (distance < entityDistance) {
+				entityDistance = distance;
+				closestEntity = entity;
+			}
+		}
+		
+		if (entityDistance > zombieDistance) {
+			closestEntity = closestZombie;
 		}
 
-		return closestZombie;
+		if (closestEntity != null) {
+			closestEntity.damage(damage);
+		}
+
+		return closestEntity;
 	}
 
 	public Point getPlayerCenter() {
