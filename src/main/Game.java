@@ -63,7 +63,7 @@ public class Game implements Runnable {
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
-		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 100).getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150).getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
