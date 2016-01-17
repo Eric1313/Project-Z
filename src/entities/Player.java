@@ -364,7 +364,7 @@ public class Player extends Mob {
 		return null;
 	}
 
-	public Point playerCenter() {
+	public Point getPlayerCenter() {
 		return new Point(
 				(int) (this.getPosition().x - camera.getxOffset() + 16),
 				(int) (this.getPosition().y - camera.getyOffset()) + 16);
