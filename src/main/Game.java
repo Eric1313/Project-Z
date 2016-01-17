@@ -33,7 +33,7 @@ public class Game implements Runnable {
 	private GameCamera camera;
 
 	private boolean running = false;
-	
+
 	private long tickCount;
 
 	public Game(String title, int width, int height) {
@@ -45,7 +45,7 @@ public class Game implements Runnable {
 	private void initialize() {
 		// Loads the assets
 		tiles = new Assets("res/img/tiles.png").getSprites();
-//		upperTiles = new Assets("res/img/upperTiles.png").getSprites();
+		// upperTiles = new Assets("res/img/upperTiles.png").getSprites();
 		player = new Assets("res/img/player.png").getSprites();
 		zombie = new Assets("res/img/zombie.png").getSprites();
 		// Load all of the items
@@ -171,37 +171,37 @@ public class Game implements Runnable {
 		}
 	}
 
-//	/**
-//	 * The main game loop of the game
-//	 */
-//	 public void run() {
-//	
-//	 initialize();
-//	
-//	 int fps = 30;
-//	 double timePerUpdate = 1000000000 / fps;
-//	 double timeElapsed = 0;
-//	 long now;
-//	 // Current time of computer in nanoseconds
-//	 long lastTime = System.nanoTime();
-//	
-//	 // Game loop
-//	 while (running) {
-//	 now = System.nanoTime();
-//	 timeElapsed += (now - lastTime) / timePerUpdate;
-//	 lastTime = now;
-//	
-//	 // If the time elapsed has been 1/60th of a second then refresh the
-//	 // game
-//	 if (timeElapsed >= 1) {
-//	 update();
-//	 render();
-//	 timeElapsed--;
-//	 }
-//	 }
-//	 // Stops the game
-//	 stop();
-//	 }
+	// /**
+	// * The main game loop of the game
+	// */
+	// public void run() {
+	//
+	// initialize();
+	//
+	// int fps = 30;
+	// double timePerUpdate = 1000000000 / fps;
+	// double timeElapsed = 0;
+	// long now;
+	// // Current time of computer in nanoseconds
+	// long lastTime = System.nanoTime();
+	//
+	// // Game loop
+	// while (running) {
+	// now = System.nanoTime();
+	// timeElapsed += (now - lastTime) / timePerUpdate;
+	// lastTime = now;
+	//
+	// // If the time elapsed has been 1/60th of a second then refresh the
+	// // game
+	// if (timeElapsed >= 1) {
+	// update();
+	// render();
+	// timeElapsed--;
+	// }
+	// }
+	// // Stops the game
+	// stop();
+	// }
 
 	public void run() {
 		initialize();
@@ -231,7 +231,7 @@ public class Game implements Runnable {
 
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					System.out.println (frames +" fps");
+					System.out.println(frames + " fps");
 					lastTime += 1000;
 					frames = 0;
 				}
@@ -239,7 +239,7 @@ public class Game implements Runnable {
 
 			if (ticked) {
 				render();
-//				update();
+				// update();
 				frames++;
 			} else {
 				try {

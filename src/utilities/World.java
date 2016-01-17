@@ -254,12 +254,12 @@ public class World {
 				.toRadians(90))), (float) (player.getPosition().getY()
 				- camera.getyOffset() - 350 * (float) Math.sin(Math
 				.toRadians(90))), new Color(0, 0, 0));
-		g2D.setPaint(gp);
-		g2D.fill(flashLight);
-		g2D.draw(flashLight);
+
+		// g2D.draw(flashLight);
 
 		g2D.setClip(null);
 		player.render(g);
+		g2D.setClip(flashLight);
 		tileY = 0;
 		tileX = 0;
 		for (int i = row; i < row + 26; i++) {
@@ -300,6 +300,11 @@ public class World {
 			}
 			tileY++;
 		}
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
+				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
+		g2D.setPaint(gp);
+		g2D.fill(flashLight);
+		g2D.setClip(null);
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .2f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
