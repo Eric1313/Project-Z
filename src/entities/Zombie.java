@@ -121,16 +121,17 @@ public class Zombie extends Mob {
 		}
 			
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
-				map.getWidth() - 1); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
-					map.getHeight() - 1); y++) {
-				if(x<100&&y<100)
-				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
-//					if (1 < chunkMap[x][y].getZombies().size()) {
+				map.getWidth()/16 - 2); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1,
+					map.getHeight()/16 - 1); y++) {
+		for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
+					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
+						if ((Math.pow(checkZombie.getPosition().x
+								- this.position.x, 2) + Math.pow(
+								checkZombie.getPosition().y - this.position.y,
+								2)) < 1100) {
 
-						if ((Math.pow(checkZombie.getPosition().x - this.position.x, 2)
-								+ Math.pow(checkZombie.getPosition().y - this.position.y, 2)) < 1100) {
 							if (checkZombie.getPosition().y > this.position.y) {
 								this.up = true;
 								collideDown = true;
@@ -153,7 +154,7 @@ public class Zombie extends Mob {
 								collideLeft = false;
 						}
 
-//					}
+					}
 				}
 			}
 		}

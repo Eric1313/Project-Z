@@ -62,10 +62,10 @@ public class World {
 		upperTiles = map.getUpperTileMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
-		player = new Player(
-				new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
-				true, game, map);
-		 player = new Player(new Point(0, 0), true, game, map);
+		player = new Player(new Point(
+				(int) map.getPlayerCoordinate().getX() * 32, (int) map
+						.getPlayerCoordinate().getY() * 32), true, game, map, (int)Math.floor((Math.random()*6)));
+		// player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		// this.row = (int) (player.getPosition().getY() / 32);
 		// this.col = (int) (player.getPosition().getX() / 32);
@@ -195,11 +195,13 @@ public class World {
 		g2D.setTransform(originalTransform);
 
 		// draw Zombies
-		int chunkX = Math.max((int) player.getPosition().getX() / 512, 3);
-		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
-		for (int x = chunkX - 3; x < chunkX + 4; x++) {
-			for (int y = chunkY - 3; y < chunkY + 4; y++) {
-				for (Iterator<Item> iterator = chunkMap[x][y].getItems().iterator(); iterator.hasNext();) {
+		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
+		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3,map.getHeight()/16-1); y++) {
+				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
+						.iterator(); iterator.hasNext();) {
+
 					Item item = iterator.next();
 					item.render(g);
 				}
@@ -331,19 +333,19 @@ public class World {
 	public Item hoverItem() {
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < chunkX + 3; x++) {
-			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3,map.getHeight()/16-1); y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
 						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
 					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()) + 32, 32, 32);
+							(int) (item.getPosition().y - camera.getyOffset()), 32, 32);
 					if (itemHitbox.contains(mouse.getMouseLocation()) && Point.distance(player.getPosition().x,
 							player.getPosition().y, item.getPosition().x, item.getPosition().y) <= 8 * 32) {
 						item.setHover(true);
 						return item;
 					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
-							(int) (player.getPosition().y - camera.getyOffset()) + 32, 32, 32))) {
+							(int) (player.getPosition().y - camera.getyOffset()), 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {

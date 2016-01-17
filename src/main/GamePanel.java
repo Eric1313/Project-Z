@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import map.Chunk;
+import map.Map;
 import entities.Zombie;
 import utilities.World;
 
@@ -16,6 +17,7 @@ public class GamePanel extends Canvas {
 	private HUD hud;
 	private boolean setUp;
 	private Chunk[][] chunkMap;
+	private Map map;
 
 	public GamePanel() {
 	}
@@ -37,13 +39,12 @@ public class GamePanel extends Canvas {
 
 	public void update() {
 		world.getPlayer().update();
-		int chunkX = Math.max(
-				(int) world.getPlayer().getPosition().getX() / 512, 2);
-		int chunkY = Math.max(
-				(int) world.getPlayer().getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < chunkX + 3; x++) {
-			for (int y = chunkY - 2; y < chunkY + 3; y++) {
-				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
+		int chunkX = Math.max((int) world.getPlayer().getPosition().getX() / 512, 2);
+		int chunkY = Math.max((int) world.getPlayer().getPosition().getY() / 512, 2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3,map.getHeight()/16-1); y++) {
+				for (int i=0;i<chunkMap[x][y].getZombies().size();i++)
+				{
 					chunkMap[x][y].getZombies().get(i).update();
 				}
 			}
@@ -54,7 +55,8 @@ public class GamePanel extends Canvas {
 		world = new World(game, 400, 400);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
-		chunkMap = world.getMap().getChunkMap();
+		this.map=world.getMap();
+		this.chunkMap=map.getChunkMap();
 	}
 
 	public World getWorld() {

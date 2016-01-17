@@ -16,22 +16,22 @@ public class Assets {
 	/**
 	 * The constructor for the assets class
 	 */
-	public Assets(String path) {
+	public Assets(String path,int height, int width) {
 		this.path = path;
-		loadAssets();
+		loadAssets(height, width);
 	}
 
 	/**
 	 * Loads in all of the assets from a sprite sheet
 	 */
-	private void loadAssets() {
+	private void loadAssets(int height, int width) {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage(path));
-		sprites = new BufferedImage[sheet.getHeight() / TILE_HEIGHT][sheet
-				.getWidth() / TILE_WIDTH];
+		sprites = new BufferedImage[sheet.getHeight() / (TILE_HEIGHT*height)][sheet
+				.getWidth() / (TILE_WIDTH*width)];
 		for (int row = 0; row < sprites.length; row++) {
 			for (int col = 0; col < sprites[row].length; col++) {
-				sprites[row][col] = sheet.crop(TILE_WIDTH * col, TILE_HEIGHT
-						* row, TILE_WIDTH, TILE_HEIGHT);
+				sprites[row][col] = sheet.crop(TILE_WIDTH*width * col, TILE_HEIGHT*height
+						* row, TILE_WIDTH*width, TILE_HEIGHT*height);
 			}
 		}
 	}
