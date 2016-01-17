@@ -492,7 +492,7 @@ public class Map {
 								.addZombie(new Zombie(
 										new Point(j * 32, i * 32), 100, game
 												.getZombie()[0], null,
-										this.game, this));
+										this.game, this, (int)Math.floor((Math.random()*5))));
 						zombieCount++;
 					}
 				}
@@ -598,7 +598,7 @@ public class Map {
 					&& (tileMap[randomX][randomY] & 0xFFF) == 201) {
 				chunkMap[randomY / 16][randomX / 16].addZombie(new Zombie(
 						new Point(randomY * 32, randomX * 32), 100, game
-								.getZombie()[0], null, this.game, this));
+								.getZombie()[0], null, this.game, this, (int)Math.floor((Math.random()*5))));
 				zombieCount++;
 			}
 		}
@@ -651,7 +651,7 @@ public class Map {
 					|| (tileMap[randomX][randomY] & 0xFFF) >= 110) {
 				chunkMap[randomY / 16][randomX / 16].addZombie(new Zombie(
 						new Point(randomY * 32, randomX* 32), 100, game
-								.getZombie()[0], null, this.game, this));
+								.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
 				zombieCount++;
 			}
 		}
@@ -870,7 +870,7 @@ public class Map {
 				if (Math.random() > 0.99) {
 					chunkMap[tempy / 16][tempx / 16].addZombie(new Zombie(
 							new Point(tempy * 32, tempx * 32), 100, game
-									.getZombie()[0], null, this.game, this));
+									.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
 					zombieCount++;
 				}
 				tempx++;
@@ -996,7 +996,7 @@ public class Map {
 			if (Math.random() > 0.99) {
 				chunkMap[tempy / 16][tempx / 16].addZombie(new Zombie(
 						new Point(tempy * 32, tempx * 32), 100, game
-								.getZombie()[0], null, this.game, this));
+								.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
 				zombieCount++;
 			}
 			tempx--;
