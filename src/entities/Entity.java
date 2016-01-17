@@ -136,7 +136,7 @@ public abstract class Entity {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 				dropItem(item);
 			}
-			this.chunkMap[Math.max(this.position.x / 512, 2)][Math.max(this.position.y / 512, 2)].remove(this);
+			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
 		}
 	}
 
@@ -171,7 +171,7 @@ public abstract class Entity {
 			item.setPosition(new Point(this.position.x, this.position.y));
 			item.setState(ItemState.DROPPED);
 			removeItem(itemNo);
-			this.chunkMap[Math.max(this.position.x / 512, 2)][Math.max(this.position.y / 512, 2)].add(item);
+			this.chunkMap[Math.max(this.position.x / 512, 1)][Math.max(this.position.y / 512, 1)].add(item);
 		}
 	}
 
