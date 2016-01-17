@@ -47,7 +47,7 @@ public class Player extends Mob {
 
 	private int selectedItem = 0;
 	private int skinNo;
-	
+
 	private long lastItemTick = 0;
 
 	public Player(boolean solid, Game game) {
@@ -91,8 +91,7 @@ public class Player extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[skinNo],
-				(int) (this.getPosition().x - camera.getxOffset()),
+		g.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
 
 				(int) (this.getPosition().y - camera.getyOffset()), null);
 	}
@@ -125,6 +124,11 @@ public class Player extends Mob {
 		if (key.isShift() && !exhausted && (key.isUp() || key.isDown() || key.isLeft() || key.isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
+		} else if (key.isCtrl()) {
+			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
+			if (this.stamina < Player.MAX_STAMINA) {
+				this.stamina++;
+			}
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
 			if (this.stamina < Player.MAX_STAMINA) {
@@ -150,10 +154,13 @@ public class Player extends Mob {
 
 		this.game.getCamera().centerOnEntity(this);
 		if (key.isUp() || key.isDown() || key.isRight() || key.isLeft()) {
-			if (key.isShift())
-				makeNoise(400, true);
-			else
+			if (key.isShift()) {
 				makeNoise(300, true);
+			} else if (key.isCtrl()) {
+				makeNoise(100, true);
+			} else {
+				makeNoise(200, true);
+			}
 		}
 	}
 
@@ -263,8 +270,11 @@ public class Player extends Mob {
 						Firearm firearm = (Firearm) currentItem;
 
 						if (firearm.getAmmoID() == newItem.getItemID() && !firearm.isFull()) {
-							firearm.setCurrentAmmo(firearm.getMaxAmmo());
-							newItem.removeDurability();
+							if (newItem.getDurability() > 0) {
+								firearm.setCurrentAmmo(firearm.getMaxAmmo());
+								newItem.removeDurability();
+							}
+							
 							if (newItem.getDurability() <= 0) {
 								this.removeItem(this.selectedItem);
 							}
@@ -307,9 +317,9 @@ public class Player extends Mob {
 									(int) (this.position.y + 16 - d * Math.sin(angle))));
 
 					bulletCollision(line);
-					
+
 					makeNoise(1000, true);
-					
+
 					newItem.removeAmmo();
 				}
 			}
@@ -345,8 +355,8 @@ public class Player extends Mob {
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < Math.min(chunkX + 4,map.getWidth()/16-1); x++) {
-			for (int y = chunkY - 3; y < Math.min(chunkY + 4,map.getWidth()/16-1); y++) {
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16 - 1); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16 - 1); y++) {
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					if (line.intersects(zombie.getPosition().x, zombie.getPosition().y, 32, 32)) {
@@ -387,8 +397,7 @@ public class Player extends Mob {
 	}
 
 	public Point getPlayerCenter() {
-		return new Point(
-				(int) (this.getPosition().x - camera.getxOffset() + 16),
+		return new Point((int) (this.getPosition().x - camera.getxOffset() + 16),
 				(int) (this.getPosition().y - camera.getyOffset()) + 16);
 	}
 }
