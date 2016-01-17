@@ -285,12 +285,12 @@ public class Player extends Mob {
 			}
 		} else if (item instanceof Melee) {
 			Melee newItem = (Melee) item;
-			double angle = Math.atan2(
-					(position.y + 16 - game.getCamera().getyOffset())
-							- game.getDisplay().getMouseHandler().getMouseLocation().y,
-					(position.x + 16 - game.getCamera().getxOffset())
-							- game.getDisplay().getMouseHandler().getMouseLocation().x)
-					- Math.PI / 2;
+			
+			double angle = -Math.atan2(
+					game.getDisplay().getMouseHandler().getMouseLocation().y
+							- (position.y + 16 - game.getCamera().getyOffset()),
+					game.getDisplay().getMouseHandler().getMouseLocation().x
+							- (position.x + 16 - game.getCamera().getxOffset()));
 
 			long currentTick = this.game.getTickCount();
 			if (currentTick - this.lastItemTick > newItem.getRechargeTime()) {
@@ -316,7 +316,7 @@ public class Player extends Mob {
 							new Point((int) (this.position.x + 16 + d * Math.cos(angle)),
 									(int) (this.position.y + 16 - d * Math.sin(angle))));
 
-					bulletCollision(line);
+					bulletCollision(line, newItem.getEffectValue());
 
 					makeNoise(1000, true);
 
@@ -339,7 +339,7 @@ public class Player extends Mob {
 		}
 	}
 
-	public Zombie bulletCollision(Line2D.Double line) {
+	public Zombie bulletCollision(Line2D.Double line, int damage) {
 		ArrayList<Entity> entitiesCollided = new ArrayList<Entity>();
 		ArrayList<Zombie> zombiesCollided = new ArrayList<Zombie>();
 
@@ -379,7 +379,7 @@ public class Player extends Mob {
 		}
 
 		if (closestZombie != null) {
-			closestZombie.damage(100);
+			closestZombie.damage(damage);
 		}
 
 		return closestZombie;

@@ -52,7 +52,7 @@ public class Chunk {
 	 */
 	public Entity remove(Entity entity) {
 		if (entity instanceof Zombie) {
-			this.zombies.remove(((Zombie) entity));
+			return removeZombie((Zombie) entity);
 		} else if (entity.isSolid()) {
 			this.solidEntities.remove(entity);
 		} else {

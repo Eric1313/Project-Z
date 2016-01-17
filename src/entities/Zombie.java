@@ -6,6 +6,7 @@ import map.Map;
 import java.applet.AudioClip;
 import java.awt.Point;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
@@ -202,6 +203,13 @@ public class Zombie extends Mob {
 	public void render(Graphics g) {
 		g.drawImage(this.getImages()[imgNo], (int) (this.position.x - game.getCamera().getxOffset()),
 				(int) (this.position.y - game.getCamera().getyOffset()), null);
+		
+		if (this.health < 100) {
+			// TODO Draw a health bar
+//			Graphics2D g2D = (Graphics2D) g;
+//			g2D.rotate(0);
+//			g.drawString(this.health + "", (int) (this.position.x - game.getCamera().getxOffset()), (int) (this.position.y - game.getCamera().getyOffset()) + 15);
+		}
 
 	}
 }
