@@ -114,7 +114,6 @@ public class Map {
 		int endHouse;
 
 		do {
-			System.out.println("test");
 			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
 				- plazaStarts.get(endHouse).getX()) < 200

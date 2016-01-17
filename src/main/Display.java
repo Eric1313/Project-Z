@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -13,6 +12,7 @@ import utilities.MouseHandler;
 public class Display {
 	private JFrame frame;
 	private GamePanel gamePanel;
+	private MainPanel main;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -34,32 +34,42 @@ public class Display {
 		panelContainer.setLayout(cardLayout);
 
 		gamePanel = new GamePanel();
-		//gamePanel.setBackground(Color.BLACK);
-//		panelContainer.add(gamePanel, "Game");
-//		cardLayout.show(panelContainer, "Game");
+		main = new MainPanel();
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+
 		gamePanel.setPreferredSize(new Dimension(width, height));
 		gamePanel.setMaximumSize(new Dimension(width, height));
 		gamePanel.setMinimumSize(new Dimension(width, height));
-		// Canvas is set to false so that input can be sent to the JFrame
 		gamePanel.setFocusable(false);
 		mouseHandler = new MouseHandler();
 		gamePanel.addMouseMotionListener(mouseHandler);
 		gamePanel.addMouseListener(mouseHandler);
 		gamePanel.addMouseWheelListener(mouseHandler);
-		// gamePanel.addMouseListener(mouseHandler);
+		
+		main.setPreferredSize(new Dimension(width, height));
+		main.setMaximumSize(new Dimension(width, height));
+		main.setMinimumSize(new Dimension(width, height));
+		main.setFocusable(false);
+		main.addMouseMotionListener(mouseHandler);
+		main.addMouseListener(mouseHandler);
+		main.addMouseWheelListener(mouseHandler);
+
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 		frame.add(gamePanel);
 		frame.pack();
 
 		frame.setVisible(true);
-	
+
+	}
+
+	public MainPanel getMain() {
+		return main;
 	}
 
 	public JFrame getFrame() {

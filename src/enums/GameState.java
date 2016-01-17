@@ -28,6 +28,7 @@ public class GameState {
 	public void update() {
 		switch (gameState) {
 		case LOBBY:
+			game.getDisplay().getMain().update();
 			break;
 		case INGAME:
 			game.getDisplay().getGamePanel().update();
@@ -38,6 +39,7 @@ public class GameState {
 	public void render(Graphics g) {
 		switch (gameState) {
 		case LOBBY:
+			game.getDisplay().getMain().render(g);
 			break;
 		case INGAME:
 			game.getDisplay().getGamePanel().render(g);
@@ -53,9 +55,9 @@ public class GameState {
 		this.gameState = gameState;
 		switch (gameState) {
 		case LOBBY:
+			game.getDisplay().getMain().setup(game);
 			break;
 		case INGAME:
-			game.getDisplay().switchPanel("Game");
 			game.getDisplay().getGamePanel().setup(game);
 			break;
 		}
