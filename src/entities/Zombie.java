@@ -118,8 +118,9 @@ public class Zombie extends Mob {
 				map.getWidth() - 1); x++) {
 			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
 					map.getHeight() - 1); y++) {
+				if(x<100||y<100)
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
-					if (1 < chunkMap[x][y].getZombies().size()) {
+//					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
 
 						if ((Math.pow(checkZombie.getPosition().x
@@ -148,7 +149,7 @@ public class Zombie extends Mob {
 								collideLeft = false;
 						}
 
-					}
+//					}
 				}
 			}
 		}
