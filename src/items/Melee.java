@@ -37,22 +37,37 @@ public class Melee extends Item {
 
 	@Override
 	public void use(Player player) {
+
 		double angle = -Math.atan2(
 				game.getDisplay().getMouseHandler().getMouseLocation().y
 						- (player.getPosition().y + 16 - game.getCamera().getyOffset()),
 				game.getDisplay().getMouseHandler().getMouseLocation().x
 						- (player.getPosition().x + 16 - game.getCamera().getxOffset()));
 
+		if (angle < 0) {
+			angle = 2 * Math.PI + angle;
+		}
+		
+		angle = Math.toDegrees(angle);
+
+		
+		System.out.println(angle);
+
 		long currentTick = this.game.getTickCount();
-		if (currentTick - player.getLastItemTick() > this.getRechargeTime()) {
+		if (currentTick - player.getLastItemTick() > this.rechargeTime + this.swingSpeed) {
+			// System.out.println(first + " " + last);
 			player.setLastItemTick(currentTick);
 
 			Arc2D arc = new Arc2D.Double();
-			arc.setArcByCenter(player.getPosition().x + 16, player.getPosition().y + 16, this.radius,
-					Math.toDegrees(angle) - this.angle, Math.toDegrees(angle) + this.angle, Arc2D.PIE);
-			
+			arc.setArcByCenter(player.getPlayerCenter().x, player.getPlayerCenter().y, this.radius, angle - this.angle, this.angle * 2,
+					Arc2D.PIE);
+
+			// System.out.println(arc.getStartPoint().getX() + " " +
+			// arc.getStartPoint().getY() + " " + arc.getEndPoint().getX() + " "
+			// + arc.getEndPoint().getY());
+
 			int enemiesHit = player.meleeCollision(arc, this.effectValue);
-			
+
 			if (enemiesHit == 0) {
 				player.makeNoise(100, true);
 			} else {
