@@ -151,9 +151,9 @@ public class Player extends Mob {
 		this.game.getCamera().centerOnEntity(this);
 		if (key.isUp() || key.isDown() || key.isRight() || key.isLeft()) {
 			if (key.isShift())
-				makeNoise(250, true);
+				makeNoise(400, true);
 			else
-				makeNoise(100, true);
+				makeNoise(300, true);
 		}
 	}
 
@@ -263,10 +263,11 @@ public class Player extends Mob {
 						Firearm firearm = (Firearm) currentItem;
 
 						if (firearm.getAmmoID() == newItem.getItemID() && !firearm.isFull()) {
-							firearm.setCurrentAmmo(firearm.getMaxAmmo());
-							newItem.removeDurability();
 							if (newItem.getDurability() <= 0) {
 								this.removeItem(this.selectedItem);
+							} else {
+								firearm.setCurrentAmmo(firearm.getMaxAmmo());
+								newItem.removeDurability();
 							}
 						}
 					}
