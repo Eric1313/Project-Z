@@ -49,7 +49,13 @@ public class Melee extends Item {
 			arc.setArcByCenter(player.getPosition().x + 16, player.getPosition().y + 16, this.radius,
 					Math.toDegrees(angle) - 30, Math.toDegrees(angle) + 30, Arc2D.PIE);
 			
-			System.out.println(player.meleeCollision(arc, this.effectValue));
+			int enemiesHit = player.meleeCollision(arc, this.effectValue);
+			
+			if (enemiesHit == 0) {
+				player.makeNoise(100, true);
+			} else {
+				player.makeNoise(200, true);
+			}
 		}
 	}
 
