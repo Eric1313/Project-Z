@@ -154,6 +154,7 @@ public class Player extends Mob {
 				makeNoise(300, true);
 			else
 				makeNoise(200, true);
+
 		}
 	}
 
@@ -263,10 +264,11 @@ public class Player extends Mob {
 						Firearm firearm = (Firearm) currentItem;
 
 						if (firearm.getAmmoID() == newItem.getItemID() && !firearm.isFull()) {
-							firearm.setCurrentAmmo(firearm.getMaxAmmo());
-							newItem.removeDurability();
 							if (newItem.getDurability() <= 0) {
 								this.removeItem(this.selectedItem);
+							} else {
+								firearm.setCurrentAmmo(firearm.getMaxAmmo());
+								newItem.removeDurability();
 							}
 						}
 					}
