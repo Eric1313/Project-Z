@@ -3,6 +3,7 @@ package items;
 import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
@@ -23,43 +24,41 @@ public class Melee extends Item {
 	private int rechargeTime;
 	private int radius;
 
-	public Melee(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			Game game, int swingSpeed, int rechargeTime, int radius) {
+	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
+			AudioClip[] clips, Game game, int swingSpeed, int rechargeTime, int radius) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 		this.radius = radius;
 	}
-	
+
 	@Override
 	public void use(Player player) {
-		double angle = -Math.atan2(game.getDisplay().getMouseHandler()
-				.getMouseLocation().y
-				- (position.y + 16 - game.getCamera().getyOffset()), game
-				.getDisplay().getMouseHandler().getMouseLocation().x
-				- (position.x + 16 - game.getCamera().getxOffset()));
+		double angle = -Math.atan2(
+				game.getDisplay().getMouseHandler().getMouseLocation().y
+						- (player.getPosition().y + 16 - game.getCamera().getyOffset()),
+				game.getDisplay().getMouseHandler().getMouseLocation().x
+						- (player.getPosition().x + 16 - game.getCamera().getxOffset()));
 
 		long currentTick = this.game.getTickCount();
 		if (currentTick - player.getLastItemTick() > this.getRechargeTime()) {
 			player.setLastItemTick(currentTick);
+
+			Arc2D arc = new Arc2D.Double();
+			arc.setArcByCenter(player.getPosition().x + 16, player.getPosition().y + 16, this.radius,
+					Math.toDegrees(angle) - 30, Math.toDegrees(angle) + 30, Arc2D.PIE);
 			
-			for (long frame = currentTick; frame < currentTick + this.getSwingSpeed(); frame++) {
-				Line2D.Double line = new Line2D.Double(new Point(player.getPosition().x + 16, player.getPosition().y + 16),
-						new Point((int) (player.getPosition().x + 16 + this.getRadius() * Math.cos(angle + (Math.PI / 3) * ((frame - currentTick - this.getSwingSpeed() / 2) / (this.getSwingSpeed() / 2.0)))),
-								(int) (player.getPosition().y + 16 - this.getRadius() * Math.sin(angle + (Math.PI / 3) * ((frame - currentTick - this.getSwingSpeed() / 2) / (this.getSwingSpeed() / 2.0))))));
-//				System.out.println(frame - currentTick - newItem.getSwingSpeed() / 2);
-				System.out.println(line.getX2() + " " + line.getY2());
-			}
-		}		
+			System.out.println(player.meleeCollision(arc, this.effectValue));
+		}
 	}
-	
+
 	public Melee(Melee item) {
 		super(item);
-		
-		this.swingSpeed = item.getSwingSpeed();
-		this.rechargeTime = item.getRechargeTime();
+
+		this.swingSpeed = item.swingSpeed;
+		this.rechargeTime = item.rechargeTime;
+		this.radius = item.radius;
 	}
 
 	public int getSwingSpeed() {
@@ -77,7 +76,7 @@ public class Melee extends Item {
 	public void setRechargeTime(int rechargeTime) {
 		this.rechargeTime = rechargeTime;
 	}
-	
+
 	public int getRadius() {
 		return this.radius;
 	}
