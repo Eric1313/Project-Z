@@ -46,24 +46,24 @@ public class Consumable extends Item {
 			}
 			break;
 		case AMMO:
-			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
-				Item currentItem = player.getItem(itemNo);
-				if (currentItem instanceof Firearm) {
-					Firearm firearm = (Firearm) currentItem;
-
-					if (firearm.getAmmoID() == this.getItemID()
-							&& !firearm.isFull()) {
-						if (this.getDurability() > 0) {
-							firearm.setCurrentAmmo(firearm.getMaxAmmo());
-							this.removeDurability();
-						}
-
-						if (this.getDurability() <= 0) {
-							player.removeItem(player.getSelectedItem());
-						}
-					}
-				}
-			}
+//			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
+//				Item currentItem = player.getItem(itemNo);
+//				if (currentItem instanceof Firearm) {
+//					Firearm firearm = (Firearm) currentItem;
+//
+//					if (firearm.getAmmoID() == this.getItemID()
+//							&& !firearm.isFull()) {
+//						if (this.getDurability() > 0) {
+//							firearm.setCurrentAmmo(firearm.getMaxAmmo());
+//							this.removeDurability();
+//						}
+//
+//						if (this.getDurability() <= 0) {
+//							player.removeItem(player.getSelectedItem());
+//						}
+//					}
+//				}
+//			}
 			break;
 		default:
 			break;

@@ -7,6 +7,7 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
 
@@ -34,23 +35,25 @@ public class Firearm extends Item {
 		this.maxAmmo = maxAmmo;
 		this.currentAmmo = maxAmmo;
 	}
-	
+
 	public Firearm(Firearm item) {
 		super(item);
-		
+
 		this.ammoID = item.getAmmoID();
 		this.rateOfFire = item.getRateOfFire();
 		this.maxAmmo = item.getMaxAmmo();
 		this.currentAmmo = maxAmmo;
 	}
-	
+
 	@Override
 	public void use(Player player) {
-		double angle = -Math.atan2(game.getDisplay().getMouseHandler()
-				.getMouseLocation().y
-				- (player.getPosition().y + 16 - game.getCamera().getyOffset()), game
-				.getDisplay().getMouseHandler().getMouseLocation().x
-				- (player.getPosition().x + 16 - game.getCamera().getxOffset()));
+		double angle = -Math.atan2(
+				game.getDisplay().getMouseHandler().getMouseLocation().y
+						- (player.getPosition().y + 16 - game.getCamera()
+								.getyOffset()), game.getDisplay()
+						.getMouseHandler().getMouseLocation().x
+						- (player.getPosition().x + 16 - game.getCamera()
+								.getxOffset()));
 
 		if (!this.isEmpty()) {
 			long currentTick = game.getTickCount();
@@ -60,11 +63,12 @@ public class Firearm extends Item {
 				int d = 32 * 16;
 
 				Line2D.Double line = new Line2D.Double(new Point(
-						player.getPosition().x + 16, player.getPosition().y + 16),
-						new Point((int) (player.getPosition().x + 16 + d
+						player.getPosition().x + 16,
+						player.getPosition().y + 16), new Point(
+						(int) (player.getPosition().x + 16 + d
 								* Math.cos(angle)),
-								(int) (player.getPosition().y + 16 - d
-										* Math.sin(angle))));
+						(int) (player.getPosition().y + 16 - d
+								* Math.sin(angle))));
 
 				player.bulletCollision(line, this.getEffectValue());
 
@@ -72,7 +76,24 @@ public class Firearm extends Item {
 
 				this.removeAmmo();
 			}
-		}		
+		}
+	}
+
+	public void reload(Player player) {
+
+		for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
+			Item currentItem = player.getItem(itemNo);
+			if (currentItem!=null&&currentItem.getItemID() == this.ammoID) {
+				Consumable ammo = ((Consumable) currentItem);
+				int bullets = ammo.getDurability();
+				if (this.currentAmmo > 0) {
+					ammo.setDurability(this.currentAmmo);
+				} else {
+					player.removeItem(currentItem);
+				}
+				this.currentAmmo = bullets;
+			}
+		}
 	}
 
 	public int getAmmoID() {
@@ -106,18 +127,17 @@ public class Firearm extends Item {
 	public void setCurrentAmmo(int currentAmmo) {
 		this.currentAmmo = currentAmmo;
 	}
-	
+
 	public void removeAmmo() {
 		this.currentAmmo--;
 	}
-	
+
 	public boolean isFull() {
 		return this.currentAmmo == this.maxAmmo;
 	}
-	
+
 	public boolean isEmpty() {
 		return this.currentAmmo == 0;
 	}
-
 
 }
