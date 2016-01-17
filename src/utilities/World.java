@@ -345,7 +345,7 @@ public class World {
 						item.setHover(true);
 						return item;
 					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
-							(int) (player.getPosition().y - camera.getyOffset()) + 32, 32, 32))) {
+							(int) (player.getPosition().y - camera.getyOffset()), 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {
