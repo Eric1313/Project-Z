@@ -1,4 +1,4 @@
-package utilities;
+package main;
 
 import items.Item;
 
@@ -16,9 +16,11 @@ import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-import main.Game;
 import map.Chunk;
 import map.Map;
+import utilities.Assets;
+import utilities.GameCamera;
+import utilities.MouseHandler;
 import entities.Player;
 import entities.Zombie;
 
