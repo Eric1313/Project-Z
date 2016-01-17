@@ -44,8 +44,8 @@ public class Zombie extends Mob {
 	 * @param map
 	 *            map that it is in
 	 */
-	public Zombie(Point position, int health, BufferedImage[] images,
-			AudioClip[] clips, Game game, Map map, int imgNo) {
+	public Zombie(Point position, int health, BufferedImage[] images, AudioClip[] clips, Game game, Map map,
+			int imgNo) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
@@ -77,14 +77,13 @@ public class Zombie extends Mob {
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
-					 targetX = 0;
-					 targetY = 0;
+					targetX = 0;
+					targetY = 0;
 				}
 			} else {
 				targetX = path.peek().locationX * 32;
 				targetY = path.peek().locationY * 32;
-				if ((this.getPosition().x == targetX)
-						&& (this.getPosition().y == targetY)) {
+				if ((this.getPosition().x == targetX) && (this.getPosition().y == targetY)) {
 					path.pop();
 				} else {
 					if (this.getPosition().y > targetY)
@@ -99,34 +98,40 @@ public class Zombie extends Mob {
 				}
 			}
 		}
-		if (targetX != 0 && targetY != 0)
-		{
-			 double dx=this.position.x - targetX,dy=this.position.y - targetY; 
-        if(dx==0)
-           if(dy==0)this.rotation=0;
-           else if(dy>0)this.rotation=Math.PI/2;
-           else this.rotation=Math.PI*3/2;
-        else if(dy==0)
-           if(dx>0)this.rotation=0;
-           else this.rotation=Math.PI;
-        else if(dx<0)this.rotation=Math.atan(dy/dx)+Math.PI;
-        else if(dy<0)this.rotation=Math.atan(dy/dx)+(2*Math.PI);
-        else this.rotation=Math.atan(dy/dx);
+		if (targetX != 0 && targetY != 0) {
+			double dx = this.position.x - targetX, dy = this.position.y - targetY;
+			if (dx == 0)
+				if (dy == 0)
+					this.rotation = 0;
+				else if (dy > 0)
+					this.rotation = Math.PI / 2;
+				else
+					this.rotation = Math.PI * 3 / 2;
+			else if (dy == 0)
+				if (dx > 0)
+					this.rotation = 0;
+				else
+					this.rotation = Math.PI;
+			else if (dx < 0)
+				this.rotation = Math.atan(dy / dx) + Math.PI;
+			else if (dy < 0)
+				this.rotation = Math.atan(dy / dx) + (2 * Math.PI);
+			else
+				this.rotation = Math.atan(dy / dx);
 		}
 			
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
-				map.getWidth() - 1); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
-					map.getHeight() - 1); y++) {
-				if(x<100&&y<100)
-				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
-//					if (1 < chunkMap[x][y].getZombies().size()) {
+				map.getWidth()/16 - 2); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1,
+					map.getHeight()/16 - 1); y++) {
+		for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
+					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
-
 						if ((Math.pow(checkZombie.getPosition().x
 								- this.position.x, 2) + Math.pow(
 								checkZombie.getPosition().y - this.position.y,
 								2)) < 1100) {
+
 							if (checkZombie.getPosition().y > this.position.y) {
 								this.up = true;
 								collideDown = true;
@@ -149,29 +154,23 @@ public class Zombie extends Mob {
 								collideLeft = false;
 						}
 
-//					}
+					}
 				}
 			}
 		}
 
 		// System.out.println(this.getPosition().x+" "+this.getPosition().y);
 		if (this.up && !collideUp) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() - MOVEMENT_SPEED);
+			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() - MOVEMENT_SPEED);
 		}
 		if (this.down && !collideDown) {
-			this.getPosition().setLocation(this.getPosition().getX(),
-					this.getPosition().getY() + MOVEMENT_SPEED);
+			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + MOVEMENT_SPEED);
 		}
 		if (this.left && !collideLeft) {
-			this.getPosition().setLocation(
-					this.getPosition().getX() - MOVEMENT_SPEED,
-					this.getPosition().getY());
+			this.getPosition().setLocation(this.getPosition().getX() - MOVEMENT_SPEED, this.getPosition().getY());
 		}
 		if (this.right && !collideRight) {
-			this.getPosition().setLocation(
-					this.getPosition().getX() + MOVEMENT_SPEED,
-					this.getPosition().getY());
+			this.getPosition().setLocation(this.getPosition().getX() + MOVEMENT_SPEED, this.getPosition().getY());
 		}
 		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100, false);
@@ -201,13 +200,8 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
+		g.drawImage(this.getImages()[imgNo], (int) (this.position.x - game.getCamera().getxOffset()),
+				(int) (this.position.y - game.getCamera().getyOffset()), null);
 
-		g.drawImage(this.getImages()[imgNo], (int) (this.position.x - game
-				.getCamera().getxOffset()), (int) (this.position.y - game
-				.getCamera().getyOffset()), null);
 	}
-
-	// @Override
-	// public void render(Graphics g) {
-	// }
 }
