@@ -707,12 +707,12 @@ public class Map {
 							&& (tileMap[i + 1][j + 1] & 0xFFF) == 108) {
 						setTile(i, j, 109, Direction.UP, true);
 						setUpperTile(i - 1, j - 1, 111, Direction.RIGHT);
-						setUpperTile(i - 1, j, 110, Direction.UP);
+						setUpperTile(i - 1, j, 109, Direction.UP);
 						setUpperTile(i - 1, j + 1, 111, Direction.UP);
-						setUpperTile(i, j - 1, 110, Direction.UP);
-						setUpperTile(i, j + 1, 110, Direction.UP);
+						setUpperTile(i, j - 1, 109, Direction.UP);
+						setUpperTile(i, j + 1, 109, Direction.UP);
 						setUpperTile(i + 1, j - 1, 111, Direction.DOWN);
-						setUpperTile(i + 1, j, 110, Direction.UP);
+						setUpperTile(i + 1, j, 109, Direction.UP);
 						setUpperTile(i + 1, j + 1, 111, Direction.LEFT);
 					}
 				}
@@ -1181,12 +1181,12 @@ public class Map {
 		upperTileMap[x][y] = (short) id;
 		// Set bit 12/ 13 to indicate direction
 		if (direction == Direction.RIGHT) {
-			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+			upperTileMap[x][y] = (short) (upperTileMap[x][y] | (1 << 13));
 		} else if (direction == Direction.LEFT) {
-			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
+			upperTileMap[x][y] = (short) (upperTileMap[x][y] | (1 << 12));
 		} else if (direction == Direction.UP) {
-			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 12));
-			upperTileMap[x][y] = (short) (tileMap[x][y] | (1 << 13));
+			upperTileMap[x][y] = (short) (upperTileMap[x][y] | (1 << 12));
+			upperTileMap[x][y] = (short) (upperTileMap[x][y] | (1 << 13));
 		}
 
 	}
