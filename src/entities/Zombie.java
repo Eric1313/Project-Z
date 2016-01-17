@@ -26,6 +26,7 @@ import map.Chunk;
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
+	private int imgNo;
 
 	/**
 	 * Zombie constructor
@@ -44,9 +45,11 @@ public class Zombie extends Mob {
 	 *            map that it is in
 	 */
 	public Zombie(Point position, int health, BufferedImage[] images,
-			AudioClip[] clips, Game game, Map map) {
+			AudioClip[] clips, Game game, Map map, int imgNo) {
 		super(32, 32, position, 0, health, true, images, clips, game, map);
 		rotation = Math.random() * (2 * Math.PI);
+		rotation = Math.random() * (2 * Math.PI);
+		this.imgNo = imgNo;
 
 	}
 
@@ -183,7 +186,8 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0], (int) (this.position.x - game
+
+		g.drawImage(this.getImages()[imgNo], (int) (this.position.x - game
 				.getCamera().getxOffset()), (int) (this.position.y - game
 				.getCamera().getyOffset()), null);
 	}
