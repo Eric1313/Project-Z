@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import entities.Player;
 import enums.ItemState;
 
 /**
@@ -52,6 +53,10 @@ public abstract class Item {
 	protected AudioClip[] clips;
 
 	protected Game game;
+	
+	
+	public abstract void use(Player player);
+
 
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,

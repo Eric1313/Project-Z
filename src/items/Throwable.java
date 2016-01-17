@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
 
@@ -29,6 +30,12 @@ public class Throwable extends Item {
 		this.effect = effect;
 		this.areaOfEffect = areaOfEffect;
 		this.range = range;
+	}
+	
+	@Override
+	public void use(Player player) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public Throwable(Throwable item) {

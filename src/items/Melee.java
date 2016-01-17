@@ -2,9 +2,12 @@ package items;
 
 import java.applet.AudioClip;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 import main.Game;
+import entities.Player;
 import enums.ItemState;
 
 /**
@@ -28,6 +31,28 @@ public class Melee extends Item {
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 		this.radius = radius;
+	}
+	
+	@Override
+	public void use(Player player) {
+		double angle = -Math.atan2(game.getDisplay().getMouseHandler()
+				.getMouseLocation().y
+				- (position.y + 16 - game.getCamera().getyOffset()), game
+				.getDisplay().getMouseHandler().getMouseLocation().x
+				- (position.x + 16 - game.getCamera().getxOffset()));
+
+		long currentTick = this.game.getTickCount();
+		if (currentTick - player.getLastItemTick() > this.getRechargeTime()) {
+			player.setLastItemTick(currentTick);
+			
+			for (long frame = currentTick; frame < currentTick + this.getSwingSpeed(); frame++) {
+				Line2D.Double line = new Line2D.Double(new Point(player.getPosition().x + 16, player.getPosition().y + 16),
+						new Point((int) (player.getPosition().x + 16 + this.getRadius() * Math.cos(angle + (Math.PI / 3) * ((frame - currentTick - this.getSwingSpeed() / 2) / (this.getSwingSpeed() / 2.0)))),
+								(int) (player.getPosition().y + 16 - this.getRadius() * Math.sin(angle + (Math.PI / 3) * ((frame - currentTick - this.getSwingSpeed() / 2) / (this.getSwingSpeed() / 2.0))))));
+//				System.out.println(frame - currentTick - newItem.getSwingSpeed() / 2);
+				System.out.println(line.getX2() + " " + line.getY2());
+			}
+		}		
 	}
 	
 	public Melee(Melee item) {
