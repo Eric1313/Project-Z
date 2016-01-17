@@ -5,6 +5,8 @@ import map.Map;
 
 import java.applet.AudioClip;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -120,18 +122,14 @@ public class Zombie extends Mob {
 			else
 				this.rotation = Math.atan(dy / dx);
 		}
-			
-		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
-				map.getWidth()/16 - 2); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1,
-					map.getHeight()/16 - 1); y++) {
-		for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
+
+		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16 - 2); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16 - 1); y++) {
+				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
-						if ((Math.pow(checkZombie.getPosition().x
-								- this.position.x, 2) + Math.pow(
-								checkZombie.getPosition().y - this.position.y,
-								2)) < 1100) {
+						if ((Math.pow(checkZombie.getPosition().x - this.position.x, 2)
+								+ Math.pow(checkZombie.getPosition().y - this.position.y, 2)) < 1100) {
 
 							if (checkZombie.getPosition().y > this.position.y) {
 								this.up = true;
@@ -201,14 +199,26 @@ public class Zombie extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[imgNo], (int) (this.position.x - game.getCamera().getxOffset()),
+		Graphics2D g2D = (Graphics2D) g;
+
+		AffineTransform originalTransform = g2D.getTransform();
+
+		g2D.rotate(this.rotation, this.position.getX() + 16 - this.getGame().getCamera().getxOffset(),
+				this.getPosition().getY() + 16 - this.getGame().getCamera().getyOffset());
+
+		g2D.drawImage(this.getImages()[imgNo], (int) (this.position.x - game.getCamera().getxOffset()),
 				(int) (this.position.y - game.getCamera().getyOffset()), null);
-		
+
+		g2D.setTransform(originalTransform);
+
 		if (this.health < 100) {
-			// TODO Draw a health bar
-//			Graphics2D g2D = (Graphics2D) g;
-//			g2D.rotate(0);
-//			g.drawString(this.health + "", (int) (this.position.x - game.getCamera().getxOffset()), (int) (this.position.y - game.getCamera().getyOffset()) + 15);
+			g2D.drawRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 6,
+					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 33, 44, 6);
+			g2D.setColor(Color.RED);
+			g2D.fillRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 5,
+					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 34,
+					(int) (42 * (this.health / 100.0)), 5);
+			g2D.setColor(null);
 		}
 
 	}

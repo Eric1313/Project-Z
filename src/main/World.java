@@ -211,21 +211,15 @@ public class World {
 				map.getWidth() / 16 - 1); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
 					map.getHeight() / 16 - 1); y++) {
-				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
-						.iterator(); iterator.hasNext();) {
-
-					Item item = iterator.next();
+				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
+					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
 				}
 				// for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
 				// .iterator(); iterator.hasNext();) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					Zombie zombie = chunkMap[x][y].getZombies().get(i);
-					g2D.rotate(zombie.getRotation(), zombie.getPosition()
-							.getX() + 16 - camera.getxOffset(), zombie
-							.getPosition().getY() + 16 - camera.getyOffset());
 					zombie.render(g);
-					g2D.setTransform(originalTransform);
 				}
 			}
 		}
