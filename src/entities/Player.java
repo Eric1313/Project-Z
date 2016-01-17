@@ -151,9 +151,9 @@ public class Player extends Mob {
 		this.game.getCamera().centerOnEntity(this);
 		if (key.isUp() || key.isDown() || key.isRight() || key.isLeft()) {
 			if (key.isShift())
-				makeNoise(400, true);
+				makeNoise(250, true);
 			else
-				makeNoise(300, true);
+				makeNoise(100, true);
 		}
 	}
 
