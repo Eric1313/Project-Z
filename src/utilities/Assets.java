@@ -5,17 +5,24 @@
  */
 package utilities;
 
+import java.applet.AudioClip;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.applet.Applet;
+
+
 
 public class Assets {
 	private String path;
 	public static final int TILE_WIDTH = 32;
 	public static final int TILE_HEIGHT = 32;
 	private BufferedImage[][] sprites;
+	private AudioClip[] clips;
 	private BufferedImage image;
 	private Font font;
 
@@ -46,6 +53,19 @@ public class Assets {
 			e.printStackTrace();
 		} catch (FontFormatException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void loadAudio(String [] paths)
+	{
+		clips=new AudioClip[paths.length];
+		for (int i=0;i<clips.length;i++)
+		{
+			try {
+				clips[i]=Applet.newAudioClip(new URL(paths[i]));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

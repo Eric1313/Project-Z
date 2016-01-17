@@ -30,6 +30,7 @@ import map.Chunk;
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
 	private int imgNo;
+	private Player player;
 
 	/**
 	 * Zombie constructor
@@ -60,6 +61,9 @@ public class Zombie extends Mob {
 	 * Updates zombie's position based on current path
 	 */
 	public void update() {
+		if(player==null)
+			player = this.game.getDisplay().getGamePanel().getWorld().getPlayer();
+
 		// Reset movement
 		this.setDown(false);
 		this.setUp(false);
@@ -121,6 +125,31 @@ public class Zombie extends Mob {
 				this.rotation = Math.atan(dy / dx) + (2 * Math.PI);
 			else
 				this.rotation = Math.atan(dy / dx);
+		}
+		
+		if ((Math.pow(player.getPosition().x - this.position.x, 2)
+				+ Math.pow(player.getPosition().y - this.position.y, 2)) < 1000) {
+player.damage(1);
+			if (player.getPosition().y > this.position.y) {
+				this.up = true;
+				collideDown = true;
+			} else
+				collideDown = false;
+			if (player.getPosition().y < this.position.y) {
+				this.down = true;
+				collideUp = true;
+			} else
+				collideUp = false;
+			if (player.getPosition().x > this.position.x) {
+				this.left = true;
+				collideRight = true;
+			} else
+				collideRight = false;
+			if (player.getPosition().x< this.position.x) {
+				this.right = true;
+				collideLeft = true;
+			} else
+				collideLeft = false;
 		}
 
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16 - 2); x++) {
