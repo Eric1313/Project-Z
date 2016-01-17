@@ -106,6 +106,7 @@ public class Player extends Mob {
 		} else if (this.stamina > Player.MIN_STAMINA) {
 			this.exhausted = false;
 		}
+		
 
 		if (mouse.isClick()) {
 			useItem();
@@ -131,6 +132,12 @@ public class Player extends Mob {
 				this.stamina++;
 			}
 		}
+		
+		if (key.isCtrl()) {
+			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
+		} else {
+			this.movementSpeed = Player.MOVEMENT_SPEED;
+		}
 
 		key.setLastNumber(key.getLastNumber() + mouse.getMouseWheel());
 		mouse.setMouseWheel(0);
@@ -150,10 +157,13 @@ public class Player extends Mob {
 
 		this.game.getCamera().centerOnEntity(this);
 		if (key.isUp() || key.isDown() || key.isRight() || key.isLeft()) {
-			if (key.isShift())
+			if (key.isShift()) {
 				makeNoise(400, true);
-			else
+			} else if (key.isCtrl()) {
+				makeNoise(100, true);
+			} else {
 				makeNoise(300, true);
+			}
 		}
 	}
 

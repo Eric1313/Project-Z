@@ -10,6 +10,7 @@ public class KeyHandler implements KeyListener {
 	private boolean left;
 	private boolean right;
 	private boolean shift;
+	private boolean ctrl;
 	private boolean q;
 	private boolean e;
 	private int lastNumber;
@@ -40,6 +41,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 			shift = pressed;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			ctrl = pressed;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			q = pressed;
@@ -80,6 +84,10 @@ public class KeyHandler implements KeyListener {
 
 	public boolean isShift() {
 		return shift;
+	}
+
+	public boolean isCtrl() {
+		return ctrl;
 	}
 
 	public boolean isQ() {
