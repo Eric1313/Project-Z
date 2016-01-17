@@ -691,6 +691,7 @@ public class Map {
 							&& (upperTileMap[i + 1][j] & 0xFFF) < 109
 							&& (upperTileMap[i + 1][j + 1] & 0xFFF) < 109) {
 						setTile(i, j, 109, Direction.UP, true);
+						setUpperTile(i, j, 110, Direction.UP);
 						setUpperTile(i - 1, j - 1, 111, Direction.RIGHT);
 						setUpperTile(i - 1, j, 110, Direction.UP);
 						setUpperTile(i - 1, j + 1, 111, Direction.UP);
