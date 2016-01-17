@@ -42,7 +42,8 @@ public class Player extends Mob {
 	private int stamina;
 
 	private int selectedItem = 0;
-
+	private int skinNo;
+	
 	private long lastItemTick = 0;
 
 	public Player(boolean solid, Game game) {
@@ -52,8 +53,9 @@ public class Player extends Mob {
 		this.mouse = game.getDisplay().getMouseHandler();
 	}
 
-	public Player(Point position, boolean solid, Game game, Map map) {
+	public Player(Point position, boolean solid, Game game, Map map, int skinNo) {
 		super(32, 32, position, solid, game, map);
+		this.skinNo = skinNo;
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
@@ -85,7 +87,7 @@ public class Player extends Mob {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(this.getImages()[0],
+		g.drawImage(this.getImages()[skinNo],
 				(int) (this.getPosition().x - camera.getxOffset()),
 				(int) (this.getPosition().y - camera.getyOffset()), null);
 	}

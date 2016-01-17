@@ -110,15 +110,16 @@ public class Map {
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE + 1) / 2, 0),
 				new Point(height - 1, width - 1));
 
-		int startHouse = (int) Math.ceil(Math.random() * plazaStarts.size());
+		int startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
 		int endHouse;
 
 		do {
-			endHouse = (int) Math.ceil(Math.random() * plazaStarts.size()) - 1;
+			System.out.println("test");
+			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
-				- plazaStarts.get(endHouse).getX()) < 250
+				- plazaStarts.get(endHouse).getX()) < 200
 				&& Math.abs(plazaStarts.get(startHouse).getY()
-						- plazaStarts.get(endHouse).getY()) < 250);
+						- plazaStarts.get(endHouse).getY()) < 200);
 
 		for (int i = 0; i < plazaStarts.size(); i++) {
 			if (i == startHouse)
@@ -658,13 +659,11 @@ public class Map {
 			int randomY = (int) (Math.random()*boxHeight+start.getY());
 			
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0) {
-				if (Math.random() > 0.5){
+				if (Math.random() > 0.25){
 					itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 					chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
 				}
-			} else {
-				item--;
-			}
+		}
 		}
 	}
 
@@ -738,8 +737,6 @@ public class Map {
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0 && (tileMap[randomX][randomY] & 0xFFF) != 201 && (tileMap[randomX][randomY] & 0xFFF) != 207) {
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
-			} else {
-				item--;
 			}
 		}
 

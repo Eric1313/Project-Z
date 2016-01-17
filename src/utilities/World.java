@@ -64,7 +64,7 @@ public class World {
 		// in the top left corner
 		player = new Player(new Point(
 				(int) map.getPlayerCoordinate().getX() * 32, (int) map
-						.getPlayerCoordinate().getY() * 32), true, game, map);
+						.getPlayerCoordinate().getY() * 32), true, game, map, (int)Math.floor((Math.random()*6)));
 		// player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		// this.row = (int) (player.getPosition().getY() / 32);
