@@ -30,7 +30,8 @@ public class World {
 	private AffineTransform originalTransform;
 	private GameCamera camera;
 	private MouseHandler mouse;
-	private short[][] tileId;
+	private short[][] baseTiles;
+	private short[][] upperTiles;
 	private Chunk[][] chunkMap;
 	private Map map;
 	private int width;
@@ -57,7 +58,8 @@ public class World {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		tileId = map.getMap();
+		baseTiles = map.getMap();
+		upperTiles = map.getUpperTileMap();
 		// TODO Randomly place the player into the world rather than putting it
 		// in the top left corner
 		player = new Player(new Point(
@@ -114,30 +116,30 @@ public class World {
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
-				if (j >= tileId[0].length || i >= tileId.length) {
+				if (j >= baseTiles[0].length || i >= baseTiles.length) {
 					break;
 				}
 				g2D.setTransform(originalTransform);
-				if ((tileId[j][i] & (1 << 12)) != 0
-						&& ((tileId[j][i] & (1 << 13)) != 0)) {
+				if ((baseTiles[j][i] & (1 << 12)) != 0
+						&& ((baseTiles[j][i] & (1 << 13)) != 0)) {
 					g2D.rotate(Math.toRadians(180), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
 							- camera.getyOffset() + yChange + 16));
 				}
 
-				else if ((tileId[j][i] & (1 << 12)) != 0) {
+				else if ((baseTiles[j][i] & (1 << 12)) != 0) {
 					g2D.rotate(Math.toRadians(90), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
 							- camera.getyOffset() + yChange + 16));
-				} else if ((tileId[j][i] & (1 << 13)) != 0) {
+				} else if ((baseTiles[j][i] & (1 << 13)) != 0) {
 					g2D.rotate(Math.toRadians(-90), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
 							- camera.getyOffset() + yChange + 16));
 				}
-				if ((tileId[j][i] & (1 << 14)) != 0) {
+				if ((baseTiles[j][i] & (1 << 14)) != 0) {
 					solid[tileY][tileX] = new Rectangle((int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange, (int) (tileY * Assets.TILE_HEIGHT
@@ -150,7 +152,7 @@ public class World {
 				} else {
 					solid[tileY][tileX] = null;
 				}
-				int id = (tileId[j][i] & 0xFFF);
+				int id = (baseTiles[j][i] & 0xFFF);
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
 						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
 								+ xChange, (int) (tileY * Assets.TILE_HEIGHT
@@ -258,7 +260,46 @@ public class World {
 
 		g2D.setClip(null);
 		player.render(g);
+		tileY = 0;
+		tileX = 0;
+		for (int i = row; i < row + 26; i++) {
+			tileX = 0;
+			for (int j = col; j < col + 34; j++) {
+				if (j >= upperTiles[0].length || i >= upperTiles.length) {
+					break;
+				}
+				g2D.setTransform(originalTransform);
+				if ((upperTiles[j][i] & (1 << 12)) != 0
+						&& ((upperTiles[j][i] & (1 << 13)) != 0)) {
+					g2D.rotate(Math.toRadians(180), (int) (tileX
+							* Assets.TILE_WIDTH - camera.getxOffset())
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
+				}
 
+				else if ((upperTiles[j][i] & (1 << 12)) != 0) {
+					g2D.rotate(Math.toRadians(90), (int) (tileX
+							* Assets.TILE_WIDTH - camera.getxOffset())
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
+				} else if ((upperTiles[j][i] & (1 << 13)) != 0) {
+					g2D.rotate(Math.toRadians(-90), (int) (tileX
+							* Assets.TILE_WIDTH - camera.getxOffset())
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
+				}
+				int id = (upperTiles[j][i] & 0xFFF);
+				if (id != 0)
+					g.drawImage(
+							game.getTiles()[(id / 100) - 1][(id % 100)],
+							(int) (tileX * Assets.TILE_WIDTH - camera
+									.getxOffset()) + xChange,
+							(int) (tileY * Assets.TILE_HEIGHT
+									- camera.getyOffset() + yChange), null);
+				tileX++;
+			}
+			tileY++;
+		}
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .2f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
