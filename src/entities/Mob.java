@@ -67,13 +67,6 @@ public abstract class Mob extends Entity {
 						else if (!path.isEmpty())
 							zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x)/32, (zombie.position.y)/32, path.get(0).locationX,path.get(0).locationY));
 					}
-//					if(Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2)<range*range)
-//					{
-//						if(player)
-//						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x-16)/32, (zombie.position.y-16)/32, (this.position.x)/32, (this.position.y)/32));
-//						else if (!path.isEmpty())
-//							zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x-16)/32, (zombie.position.y-16)/32, path.get(0).locationX,path.get(0).locationY));
-//					}
 				}
 			}
 		}
