@@ -8,6 +8,7 @@ import items.Throwable;
 
 import java.applet.AudioClip;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -29,6 +30,10 @@ public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
 	private BufferedImage[][] zombie;
+	private BufferedImage mainMenu;
+	private Font uiFont;
+	private Font zombieFont;
+	private Font zombieFontBig;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -54,9 +59,15 @@ public class Game implements Runnable {
 
 	private void initialize() {
 		// Loads the assets
-		tiles = new Assets("res/img/tiles.png",1,1).getSprites();
-		player = new Assets("res/img/player.png",1,1).getSprites();
-		zombie = new Assets("res/img/zombie.png",1,1).getSprites();
+		tiles = new Assets("res/img/tiles.png", 1, 1).getSprites();
+		player = new Assets("res/img/player.png", 1, 1).getSprites();
+		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
+		mainMenu = new Assets("res/img/menu.png").getImage();
+		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
+				.getFont();
+		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
+				.getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -88,7 +99,8 @@ public class Game implements Runnable {
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
-					BufferedImage[] images = new Assets(stats[4],1,1).getSprites()[0];
+					BufferedImage[] images = new Assets(stats[4], 1, 1)
+							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
 					AudioClip[] sounds = new AudioClip[soundLinks.length];
@@ -112,7 +124,8 @@ public class Game implements Runnable {
 										.parseInt(stats[3]), ItemState.DROPPED,
 								images, sounds, this, Integer
 										.parseInt(stats[6]), Integer
-										.parseInt(stats[7])));
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8])));
 						break;
 					case 2:
 						this.items.add(new Firearm(Integer.parseInt(stats[0]),
@@ -155,13 +168,30 @@ public class Game implements Runnable {
 		camera = new GameCamera(this, 0, 0);
 		// Sets the state of the game
 		state = new GameState(this);
-		state.setGameState(State.INGAME);
+		state.setGameState(State.LOBBY);
 
 		// display.getFrame().createBufferStrategy(2);
-
+		display.getFrame().setIconImage(
+				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
+	}
+
+	public Font getUiFont() {
+		return uiFont;
+	}
+
+	public Font getZombieFont() {
+		return zombieFont;
+	}
+
+	public Font getZombieFontBig() {
+		return zombieFontBig;
+	}
+
+	public BufferedImage getMainMenu() {
+		return mainMenu;
 	}
 
 	private void update() {
@@ -345,6 +375,10 @@ public class Game implements Runnable {
 
 	public long getTickCount() {
 		return tickCount;
+	}
+
+	public GameState getState() {
+		return state;
 	}
 
 	public static void main(String[] args) {

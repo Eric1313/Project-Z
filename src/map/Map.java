@@ -92,7 +92,7 @@ public class Map {
 		itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
-			int chance = (int) Math.pow(2, currentItem.getRarity());
+			int chance = (int) Math.pow(currentItem.getRarity(), 2);
 			for (int rarity = 0; rarity < chance; rarity++) {
 				itemSpawns.add(currentItem);
 			}
@@ -114,7 +114,6 @@ public class Map {
 		int endHouse;
 
 		do {
-			System.out.println("test");
 			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
 				- plazaStarts.get(endHouse).getX()) < 200

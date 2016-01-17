@@ -51,7 +51,9 @@ public class Chunk {
 	 * @return
 	 */
 	public Entity remove(Entity entity) {
-		if (entity.isSolid()) {
+		if (entity instanceof Zombie) {
+			return removeZombie((Zombie) entity);
+		} else if (entity.isSolid()) {
 			this.solidEntities.remove(entity);
 		} else {
 			this.passibleEntities.remove(entity);
