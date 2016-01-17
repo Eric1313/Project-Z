@@ -126,6 +126,8 @@ public class Player extends Mob {
 		if (key.isShift() && !exhausted && (key.isUp() || key.isDown() || key.isLeft() || key.isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
+		} else if (key.isCtrl()) {
+			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
 			if (this.stamina < Player.MAX_STAMINA) {
@@ -133,11 +135,7 @@ public class Player extends Mob {
 			}
 		}
 		
-		if (key.isCtrl()) {
-			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
-		} else {
-			this.movementSpeed = Player.MOVEMENT_SPEED;
-		}
+		
 
 		key.setLastNumber(key.getLastNumber() + mouse.getMouseWheel());
 		mouse.setMouseWheel(0);
