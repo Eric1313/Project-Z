@@ -697,22 +697,22 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if ((tileMap[i][j] & 0xFFF) == 108) {
 					if (Math.random() > 0.90
-							&& (tileMap[i - 1][j] & 0xFFF) == 108
-							&& (tileMap[i - 1][j - 1] & 0xFFF) == 108
-							&& (tileMap[i - 1][j + 1] & 0xFFF) == 108
-							&& (tileMap[i][j - 1] & 0xFFF) == 108
-							&& (tileMap[i][j + 1] & 0xFFF) == 108
-							&& (tileMap[i + 1][j - 1] & 0xFFF) == 108
-							&& (tileMap[i + 1][j] & 0xFFF) == 108
-							&& (tileMap[i + 1][j + 1] & 0xFFF) == 108) {
+							&& (upperTileMap[i - 1][j] & 0xFFF) < 109
+							&& (upperTileMap[i - 1][j - 1] & 0xFFF) < 109
+							&& (upperTileMap[i - 1][j + 1] & 0xFFF) < 109
+							&& (upperTileMap[i][j - 1] & 0xFFF) < 109
+							&& (upperTileMap[i][j + 1] & 0xFFF) < 109
+							&& (upperTileMap[i + 1][j - 1] & 0xFFF) < 109
+							&& (upperTileMap[i + 1][j] & 0xFFF) < 109
+							&& (upperTileMap[i + 1][j + 1] & 0xFFF) < 109) {
 						setTile(i, j, 109, Direction.UP, true);
 						setUpperTile(i - 1, j - 1, 111, Direction.RIGHT);
-						setUpperTile(i - 1, j, 109, Direction.UP);
+						setUpperTile(i - 1, j, 110, Direction.UP);
 						setUpperTile(i - 1, j + 1, 111, Direction.UP);
-						setUpperTile(i, j - 1, 109, Direction.UP);
-						setUpperTile(i, j + 1, 109, Direction.UP);
+						setUpperTile(i, j - 1, 110, Direction.UP);
+						setUpperTile(i, j + 1, 110, Direction.UP);
 						setUpperTile(i + 1, j - 1, 111, Direction.DOWN);
-						setUpperTile(i + 1, j, 109, Direction.UP);
+						setUpperTile(i + 1, j, 110, Direction.UP);
 						setUpperTile(i + 1, j + 1, 111, Direction.LEFT);
 					}
 				}
