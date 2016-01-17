@@ -270,11 +270,13 @@ public class Player extends Mob {
 						Firearm firearm = (Firearm) currentItem;
 
 						if (firearm.getAmmoID() == newItem.getItemID() && !firearm.isFull()) {
-							if (newItem.getDurability() <= 0) {
-								this.removeItem(this.selectedItem);
-							} else {
+							if (newItem.getDurability() > 0) {
 								firearm.setCurrentAmmo(firearm.getMaxAmmo());
 								newItem.removeDurability();
+							}
+							
+							if (newItem.getDurability() <= 0) {
+								this.removeItem(this.selectedItem);
 							}
 						}
 					}
