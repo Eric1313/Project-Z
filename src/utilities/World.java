@@ -337,7 +337,7 @@ public class World {
 						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
 					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()) + 32, 32, 32);
+							(int) (item.getPosition().y - camera.getyOffset()), 32, 32);
 					if (itemHitbox.contains(mouse.getMouseLocation()) && Point.distance(player.getPosition().x,
 							player.getPosition().y, item.getPosition().x, item.getPosition().y) <= 8 * 32) {
 						item.setHover(true);
