@@ -22,6 +22,7 @@ import enums.ItemState;
 public abstract class Item {
 	protected int itemID;
 	protected String name;
+	protected boolean inHand;
 
 	/**
 	 * Integer that decides how rare it is to find this item in a map.<br>
@@ -72,6 +73,7 @@ public abstract class Item {
 		this.clips = clips;
 
 		this.game = game;
+		this.inHand=false;
 	}
 
 	public Item(Item item) {
@@ -188,6 +190,17 @@ public abstract class Item {
 	public Game getGame() {
 		return this.game;
 	}
+	
+
+	public boolean isInHand() {
+		return inHand;
+	}
+
+
+	public void setInHand(boolean inHand) {
+		this.inHand = inHand;
+	}
+
 
 	public void render(Graphics g) {
 		if (this.state == ItemState.DROPPED) {
@@ -200,6 +213,7 @@ public abstract class Item {
 			}
 		} else if (this.state == ItemState.INHAND) {
 			g.drawImage(this.getImages()[2], 0, 0, null);
+	
 		}
 	}
 }

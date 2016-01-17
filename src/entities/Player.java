@@ -122,11 +122,10 @@ public class Player extends Mob {
 			pickUpItem();
 			key.setE(false);
 		}
-		if(key.isR())
-		{
+		if (key.isR()) {
 			Item item = getItem(this.selectedItem);
 			if (item != null && item instanceof Firearm) {
-			    ((Firearm) item).reload(this);
+				((Firearm) item).reload(this);
 			}
 		}
 		if (key.isShift()
@@ -149,7 +148,16 @@ public class Player extends Mob {
 		key.setLastNumber(key.getLastNumber() + mouse.getMouseWheel());
 		mouse.setMouseWheel(0);
 
-		this.selectedItem = key.getLastNumber();
+		if (this.selectedItem != key.getLastNumber()) {
+		     if (getItem(selectedItem) != null) {
+		      getItem(this.selectedItem).setState(ItemState.INVENTORY);
+		     }
+		     this.selectedItem = key.getLastNumber();
+
+		     if (getItem(selectedItem) != null) {
+		      getItem(this.selectedItem).setState(ItemState.INHAND);
+		     }
+		    }
 
 		this.getPosition().setLocation(this.getPosition().getX(),
 				this.getPosition().getY() + yMove());
