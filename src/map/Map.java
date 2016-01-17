@@ -42,6 +42,8 @@ public class Map {
 
 	final int MAX_ZOMBIE_PER_ROOM = 2;
 	final int MAX_ZOMBIE_PER_FOREST = 2;
+	final int MAX_ITEM_PER_ROOM = 1;
+	final int MAX_ITEM_PER_FOREST = 5;
 	// STores locations of all plazas
 
 	// Map storage
@@ -55,6 +57,7 @@ public class Map {
 	private Point playerStart;
 
 	private ArrayList<Item> items;
+	private ArrayList<Item> itemSpawns;
 	private ArrayList<Point> plazaStarts;
 	private ArrayList<Point> plazaEnds;
 
@@ -85,6 +88,16 @@ public class Map {
 
 		plazaStarts = new ArrayList<Point>();
 		plazaEnds = new ArrayList<Point>();
+		
+		itemSpawns = new ArrayList<Item>();
+		for (int item = 0; item < this.items.size(); item++) {
+			Item currentItem = this.items.get(item);
+			int chance = (int) Math.pow(2, currentItem.getRarity());
+			for (int rarity = 0; rarity < chance; rarity++) {
+				itemSpawns.add(currentItem);
+			}
+		}
+
 
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
@@ -119,59 +132,6 @@ public class Map {
 		}
 
 		pathFinder = new PathFinder(this);
-
-		spawnItems();
-	}
-
-	/*
-	 * public void spawnZombies(int noZombies) {
-	 * 
-	 * for (int i = 0; i < noZombies; i++) { int randomX = (int) (1 +
-	 * Math.random() * (width - 5)); int randomY = (int) (1 + Math.random() *
-	 * (height - 5)); if ((tileMap[randomX][randomY] & (1 << 14)) == 0)
-	 * chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new
-	 * Point(randomX * 32, randomY * 32), 100, game.getZombie()[0], null,
-	 * this.game, this));
-	 * 
-	 * 
-	 * } }
-	 */
-
-	public void spawnItems() {
-		ArrayList<Item> itemSpawns = new ArrayList<Item>();
-		for (int item = 0; item < this.items.size(); item++) {
-			Item currentItem = this.items.get(item);
-			int chance = (int) Math.pow(2, currentItem.getRarity());
-			for (int rarity = 0; rarity < chance; rarity++) {
-				itemSpawns.add(currentItem);
-			}
-		}
-
-		for (int item = 0; item < (int) Math.random() * 100 + 500; item++) {
-			// Clone the item
-			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns
-					.size()));
-			if (itemSpawned instanceof Consumable) {
-				itemSpawned = new Consumable((Consumable) itemSpawned);
-			} else if (itemSpawned instanceof Melee) {
-				itemSpawned = new Melee((Melee) itemSpawned);
-			} else if (itemSpawned instanceof Firearm) {
-				itemSpawned = new Firearm((Firearm) itemSpawned);
-			} else if (itemSpawned instanceof Throwable) {
-				itemSpawned = new Throwable((Throwable) itemSpawned);
-			}
-
-			int randomX = (int) (1 + Math.random() * (width - 5));
-			int randomY = (int) (1 + Math.random() * (height - 5));
-			if ((tileMap[randomX][randomY] & (1 << 14)) == 0) {
-				// itemSpawned.setPosition(new Point(128, 128));
-				// chunkMap[1][1].add(itemSpawned);
-				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
-				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
-			} else {
-				item--;
-			}
-		}
 	}
 
 	/**
@@ -680,7 +640,32 @@ public class Map {
 			}
 		}
 		}
+		for (int item = 0; item <  MAX_ITEM_PER_ROOM; item++) {
+			// Clone the item
+			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns
+					.size()));
+			if (itemSpawned instanceof Consumable) {
+				itemSpawned = new Consumable((Consumable) itemSpawned);
+			} else if (itemSpawned instanceof Melee) {
+				itemSpawned = new Melee((Melee) itemSpawned);
+			} else if (itemSpawned instanceof Firearm) {
+				itemSpawned = new Firearm((Firearm) itemSpawned);
+			} else if (itemSpawned instanceof Throwable) {
+				itemSpawned = new Throwable((Throwable) itemSpawned);
+			}
 
+			int randomX = (int) (Math.random()*boxWidth+start.getX());
+			int randomY = (int) (Math.random()*boxHeight+start.getY());
+			
+			if ((tileMap[randomX][randomY] & (1 << 14)) == 0) {
+				if (Math.random() > 0.5){
+					itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
+					chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
+				}
+			} else {
+				item--;
+			}
+		}
 	}
 
 	/**
@@ -731,6 +716,30 @@ public class Map {
 						new Point(randomX * 32, randomY* 32), 100, game
 								.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
 				zombieCount++;
+			}
+		}
+		
+		for (int item = 0; item <  MAX_ITEM_PER_FOREST; item++) {
+			// Clone the item
+			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns
+					.size()));
+			if (itemSpawned instanceof Consumable) {
+				itemSpawned = new Consumable((Consumable) itemSpawned);
+			} else if (itemSpawned instanceof Melee) {
+				itemSpawned = new Melee((Melee) itemSpawned);
+			} else if (itemSpawned instanceof Firearm) {
+				itemSpawned = new Firearm((Firearm) itemSpawned);
+			} else if (itemSpawned instanceof Throwable) {
+				itemSpawned = new Throwable((Throwable) itemSpawned);
+			}
+
+			int randomX = (int) (Math.random()*boxWidth+start.getX());
+			int randomY = (int) (Math.random()*boxHeight+start.getY());
+			if ((tileMap[randomX][randomY] & (1 << 14)) == 0 && (tileMap[randomX][randomY] & 0xFFF) != 201 && (tileMap[randomX][randomY] & 0xFFF) != 207) {
+				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
+				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
+			} else {
+				item--;
 			}
 		}
 
