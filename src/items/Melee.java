@@ -55,16 +55,11 @@ public class Melee extends Item {
 
 		long currentTick = this.game.getTickCount();
 		if (currentTick - player.getLastItemTick() > this.rechargeTime + this.swingSpeed) {
-			// System.out.println(first + " " + last);
 			player.setLastItemTick(currentTick);
 
 			Arc2D arc = new Arc2D.Double();
 			arc.setArcByCenter(player.getPlayerCenter().x, player.getPlayerCenter().y, this.radius, angle - this.angle, this.angle * 2,
 					Arc2D.PIE);
-
-			// System.out.println(arc.getStartPoint().getX() + " " +
-			// arc.getStartPoint().getY() + " " + arc.getEndPoint().getX() + " "
-			// + arc.getEndPoint().getY());
 
 			int enemiesHit = player.meleeCollision(arc, this.effectValue);
 

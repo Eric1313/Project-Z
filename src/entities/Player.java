@@ -48,6 +48,7 @@ public class Player extends Mob {
 	private Rectangle hitbox;
 	private boolean exhausted = false;
 	private int stamina;
+	private long lastDamageTick = -60;
 
 	private int selectedItemNumber = 0;
 	private Item selectedItem;
@@ -99,6 +100,15 @@ public class Player extends Mob {
 
 	public void setSelectedItem(int selectedItem) {
 		this.selectedItemNumber = selectedItem;
+	}
+
+	@Override
+	public void damage(int health) {
+		long currentTick = this.game.getTickCount();
+		if (currentTick - lastDamageTick > 60) {
+			super.damage(health);
+			this.lastDamageTick = currentTick;
+		}
 	}
 
 	@Override
