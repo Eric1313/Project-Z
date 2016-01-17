@@ -26,7 +26,7 @@ public class World {
 	private Game game;
 	private Player player;
 	private Arc2D flashLight;
-	private Rectangle[][] solid;
+	private Rectangle[][] solidTiles;
 	private AffineTransform originalTransform;
 	private GameCamera camera;
 	private MouseHandler mouse;
@@ -76,7 +76,7 @@ public class World {
 		this.yChange = 0;
 		this.xChange = 0;
 		flashLight = new Arc2D.Double();
-		solid = new Rectangle[26][34];
+		solidTiles = new Rectangle[26][34];
 		this.camera = game.getCamera();
 		this.mouse = game.getDisplay().getMouseHandler();
 	}
@@ -140,7 +140,7 @@ public class World {
 							- camera.getyOffset() + yChange + 16));
 				}
 				if ((baseTiles[j][i] & (1 << 14)) != 0) {
-					solid[tileY][tileX] = new Rectangle((int) (tileX
+					solidTiles[tileY][tileX] = new Rectangle((int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange, (int) (tileY * Assets.TILE_HEIGHT
 							- camera.getyOffset() + yChange), 32, 32);
@@ -150,7 +150,7 @@ public class World {
 					// (int) solid[tileY][tileX].getX(),
 					// (int) solid[tileY][tileX].getY());
 				} else {
-					solid[tileY][tileX] = null;
+					solidTiles[tileY][tileX] = null;
 				}
 				int id = (baseTiles[j][i] & 0xFFF);
 				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
@@ -324,7 +324,7 @@ public class World {
 	}
 
 	public Rectangle[][] getSolid() {
-		return solid;
+		return solidTiles;
 	}
 
 	private void initializeOffsets() {
