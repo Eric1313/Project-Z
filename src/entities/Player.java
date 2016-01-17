@@ -112,7 +112,7 @@ public class Player extends Mob {
 		}
 
 		if (key.isQ()) {
-			dropItem();
+			dropItem(this.selectedItem);
 			key.setQ(false);
 		}
 
@@ -328,16 +328,6 @@ public class Player extends Mob {
 		}
 	}
 
-	public void dropItem() {
-		Item item = getItem(this.selectedItem);
-		if (item != null) {
-			item.setPosition(new Point(this.position.x, this.position.y));
-			item.setState(ItemState.DROPPED);
-			removeItem(this.selectedItem);
-			this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
-		}
-	}
-
 	public void pickUpItem() {
 		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld().getHoverItem();
 
@@ -389,8 +379,7 @@ public class Player extends Mob {
 		}
 
 		if (closestZombie != null) {
-			chunkMap[closestZombie.getPosition().x / 512][closestZombie.getPosition().y / 512]
-					.removeZombie(closestZombie);
+			closestZombie.damage(100);
 		}
 
 		return closestZombie;

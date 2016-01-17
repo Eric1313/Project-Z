@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import enums.ItemState;
 import main.Game;
+import map.Chunk;
 
 /**
  * Abstract Entity class for all entities in Project Z.
@@ -32,6 +33,7 @@ public abstract class Entity {
 	protected AudioClip[] clips;
 
 	protected Game game;
+	protected Chunk[][]chunkMap;
 
 	public Entity(boolean solid, Game game) {
 		// TODO Add map for future features
@@ -126,6 +128,17 @@ public abstract class Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	
+	public void damage(int health) {
+		this.health -= health;
+		
+		if (this.health <= 0) {
+			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
+				dropItem(item);
+			}
+			this.chunkMap[Math.max(this.position.x / 512, 2)][Math.max(this.position.y / 512, 2)].remove(this);
+		}
+	}
 
 	public Inventory getInventory() {
 		return this.inventory;
@@ -151,6 +164,17 @@ public abstract class Entity {
 	public Item getItem(int itemNo) {
 		return this.inventory.get(itemNo);
 	}
+	
+	public void dropItem(int itemNo) {
+		Item item = getItem(itemNo);
+		if (item != null) {
+			item.setPosition(new Point(this.position.x, this.position.y));
+			item.setState(ItemState.DROPPED);
+			removeItem(itemNo);
+			this.chunkMap[Math.max(this.position.x / 512, 2)][Math.max(this.position.y / 512, 2)].add(item);
+		}
+	}
+
 	
 	public boolean isSolid() {
 		return this.solid;
