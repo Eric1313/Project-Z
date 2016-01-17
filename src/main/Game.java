@@ -18,7 +18,6 @@ import enums.ItemState;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tiles;
-	private BufferedImage[][] upperTiles;
 	private BufferedImage[][] player;
 	private BufferedImage[][] zombie;
 	private ArrayList<Item> items;
@@ -44,10 +43,9 @@ public class Game implements Runnable {
 
 	private void initialize() {
 		// Loads the assets
-		tiles = new Assets("res/img/tiles.png").getSprites();
-		// upperTiles = new Assets("res/img/upperTiles.png").getSprites();
-		player = new Assets("res/img/player.png").getSprites();
-		zombie = new Assets("res/img/zombie.png").getSprites();
+		tiles = new Assets("res/img/tiles.png",1,1).getSprites();
+		player = new Assets("res/img/player.png",1,1).getSprites();
+		zombie = new Assets("res/img/zombie.png",1,1).getSprites();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -79,7 +77,7 @@ public class Game implements Runnable {
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
-					BufferedImage[] images = new Assets(stats[4]).getSprites()[0];
+					BufferedImage[] images = new Assets(stats[4],1,1).getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
 					AudioClip[] sounds = new AudioClip[soundLinks.length];

@@ -202,10 +202,10 @@ public class World {
 		g2D.setTransform(originalTransform);
 		
 		// draw Zombies
-		int chunkX = Math.max((int) player.getPosition().getX() / 512, 3);
-		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
-		for (int x = chunkX - 3; x < chunkX + 4; x++) {
-			for (int y = chunkY - 3; y < chunkY + 4; y++) {
+		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
+		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3,map.getHeight()/16-1); y++) {
 				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
 						.iterator(); iterator.hasNext();) {
 					Item item = iterator.next();
@@ -351,8 +351,8 @@ public class World {
 	public Item hoverItem() {
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < chunkX + 3; x++) {
-			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3,map.getHeight()/16-1); y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
 						.listIterator(chunkMap[x][y].getItems().size()); iterator
 						.hasPrevious();) {
