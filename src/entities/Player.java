@@ -338,8 +338,8 @@ public class Player extends Mob {
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < chunkX + 4; x++) {
-			for (int y = chunkY - 3; y < chunkY + 4; y++) {
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4,map.getWidth()/16-1); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4,map.getWidth()/16-1); y++) {
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
 					if (line.intersects(zombie.getPosition().x, zombie.getPosition().y, 32, 32)) {
