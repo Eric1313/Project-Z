@@ -124,7 +124,8 @@ public class Game implements Runnable {
 										.parseInt(stats[3]), ItemState.DROPPED,
 								images, sounds, this, Integer
 										.parseInt(stats[6]), Integer
-										.parseInt(stats[7])));
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8])));
 						break;
 					case 2:
 						this.items.add(new Firearm(Integer.parseInt(stats[0]),

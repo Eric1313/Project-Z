@@ -18,14 +18,16 @@ import enums.ItemState;
 public class Melee extends Item {
 	private int swingSpeed;
 	private int rechargeTime;
+	private int radius;
 
 	public Melee(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, AudioClip[] clips,
-			Game game, int swingSpeed, int rechargeTime) {
+			Game game, int swingSpeed, int rechargeTime, int radius) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
+		this.radius = radius;
 	}
 	
 	public Melee(Melee item) {
@@ -49,5 +51,9 @@ public class Melee extends Item {
 
 	public void setRechargeTime(int rechargeTime) {
 		this.rechargeTime = rechargeTime;
+	}
+	
+	public int getRadius() {
+		return this.radius;
 	}
 }

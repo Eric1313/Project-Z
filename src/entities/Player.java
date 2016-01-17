@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -319,6 +320,14 @@ public class Player extends Mob {
 			long currentTick = this.game.getTickCount();
 			if (currentTick - this.lastItemTick > newItem.getRechargeTime()) {
 				this.lastItemTick = currentTick;
+				
+				for (long frame = currentTick; frame < currentTick + newItem.getSwingSpeed(); frame++) {
+					Line2D.Double line = new Line2D.Double(new Point(this.position.x + 16, this.position.y + 16),
+							new Point((int) (this.position.x + 16 + newItem.getRadius() * Math.cos(angle + (Math.PI / 3) * ((frame - currentTick - newItem.getSwingSpeed() / 2) / (newItem.getSwingSpeed() / 2.0)))),
+									(int) (this.position.y + 16 - newItem.getRadius() * Math.sin(angle + (Math.PI / 3) * ((frame - currentTick - newItem.getSwingSpeed() / 2) / (newItem.getSwingSpeed() / 2.0))))));
+//					System.out.println(frame - currentTick - newItem.getSwingSpeed() / 2);
+					System.out.println(line.getX2() + " " + line.getY2());
+				}
 			}
 		} else if (item instanceof Firearm) {
 			Firearm newItem = (Firearm) item;
@@ -370,7 +379,7 @@ public class Player extends Mob {
 		}
 	}
 
-	public Zombie bulletCollision(Line2D.Double line, int damage) {
+	public Entity bulletCollision(Line2D.Double line, int damage) {
 		ArrayList<Entity> entitiesCollided = new ArrayList<Entity>();
 		ArrayList<Zombie> zombiesCollided = new ArrayList<Zombie>();
 
@@ -415,12 +424,31 @@ public class Player extends Mob {
 				closestZombie = zombie;
 			}
 		}
+		
+		Entity closestEntity = null;
+		double entityDistance = 100 * 32;
+		
+		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator.hasNext();) {
+			Entity entity = iterator.next();
 
-		if (closestZombie != null) {
-			closestZombie.damage(damage);
+			double distance = Point.distance(this.position.x, this.position.y, entity.getPosition().x,
+					entity.getPosition().y);
+
+			if (distance < entityDistance) {
+				entityDistance = distance;
+				closestEntity = entity;
+			}
+		}
+		
+		if (entityDistance > zombieDistance) {
+			closestEntity = closestZombie;
 		}
 
-		return closestZombie;
+		if (closestEntity != null) {
+			closestEntity.damage(damage);
+		}
+
+		return closestEntity;
 	}
 
 	public Point getPlayerCenter() {
