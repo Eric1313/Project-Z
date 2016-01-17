@@ -109,7 +109,7 @@ public class World {
 				player.getPosition().getX() - camera.getxOffset() + 16, player
 						.getPosition().getY() - camera.getyOffset() + 16, 500,
 				50, 80, Arc2D.PIE);
-		g2D.clip(flashLight);
+//		g2D.clip(flashLight);
 
 		int tileY = 0;
 		int tileX = 0;
@@ -236,9 +236,9 @@ public class World {
 
 		// g2D.draw(flashLight);
 
-		g2D.setClip(null);
+//		g2D.setClip(null);
 		player.render(g);
-		g2D.setClip(flashLight);
+//		g2D.setClip(flashLight);
 		tileY = 0;
 		tileX = 0;
 		for (int i = row; i < row + 26; i++) {
@@ -281,13 +281,13 @@ public class World {
 		}
 		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
 				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
-		g2D.setPaint(gp);
-		g2D.fill(flashLight);
-		g2D.setClip(null);
+//		g2D.setPaint(gp);
+//		g2D.fill(flashLight);
+//		g2D.setClip(null);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color(0f, 0f, 0f, .2f));
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+//		g2D.setColor(new Color(0f, 0f, 0f, .2f));
+//		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+//				.getDisplay().getFrame().getHeight());
 		
 		this.hoverItem = hoverItem();
 
