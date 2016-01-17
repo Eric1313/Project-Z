@@ -303,6 +303,9 @@ public class Player extends Mob {
 									(int) (this.position.y + 16 - d * Math.sin(angle))));
 
 					bulletCollision(line);
+					
+					makeNoise(1000, true);
+					
 					newItem.removeAmmo();
 				}
 			}
