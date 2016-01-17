@@ -77,6 +77,8 @@ public class Zombie extends Mob {
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
+					 targetX = 0;
+					 targetY = 0;
 				}
 			} else {
 				targetX = path.peek().locationX * 32;
@@ -98,8 +100,20 @@ public class Zombie extends Mob {
 			}
 		}
 		if (targetX != 0 && targetY != 0)
-			this.rotation = Math.atan2(this.position.y - targetY,
-					this.position.x - targetX) - Math.PI / 2;
+		{
+			 double dx=this.position.x - targetX,dy=this.position.y - targetY; 
+        if(dx==0)
+           if(dy==0)this.rotation=0;
+           else if(dy>0)this.rotation=Math.PI/2;
+           else this.rotation=Math.PI*3/2;
+        else if(dy==0)
+           if(dx>0)this.rotation=0;
+           else this.rotation=Math.PI;
+        else if(dx<0)this.rotation=Math.atan(dy/dx)+Math.PI;
+        else if(dy<0)this.rotation=Math.atan(dy/dx)+(2*Math.PI);
+        else this.rotation=Math.atan(dy/dx);
+		}
+			
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
 				map.getWidth() - 1); x++) {
 			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 2,
