@@ -102,11 +102,13 @@ public class World {
 			originalTransform = g2D.getTransform();
 		}
 
-		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
-				player.getPosition().getY() - camera.getyOffset() + 16);
-		flashLight.setArcByCenter(player.getPosition().getX() - camera.getxOffset() + 16,
-				player.getPosition().getY() - camera.getyOffset() + 16, 500, 50, 80, Arc2D.PIE);
-		g2D.clip(flashLight);
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
+				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
+		flashLight.setArcByCenter(
+				player.getPosition().getX() - camera.getxOffset() + 16, player
+						.getPosition().getY() - camera.getyOffset() + 16, 500,
+				50, 80, Arc2D.PIE);
+//		g2D.clip(flashLight);
 
 		int tileY = 0;
 		int tileX = 0;
@@ -201,10 +203,14 @@ public class World {
 					Item item = iterator.next();
 					item.render(g);
 				}
-				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
-					Zombie zombie = iterator.next();
-					g2D.rotate(zombie.getRotation(), zombie.getPosition().getX() + 16 - camera.getxOffset(),
-							zombie.getPosition().getY() + 16 - camera.getyOffset());
+//				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
+//						.iterator(); iterator.hasNext();) {
+				for (int i=0;i<chunkMap[x][y].getZombies().size();i++)
+				{
+					Zombie zombie = chunkMap[x][y].getZombies().get(i);
+					g2D.rotate(zombie.getRotation(), zombie.getPosition()
+							.getX() + 16 - camera.getxOffset(), zombie
+							.getPosition().getY() + 16 - camera.getyOffset());
 					zombie.render(g);
 					g2D.setTransform(originalTransform);
 				}
@@ -223,9 +229,9 @@ public class World {
 
 		// g2D.draw(flashLight);
 
-		g2D.setClip(null);
+//		g2D.setClip(null);
 		player.render(g);
-		g2D.setClip(flashLight);
+//		g2D.setClip(flashLight);
 		tileY = 0;
 		tileX = 0;
 		for (int i = row; i < row + 26; i++) {
@@ -259,15 +265,16 @@ public class World {
 			}
 			tileY++;
 		}
-		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
-				player.getPosition().getY() - camera.getyOffset() + 16);
-		g2D.setPaint(gp);
-		g2D.fill(flashLight);
-		g2D.setClip(null);
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
+				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
+//		g2D.setPaint(gp);
+//		g2D.fill(flashLight);
+//		g2D.setClip(null);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color(0f, 0f, 0f, .2f));
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
-
+//		g2D.setColor(new Color(0f, 0f, 0f, .2f));
+//		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+//				.getDisplay().getFrame().getHeight());
+		
 		this.hoverItem = hoverItem();
 
 		if (this.hoverItem != null) {
