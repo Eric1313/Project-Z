@@ -57,6 +57,7 @@ public abstract class Mob extends Entity {
 		int chunkY = Math.max(position.y / 512,2);
 		for (int x = chunkX - 2; x < chunkX + 3; x++) {
 			for (int y = chunkY - 2; y < chunkY + 3; y++) {
+				if(x<100&&y<100)
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
 						.hasNext();) {
 					Zombie zombie = iterator.next();

@@ -211,9 +211,11 @@ public class World {
 					Item item = iterator.next();
 					item.render(g);
 				}
-				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
-						.iterator(); iterator.hasNext();) {
-					Zombie zombie = iterator.next();
+//				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
+//						.iterator(); iterator.hasNext();) {
+				for (int i=0;i<chunkMap[x][y].getZombies().size();i++)
+				{
+					Zombie zombie = chunkMap[x][y].getZombies().get(i);
 					g2D.rotate(zombie.getRotation(), zombie.getPosition()
 							.getX() + 16 - camera.getxOffset(), zombie
 							.getPosition().getY() + 16 - camera.getyOffset());
