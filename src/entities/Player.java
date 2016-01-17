@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import main.Game;
+import main.World;
 import map.Map;
 import utilities.Assets;
 import utilities.GameCamera;
 import utilities.KeyHandler;
 import utilities.MouseHandler;
-import utilities.World;
 import enums.ItemState;
 
 /**

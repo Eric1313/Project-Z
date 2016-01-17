@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import map.Chunk;
 import map.Map;
-import utilities.World;
 
 public class GamePanel extends Canvas {
 	private static final long serialVersionUID = 1L;
