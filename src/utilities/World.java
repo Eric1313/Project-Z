@@ -200,28 +200,7 @@ public class World {
 		previousXOffset = camera.getxOffset();
 		previousYOffset = camera.getyOffset();
 		g2D.setTransform(originalTransform);
-		this.hoverItem = hoverItem();
-
-		if (this.hoverItem != null) {
-			FontMetrics fm = g.getFontMetrics();
-
-			g.setColor(new Color(100, 100, 100, 150));
-			g.fillRect(
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15
-							- fm.stringWidth(this.hoverItem.getName())
-							/ 2
-							- 15,
-					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
-					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
-
-			g.setColor(this.hoverItem.getColour());
-			g.drawString(
-					this.hoverItem.getName(),
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
-					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
-		}
+		
 		// draw Zombies
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 3);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
@@ -254,12 +233,12 @@ public class World {
 				.toRadians(90))), (float) (player.getPosition().getY()
 				- camera.getyOffset() - 350 * (float) Math.sin(Math
 				.toRadians(90))), new Color(0, 0, 0));
-		g2D.setPaint(gp);
-		g2D.fill(flashLight);
-		g2D.draw(flashLight);
+
+		// g2D.draw(flashLight);
 
 		g2D.setClip(null);
 		player.render(g);
+		g2D.setClip(flashLight);
 		tileY = 0;
 		tileX = 0;
 		for (int i = row; i < row + 26; i++) {
@@ -300,10 +279,38 @@ public class World {
 			}
 			tileY++;
 		}
+		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset()
+				+ 16, player.getPosition().getY() - camera.getyOffset() + 16);
+		g2D.setPaint(gp);
+		g2D.fill(flashLight);
+		g2D.setClip(null);
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .2f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
+		
+		this.hoverItem = hoverItem();
+
+		if (this.hoverItem != null) {
+			FontMetrics fm = g.getFontMetrics();
+
+			g.setColor(new Color(100, 100, 100, 150));
+			g.fillRect(
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
+							+ 15
+							- fm.stringWidth(this.hoverItem.getName())
+							/ 2
+							- 15,
+					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
+					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
+
+			g.setColor(this.hoverItem.getColour());
+			g.drawString(
+					this.hoverItem.getName(),
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
+							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
+					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
+		}
 	}
 
 	public int getWidth() {
