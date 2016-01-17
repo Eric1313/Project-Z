@@ -26,7 +26,7 @@ public class MainPanel extends Canvas {
 		if (hover) {
 			g.setColor(Color.RED);
 			g.setFont(game.getZombieFont());
-			g.drawString("}", 477, 378);
+			g.drawString("}", 460, 390);
 		}
 		g.setFont(game.getUiFont());
 		if (hover) {
