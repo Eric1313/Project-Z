@@ -126,6 +126,9 @@ public class Player extends Mob {
 			this.stamina -= Player.SPRINT_COST;
 		} else if (key.isCtrl()) {
 			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
+			if (this.stamina < Player.MAX_STAMINA) {
+				this.stamina++;
+			}
 		} else {
 			this.movementSpeed = Player.MOVEMENT_SPEED;
 			if (this.stamina < Player.MAX_STAMINA) {
