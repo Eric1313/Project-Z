@@ -198,12 +198,38 @@ public class World {
 		previousXOffset = camera.getxOffset();
 		previousYOffset = camera.getyOffset();
 		g2D.setTransform(originalTransform);
+		this.hoverItem = hoverItem();
 
+		if (this.hoverItem != null) {
+			FontMetrics fm = g.getFontMetrics();
+
+			g.setColor(new Color(100, 100, 100, 150));
+			g.fillRect(
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
+							+ 15
+							- fm.stringWidth(this.hoverItem.getName())
+							/ 2
+							- 15,
+					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
+					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
+
+			g.setColor(this.hoverItem.getColour());
+			g.drawString(
+					this.hoverItem.getName(),
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
+							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
+					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
+		}
 		// draw Zombies
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 3);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 3);
 		for (int x = chunkX - 3; x < chunkX + 4; x++) {
 			for (int y = chunkY - 3; y < chunkY + 4; y++) {
+				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
+						.iterator(); iterator.hasNext();) {
+					Item item = iterator.next();
+					item.render(g);
+				}
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
 						.iterator(); iterator.hasNext();) {
 					Zombie zombie = iterator.next();
@@ -212,11 +238,6 @@ public class World {
 							.getPosition().getY() + 16 - camera.getyOffset());
 					zombie.render(g);
 					g2D.setTransform(originalTransform);
-				}
-				for (Iterator<Item> iterator = chunkMap[x][y].getItems()
-						.iterator(); iterator.hasNext();) {
-					Item item = iterator.next();
-					item.render(g);
 				}
 			}
 		}
@@ -242,29 +263,6 @@ public class World {
 		g2D.setColor(new Color(0f, 0f, 0f, .2f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
-
-		this.hoverItem = hoverItem();
-
-		if (this.hoverItem != null) {
-			FontMetrics fm = g.getFontMetrics();
-
-			g.setColor(new Color(100, 100, 100, 150));
-			g.fillRect(
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15
-							- fm.stringWidth(this.hoverItem.getName())
-							/ 2
-							- 15,
-					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
-					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
-
-			g.setColor(this.hoverItem.getColour());
-			g.drawString(
-					this.hoverItem.getName(),
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
-					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
-		}
 	}
 
 	public int getWidth() {
