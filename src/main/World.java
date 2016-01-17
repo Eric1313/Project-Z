@@ -300,7 +300,7 @@ public class World {
 			long currentTick = game.getTickCount();
 			long difference = currentTick - this.damageTicks.get(entity);
 			if (difference < 90) {
-				g.setColor(new Color(20, 20, 20, (int) (255 - difference * 2)));
+				g.setColor(new Color(200, 200, 200, (int) (255 - difference * 2)));
 				g.drawString(this.damage.get(entity).toString(),
 						(int) (this.entitiesDamaged.get(entity).getPosition().x - camera.getxOffset()) + 16,
 						(int) (this.entitiesDamaged.get(entity).getPosition().y - camera.getyOffset()) - 32 - (int) (difference / 5));
