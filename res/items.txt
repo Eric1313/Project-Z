@@ -4,6 +4,6 @@
 1
 100~Health Pack~5~20~res/img/100.png~res/sfx/100-0.wav`res/sfx/100-1.wav~0~1
 101~Pistol Ammo~4~1~res/img/101.png~res/sfx/101-0.wav`res/sfx/101-1.wav~1~8
-200~Baseball Bat~2~40~res/img/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~20~15~16
+200~Baseball Bat~2~40~res/img/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~20~15~32~60
 300~Pistol~2~100~res/img/300.png~res/sfx/300-0.wav`res/sfx/300-1.wav~101~60~8
 400~Brick~3~20~res/img/400.png~res/sfx/400-0.wav`res/sfx/400-1.wav~1~10~3

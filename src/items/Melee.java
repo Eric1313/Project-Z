@@ -23,14 +23,16 @@ public class Melee extends Item {
 	private int swingSpeed;
 	private int rechargeTime;
 	private int radius;
+	private int angle;
 
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			AudioClip[] clips, Game game, int swingSpeed, int rechargeTime, int radius) {
+			AudioClip[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 		this.radius = radius;
+		this.angle = angle;
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class Melee extends Item {
 
 			Arc2D arc = new Arc2D.Double();
 			arc.setArcByCenter(player.getPosition().x + 16, player.getPosition().y + 16, this.radius,
-					Math.toDegrees(angle) - 30, Math.toDegrees(angle) + 30, Arc2D.PIE);
+					Math.toDegrees(angle) - this.angle, Math.toDegrees(angle) + this.angle, Arc2D.PIE);
 			
 			int enemiesHit = player.meleeCollision(arc, this.effectValue);
 			
@@ -65,6 +67,7 @@ public class Melee extends Item {
 		this.swingSpeed = item.swingSpeed;
 		this.rechargeTime = item.rechargeTime;
 		this.radius = item.radius;
+		this.angle = item.angle;
 	}
 
 	public int getSwingSpeed() {
