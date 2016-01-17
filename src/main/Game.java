@@ -1,12 +1,21 @@
 package main;
 
-import items.*;
+import items.Consumable;
+import items.Firearm;
+import items.Item;
+import items.Melee;
 import items.Throwable;
 
 import java.applet.AudioClip;
 import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import utilities.Assets;
@@ -28,6 +37,8 @@ public class Game implements Runnable {
 	private int height;
 	private Thread thread;
 	private GameState state;
+	private BufferStrategy bs;
+	private Graphics g;
 
 	private GameCamera camera;
 
@@ -146,7 +157,7 @@ public class Game implements Runnable {
 		state = new GameState(this);
 		state.setGameState(State.INGAME);
 
-		display.getFrame().createBufferStrategy(2);
+		// display.getFrame().createBufferStrategy(2);
 
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
@@ -163,10 +174,25 @@ public class Game implements Runnable {
 	 * Where the drawing happens in the program
 	 */
 	private void render() {
+		bs = display.getGamePanel().getBufferStrategy();
+
+		// If this is the first time running initialize the buffer strategy
+		if (bs == null) {
+			display.getGamePanel().createBufferStrategy(3);
+			return;
+		}
+
+		g = bs.getDrawGraphics();
+		// Clears the screen
+		g.clearRect(0, 0, width, height);
+
 		// Drawing
 		if (state.getGameState() != null) {
-			state.render();
+			state.render(g);
 		}
+		// End drawing
+		bs.show();
+		g.dispose();
 	}
 
 	// /**

@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Canvas;
 import java.awt.Graphics;
 import java.util.Iterator;
 
@@ -10,7 +11,7 @@ import map.Map;
 import entities.Zombie;
 import utilities.World;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private World world;
 	private HUD hud;
@@ -19,12 +20,17 @@ public class GamePanel extends JPanel {
 	private Map map;
 
 	public GamePanel() {
-		super(true);
 	}
 
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	// @Override
+	// public void paintComponent(Graphics g) {
+	// super.paintComponent(g);
+	// if (setUp) {
+	// world.render(g);
+	// hud.render(g);
+	// }
+	// }
+	public void render(Graphics g) {
 		if (setUp) {
 			world.render(g);
 			hud.render(g);

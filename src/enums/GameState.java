@@ -1,5 +1,7 @@
 package enums;
 
+import java.awt.Graphics;
+
 import main.Game;
 
 /**
@@ -33,12 +35,12 @@ public class GameState {
 		}
 	}
 
-	public void render() {
+	public void render(Graphics g) {
 		switch (gameState) {
 		case LOBBY:
 			break;
 		case INGAME:
-			game.getDisplay().getGamePanel().repaint();
+			game.getDisplay().getGamePanel().render(g);
 			break;
 		}
 	}
