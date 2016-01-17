@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 
 import enums.GameState.State;
 
@@ -20,6 +21,10 @@ public class MainPanel extends Canvas {
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
+		
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		// Make the background black
 		g2D.setColor(Color.BLACK);
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
