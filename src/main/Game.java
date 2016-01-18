@@ -22,6 +22,7 @@ import javax.sound.sampled.Clip;
 
 import utilities.Assets;
 import utilities.GameCamera;
+import Audio.Sound;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
@@ -186,6 +187,9 @@ public class Game implements Runnable {
 				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		
+		Sound sound = new Sound ("res/sfx/100-0.wav");
+		sound.play();
 
 	}
 
