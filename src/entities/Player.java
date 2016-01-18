@@ -176,6 +176,7 @@ public class Player extends Mob {
 	public void update() {
 		if (key.isEsc()) {
 			game.getState().setGameState(State.PAUSE, false);
+			key.setEsc(false);
 		}
 		world = game.getDisplay().getGamePanel().getWorld();
 		if (this.stamina < Player.SPRINT_COST) {
