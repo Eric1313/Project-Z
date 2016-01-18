@@ -20,7 +20,7 @@ public class GameState {
 	}
 
 	public enum State {
-		LOBBY, INGAME, PAUSE, FINISH
+		LOBBY, INGAME, PAUSE, FINISH, DEATH
 	}
 
 	private State gameState;
@@ -39,6 +39,9 @@ public class GameState {
 		case FINISH:
 			game.getDisplay().getFinish().update();
 			break;
+		case DEATH:
+			game.getDisplay().getDeath().update();
+			break;
 		}
 	}
 
@@ -55,6 +58,9 @@ public class GameState {
 			break;
 		case FINISH:
 			game.getDisplay().getFinish().render(g);
+			break;
+		case DEATH:
+			game.getDisplay().getDeath().render(g);
 			break;
 		}
 	}
@@ -79,6 +85,9 @@ public class GameState {
 		case FINISH:
 			game.getDisplay().getFinish().setup(game);
 			break;
+		case DEATH:
+			game.getDisplay().getDeath().setup(game);
+			break;
 		}
 	}
 
@@ -97,6 +106,9 @@ public class GameState {
 			break;
 		case FINISH:
 			game.getDisplay().getFinish().setup(game);
+			break;
+		case DEATH:
+			game.getDisplay().getDeath().setup(game);
 			break;
 		}
 	}
