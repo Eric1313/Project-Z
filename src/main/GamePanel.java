@@ -39,9 +39,9 @@ public class GamePanel extends Canvas {
 		int chunkY = Math.max(
 				(int) world.getPlayer().getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3,
-				map.getWidth() / 16 - 1); x++) {
+				map.getWidth() / 16 ); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
-					map.getHeight() / 16 - 1); y++) {
+					map.getHeight() / 16 ); y++) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					chunkMap[x][y].getZombies().get(i).update();
 				}
