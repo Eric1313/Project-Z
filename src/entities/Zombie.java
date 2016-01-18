@@ -221,7 +221,7 @@ public class Zombie extends Mob {
 				dropItem(item);
 			}
 			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
-			this.chunkMap[this.position.x / 512][this.position.y / 512].addCorpse(new Corpse(position, images, game, map, rotation));
+			this.chunkMap[this.position.x / 512][this.position.y / 512].add(new Corpse(position, images, game, map, rotation));
 		}
 		
 		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);

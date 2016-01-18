@@ -376,7 +376,11 @@ public class Player extends Mob {
 		if(line.x2>line.x1)
 		for (int i=0;i<1024;i++)
 		{
-			if((tiles[(this.position.x+i)/32][((int)(this.position.y+(i*slope)))/32] & (1 << 14)) != 0)
+			int tileX=(this.position.x+i)/32;
+			int tileY=((int)(this.position.y+(i*slope)))/32;
+			if(tileX>0||tileY<0||tileX>(tiles.length-1)||tileY>(tiles[0].length))
+				break;
+			if((tiles[tileX][tileY] & (1 << 14)) != 0)
 			{
 				maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));
 				break;
@@ -385,6 +389,10 @@ public class Player extends Mob {
 		else
 			for (int i=0;i>-1024;i--)
 			{
+				int tileX=(this.position.x+i)/32;
+				int tileY=((int)(this.position.y+(i*slope)))/32;
+				if(tileX>0||tileY<0||tileX>(tiles.length-1)||tileY>(tiles[0].length))
+					break;
 				if((tiles[(this.position.x+i)/32][((int)(this.position.y+(i*slope)))/32] & (1 << 14)) != 0)
 				{
 					maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));

@@ -9,5 +9,5 @@ package enums;
  * @version 1.0
  */
 public enum MapObjectType {
-	RUBBLE, DOOR, WALL, WALL_CORNER
+	RUBBLE, DOOR, CORPSE
 }
