@@ -6,13 +6,14 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import enums.MapObjectType;
 import main.Game;
 import map.Map;
 
-public class Corpse extends Mob {
+public class Corpse extends MapObject {
 	
 	public Corpse(Point position, BufferedImage[] images, Game game, Map map, double rotation){
-		super(32, 32, position, 0, 0, true, images, null, game, map);
+		super(32, 32, position, 0, 0, false, images, null, game, MapObjectType.CORPSE);
 		
 		this.rotation = rotation;
 	}
