@@ -90,10 +90,6 @@ public class HUD {
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
 		
-		if (player.getItem(player.getSelectedItem()) instanceof Firearm) {
-			// render bullets
-		}
-		
 		Point mouseLocation = player.getMouse().getMouseLocation();
 		
 		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {
