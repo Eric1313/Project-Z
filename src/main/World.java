@@ -22,6 +22,7 @@ import map.Map;
 import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
+import entities.Corpse;
 import entities.Entity;
 import entities.Player;
 import entities.Zombie;
@@ -204,11 +205,17 @@ public class World {
 		// draw Zombies
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 - 1); y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
+				
+				
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
+				}
+				for (int i = 0; i < chunkMap[x][y].getCorpses().size(); i++) {
+					Corpse corpse = chunkMap[x][y].getCorpses().get(i);
+					corpse.render(g);
 				}
 				// for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
 				// .iterator(); iterator.hasNext();) {
@@ -348,8 +355,8 @@ public class World {
 	public Item hoverItem() {
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 - 1); y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 ); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 ); y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
 						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();

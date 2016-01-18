@@ -54,8 +54,8 @@ public abstract class Mob extends Entity {
 	public void makeNoise(int range, boolean player) {
 		int chunkX = Math.max(position.x / 512,2);
 		int chunkY = Math.max(position.y / 512,2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16 - 1); x++) {
-			for (int y = chunkY - 2; y <Math.min( chunkY + 3,map.getHeight()/16 - 1); y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16); x++) {
+			for (int y = chunkY - 2; y <Math.min( chunkY + 3,map.getHeight()/16); y++) {
 				if(x<100&&y<100)
 				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
 						.hasNext();) {

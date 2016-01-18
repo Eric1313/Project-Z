@@ -55,6 +55,8 @@ public class Map {
 	public static int zombieCount;
 	private int doorDivider;
 	private Point playerStart;
+	private Point safehouseStart;
+	private Point safehouseEnd;
 
 	private ArrayList<Item> items;
 	private ArrayList<Item> itemSpawns;
@@ -124,9 +126,12 @@ public class Map {
 			if (i == startHouse)
 				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i),
 						true);
-			else if (i == endHouse)
+			else if (i == endHouse){
 				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i),
 						false);
+				safehouseStart = plazaStarts.get(i);
+				safehouseEnd = plazaEnds.get(i);
+			}
 			else
 				generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 		}
@@ -1230,6 +1235,20 @@ public class Map {
 	 */
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	/**
+	 * @return The starting point of the final safehouse
+	 */
+	public Point getSafehouseStart(){
+		return safehouseStart;
+	}
+	
+	/**
+	 * @return The ending point of the final safehouse
+	 */
+	public Point getSafehouseEnd(){
+		return safehouseEnd;
 	}
 
 	/**

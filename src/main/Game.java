@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
+
 import utilities.Assets;
 import utilities.GameCamera;
 import enums.GameState;
@@ -52,6 +54,8 @@ public class Game implements Runnable {
 	private boolean running = false;
 
 	private long tickCount;
+	private Font miniUiFont;
+	private Font tinyUiFont;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -67,6 +71,8 @@ public class Game implements Runnable {
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
 		uiBigFont = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
+		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
+		tinyUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
 		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
 				.getFont();
 		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
@@ -108,7 +114,7 @@ public class Game implements Runnable {
 							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
-					AudioClip[] sounds = new AudioClip[soundLinks.length];
+					Clip[] sounds = new Clip[soundLinks.length];
 
 					// TODO: Add AudioClips to the sounds array
 
@@ -189,6 +195,14 @@ public class Game implements Runnable {
 	}
 	public Font getUiBigFont() {
 		return uiBigFont;
+	}
+
+	public Font getMiniUiFont() {
+		return miniUiFont;
+	}
+
+	public Font getTinyUiFont() {
+		return tinyUiFont;
 	}
 
 	public Font getZombieFont() {

@@ -32,6 +32,8 @@ public class Zombie extends Mob {
 	private int imgNo;
 	private Player player;
 
+	public static int damage;
+
 	/**
 	 * Zombie constructor
 	 * 
@@ -54,14 +56,14 @@ public class Zombie extends Mob {
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
 		this.imgNo = imgNo;
-
+		Zombie.damage = 10;
 	}
 
 	/**
 	 * Updates zombie's position based on current path
 	 */
 	public void update() {
-		if(player==null)
+		if (player == null)
 			player = this.game.getDisplay().getGamePanel().getWorld().getPlayer();
 
 		// Reset movement
@@ -126,10 +128,10 @@ public class Zombie extends Mob {
 			else
 				this.rotation = Math.atan(dy / dx);
 		}
-		
+
 		if ((Math.pow(player.getPosition().x - this.position.x, 2)
 				+ Math.pow(player.getPosition().y - this.position.y, 2)) < 1000) {
-player.damage(1);
+			player.damage(Zombie.damage);
 			if (player.getPosition().y > this.position.y) {
 				this.up = true;
 				collideDown = true;
@@ -145,15 +147,15 @@ player.damage(1);
 				collideRight = true;
 			} else
 				collideRight = false;
-			if (player.getPosition().x< this.position.x) {
+			if (player.getPosition().x < this.position.x) {
 				this.right = true;
 				collideLeft = true;
 			} else
 				collideLeft = false;
 		}
 
-		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16 - 2); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16 - 1); y++) {
+		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16); y++) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
@@ -209,6 +211,20 @@ player.damage(1);
 			chunkY = this.position.y / 512;
 			chunkMap[chunkX][chunkY].addZombie(this);
 		}
+	}
+	
+	public void damage(int health) {
+		this.health -= health;
+		
+		if (this.health <= 0) {
+			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
+				dropItem(item);
+			}
+			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
+			this.chunkMap[this.position.x / 512][this.position.y / 512].addCorpse(new Corpse(position, images, game, map, rotation));
+		}
+		
+		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
 	}
 
 	/**
