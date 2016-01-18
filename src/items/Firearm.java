@@ -42,7 +42,7 @@ public class Firearm extends Item {
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
 		this.maxAmmo = maxAmmo;
-		this.currentAmmo = maxAmmo;
+		this.currentAmmo = (int) (Math.random() * maxAmmo);
 		this.noise = noise;
 		this.reloadTime = reloadTime;
 	}
@@ -53,7 +53,7 @@ public class Firearm extends Item {
 		this.ammoID = item.ammoID;
 		this.rateOfFire = item.rateOfFire;
 		this.maxAmmo = item.maxAmmo;
-		this.currentAmmo = maxAmmo;
+		this.currentAmmo = (int) (Math.random() * this.maxAmmo);
 		this.noise = item.noise;
 		this.reloadTime = item.reloadTime;
 
@@ -91,7 +91,7 @@ public class Firearm extends Item {
 							new Point((int) (player.getPosition().x + 16 + d * Math.cos(adjustedAngle)),
 									(int) (player.getPosition().y + 16 - d * Math.sin(adjustedAngle))));
 
-					player.projectileTracer(line, this.getEffectValue(),1000);
+					player.projectileTracer(line, this.getEffectValue(), 1000);
 
 					player.makeNoise(this.noise, true);
 				}
@@ -137,7 +137,7 @@ public class Firearm extends Item {
 			}
 		}
 	}
-	
+
 	public int getAmmoID() {
 		return this.ammoID;
 	}
