@@ -124,7 +124,8 @@ public class Player extends Mob {
 		double angle = Math.atan2(((position.getY()) + 16 - camera.getyOffset()) - mouse.getMouseLocation().getY(),
 				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
 
-		if (this.getItem(selectedItemNumber) != null) {
+		this.selectedItem = this.getItem(selectedItemNumber);
+		if (selectedItem != null) {
 			if (selectedItem instanceof Melee && this.swinging) {
 				long difference = this.game.getTickCount() - this.swingTick;
 				if (difference <= ((Melee) selectedItem).getSwingSpeed()) {
