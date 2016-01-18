@@ -122,18 +122,21 @@ public class Player extends Mob {
 				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
 
 		g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
+		if (this.getItem(selectedItemNumber) != null){
+			System.out.println(selectedItem);
 		if (selectedItem instanceof Firearm)
 			g2D.drawImage(selectedItem.getImages()[2], (int) (this.getPosition().x - camera.getxOffset()+10),
 					(int) (this.getPosition().y - camera.getyOffset()-10), null);
 		else
 			g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset()+10),
 					(int) (this.getPosition().y - camera.getyOffset()-10), null);
+		}
 		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
 				(int) (this.getPosition().y - camera.getyOffset()), null);
 
 		g2D.setTransform(originalTransform);
 
-		if (selectedItem != null && selectedItem instanceof Throwable) {
+		if (this.getItem(selectedItemNumber) != null && selectedItem instanceof Throwable) {
 			Throwable throwable = ((Throwable) selectedItem);
 			g2D.drawOval((int) (this.getPlayerCenter().x - throwable.getRange()),
 					(int) (this.getPlayerCenter().y - throwable.getRange()), 2 * throwable.getRange(),
