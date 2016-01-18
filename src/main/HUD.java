@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
@@ -71,36 +72,31 @@ public class HUD {
 		}
 
 		g.setColor(new Color(112, 112, 112));
-		g.drawRect(939, 19, 21, 101);
-		g.drawRect(979, 19, 21, 101);
+		g.drawRect(904, 19, 101, 21);
+		g.drawRect(904, 49, 101, 21);
 
 		g.setColor(Color.RED);
-		g.fillRect(940, 120 - player.getHealth(), 20, player.getHealth());
-
-		try {
-			Font f25font = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/VCR_OSD_MONO_1.001.ttf"))
-					.deriveFont(12f);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(f25font);
-			g.setFont(f25font);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		g.setColor(Color.WHITE);
-		for (int letter = 0; letter < "HEALTH".length(); letter++) {
-			g.drawString("HEALTH".substring(letter, letter + 1), 943, 32 + letter * 12);
-		}
-
+		g.fillRect(905, 20, player.getHealth(), 20);
+		
 		g.setColor(new Color(0, 200, 50));
-		g.fillRect(980, 120 - player.getStamina() / 3, 20, player.getStamina() / 3);
+		g.fillRect(905, 50, player.getStamina() / 3, 20);
+
+		g.setFont(player.getGame().getTinyUiFont());
 
 		g.setColor(Color.WHITE);
-		for (int letter = 0; letter < "STAMINA".length(); letter++) {
-			g.drawString("STAMINA".substring(letter, letter + 1), 983, 32 + letter * 12);
-		}
+		g.drawString("HEALTH", 908, 35);
+		g.drawString("STAMINA", 908, 65);
 
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
+		
+		Point mouseLocation = player.getMouse().getMouseLocation();
+		
+		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {
+			Item item = player.getItem((mouseLocation.x - 200) / 60);
+			if (item != null) {
+				item.renderTooltip(g, mouseLocation);
+			}
+		}
 	}
 }

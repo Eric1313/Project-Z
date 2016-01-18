@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
+
 import utilities.Assets;
 import utilities.GameCamera;
 import enums.GameState;
@@ -32,8 +34,10 @@ public class Game implements Runnable {
 	private BufferedImage[][] zombie;
 	private BufferedImage mainMenu;
 	private Font uiFont;
+	private Font uiBigFont;
 	private Font zombieFont;
 	private Font zombieFontBig;
+	private Font zombieFontHuge;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -50,6 +54,8 @@ public class Game implements Runnable {
 	private boolean running = false;
 
 	private long tickCount;
+	private Font miniUiFont;
+	private Font tinyUiFont;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -64,10 +70,15 @@ public class Game implements Runnable {
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
+		uiBigFont = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
+		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
+		tinyUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
 		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
 				.getFont();
 		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
 				.getFont();
+		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
+		.getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -103,7 +114,7 @@ public class Game implements Runnable {
 							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
-					AudioClip[] sounds = new AudioClip[soundLinks.length];
+					Clip[] sounds = new Clip[soundLinks.length];
 
 					// TODO: Add AudioClips to the sounds array
 
@@ -135,7 +146,8 @@ public class Game implements Runnable {
 								images, sounds, this, Integer
 										.parseInt(stats[6]), Integer
 										.parseInt(stats[7]), Integer
-										.parseInt(stats[8])));
+										.parseInt(stats[8]), Integer
+										.parseInt(stats[9])));
 						break;
 					case 3:
 						this.items
@@ -169,7 +181,7 @@ public class Game implements Runnable {
 		camera = new GameCamera(this, 0, 0);
 		// Sets the state of the game
 		state = new GameState(this);
-		state.setGameState(State.LOBBY);
+		state.setGameState(State.LOBBY, false);
 
 		// display.getFrame().createBufferStrategy(2);
 		display.getFrame().setIconImage(
@@ -182,6 +194,17 @@ public class Game implements Runnable {
 	public Font getUiFont() {
 		return uiFont;
 	}
+	public Font getUiBigFont() {
+		return uiBigFont;
+	}
+
+	public Font getMiniUiFont() {
+		return miniUiFont;
+	}
+
+	public Font getTinyUiFont() {
+		return tinyUiFont;
+	}
 
 	public Font getZombieFont() {
 		return zombieFont;
@@ -189,6 +212,10 @@ public class Game implements Runnable {
 
 	public Font getZombieFontBig() {
 		return zombieFontBig;
+	}
+	
+	public Font getZombieFontHuge() {
+		return zombieFontHuge;
 	}
 
 	public BufferedImage getMainMenu() {
@@ -286,7 +313,7 @@ public class Game implements Runnable {
 
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					System.out.println(frames + " fps");
+//					System.out.println(frames + " fps");
 					lastTime += 1000;
 					frames = 0;
 				}

@@ -93,7 +93,7 @@ public class World {
 		this.damageTicks = new ArrayList<Long>();
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g) {		
 		if (!initializeOffset) {
 			initializeOffsets();
 			initializeOffset = true;
@@ -105,6 +105,8 @@ public class World {
 				- Math.PI / 2;
 
 		Graphics2D g2D = (Graphics2D) g;
+		
+		g2D.setFont(this.game.getTinyUiFont());
 
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -205,8 +207,8 @@ public class World {
 		// draw Zombies
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 - 1); y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
 				
 				
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
@@ -280,7 +282,7 @@ public class World {
 		// g2D.fill(flashLight);
 		// g2D.setClip(null);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color(0f, 0f, 0f, .5f));
+		g2D.setColor(new Color(0f, 0f, 0f, .6f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		this.hoverItem = hoverItem();
@@ -355,8 +357,8 @@ public class World {
 	public Item hoverItem() {
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 - 1); y++) {
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 ); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 ); y++) {
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
 						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();

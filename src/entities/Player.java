@@ -27,6 +27,7 @@ import utilities.GameCamera;
 import utilities.KeyHandler;
 import utilities.MouseHandler;
 import enums.ItemState;
+import enums.GameState.State;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -49,14 +50,13 @@ public class Player extends Mob {
 	private boolean exhausted = false;
 	private int stamina;
 	private long lastDamageTick = -60;
+	private short[][] tiles;
 
 	private int selectedItemNumber = 0;
 	private Item selectedItem;
 	private int skinNo;
 
 	private long lastItemTick = -60;
-
-	private Arc2D arc = new Arc2D.Double();
 
 	public Player(boolean solid, Game game) {
 		super(solid, game);
@@ -84,6 +84,7 @@ public class Player extends Mob {
 		this.key = game.getDisplay().getKeyHandler();
 		this.world = game.getDisplay().getGamePanel().getWorld();
 		this.selectedItem = this.getItem(selectedItemNumber);
+
 	}
 
 	public int getStamina() {
@@ -143,6 +144,9 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		if (key.isEsc()){
+			game.getState().setGameState(State.PAUSE, false);
+		}
 		world = game.getDisplay().getGamePanel().getWorld();
 		if (this.stamina < Player.SPRINT_COST) {
 			this.exhausted = true;
@@ -341,8 +345,8 @@ public class Player extends Mob {
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16 - 1); y++) {
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16); y++) {
 				ArrayList<Zombie> zombies = chunkMap[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);
@@ -360,9 +364,41 @@ public class Player extends Mob {
 				}
 			}
 		}
-
+		
 		Zombie closestZombie = null;
-		double zombieDistance = 100 * 32;
+		double maxDistance = 100 * 32;
+		
+		if(tiles==null)
+		this.tiles=this.world.getMap().getMap();
+		
+		double slope= (line.y2-line.y1)/(line.x2-line.x1);
+
+		if(line.x2>line.x1)
+		for (int i=0;i<1024;i++)
+		{
+			int tileX=(this.position.x+i)/32;
+			int tileY=((int)(this.position.y+(i*slope)))/32;
+			if(tileX>0||tileY<0||tileX>(tiles.length-1)||tileY>(tiles[0].length))
+				break;
+			if((tiles[tileX][tileY] & (1 << 14)) != 0)
+			{
+				maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));
+				break;
+			}
+		}
+		else
+			for (int i=0;i>-1024;i--)
+			{
+				int tileX=(this.position.x+i)/32;
+				int tileY=((int)(this.position.y+(i*slope)))/32;
+				if(tileX>0||tileY<0||tileX>(tiles.length-1)||tileY>(tiles[0].length))
+					break;
+				if((tiles[(this.position.x+i)/32][((int)(this.position.y+(i*slope)))/32] & (1 << 14)) != 0)
+				{
+					maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));
+					break;
+				}
+			}
 
 		for (Iterator<Zombie> iterator = zombiesCollided.iterator(); iterator.hasNext();) {
 			Zombie zombie = iterator.next();
@@ -370,8 +406,8 @@ public class Player extends Mob {
 			double distance = Point.distance(this.position.x, this.position.y, zombie.getPosition().x,
 					zombie.getPosition().y);
 
-			if (distance < zombieDistance) {
-				zombieDistance = distance;
+			if (distance < maxDistance) {
+				maxDistance = distance;
 				closestZombie = zombie;
 			}
 		}
@@ -392,7 +428,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (entityDistance > zombieDistance) {
+		if (entityDistance > maxDistance) {
 			closestEntity = closestZombie;
 		}
 
@@ -404,13 +440,12 @@ public class Player extends Mob {
 	}
 
 	public int meleeCollision(Arc2D arc, int damage) {
-		this.arc = arc;
 		int noOfEnemies = 0;
 
 		int chunkX = Math.max(this.position.x / 512, 1);
 		int chunkY = Math.max(this.position.y / 512, 1);
-		for (int x = chunkX - 1; x < Math.min(chunkX + 2, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 1; y < Math.min(chunkY + 2, map.getWidth() / 16 - 1); y++) {
+		for (int x = chunkX - 1; x < Math.min(chunkX + 2, map.getWidth() / 16 ); x++) {
+			for (int y = chunkY - 1; y < Math.min(chunkY + 2, map.getWidth() / 16 ); y++) {
 				ArrayList<Zombie> zombies = chunkMap[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);
@@ -453,5 +488,9 @@ public class Player extends Mob {
 	 */
 	public void setLastItemTick(long lastItemTick) {
 		this.lastItemTick = lastItemTick;
+	}
+
+	public MouseHandler getMouse() {
+		return mouse;
 	}
 }

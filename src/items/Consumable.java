@@ -1,8 +1,12 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import javax.sound.sampled.Clip;
 
 import main.Game;
 import entities.Inventory;
@@ -23,7 +27,7 @@ public class Consumable extends Item {
 	private int durability;
 
 	public Consumable(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			ItemState state, BufferedImage[] images, Clip[] clips,
 			Game game, ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
@@ -37,8 +41,7 @@ public class Consumable extends Item {
 		switch (this.getEffect()) {
 		case HEAL:
 			if (player.getHealth() < 100) {
-				player.setHealth(Math.min(100,
-						player.getHealth() + this.getEffectValue()));
+				player.setHealth(Math.min(100, player.getHealth() + this.getEffectValue()));
 				this.removeDurability();
 				if (this.getDurability() <= 0) {
 					player.removeItem(player.getSelectedItem());
@@ -46,24 +49,24 @@ public class Consumable extends Item {
 			}
 			break;
 		case AMMO:
-//			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
-//				Item currentItem = player.getItem(itemNo);
-//				if (currentItem instanceof Firearm) {
-//					Firearm firearm = (Firearm) currentItem;
-//
-//					if (firearm.getAmmoID() == this.getItemID()
-//							&& !firearm.isFull()) {
-//						if (this.getDurability() > 0) {
-//							firearm.setCurrentAmmo(firearm.getMaxAmmo());
-//							this.removeDurability();
-//						}
-//
-//						if (this.getDurability() <= 0) {
-//							player.removeItem(player.getSelectedItem());
-//						}
-//					}
-//				}
-//			}
+			// for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
+			// Item currentItem = player.getItem(itemNo);
+			// if (currentItem instanceof Firearm) {
+			// Firearm firearm = (Firearm) currentItem;
+			//
+			// if (firearm.getAmmoID() == this.getItemID()
+			// && !firearm.isFull()) {
+			// if (this.getDurability() > 0) {
+			// firearm.setCurrentAmmo(firearm.getMaxAmmo());
+			// this.removeDurability();
+			// }
+			//
+			// if (this.getDurability() <= 0) {
+			// player.removeItem(player.getSelectedItem());
+			// }
+			// }
+			// }
+			// }
 			break;
 		default:
 			break;
@@ -103,5 +106,45 @@ public class Consumable extends Item {
 
 	public void removeDurability() {
 		this.durability--;
+	}
+
+	@Override
+	public void renderTooltip(Graphics g, Point mouseLocation) {
+		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
+		g.fillRect(mouseLocation.x, mouseLocation.y - 150, 300, 150);
+		
+		g.setColor(new Color(0, 0, 0, 200));
+		g.setFont(this.game.getUiFont());
+		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 100);
+
+		g.setFont(this.game.getTinyUiFont());
+		switch (this.rarity) {
+		case 5:
+			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 80);
+			break;
+		case 4:
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 80);
+			break;
+		case 3:
+			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			break;
+		case 2:
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			break;
+		case 1:
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			break;
+		}
+		
+		g.setFont(this.game.getMiniUiFont());
+		switch (this.effect) {
+		case HEAL:
+			g.drawString("Heals " + this.effectValue + " health", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Can be used " + this.durability + " time(s)", mouseLocation.x + 20, mouseLocation.y - 30);
+			break;
+		case AMMO:
+			g.drawString("Reloads " + this.durability + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
+			break;
+		}
 	}
 }

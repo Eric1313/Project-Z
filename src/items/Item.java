@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import main.Game;
 import entities.Player;
 import enums.ItemState;
@@ -51,17 +53,15 @@ public abstract class Item {
 	protected boolean hover = true;
 
 	protected BufferedImage[] images;
-	protected AudioClip[] clips;
+	protected Clip[] clips;
 
 	protected Game game;
-	
-	
-	public abstract void use(Player player);
 
+	public abstract void use(Player player);
 
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			AudioClip[] clips, Game game) {
+			Clip[] clips, Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;
@@ -73,7 +73,7 @@ public abstract class Item {
 		this.clips = clips;
 
 		this.game = game;
-		this.inHand=false;
+		this.inHand = false;
 	}
 
 	public Item(Item item) {
@@ -179,28 +179,25 @@ public abstract class Item {
 		this.images = images;
 	}
 
-	public AudioClip[] getClips() {
+	public Clip[] getClips() {
 		return clips;
 	}
 
-	public void setClips(AudioClip[] clips) {
+	public void setClips(Clip[] clips) {
 		this.clips = clips;
 	}
 
 	public Game getGame() {
 		return this.game;
 	}
-	
 
 	public boolean isInHand() {
 		return inHand;
 	}
 
-
 	public void setInHand(boolean inHand) {
 		this.inHand = inHand;
 	}
-
 
 	public void render(Graphics g) {
 		if (this.state == ItemState.DROPPED) {
@@ -213,7 +210,9 @@ public abstract class Item {
 			}
 		} else if (this.state == ItemState.IN_HAND) {
 			g.drawImage(this.getImages()[2], 0, 0, null);
-	
+
 		}
 	}
+
+	public abstract void renderTooltip(Graphics g, Point mouseLocation);
 }

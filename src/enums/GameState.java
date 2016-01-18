@@ -20,7 +20,7 @@ public class GameState {
 	}
 
 	public enum State {
-		LOBBY, INGAME
+		LOBBY, INGAME, PAUSE
 	}
 
 	private State gameState;
@@ -33,6 +33,9 @@ public class GameState {
 		case INGAME:
 			game.getDisplay().getGamePanel().update();
 			break;
+		case PAUSE:
+			game.getDisplay().getPause().update();
+			break;
 		}
 	}
 
@@ -44,6 +47,9 @@ public class GameState {
 		case INGAME:
 			game.getDisplay().getGamePanel().render(g);
 			break;
+		case PAUSE:
+			game.getDisplay().getPause().render(g);
+			break;
 		}
 	}
 
@@ -51,14 +57,18 @@ public class GameState {
 		return gameState;
 	}
 
-	public void setGameState(State gameState) {
+	public void setGameState(State gameState, boolean pause) {
 		this.gameState = gameState;
 		switch (gameState) {
 		case LOBBY:
 			game.getDisplay().getMain().setup(game);
 			break;
 		case INGAME:
-			game.getDisplay().getGamePanel().setup(game);
+			if (!pause)
+				game.getDisplay().getGamePanel().setup(game);
+			break;
+		case PAUSE:
+			game.getDisplay().getPause().setup(game);
 			break;
 		}
 	}
