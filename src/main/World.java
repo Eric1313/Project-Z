@@ -2,7 +2,9 @@ package main;
 
 import items.Item;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -322,6 +324,14 @@ public class World {
 				this.damage.remove(entity);
 				this.damageTicks.remove(entity);
 			}
+		}
+		
+		if (player.getHealth() >= 0){
+			Composite original = g2D.getComposite();
+			float transparency = (float) ((100.0-player.getHealth())/100);
+			g2D.setComposite(AlphaComposite.SrcOver.derive(transparency)); 
+			g.drawImage(game.getBloodVisual(), 0, 0, null);
+			g2D.setComposite(original);
 		}
 	}
 
