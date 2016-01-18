@@ -410,38 +410,17 @@ public class Player extends Mob {
 			for (int i = 0; i < 1024; i++) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
-<<<<<<< HEAD
-				if (tileX > 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length)) {
-
-				}
-				if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
-					maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
-					break;
-				}
-=======
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
 						maxDistance = (Math.sqrt(Math.pow(i, 2)
 								+ Math.pow((i * slope), 2)));
 						break;
 					}
-
->>>>>>> 0e04dc6a75485db343f71191d723b46d66fe887a
 			}
 		else
 			for (int i = 0; i > -1024; i--) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
-<<<<<<< HEAD
-				if (tileX > 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length)) {
-				}
-				if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
-
-						& (1 << 14)) != 0) {
-					maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
-					break;
-				}
-=======
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
 
@@ -450,8 +429,6 @@ public class Player extends Mob {
 								+ Math.pow((i * slope), 2)));
 						break;
 					}
-
->>>>>>> 0e04dc6a75485db343f71191d723b46d66fe887a
 			}
 
 		for (Iterator<Zombie> iterator = zombiesCollided.iterator(); iterator.hasNext();) {
