@@ -79,8 +79,6 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 		addItem(new Melee((Melee) this.game.getItems().get(4)));
 		addItem(new Firearm((Firearm) this.game.getItems().get(5)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(6)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(7)));
 		this.mouse = game.getDisplay().getMouseHandler();
 		this.camera = game.getCamera();
 		this.key = game.getDisplay().getKeyHandler();
