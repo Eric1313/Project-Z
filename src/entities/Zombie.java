@@ -158,9 +158,9 @@ public class Zombie extends Mob {
 
 		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16); x++) {
 			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16); y++) {
-				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
-					if (1 < chunkMap[x][y].getZombies().size()) {
-						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
+				for (int i = 0; i < getChunkMap()[x][y].getZombies().size(); i++) {
+					if (1 < getChunkMap()[x][y].getZombies().size()) {
+						Zombie checkZombie = getChunkMap()[x][y].getZombies().get(i);
 						if ((Math.pow(checkZombie.getPosition().x - this.position.x, 2)
 								+ Math.pow(checkZombie.getPosition().y - this.position.y, 2)) < 1100) {
 
@@ -208,11 +208,11 @@ public class Zombie extends Mob {
 			makeNoise(100, false);
 		}
 		if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
-			chunkMap[chunkX][chunkY].removeZombie(this);
+			getChunkMap()[chunkX][chunkY].removeZombie(this);
 			chunkX = this.position.x / 512;
 			chunkY = this.position.y / 512;
-			if(!(chunkX>chunkMap.length-1||chunkY>chunkMap[0].length-1||chunkX<0||chunkY<0))
-			chunkMap[chunkX][chunkY].addZombie(this);
+			if(!(chunkX>getChunkMap().length-2||chunkY>getChunkMap()[0].length-2||chunkX<0||chunkY<0))
+			getChunkMap()[chunkX][chunkY].addZombie(this);
 		}
 	}
 	
@@ -223,8 +223,8 @@ public class Zombie extends Mob {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 				dropItem(item);
 			}
-			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
-			this.chunkMap[this.position.x / 512][this.position.y / 512].add(new Corpse(position, images, game, map, rotation));
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512].add(new Corpse(position, images, game, map, rotation));
 		}
 		
 		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);

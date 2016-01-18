@@ -40,24 +40,6 @@ public class PathFinder {
 			return oldPath;
 
 		} else {
-////		if (!oldPath.isEmpty()) {
-////		currentChunk = chunkMap[oldPath.peek().locationX / 16][oldPath
-////				.peek().locationY / 16];
-////		if (currentChunk.getZombies().size() > 5)
-////			for (Iterator<Zombie> iterator = currentChunk.getZombies()
-////					.iterator(); iterator.hasNext();) {
-////				Zombie zombie = iterator.next();
-////				Stack<Node> checkPath = zombie.getPath();
-////				if (!checkPath.isEmpty()&& (Math.abs(checkPath.peek().locationX
-////						- targetX) > 2)
-////				&& (Math.abs(checkPath.peek().locationY
-////						- targetY) > 2)
-////						&& checkPath.get(0).locationX == targetX
-////						&& checkPath.get(0).locationY == targetY
-////						)
-////					return (checkPath);
-////			}
-////	}
 			this.path = new Stack<Node>();
 			openList.clear();
 			closedList.clear();
