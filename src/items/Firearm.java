@@ -62,7 +62,7 @@ public class Firearm extends Item {
 			if (currentTick - player.getLastItemTick() > this.getRateOfFire()) {
 				player.setLastItemTick(currentTick);
 
-				int d = 32 * 16;
+				int d = 32 * 64;
 
 				Line2D.Double line = new Line2D.Double(new Point(
 						player.getPosition().x + 16,
