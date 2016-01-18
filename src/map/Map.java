@@ -41,7 +41,7 @@ public class Map {
 	final int ROAD_WIDTH = 11;
 
 	final int MAX_ZOMBIE_PER_ROOM = 2;
-	final int MAX_ZOMBIE_PER_FOREST = 2;
+	final int MAX_ZOMBIE_PER_FOREST = 10;
 	final int MAX_ITEM_PER_ROOM = 1;
 	final int MAX_ITEM_PER_FOREST = 5;
 	// STores locations of all plazas
@@ -754,13 +754,13 @@ public class Map {
 			}
 		}
 
-		for (int z = 0; z < MAX_ZOMBIE_PER_ROOM; z++) {
+		for (int z = 0; z < MAX_ZOMBIE_PER_FOREST; z++) {
 			int randomX = (int) (Math.random() * boxWidth + start.getX());
 			int randomY = (int) (Math.random() * boxHeight + start.getY());
 
 			if (Math.random() > 0.10
 					&& (tileMap[randomX][randomY] & 0xFFF) == 108
-					|| (tileMap[randomX][randomY] & 0xFFF) >= 110) {
+					|| ((tileMap[randomX][randomY] & 0xFFF) >= 110 && (tileMap[randomX][randomY] & 0xFFF) < 200)) {
 				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
 						new Point(randomX * 32, randomY * 32), 100, game
 								.getZombie()[0], null, this.game, this,
@@ -1168,7 +1168,7 @@ public class Map {
 				else if (i == size)
 					setTile(tempx, tempy, 120, Direction.RIGHT, false);
 				else
-					setTile(tempx, tempy, 121, Direction.DOWN, false);
+					setTile(tempx, tempy, 120, Direction.DOWN, false);
 				tempy++;
 			}
 		}

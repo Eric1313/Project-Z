@@ -63,6 +63,8 @@ public class Player extends Mob {
 	private double swingAngle;
 	private double swingAngleRange;
 
+	private boolean shoot;
+
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -75,15 +77,8 @@ public class Player extends Mob {
 		this.skinNo = skinNo;
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
-		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(1)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(2)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(3)));
 		addItem(new Melee((Melee) this.game.getItems().get(4)));
 		addItem(new Firearm((Firearm) this.game.getItems().get(5)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(6)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(7)));
-		addItem(new Throwable((Throwable) this.game.getItems().get(8)));
 		this.mouse = game.getDisplay().getMouseHandler();
 		this.camera = game.getCamera();
 		this.key = game.getDisplay().getKeyHandler();
@@ -133,7 +128,8 @@ public class Player extends Mob {
 						- mouse.getMouseLocation().getX())
 				- Math.PI / 2;
 
-		if (this.getItem(selectedItemNumber) != null) {
+		this.selectedItem = this.getItem(selectedItemNumber);
+		if (selectedItem != null) {
 			if (selectedItem instanceof Melee && this.swinging) {
 				long difference = this.game.getTickCount() - this.swingTick;
 				if (difference <= ((Melee) selectedItem).getSwingSpeed()) {
@@ -168,18 +164,30 @@ public class Player extends Mob {
 						position.getY() - camera.getyOffset() + 16);
 				if (selectedItem instanceof Firearm) {
 					g2D.drawImage(
-							selectedItem.getImages()[2],
+							this.getItem(selectedItemNumber).getImages()[2],
 							(int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10),
 							null);
+					if (this.shoot) {
+						g2D.setColor(new Color(255, 255, 0));
+						g2D.fillOval(
+								(int) (this.getPosition().x
+										- camera.getxOffset() + 25),
+								(int) (this.getPosition().y
+										- camera.getyOffset() - 18), 6, 12);
+						this.shoot = false;
+					}
 				} else {
 					g2D.drawImage(
-							selectedItem.getImages()[0],
+							this.getItem(selectedItemNumber).getImages()[0],
 							(int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10),
 							null);
 				}
 			}
+		} else {
+			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
+					position.getY() - camera.getyOffset() + 16);
 		}
 
 		g2D.drawImage(this.getImages()[skinNo],
@@ -203,6 +211,7 @@ public class Player extends Mob {
 	public void update() {
 		if (key.isEsc()) {
 			game.getState().setGameState(State.PAUSE, false);
+			key.setEsc(false);
 		}
 		world = game.getDisplay().getGamePanel().getWorld();
 		if (this.stamina < Player.SPRINT_COST) {
@@ -419,8 +428,6 @@ public class Player extends Mob {
 	}
 
 	public Point calculatePointOfImpact(Line2D.Double line) {
-		
-	
 
 		if (tiles == null)
 			this.tiles = this.world.getMap().getMap();
@@ -433,7 +440,8 @@ public class Player extends Mob {
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
-						return new Point((this.position.x + i),((int) (this.position.y + (i * slope))));
+						return new Point((this.position.x + i),
+								((int) (this.position.y + (i * slope))));
 					}
 			}
 		else
@@ -444,10 +452,11 @@ public class Player extends Mob {
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
 
 					& (1 << 14)) != 0) {
-						return new Point((this.position.x + i),((int) (this.position.y + (i * slope))));
+						return new Point((this.position.x + i),
+								((int) (this.position.y + (i * slope))));
 					}
 			}
-		return new Point((int)line.x2,(int)line.y2);
+		return new Point((int) line.x2, (int) line.y2);
 	}
 
 	public Entity projectileTracer(Line2D.Double line, int damage, int range) {
@@ -468,7 +477,8 @@ public class Player extends Mob {
 					}
 				}
 
-				ArrayList<Entity> entities = getChunkMap()[x][y].getSolidEntities();
+				ArrayList<Entity> entities = getChunkMap()[x][y]
+						.getSolidEntities();
 				for (int entity = 0; entity < entities.size(); entity++) {
 					Entity currentEntity = entities.get(entity);
 					if (line.intersects(currentEntity.getPosition().x,
@@ -571,7 +581,8 @@ public class Player extends Mob {
 					}
 				}
 
-				ArrayList<Entity> entities = getChunkMap()[x][y].getSolidEntities();
+				ArrayList<Entity> entities = getChunkMap()[x][y]
+						.getSolidEntities();
 				for (int entity = 0; entity < entities.size(); entity++) {
 					Entity currentEntity = entities.get(entity);
 					if (arc.intersects(currentEntity.getPosition().x,
@@ -617,5 +628,9 @@ public class Player extends Mob {
 		this.swingTick = tick;
 		this.swingAngle = angle;
 		this.swingAngleRange = angleRange;
+	}
+
+	public void shoot() {
+		this.shoot = true;
 	}
 }

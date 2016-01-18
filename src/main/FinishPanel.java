@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
+import entities.Zombie;
 import enums.GameState.State;
 
 public class FinishPanel extends Canvas {
@@ -64,6 +65,7 @@ public class FinishPanel extends Canvas {
 				game.getDisplay().getMouseHandler().setClick(false);
 				game.getState().setGameState(State.INGAME, false,
 						400 + 160 * level);
+				Zombie.damage = (level + 1) * 5;
 			}
 		} else {
 			hoverNext = false;
@@ -87,6 +89,7 @@ public class FinishPanel extends Canvas {
 		} else {
 			hoverExit = false;
 		}
+		game.getDisplay().getMouseHandler().setClick(false);
 		// game.getDisplay().getGamePanel().getWorld();
 		// game.getDisplay().getGamePanel().getWorld().getNoOfZombie();
 	}

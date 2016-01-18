@@ -31,8 +31,8 @@ public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
 	private int imgNo;
 	private Player player;
-
-	public static int damage;
+	
+	public static int damage = 5;
 
 	/**
 	 * Zombie constructor
@@ -56,7 +56,6 @@ public class Zombie extends Mob {
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
 		this.imgNo = imgNo;
-		Zombie.damage = 10;
 	}
 
 	/**
@@ -266,6 +265,5 @@ public class Zombie extends Mob {
 					(int) (42 * (this.health / 100.0)), 5);
 			g2D.setColor(Color.BLACK);
 		}
-
 	}
 }
