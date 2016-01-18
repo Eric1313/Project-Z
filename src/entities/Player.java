@@ -27,6 +27,7 @@ import utilities.GameCamera;
 import utilities.KeyHandler;
 import utilities.MouseHandler;
 import enums.ItemState;
+import enums.GameState.State;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -143,6 +144,9 @@ public class Player extends Mob {
 	// TODO Getters & setters VS protected?
 	// Reorganize code; looks messy
 	public void update() {
+		if (key.isEsc()){
+			game.getState().setGameState(State.PAUSE, false);
+		}
 		world = game.getDisplay().getGamePanel().getWorld();
 		if (this.stamina < Player.SPRINT_COST) {
 			this.exhausted = true;

@@ -34,8 +34,10 @@ public class Game implements Runnable {
 	private BufferedImage[][] zombie;
 	private BufferedImage mainMenu;
 	private Font uiFont;
+	private Font uiBigFont;
 	private Font zombieFont;
 	private Font zombieFontBig;
+	private Font zombieFontHuge;
 	private ArrayList<Item> items;
 
 	private Display display;
@@ -68,12 +70,15 @@ public class Game implements Runnable {
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
+		uiBigFont = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
 		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
 		tinyUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
 		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
 				.getFont();
 		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
 				.getFont();
+		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
+		.getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -141,7 +146,8 @@ public class Game implements Runnable {
 								images, sounds, this, Integer
 										.parseInt(stats[6]), Integer
 										.parseInt(stats[7]), Integer
-										.parseInt(stats[8])));
+										.parseInt(stats[8]), Integer
+										.parseInt(stats[9])));
 						break;
 					case 3:
 						this.items
@@ -175,7 +181,7 @@ public class Game implements Runnable {
 		camera = new GameCamera(this, 0, 0);
 		// Sets the state of the game
 		state = new GameState(this);
-		state.setGameState(State.LOBBY);
+		state.setGameState(State.LOBBY, false);
 
 		// display.getFrame().createBufferStrategy(2);
 		display.getFrame().setIconImage(
@@ -187,6 +193,9 @@ public class Game implements Runnable {
 
 	public Font getUiFont() {
 		return uiFont;
+	}
+	public Font getUiBigFont() {
+		return uiBigFont;
 	}
 
 	public Font getMiniUiFont() {
@@ -203,6 +212,10 @@ public class Game implements Runnable {
 
 	public Font getZombieFontBig() {
 		return zombieFontBig;
+	}
+	
+	public Font getZombieFontHuge() {
+		return zombieFontHuge;
 	}
 
 	public BufferedImage getMainMenu() {
