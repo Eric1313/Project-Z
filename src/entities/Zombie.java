@@ -209,6 +209,7 @@ public class Zombie extends Mob {
 			chunkMap[chunkX][chunkY].removeZombie(this);
 			chunkX = this.position.x / 512;
 			chunkY = this.position.y / 512;
+			if(!(chunkX>chunkMap.length-1||chunkY>chunkMap[0].length-1||chunkX<0||chunkY<0))
 			chunkMap[chunkX][chunkY].addZombie(this);
 		}
 	}

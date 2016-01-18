@@ -55,7 +55,7 @@ public class Consumable extends Item {
 						player.setHealth(Math.min(100, player.getHealth() + consumable.getEffectValue()));
 						consumable.removeDurability();
 						if (consumable.getDurability() <= 0) {
-							player.removeItem(player.getSelectedItem());
+							player.removeItem(consumable);
 						}
 					}
 				});
