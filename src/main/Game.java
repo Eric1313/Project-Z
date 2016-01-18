@@ -149,7 +149,8 @@ public class Game implements Runnable {
 										.parseInt(stats[6]), Integer
 										.parseInt(stats[7]), Integer
 										.parseInt(stats[8]), Integer
-										.parseInt(stats[9])));
+										.parseInt(stats[9]), Integer
+										.parseInt(stats[10])));
 						break;
 					case 2:
 						this.items.add(new Firearm(Integer.parseInt(stats[0]),

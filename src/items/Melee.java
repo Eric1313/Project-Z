@@ -28,15 +28,27 @@ public class Melee extends Item {
 	private int rechargeTime;
 	private int radius;
 	private int angle;
+	private int durability;
 
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Sound[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
+			Sound[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
 		this.rechargeTime = rechargeTime;
 		this.radius = radius;
 		this.angle = angle;
+		this.durability = durability;
+	}
+
+	public Melee(Melee item) {
+		super(item);
+
+		this.swingSpeed = item.swingSpeed;
+		this.rechargeTime = item.rechargeTime;
+		this.radius = item.radius;
+		this.angle = item.angle;
+		this.durability = item.durability;
 	}
 
 	@Override
@@ -70,19 +82,14 @@ public class Melee extends Item {
 				clips[0].play();
 				player.makeNoise(100, true);
 			} else {
+				this.durability -= enemiesHit;
 				clips[0].play();
 				player.makeNoise(200, true);
+				if (this.durability <= 0) {
+					player.removeItem(this);
+				}
 			}
 		}
-	}
-
-	public Melee(Melee item) {
-		super(item);
-
-		this.swingSpeed = item.swingSpeed;
-		this.rechargeTime = item.rechargeTime;
-		this.radius = item.radius;
-		this.angle = item.angle;
 	}
 
 	public int getSwingSpeed() {
@@ -159,5 +166,9 @@ public class Melee extends Item {
 		} else {
 			g.drawString("Very fast recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
 		}
+	}
+
+	public int getDurability() {
+		return this.durability;
 	}
 }

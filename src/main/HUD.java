@@ -16,6 +16,7 @@ import entities.Player;
 import items.Consumable;
 import items.Firearm;
 import items.Item;
+import items.Melee;
 
 public class HUD {
 	private Player player;
@@ -36,16 +37,20 @@ public class HUD {
 
 			if (currentItem != null) {
 				g.drawImage(currentItem.getImages()[0], 200 + item * 60 + 14, 664, null, null);
-				
+
 				FontMetrics fm = g.getFontMetrics();
-				
+
 				if (currentItem instanceof Consumable) {
 					String amount = ((Consumable) currentItem).getDurability() + "";
-					
+
 					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
 				} else if (currentItem instanceof Firearm) {
 					String amount = ((Firearm) currentItem).getCurrentAmmo() + "";
-					
+
+					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+				} else if (currentItem instanceof Melee) {
+					String amount = ((Melee) currentItem).getDurability() + "";
+
 					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
 				}
 			}
@@ -77,7 +82,7 @@ public class HUD {
 
 		g.setColor(Color.RED);
 		g.fillRect(905, 20, player.getHealth(), 20);
-		
+
 		g.setColor(new Color(0, 200, 50));
 		g.fillRect(905, 50, player.getStamina() / 3, 20);
 
@@ -90,9 +95,9 @@ public class HUD {
 
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
-		
+
 		Point mouseLocation = player.getMouse().getMouseLocation();
-		
+
 		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {
 			Item item = player.getItem((mouseLocation.x - 200) / 60);
 			if (item != null) {
