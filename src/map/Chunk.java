@@ -14,14 +14,12 @@ public class Chunk {
 	private ArrayList<Entity> passibleEntities;
 	private ArrayList<Item> items;
 	private ArrayList<Zombie>zombies;
-	private ArrayList<Corpse>corpses;
 
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
 		this.passibleEntities = new ArrayList<Entity>();
 		this.zombies= new ArrayList<Zombie>();
 		this.items = new ArrayList<Item>();
-		this.corpses = new ArrayList<Corpse>();
 	}
 
 	/**
@@ -103,11 +101,4 @@ public class Chunk {
 		return zombie;
 	}
 	
-	public void addCorpse(Corpse corpse){
-		corpses.add(corpse);
-	}
-	
-	public ArrayList<Corpse> getCorpses(){
-		return corpses;
-	}
 }

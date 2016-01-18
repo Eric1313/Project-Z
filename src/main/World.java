@@ -215,9 +215,13 @@ public class World {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
 				}
-				for (int i = 0; i < chunkMap[x][y].getCorpses().size(); i++) {
-					Corpse corpse = chunkMap[x][y].getCorpses().get(i);
-					corpse.render(g);
+				for (int i = 0; i < chunkMap[x][y].getPassibleEntities().size(); i++) {
+					Entity entity = chunkMap[x][y].getPassibleEntities().get(i);
+					entity.render(g);
+				}
+				for (int i = 0; i < chunkMap[x][y].getSolidEntities().size(); i++) {
+					Entity entity = chunkMap[x][y].getSolidEntities().get(i);
+					entity.render(g);
 				}
 				// for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
 				// .iterator(); iterator.hasNext();) {
