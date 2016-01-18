@@ -94,7 +94,7 @@ public class Map {
 		itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
-			int chance = (int) Math.pow(currentItem.getRarity(), 2);
+			int chance = (int) Math.pow(2, currentItem.getRarity());
 			for (int rarity = 0; rarity < chance; rarity++) {
 				itemSpawns.add(currentItem);
 			}
