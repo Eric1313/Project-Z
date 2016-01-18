@@ -115,6 +115,9 @@ public class Player extends Mob {
 			super.damage(health);
 			this.lastDamageTick = currentTick;
 		}
+		if (this.getHealth() <= 0){
+			//DIE
+		}
 	}
 
 	@Override

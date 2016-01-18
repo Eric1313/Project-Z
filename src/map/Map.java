@@ -85,7 +85,7 @@ public class Map {
 		this.tileMap = new short[width][height];
 		this.upperTileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
-		safeHouseDisatnce=(height+width)/8;
+		safeHouseDisatnce = (height + width) / 8;
 
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
@@ -93,7 +93,7 @@ public class Map {
 
 		plazaStarts = new ArrayList<Point>();
 		plazaEnds = new ArrayList<Point>();
-		
+
 		itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
@@ -102,7 +102,6 @@ public class Map {
 				itemSpawns.add(currentItem);
 			}
 		}
-
 
 		// Generate main road
 		int mainRoadX = (int) ((width / 4) + Math.random() * (width / 2));
@@ -115,15 +114,18 @@ public class Map {
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE + 1) / 2, 0),
 				new Point(height - 1, width - 1));
 
-		int startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
+		int startHouse = (int) Math
+				.floor((Math.random() * (plazaStarts.size() - 1)));
 		int endHouse;
 		int count = 0;
 
 		do {
-			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
+			endHouse = (int) Math
+					.ceil(Math.random() * (plazaStarts.size() - 1));
 			count++;
-			if (count >= 10){
-				startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
+			if (count >= 10) {
+				startHouse = (int) Math.floor((Math.random() * (plazaStarts
+						.size() - 1)));
 				count = 0;
 			}
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
@@ -135,13 +137,12 @@ public class Map {
 			if (i == startHouse)
 				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i),
 						true);
-			else if (i == endHouse){
+			else if (i == endHouse) {
 				generateSafehousePlaza(plazaStarts.get(i), plazaEnds.get(i),
 						false);
 				safehouseStart = plazaStarts.get(i);
 				safehouseEnd = plazaEnds.get(i);
-			}
-			else
+			} else
 				generatePlaza(plazaStarts.get(i), plazaEnds.get(i));
 		}
 
@@ -418,7 +419,8 @@ public class Map {
 		// Generates the safehouse
 		generateSafeBuilding(new Point((int) start.getX() + boxWidth / 3,
 				(int) start.getY() + boxHeight / 3), new Point((int) end.getX()
-				- boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP, isStart);
+				- boxWidth / 3, (int) end.getY() - boxHeight / 3),
+				Direction.UP, isStart);
 
 		int playerX;
 		int playerY;
@@ -432,8 +434,8 @@ public class Map {
 
 			playerX = (int) (Math.random() * xRange + startX);
 			playerY = (int) (Math.random() * yRange + startY);
-//			System.out.println(start.getX() + " " + start.getY() + " : "
-//					+ playerX + " " + playerY);
+			// System.out.println(start.getX() + " " + start.getY() + " : "
+			// + playerX + " " + playerY);
 		} while ((tileMap[playerX][playerY] & 0xFFF) != 201);
 
 		if (isStart)
@@ -462,11 +464,10 @@ public class Map {
 						|| j == end.getY()) {
 					setTile(i, j, 200, Direction.UP, false);
 					if (Math.random() > 0.99) {
-						chunkMap[i / 16][j / 16]
-								.addZombie(new Zombie(
-										new Point(i * 32, j * 32), 100, game
-												.getZombie()[0], null,
-										this.game, this, (int)Math.floor((Math.random()*5))));
+						chunkMap[i / 16][j / 16].addZombie(new Zombie(
+								new Point(i * 32, j * 32), 100, game
+										.getZombie()[0], null, this.game, this,
+								(int) Math.floor((Math.random() * 5))));
 						zombieCount++;
 					}
 				}
@@ -505,38 +506,42 @@ public class Map {
 
 		generateRooms(
 				new Point((int) start.getX() + 2, (int) start.getY() + 2),
-				new Point((int) end.getX() - 2, (int) end.getY() - 2),false);
-		
-		int doorLocation;
-		
-		
-		if (direction == Direction.UP || direction == Direction.DOWN) {
-			setTile((int) start.getX() + 4,
-					(int) start.getY() + 1, 207, Direction.UP, false);
-			setTile((int) start.getX() + 5,
-					(int) start.getY() + 1, 207, Direction.UP, false);
+				new Point((int) end.getX() - 2, (int) end.getY() - 2), false);
 
-			setTile((int) end.getX() - 4,
-					(int) end.getY() - 1, 207, Direction.UP, false);
-			setTile((int) end.getX()- 5,
-					(int) end.getY() - 1, 207, Direction.UP, false);
+		int doorLocation;
+
+		if (direction == Direction.UP || direction == Direction.DOWN) {
+			setTile((int) start.getX() + 4, (int) start.getY() + 1, 207,
+					Direction.UP, false);
+			setTile((int) start.getX() + 5, (int) start.getY() + 1, 207,
+					Direction.UP, false);
+
+			setTile((int) end.getX() - 4, (int) end.getY() - 1, 207,
+					Direction.UP, false);
+			setTile((int) end.getX() - 5, (int) end.getY() - 1, 207,
+					Direction.UP, false);
 		} else if (direction == Direction.RIGHT || direction == Direction.LEFT) {
-			setTile((int) end.getX() - 1, (int) start.getY() + 4, 207, Direction.UP, false);
-			setTile((int) end.getX() - 1, (int) start.getY() + 5, 207, Direction.UP, false);
-			
-			setTile((int) start.getX() + 1, (int) end.getY() - 4, 207, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + 4, 207,
+					Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + 5, 207,
+					Direction.UP, false);
+
+			setTile((int) start.getX() + 1, (int) end.getY() - 4, 207,
+					Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207,
+					Direction.UP, false);
 		}
 
 	}
-	
+
 	/**
 	 * Generates the building and its tiles
 	 * 
 	 * @param start
 	 * @param end
 	 */
-	public void generateSafeBuilding(Point start, Point end, Direction direction, boolean isStart) {
+	public void generateSafeBuilding(Point start, Point end,
+			Direction direction, boolean isStart) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 
@@ -581,45 +586,54 @@ public class Map {
 
 		generateRooms(
 				new Point((int) start.getX() + 2, (int) start.getY() + 2),
-				new Point((int) end.getX() - 2, (int) end.getY() - 2),true);
-		
-		if (direction == Direction.UP || direction == Direction.DOWN) {
-			setTile((int) start.getX() + 4,
-					(int) start.getY() + 1, 207, Direction.UP, false);
-			setTile((int) start.getX() + 5,
-					(int) start.getY() + 1, 207, Direction.UP, false);
+				new Point((int) end.getX() - 2, (int) end.getY() - 2), true);
 
-			setTile((int) end.getX() - 4,
-					(int) end.getY() - 1, 207, Direction.UP, false);
-			setTile((int) end.getX()- 5,
-					(int) end.getY() - 1, 207, Direction.UP, false);
+		if (direction == Direction.UP || direction == Direction.DOWN) {
+			setTile((int) start.getX() + 4, (int) start.getY() + 1, 207,
+					Direction.UP, false);
+			setTile((int) start.getX() + 5, (int) start.getY() + 1, 207,
+					Direction.UP, false);
+
+			setTile((int) end.getX() - 4, (int) end.getY() - 1, 207,
+					Direction.UP, false);
+			setTile((int) end.getX() - 5, (int) end.getY() - 1, 207,
+					Direction.UP, false);
 		} else if (direction == Direction.RIGHT || direction == Direction.LEFT) {
-			setTile((int) end.getX() - 1, (int) start.getY() + 4, 207, Direction.UP, false);
-			setTile((int) end.getX() - 1, (int) start.getY() + 5, 207, Direction.UP, false);
-			
-			setTile((int) start.getX() + 1, (int) end.getY() - 4, 207, Direction.UP, false);
-			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207, Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + 4, 207,
+					Direction.UP, false);
+			setTile((int) end.getX() - 1, (int) start.getY() + 5, 207,
+					Direction.UP, false);
+
+			setTile((int) start.getX() + 1, (int) end.getY() - 4, 207,
+					Direction.UP, false);
+			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207,
+					Direction.UP, false);
 		}
-		
-		//Spawns the victory flag
-		if (!isStart){
-			int corner = (int)Math.floor((Math.random()*4));
-			
-			if (corner == 0){
-				setTile((int) start.getX() + 2, (int) start.getY()+2, 211, Direction.DOWN, false);
-				flagLocation = new Point((int) start.getX() + 2, (int) start.getY()+2);
-			}
-			else if (corner == 1){
-				setTile((int) start.getX() + 2, (int) end.getY()-2, 211, Direction.DOWN, false);
-				flagLocation = new Point((int) start.getX() + 2, (int) end.getY()-2);
-			}
-			else if (corner == 2){
-				setTile((int) end.getX() - 2, (int) start.getY()+2, 211, Direction.DOWN, false);
-				flagLocation = new Point((int) end.getX() - 2, (int) start.getY()+2);
-			}
-			else if (corner == 3){
-				setTile((int) end.getX() -2, (int) end.getY()-2, 211, Direction.DOWN, false);
-				flagLocation = new Point((int) end.getX() -2, (int) end.getY()-2);
+
+		// Spawns the victory flag
+		if (!isStart) {
+			int corner = (int) Math.floor((Math.random() * 4));
+
+			if (corner == 0) {
+				setTile((int) start.getX() + 2, (int) start.getY() + 2, 211,
+						Direction.DOWN, false);
+				flagLocation = new Point((int) start.getX() + 2,
+						(int) start.getY() + 2);
+			} else if (corner == 1) {
+				setTile((int) start.getX() + 2, (int) end.getY() - 2, 211,
+						Direction.DOWN, false);
+				flagLocation = new Point((int) start.getX() + 2,
+						(int) end.getY() - 2);
+			} else if (corner == 2) {
+				setTile((int) end.getX() - 2, (int) start.getY() + 2, 211,
+						Direction.DOWN, false);
+				flagLocation = new Point((int) end.getX() - 2,
+						(int) start.getY() + 2);
+			} else if (corner == 3) {
+				setTile((int) end.getX() - 2, (int) end.getY() - 2, 211,
+						Direction.DOWN, false);
+				flagLocation = new Point((int) end.getX() - 2,
+						(int) end.getY() - 2);
 			}
 		}
 
@@ -645,36 +659,37 @@ public class Map {
 						(int) start.getY() + (boxHeight / 2));
 				generateWall(midPoint,
 						new Point((int) end.getX(), (int) start.getY()
-								+ (boxHeight / 2)),safe);
+								+ (boxHeight / 2)), safe);
 				generateRooms(start,
 						new Point((int) end.getX(), (int) start.getY()
-								+ (boxHeight / 2)),safe);
-				generateRooms(midPoint, end,safe);
+								+ (boxHeight / 2)), safe);
+				generateRooms(midPoint, end, safe);
 			} else if (boxWidth > boxHeight) {
 				Point midPoint = new Point((int) start.getX() + boxWidth / 2,
 						(int) start.getY());
 				generateWall(midPoint, new Point((int) start.getX() + boxWidth
-						/ 2, (int) end.getY()),safe);
+						/ 2, (int) end.getY()), safe);
 				generateRooms(start, new Point((int) start.getX() + boxWidth
-						/ 2, (int) end.getY()),safe);
-				generateRooms(midPoint, end,safe);
+						/ 2, (int) end.getY()), safe);
+				generateRooms(midPoint, end, safe);
 			}
 		}
-		if (!safe){
-		for (int z = 0; z < MAX_ZOMBIE_PER_ROOM; z++) {
-			int randomX = (int) (Math.random() * boxWidth + start.getX());
-			int randomY = (int) (Math.random() * boxHeight + start.getY());
+		if (!safe) {
+			for (int z = 0; z < MAX_ZOMBIE_PER_ROOM; z++) {
+				int randomX = (int) (Math.random() * boxWidth + start.getX());
+				int randomY = (int) (Math.random() * boxHeight + start.getY());
 
-			if (Math.random() > 0
-					&& (tileMap[randomX][randomY] & 0xFFF) == 201) {
-				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
-						new Point(randomX * 32, randomY * 32), 100, game
-								.getZombie()[0], null, this.game, this, (int)Math.floor((Math.random()*5))));
-				zombieCount++;
+				if (Math.random() > 0
+						&& (tileMap[randomX][randomY] & 0xFFF) == 201) {
+					chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
+							new Point(randomX * 32, randomY * 32), 100, game
+									.getZombie()[0], null, this.game, this,
+							(int) Math.floor((Math.random() * 5))));
+					zombieCount++;
+				}
 			}
 		}
-		}
-		for (int item = 0; item <  MAX_ITEM_PER_ROOM; item++) {
+		for (int item = 0; item < MAX_ITEM_PER_ROOM; item++) {
 			// Clone the item
 			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns
 					.size()));
@@ -688,15 +703,16 @@ public class Map {
 				itemSpawned = new Throwable((Throwable) itemSpawned);
 			}
 
-			int randomX = (int) (Math.random()*boxWidth+start.getX());
-			int randomY = (int) (Math.random()*boxHeight+start.getY());
-			
+			int randomX = (int) (Math.random() * boxWidth + start.getX());
+			int randomY = (int) (Math.random() * boxHeight + start.getY());
+
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0) {
-				if (Math.random() > 0.25){
-					itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
+				if (Math.random() > 0.25) {
+					itemSpawned.setPosition(new Point(randomX * 32,
+							randomY * 32));
 					chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
 				}
-		}
+			}
 		}
 	}
 
@@ -746,13 +762,14 @@ public class Map {
 					&& (tileMap[randomX][randomY] & 0xFFF) == 108
 					|| (tileMap[randomX][randomY] & 0xFFF) >= 110) {
 				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(
-						new Point(randomX * 32, randomY* 32), 100, game
-								.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
+						new Point(randomX * 32, randomY * 32), 100, game
+								.getZombie()[0], null, this.game, this,
+						(int) Math.floor((Math.random() * 5))));
 				zombieCount++;
 			}
 		}
-		
-		for (int item = 0; item <  MAX_ITEM_PER_FOREST; item++) {
+
+		for (int item = 0; item < MAX_ITEM_PER_FOREST; item++) {
 			// Clone the item
 			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns
 					.size()));
@@ -766,9 +783,11 @@ public class Map {
 				itemSpawned = new Throwable((Throwable) itemSpawned);
 			}
 
-			int randomX = (int) (Math.random()*boxWidth+start.getX());
-			int randomY = (int) (Math.random()*boxHeight+start.getY());
-			if ((tileMap[randomX][randomY] & (1 << 14)) == 0 && (tileMap[randomX][randomY] & 0xFFF) != 201 && (tileMap[randomX][randomY] & 0xFFF) != 207) {
+			int randomX = (int) (Math.random() * boxWidth + start.getX());
+			int randomY = (int) (Math.random() * boxHeight + start.getY());
+			if ((tileMap[randomX][randomY] & (1 << 14)) == 0
+					&& (tileMap[randomX][randomY] & 0xFFF) != 201
+					&& (tileMap[randomX][randomY] & 0xFFF) != 207) {
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
 			}
@@ -793,7 +812,7 @@ public class Map {
 					&& (tileMap[(int) start.getX()][(int) start.getY()] & 0xFFF) != 206) {
 				if (!safe)
 					setTile((int) start.getX(), (int) start.getY() - 1, 204,
-						Direction.LEFT, true);
+							Direction.LEFT, true);
 				else
 					setTile((int) start.getX(), (int) start.getY() - 1, 210,
 							Direction.LEFT, true);
@@ -847,9 +866,11 @@ public class Map {
 				setTile((int) end.getX(), (int) start.getY(), 205,
 						Direction.RIGHT, true);
 				if (!safe)
-					setTile((int) end.getX() + 1, (int) start.getY(), 204, Direction.UP, true);
+					setTile((int) end.getX() + 1, (int) start.getY(), 204,
+							Direction.UP, true);
 				else
-					setTile((int) end.getX() + 1, (int) start.getY(), 210, Direction.UP, true);
+					setTile((int) end.getX() + 1, (int) start.getY(), 210,
+							Direction.UP, true);
 			} else {
 				setTile((int) end.getX(), (int) start.getY(), 206,
 						Direction.UP, true);
@@ -861,6 +882,7 @@ public class Map {
 			}
 		}
 	}
+
 	/**
 	 * Generates side road off of main road
 	 * 
@@ -1001,7 +1023,8 @@ public class Map {
 				if (Math.random() > 0.99) {
 					chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(
 							new Point(tempx * 32, tempy * 32), 100, game
-									.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
+									.getZombie()[0], null, this.game, this,
+							(int) Math.floor((Math.random() * 5))));
 					zombieCount++;
 				}
 				tempx++;
@@ -1127,7 +1150,8 @@ public class Map {
 			if (Math.random() > 0.99) {
 				chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(
 						new Point(tempx * 32, tempy * 32), 100, game
-								.getZombie()[0], null, this.game, this,  (int)Math.floor((Math.random()*5))));
+								.getZombie()[0], null, this.game, this,
+						(int) Math.floor((Math.random() * 5))));
 				zombieCount++;
 			}
 			tempx--;
@@ -1265,25 +1289,25 @@ public class Map {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-	
+
 	/**
 	 * @return The starting point of the final safehouse
 	 */
-	public Point getSafehouseStart(){
+	public Point getSafehouseStart() {
 		return safehouseStart;
 	}
-	
+
 	/**
 	 * @return The ending point of the final safehouse
 	 */
-	public Point getSafehouseEnd(){
+	public Point getSafehouseEnd() {
 		return safehouseEnd;
 	}
-	
+
 	/**
 	 * @return The location of the flag
 	 */
-	public Point getFlagLocation(){
+	public Point getFlagLocation() {
 		return flagLocation;
 	}
 
