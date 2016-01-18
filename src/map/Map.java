@@ -57,6 +57,7 @@ public class Map {
 	private Point playerStart;
 	private Point safehouseStart;
 	private Point safehouseEnd;
+	private Point flagLocation;
 
 	private ArrayList<Item> items;
 	private ArrayList<Item> itemSpawns;
@@ -415,7 +416,7 @@ public class Map {
 		// Generates the safehouse
 		generateSafeBuilding(new Point((int) start.getX() + boxWidth / 3,
 				(int) start.getY() + boxHeight / 3), new Point((int) end.getX()
-				- boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP);
+				- boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP, isStart);
 
 		int playerX;
 		int playerY;
@@ -533,7 +534,7 @@ public class Map {
 	 * @param start
 	 * @param end
 	 */
-	public void generateSafeBuilding(Point start, Point end, Direction direction) {
+	public void generateSafeBuilding(Point start, Point end, Direction direction, boolean isStart) {
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 
@@ -580,8 +581,6 @@ public class Map {
 				new Point((int) start.getX() + 2, (int) start.getY() + 2),
 				new Point((int) end.getX() - 2, (int) end.getY() - 2),true);
 		
-		int doorLocation;
-		
 		if (direction == Direction.UP || direction == Direction.DOWN) {
 			setTile((int) start.getX() + 4,
 					(int) start.getY() + 1, 207, Direction.UP, false);
@@ -598,6 +597,28 @@ public class Map {
 			
 			setTile((int) start.getX() + 1, (int) end.getY() - 4, 207, Direction.UP, false);
 			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207, Direction.UP, false);
+		}
+		
+		//Spawns the victory flag
+		if (!isStart){
+			int corner = (int)Math.floor((Math.random()*4));
+			
+			if (corner == 0){
+				setTile((int) start.getX() + 2, (int) start.getY()+2, 211, Direction.DOWN, false);
+				flagLocation = new Point((int) start.getX() + 2, (int) start.getY()+2);
+			}
+			else if (corner == 1){
+				setTile((int) start.getX() + 2, (int) end.getY()-2, 211, Direction.DOWN, false);
+				flagLocation = new Point((int) start.getX() + 2, (int) end.getY()-2);
+			}
+			else if (corner == 2){
+				setTile((int) end.getX() - 2, (int) start.getY()+2, 211, Direction.DOWN, false);
+				flagLocation = new Point((int) end.getX() - 2, (int) start.getY()+2);
+			}
+			else if (corner == 3){
+				setTile((int) end.getX() -2, (int) end.getY()-2, 211, Direction.DOWN, false);
+				flagLocation = new Point((int) end.getX() -2, (int) end.getY()-2);
+			}
 		}
 
 	}
@@ -1255,6 +1276,13 @@ public class Map {
 	 */
 	public Point getSafehouseEnd(){
 		return safehouseEnd;
+	}
+	
+	/**
+	 * @return The location of the flag
+	 */
+	public Point getFlagLocation(){
+		return flagLocation;
 	}
 
 	/**

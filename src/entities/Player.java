@@ -123,7 +123,6 @@ public class Player extends Mob {
 
 		g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
 		if (this.getItem(selectedItemNumber) != null){
-			System.out.println(selectedItem);
 		if (selectedItem instanceof Firearm)
 			g2D.drawImage(selectedItem.getImages()[2], (int) (this.getPosition().x - camera.getxOffset()+10),
 					(int) (this.getPosition().y - camera.getyOffset()-10), null);
