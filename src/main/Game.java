@@ -300,7 +300,7 @@ public class Game implements Runnable {
 
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					System.out.println(frames + " fps");
+//					System.out.println(frames + " fps");
 					lastTime += 1000;
 					frames = 0;
 				}

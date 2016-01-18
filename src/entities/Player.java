@@ -367,8 +367,8 @@ public class Player extends Mob {
 		if(tiles==null)
 		this.tiles=this.world.getMap().getMap();
 		
-		double slope= (line.y2-line.y2)/(line.x2-line.x1);
-		System.out.println(slope);
+		double slope= (line.y2-line.y1)/(line.x2-line.x1);
+
 		if(line.x2>line.x1)
 		for (int i=0;i<1024;i++)
 		{
