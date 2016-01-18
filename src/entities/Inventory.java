@@ -1,4 +1,3 @@
-
 package entities;
 
 import enums.ItemState;
@@ -55,6 +54,11 @@ public class Inventory {
 		return -1;
 	}
 
+	/**
+	 * Gets the number of items currently in the inventory.
+	 * 
+	 * @return the number of items currently in the inventory.
+	 */
 	public int getNoOfItems() {
 		return noOfItems;
 	}
@@ -110,8 +114,7 @@ public class Inventory {
 	 *         removed.
 	 */
 	public Item remove(int itemNo) {
-		if (itemNo >= this.items.length || itemNo < 0
-				|| this.items[itemNo] == null) {
+		if (itemNo >= this.items.length || itemNo < 0 || this.items[itemNo] == null) {
 			return null;
 		} else {
 			Item removedItem = this.items[itemNo];

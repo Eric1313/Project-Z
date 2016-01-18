@@ -1,19 +1,15 @@
 package items;
 
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
-import javax.sound.sampled.Clip;
-
-import main.Game;
-import utilities.Sound;
 import entities.Player;
 import enums.ItemState;
+import main.Game;
+import utilities.Sound;
 
 /**
  * Subclass of Item that represents a melee weapon item in Project Z.
@@ -67,14 +63,14 @@ public class Melee extends Item {
 		long currentTick = this.game.getTickCount();
 		if (currentTick - player.getLastItemTick() > this.rechargeTime + this.swingSpeed) {
 			player.setLastItemTick(currentTick);
-			
+
 			player.swing(currentTick, angle, Math.toRadians(this.angle));
-			
+
 			angle = Math.toDegrees(angle);
 
 			Arc2D arc = new Arc2D.Double();
-			arc.setArcByCenter(player.getPosition().x, player.getPosition().y, this.radius, angle - this.angle, this.angle * 2,
-					Arc2D.PIE);
+			arc.setArcByCenter(player.getPosition().x, player.getPosition().y, this.radius, angle - this.angle,
+					this.angle * 2, Arc2D.PIE);
 
 			int enemiesHit = player.meleeCollision(arc, this.effectValue);
 
@@ -116,7 +112,7 @@ public class Melee extends Item {
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
-		
+
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
 		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
@@ -139,10 +135,10 @@ public class Melee extends Item {
 			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		}
-		
+
 		g.setFont(this.game.getMiniUiFont());
 		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
-		
+
 		if (this.swingSpeed >= 60) {
 			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else if (this.swingSpeed >= 50) {
@@ -154,7 +150,7 @@ public class Melee extends Item {
 		} else {
 			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		}
-		
+
 		if (this.rechargeTime >= 40) {
 			g.drawString("Very slow recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
 		} else if (this.rechargeTime >= 30) {

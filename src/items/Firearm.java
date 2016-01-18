@@ -1,20 +1,16 @@
 package items;
 
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
-import javax.sound.sampled.Clip;
-
-import main.Game;
-import main.World;
-import utilities.Sound;
 import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
+import main.Game;
+import utilities.Sound;
 
 /**
  * Subclass of Item that represents a firearm weapon item in Project Z.

@@ -1,13 +1,12 @@
 package entities;
 
 import java.applet.AudioClip;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 
-import main.Game;
 import enums.MapObjectType;
+import main.Game;
 
 /**
  * Abstract MapObject class for objects inside a map in Project Z.

@@ -2,15 +2,13 @@ package entities;
 
 import java.applet.AudioClip;
 import java.awt.Point;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.Stack;
 
-import utilities.Node;
 import main.Game;
-import map.Chunk;
 import map.Map;
+import utilities.Node;
 
 /**
  * Abstract Mob class for all mobs in Project Z.<br>
@@ -31,43 +29,42 @@ public abstract class Mob extends Entity {
 	protected Map map;
 	protected Stack<Node> path = new Stack<Node>();
 
-
 	public Mob(boolean solid, Game game) {
 		super(solid, game);
 	}
 
-	public Mob(int height, int width, Point position, boolean solid, Game game,Map map) {
+	public Mob(int height, int width, Point position, boolean solid, Game game, Map map) {
 		super(height, width, position, solid, game);
-		this.map=map;
+		this.map = map;
 		this.setChunkMap(map.getChunkMap());
 	}
 
-	public Mob(int height, int width, Point position, double rotation,
-			int health, boolean solid, BufferedImage[] images,
-			AudioClip[] clips, Game game,Map map) {
-		super(height, width, position, rotation, health, solid, images, clips,
-				game);
-		this.map=map;
-	this.setChunkMap(map.getChunkMap());
+	public Mob(int height, int width, Point position, double rotation, int health, boolean solid,
+			BufferedImage[] images, AudioClip[] clips, Game game, Map map) {
+		super(height, width, position, rotation, health, solid, images, clips, game);
+		this.map = map;
+		this.setChunkMap(map.getChunkMap());
 	}
 
 	public void makeNoise(int range, boolean player) {
-		int chunkX = Math.max(position.x / 512,2);
-		int chunkY = Math.max(position.y / 512,2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16); x++) {
-			for (int y = chunkY - 2; y <Math.min( chunkY + 3,map.getHeight()/16); y++) {
-				if(x<100&&y<100)
-				for (Iterator<Zombie> iterator = getChunkMap()[x][y].getZombies().iterator(); iterator
-						.hasNext();) {
-					Zombie zombie = iterator.next();
-					if(Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2)<range*range)
-					{
-						if(player)
-						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x+16)/32, (zombie.position.y+16)/32, (this.position.x+16)/32, (this.position.y+16)/32));
-						else if (!path.isEmpty())
-							zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x)/32, (zombie.position.y)/32, path.get(0).locationX,path.get(0).locationY));
+		int chunkX = Math.max(position.x / 512, 2);
+		int chunkY = Math.max(position.y / 512, 2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
+				if (x < 100 && y < 100)
+					for (Iterator<Zombie> iterator = getChunkMap()[x][y].getZombies().iterator(); iterator.hasNext();) {
+						Zombie zombie = iterator.next();
+						if (Math.pow(position.x - zombie.position.x, 2)
+								+ Math.pow(position.y - zombie.position.y, 2) < range * range) {
+							if (player)
+								zombie.setPath(map.getPathFinder().findPath(zombie.getPath(),
+										(zombie.position.x + 16) / 32, (zombie.position.y + 16) / 32,
+										(this.position.x + 16) / 32, (this.position.y + 16) / 32));
+							else if (!path.isEmpty())
+								zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x) / 32,
+										(zombie.position.y) / 32, path.get(0).locationX, path.get(0).locationY));
+						}
 					}
-				}
 			}
 		}
 	}

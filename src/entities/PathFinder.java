@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
@@ -33,10 +32,8 @@ public class PathFinder {
 		}
 	}
 
-	public Stack<Node> findPath(Stack<Node> oldPath,int startX, int startY, 
-			int targetX, int targetY) {
-		if (!oldPath.isEmpty() && oldPath.get(0).locationX == targetX
-				&& oldPath.get(0).locationY == targetY) {
+	public Stack<Node> findPath(Stack<Node> oldPath, int startX, int startY, int targetX, int targetY) {
+		if (!oldPath.isEmpty() && oldPath.get(0).locationX == targetX && oldPath.get(0).locationY == targetY) {
 			return oldPath;
 
 		} else {
@@ -55,8 +52,7 @@ public class PathFinder {
 					openList.remove(current);
 					closedList.add(current);
 					// if is destination
-					if (current.locationX == targetX
-							&& current.locationY == targetY) {
+					if (current.locationX == targetX && current.locationY == targetY) {
 						while (current != start) {
 							path.add(current);
 							current = current.prev;
@@ -66,20 +62,17 @@ public class PathFinder {
 					for (int i = -1; i < 2; i++)
 						for (int j = -1; j < 2; j++) {
 							// out of bounds
-							if (current.locationY + i < 0
-									|| current.locationX + j < 0
+							if (current.locationY + i < 0 || current.locationX + j < 0
 									|| current.locationY + i > tiles.length - 1
 									|| current.locationX + j > tiles[0].length - 1)
 								continue;
-							if (tiles[current.locationY + i][current.locationX
-									+ j] == true)
+							if (tiles[current.locationY + i][current.locationX + j] == true)
 								continue;
 
 							if (i == 0 && j == 0)
 								continue;
 
-							Node nextNode = graph[current.locationY + i][current.locationX
-									+ j];
+							Node nextNode = graph[current.locationY + i][current.locationX + j];
 							int add = 10;
 							// diagonal case
 							if (i != 0 && j != 0) {
@@ -88,8 +81,7 @@ public class PathFinder {
 								// skip
 								// this case
 								if (tiles[current.locationY + i][current.locationX] == true
-										|| tiles[current.locationY][current.locationX
-												+ j] == true)
+										|| tiles[current.locationY][current.locationX + j] == true)
 									continue;
 							}
 							// in closed List, then skip
@@ -112,20 +104,18 @@ public class PathFinder {
 							} else {
 								nextNode.setParent(current);
 								nextNode.g = g;
-								nextNode.h = Math.abs(nextNode.locationX
-										- targetX)
+								nextNode.h = Math.abs(nextNode.locationX - targetX)
 										+ Math.abs(nextNode.locationY - targetY);
 								openList.add(nextNode);
 							}
 						}
 				}
 		}
-//		oldPath.clear();
-//		while(!path.empty()&&path.peek()!=null)
-//		{
-//			oldPath.push(path.pop());
-//		}
+		// oldPath.clear();
+		// while(!path.empty()&&path.peek()!=null)
+		// {
+		// oldPath.push(path.pop());
+		// }
 		return path;
 	}
 }
-

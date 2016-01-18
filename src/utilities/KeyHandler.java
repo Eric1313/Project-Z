@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-
 	private boolean up;
 	private boolean down;
 	private boolean left;
@@ -119,6 +118,24 @@ public class KeyHandler implements KeyListener {
 		this.e = e;
 		this.stop = true;
 	}
+	
+	public boolean isR() {
+		return r;
+	}
+
+	public void setR(boolean r) {
+		this.r = r;
+		this.stop = true;
+	}
+
+	public boolean isEsc() {
+		return esc;
+	}
+
+	public void setEsc(boolean esc) {
+		this.esc = esc;
+		this.stop = true;
+	}
 
 	public int getLastNumber() {
 		return this.lastNumber;
@@ -132,30 +149,5 @@ public class KeyHandler implements KeyListener {
 		} else {
 			this.lastNumber = lastNumber;
 		}
-	}
-
-	/**
-	 * @return the r
-	 */
-	public boolean isR() {
-		return r;
-	}
-
-	/**
-	 * @param r
-	 *            the r to set
-	 */
-	public void setR(boolean r) {
-		this.r = r;
-		this.stop = true;
-	}
-
-	public boolean isEsc() {
-		return esc;
-	}
-
-	public void setEsc(boolean esc) {
-		this.esc = esc;
-		this.stop = true;
 	}
 }

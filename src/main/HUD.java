@@ -1,22 +1,17 @@
 package main;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-import java.awt.geom.AffineTransform;
-import java.io.File;
 
-import map.Map;
 import entities.Inventory;
 import entities.Player;
 import items.Consumable;
 import items.Firearm;
 import items.Item;
 import items.Melee;
+import map.Map;
 
 public class HUD {
 	private Player player;

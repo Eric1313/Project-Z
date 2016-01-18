@@ -40,8 +40,7 @@ public class Assets {
 	private void loadFont(String path, int fontSize) {
 		try {
 			// create the font to use. Specify the size!
-			font = Font.createFont(Font.TRUETYPE_FONT, new File(path))
-					.deriveFont(Font.PLAIN, fontSize);
+			font = Font.createFont(Font.TRUETYPE_FONT, new File(path)).deriveFont(Font.PLAIN, fontSize);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (FontFormatException e) {
@@ -58,12 +57,11 @@ public class Assets {
 	 */
 	private void loadAssets(int height, int width) {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage(path));
-		sprites = new BufferedImage[sheet.getHeight() / (TILE_HEIGHT * height)][sheet
-				.getWidth() / (TILE_WIDTH * width)];
+		sprites = new BufferedImage[sheet.getHeight() / (TILE_HEIGHT * height)][sheet.getWidth()
+				/ (TILE_WIDTH * width)];
 		for (int row = 0; row < sprites.length; row++) {
 			for (int col = 0; col < sprites[row].length; col++) {
-				sprites[row][col] = sheet.crop(TILE_WIDTH * width * col,
-						TILE_HEIGHT * height * row, TILE_WIDTH * width,
+				sprites[row][col] = sheet.crop(TILE_WIDTH * width * col, TILE_HEIGHT * height * row, TILE_WIDTH * width,
 						TILE_HEIGHT * height);
 			}
 		}

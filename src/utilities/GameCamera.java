@@ -1,7 +1,7 @@
 package utilities;
 
-import main.Game;
 import entities.Entity;
+import main.Game;
 
 public class GameCamera {
 
@@ -15,27 +15,23 @@ public class GameCamera {
 	}
 
 	public void centerOnEntity(Entity e) {
-		xOffset = (float) (e.getPosition().getX()
-				- game.getDisplay().getFrame().getWidth() / 2 + Assets.TILE_WIDTH / 2);
-		yOffset = (float) (e.getPosition().getY()
-				- game.getDisplay().getFrame().getHeight() / 2 + Assets.TILE_HEIGHT / 2);
+		xOffset = (float) (e.getPosition().getX() - game.getDisplay().getFrame().getWidth() / 2
+				+ Assets.TILE_WIDTH / 2);
+		yOffset = (float) (e.getPosition().getY() - game.getDisplay().getFrame().getHeight() / 2
+				+ Assets.TILE_HEIGHT / 2);
 		if (xOffset < 0) {
 			xOffset = 0;
-		} else if (xOffset > game.getDisplay().getGamePanel().getWorld()
-				.getWidth()
-				* Assets.TILE_WIDTH - game.getDisplay().getFrame().getWidth()) {
-			xOffset = game.getDisplay().getGamePanel().getWorld().getWidth()
-					* Assets.TILE_WIDTH
+		} else if (xOffset > game.getDisplay().getGamePanel().getWorld().getWidth() * Assets.TILE_WIDTH
+				- game.getDisplay().getFrame().getWidth()) {
+			xOffset = game.getDisplay().getGamePanel().getWorld().getWidth() * Assets.TILE_WIDTH
 					- game.getDisplay().getFrame().getWidth();
 		}
 
 		if (yOffset < 0) {
 			yOffset = 0;
-		} else if (yOffset > game.getDisplay().getGamePanel().getWorld()
-				.getHeight()
-				* Assets.TILE_HEIGHT - game.getDisplay().getFrame().getHeight()) {
-			yOffset = game.getDisplay().getGamePanel().getWorld().getHeight()
-					* Assets.TILE_HEIGHT
+		} else if (yOffset > game.getDisplay().getGamePanel().getWorld().getHeight() * Assets.TILE_HEIGHT
+				- game.getDisplay().getFrame().getHeight()) {
+			yOffset = game.getDisplay().getGamePanel().getWorld().getHeight() * Assets.TILE_HEIGHT
 					- game.getDisplay().getFrame().getHeight();
 		}
 	}
@@ -55,6 +51,5 @@ public class GameCamera {
 	public void setyOffset(float yOffset) {
 		this.yOffset = yOffset;
 	}
-	
-	
+
 }

@@ -1,22 +1,17 @@
 package entities;
 
-import utilities.Node;
-import map.Map;
-
 import java.applet.AudioClip;
-import java.awt.Point;
-import java.awt.geom.AffineTransform;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.text.AttributedCharacterIterator;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Stack;
 
 import main.Game;
-import map.Chunk;
+import map.Map;
+import utilities.Node;
 
 /**
  * Subclass of Mob that represents a zombie enemy in Project Z.

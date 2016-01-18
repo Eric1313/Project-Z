@@ -24,14 +24,11 @@ public class PausePanel extends Canvas {
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// Make the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 		// Draws the hand
 		// Pulsates the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -57,12 +54,11 @@ public class PausePanel extends Canvas {
 	}
 
 	public void update() {
-		if (game.getDisplay().getKeyHandler().isEsc()){
+		if (game.getDisplay().getKeyHandler().isEsc()) {
 			game.getState().setGameState(State.INGAME, true);
 			game.getDisplay().getKeyHandler().setEsc(false);
 		}
-		if (resume.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (resume.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverResume = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -71,8 +67,7 @@ public class PausePanel extends Canvas {
 		} else {
 			hoverResume = false;
 		}
-		if (main.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (main.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -81,8 +76,7 @@ public class PausePanel extends Canvas {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (exit.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverExit = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				System.exit(0);
@@ -100,8 +94,8 @@ public class PausePanel extends Canvas {
 		exit = new Rectangle(412, 540, 200, 100);
 	}
 
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
+	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
+			int handY) {
 		g2D.setColor(Color.WHITE);
 		if (hover) {
 			g2D.setPaint(Color.WHITE);

@@ -235,9 +235,6 @@ public abstract class Item {
 				g.drawImage(this.getImages()[1], (int) (this.getPosition().x - this.game.getCamera().getxOffset()),
 						(int) (this.getPosition().y - this.game.getCamera().getyOffset()), null);
 			}
-		} else if (this.state == ItemState.IN_HAND) {
-			g.drawImage(this.getImages()[2], 0, 0, null);
-
 		}
 	}
 

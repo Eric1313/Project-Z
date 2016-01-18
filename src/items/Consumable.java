@@ -1,19 +1,15 @@
 package items;
 
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import javax.sound.sampled.Clip;
-
-import main.Game;
-import utilities.Sound;
-import entities.Inventory;
 import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
+import main.Game;
+import utilities.Sound;
 
 /**
  * Subclass of Item that represents a consumable item in Project Z.
@@ -27,9 +23,8 @@ public class Consumable extends Item {
 	private ItemEffect effect;
 	private int durability;
 
-	public Consumable(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, Sound[] clips,
-			Game game, ItemEffect effect, int durability) {
+	public Consumable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
+			Sound[] clips, Game game, ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
@@ -43,7 +38,7 @@ public class Consumable extends Item {
 		case HEAL:
 			if (player.getHealth() < 100) {
 				clips[0].play();
-				Consumable consumable=this;
+				Consumable consumable = this;
 				Thread reloadPause = new Thread(new Runnable() {
 					public void run() {
 						try {
@@ -60,7 +55,7 @@ public class Consumable extends Item {
 					}
 				});
 				reloadPause.start();
-				
+
 			}
 			break;
 		case AMMO:
@@ -127,7 +122,7 @@ public class Consumable extends Item {
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 150, 300, 150);
-		
+
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
 		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 100);
@@ -150,7 +145,7 @@ public class Consumable extends Item {
 			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 80);
 			break;
 		}
-		
+
 		g.setFont(this.game.getMiniUiFont());
 		switch (this.effect) {
 		case HEAL:

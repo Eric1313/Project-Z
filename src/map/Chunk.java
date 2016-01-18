@@ -1,24 +1,21 @@
 package map;
 
-import items.Item;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import entities.Corpse;
 import entities.Entity;
 import entities.Zombie;
+import items.Item;
 
 public class Chunk {
 	private ArrayList<Entity> solidEntities;
 	private ArrayList<Entity> passibleEntities;
 	private ArrayList<Item> items;
-	private ArrayList<Zombie>zombies;
+	private ArrayList<Zombie> zombies;
 
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
 		this.passibleEntities = new ArrayList<Entity>();
-		this.zombies= new ArrayList<Zombie>();
+		this.zombies = new ArrayList<Zombie>();
 		this.items = new ArrayList<Item>();
 	}
 
@@ -40,7 +37,7 @@ public class Chunk {
 		this.items.add(item);
 		// TODO Make sure the chunk isn't full
 	}
-	
+
 	public void remove(Item item) {
 		this.items.remove(item);
 	}
@@ -77,7 +74,7 @@ public class Chunk {
 	public void setPassibleEntities(ArrayList<Entity> passibleEntities) {
 		this.passibleEntities = passibleEntities;
 	}
-	
+
 	public ArrayList<Item> getItems() {
 		return this.items;
 	}
@@ -90,15 +87,16 @@ public class Chunk {
 	}
 
 	/**
-	 * @param zombies the zombies to set
+	 * @param zombies
+	 *            the zombies to set
 	 */
 	public void addZombie(Zombie zombie) {
 		zombies.add(zombie);
 	}
-	public Zombie removeZombie(Zombie zombie)
-	{
+
+	public Zombie removeZombie(Zombie zombie) {
 		zombies.remove(zombie);
 		return zombie;
 	}
-	
+
 }

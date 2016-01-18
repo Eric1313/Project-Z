@@ -1,6 +1,5 @@
 package utilities;
 
-
 public class Node implements Comparable<Node> {
 	public int locationX;
 	public int locationY;
@@ -18,7 +17,6 @@ public class Node implements Comparable<Node> {
 	}
 
 	public int compareTo(Node node) {
-return (int) ((g+h)-(node.g+node.h));
+		return (int) ((g + h) - (node.g + node.h));
 	}
-
 }

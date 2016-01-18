@@ -20,21 +20,20 @@ public class HelpPanel extends Canvas {
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.drawImage(game.getHelp()[image], 0, 0, null);
 		if (image != 0) {
 			button(g2D, previousHover, previous, "PREVIOUS", 50, 705, 70, 725);
 		}
-		if (image != 5){
+		if (image != 5) {
 			button(g2D, nextHover, next, "NEXT", 866, 705, 855, 725);
-		}else {
+		} else {
 			button(g2D, nextHover, next, "MAIN", 866, 705, 855, 725);
 		}
 	}
 
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
+	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
+			int handY) {
 		if (hover) {
 			g2D.setPaint(Color.WHITE);
 			g2D.fill(box);
@@ -59,9 +58,7 @@ public class HelpPanel extends Canvas {
 	}
 
 	public void update() {
-		if (previous.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())
-				&& image != 0) {
+		if (previous.contains(game.getDisplay().getMouseHandler().getMouseLocation()) && image != 0) {
 			previousHover = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				image--;
@@ -70,14 +67,12 @@ public class HelpPanel extends Canvas {
 		} else {
 			previousHover = false;
 		}
-		if (next.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (next.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			nextHover = true;
 			if (game.getDisplay().getMouseHandler().isClick() && image != 5) {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
-			} else if (game.getDisplay().getMouseHandler().isClick()
-					&& image == 5) {
+			} else if (game.getDisplay().getMouseHandler().isClick() && image == 5) {
 				game.getState().setGameState(State.LOBBY, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}

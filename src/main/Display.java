@@ -90,7 +90,7 @@ public class Display {
 		death.addMouseMotionListener(mouseHandler);
 		death.addMouseListener(mouseHandler);
 		death.addMouseWheelListener(mouseHandler);
-		
+
 		help.setPreferredSize(new Dimension(width, height));
 		help.setMaximumSize(new Dimension(width, height));
 		help.setMinimumSize(new Dimension(width, height));
@@ -122,7 +122,7 @@ public class Display {
 	public FinishPanel getFinish() {
 		return finish;
 	}
-	
+
 	public HelpPanel getHelp() {
 		return help;
 	}
