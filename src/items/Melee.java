@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
+import Audio.Sound;
 import main.Game;
 import entities.Player;
 import enums.ItemState;
@@ -29,7 +30,7 @@ public class Melee extends Item {
 	private int angle;
 
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Clip[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
+			Sound[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
@@ -64,8 +65,10 @@ public class Melee extends Item {
 			int enemiesHit = player.meleeCollision(arc, this.effectValue);
 
 			if (enemiesHit == 0) {
+				clips[0].play();
 				player.makeNoise(100, true);
 			} else {
+				clips[0].play();
 				player.makeNoise(200, true);
 			}
 		}

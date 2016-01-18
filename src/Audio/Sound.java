@@ -25,6 +25,7 @@ public class Sound {
     SourceDataLine line;
 
     private boolean loop;
+    String file;
 
     private BufferedInputStream stream;
 
@@ -36,7 +37,8 @@ public class Sound {
      */
     public void reset() {
         try {
-            stream.reset();
+            stream = new BufferedInputStream(new FileInputStream (file));
+//            stream.reset();
             in = AudioSystem.getAudioInputStream(stream);
             din = AudioSystem.getAudioInputStream(decodedFormat, in);
             line = getLine(decodedFormat);
@@ -61,6 +63,7 @@ public class Sound {
     }
 
     public Sound(String filename) {
+    	file=filename;
         this.loop = false;
         try {
             //InputStream raw = Object.class.getResourceAsStream(filename);
@@ -109,35 +112,40 @@ public class Sound {
     }
 
     public void play() {
+    	Thread t1 = new Thread(new Runnable() {
+    	     public void run() {
+    	         try {
+    	             boolean firstTime = true;
+    	             while (firstTime || loop) {
 
-        try {
-            boolean firstTime = true;
-            while (firstTime || loop) {
+    	                 firstTime = false;
+    	                 byte[] data = new byte[4096];
 
-                firstTime = false;
-                byte[] data = new byte[4096];
+    	                 if (line != null) {
 
-                if (line != null) {
+    	                     line.start();
+    	                     int nBytesRead = 0;
 
-                    line.start();
-                    int nBytesRead = 0;
+    	                     while (nBytesRead != -1) {
+    	                         nBytesRead = din.read(data, 0, data.length);
+    	                         if (nBytesRead != -1)
+    	                             line.write(data, 0, nBytesRead);
+    	                     }
 
-                    while (nBytesRead != -1) {
-                        nBytesRead = din.read(data, 0, data.length);
-                        if (nBytesRead != -1)
-                            line.write(data, 0, nBytesRead);
-                    }
+    	                     line.drain();
+    	                     line.stop();
+    	                     line.close();
 
-                    line.drain();
-                    line.stop();
-                    line.close();
+    	                     reset();
+    	                 }
+    	             }
+    	         } catch (IOException e) {
+    	             e.printStackTrace();
+    	         }    
+    	         }
+    	});  
+    	t1.start();
 
-                    reset();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }

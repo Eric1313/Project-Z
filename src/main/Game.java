@@ -113,8 +113,12 @@ public class Game implements Runnable {
 							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
-					Clip[] sounds = new Clip[soundLinks.length];
+					Sound[] sounds = new Sound[soundLinks.length];
 
+					for(int i=0;i<sounds.length;i++)
+					{
+						 sounds[i] = new Sound (soundLinks[i]);
+					}
 					// TODO: Add AudioClips to the sounds array
 
 					switch (itemType) {
@@ -146,7 +150,8 @@ public class Game implements Runnable {
 										.parseInt(stats[6]), Integer
 										.parseInt(stats[7]), Integer
 										.parseInt(stats[8]), Integer
-										.parseInt(stats[9])));
+										.parseInt(stats[9]),Integer
+										.parseInt(stats[10])));
 						break;
 					case 3:
 						this.items
@@ -188,8 +193,7 @@ public class Game implements Runnable {
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		
-		Sound sound = new Sound ("res/sfx/100-0.wav");
-		sound.play();
+
 
 	}
 
