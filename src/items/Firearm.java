@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
-import Audio.Sound;
 import main.Game;
 import main.World;
+import utilities.Sound;
 import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
@@ -35,9 +35,8 @@ public class Firearm extends Item {
 
 	private long reloadTick = -60;
 
-	public Firearm(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, Sound[] clips, Game game,
-			int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime) {
+	public Firearm(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
+			Sound[] clips, Game game, int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
@@ -64,11 +63,9 @@ public class Firearm extends Item {
 	public void use(Player player) {
 		double angle = -Math.atan2(
 				game.getDisplay().getMouseHandler().getMouseLocation().y
-						- (player.getPosition().y + 16 - game.getCamera()
-								.getyOffset()), game.getDisplay()
-						.getMouseHandler().getMouseLocation().x
-						- (player.getPosition().x + 16 - game.getCamera()
-								.getxOffset()));
+						- (player.getPosition().y + 16 - game.getCamera().getyOffset()),
+				game.getDisplay().getMouseHandler().getMouseLocation().x
+						- (player.getPosition().x + 16 - game.getCamera().getxOffset()));
 
 		if (!this.isEmpty()) {
 			long currentTick = game.getTickCount();
@@ -89,21 +86,19 @@ public class Firearm extends Item {
 						angleAdjust = angleAdjust * (-1);
 					adjustedAngle = angle + angleAdjust;
 
-					Line2D.Double line = new Line2D.Double(new Point(
-							player.getPosition().x + 16,
-							player.getPosition().y + 16), new Point(
-							(int) (player.getPosition().x + 16 + d
-									* Math.cos(adjustedAngle)),
-							(int) (player.getPosition().y + 16 - d
-									* Math.sin(adjustedAngle))));
+					Line2D.Double line = new Line2D.Double(
+							new Point(player.getPosition().x + 16, player.getPosition().y + 16),
+							new Point((int) (player.getPosition().x + 16 + d * Math.cos(adjustedAngle)),
+									(int) (player.getPosition().y + 16 - d * Math.sin(adjustedAngle))));
 
 					player.bulletCollision(line, this.getEffectValue());
 
 					player.makeNoise(this.noise, true);
 				}
 				this.removeAmmo();
-				game.getDisplay().getGamePanel().getWorld().setShotsFired(game.getDisplay().getGamePanel().getWorld().getShotsFired()+1);
-				System.out.println(game.getDisplay().getGamePanel().getWorld().getShotsFired());
+				game.getDisplay().getGamePanel().getWorld()
+						.setShotsFired(game.getDisplay().getGamePanel().getWorld().getShotsFired() + 1);
+				player.shoot();
 			}
 		}
 	}
@@ -115,8 +110,7 @@ public class Firearm extends Item {
 			this.reloadTick = currentTick;
 			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
 				Item currentItem = player.getItem(itemNo);
-				if (currentItem != null
-						&& currentItem.getItemID() == this.ammoID) {
+				if (currentItem != null && currentItem.getItemID() == this.ammoID) {
 					Consumable ammo = ((Consumable) currentItem);
 					ammo.clips[0].play();
 					Firearm firearm = this;
@@ -190,8 +184,7 @@ public class Firearm extends Item {
 
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
-		g.setColor(new Color(getColour().getRed(), getColour().getGreen(),
-				getColour().getBlue(), 75));
+		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
 
 		g.setColor(new Color(0, 0, 0, 200));
@@ -204,45 +197,35 @@ public class Firearm extends Item {
 			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		case 4:
-			g.drawString("Uncommon", mouseLocation.x + 20,
-					mouseLocation.y - 130);
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		case 3:
 			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		case 2:
-			g.drawString("Very Rare", mouseLocation.x + 20,
-					mouseLocation.y - 130);
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		case 1:
-			g.drawString("Ultra Rare", mouseLocation.x + 20,
-					mouseLocation.y - 130);
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		}
 
 		g.setFont(this.game.getMiniUiFont());
-		g.drawString("Deals " + this.effectValue + " damage",
-				mouseLocation.x + 20, mouseLocation.y - 105);
+		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
 
 		if (this.rateOfFire >= 60) {
-			g.drawString("Very slow attack speed", mouseLocation.x + 20,
-					mouseLocation.y - 80);
+			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else if (this.rateOfFire >= 50) {
-			g.drawString("Slow attack speed", mouseLocation.x + 20,
-					mouseLocation.y - 80);
+			g.drawString("Slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else if (this.rateOfFire >= 40) {
-			g.drawString("Normal attack speed", mouseLocation.x + 20,
-					mouseLocation.y - 80);
+			g.drawString("Normal attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else if (this.rateOfFire >= 30) {
-			g.drawString("Fast attack speed", mouseLocation.x + 20,
-					mouseLocation.y - 80);
+			g.drawString("Fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else {
-			g.drawString("Very fast attack speed", mouseLocation.x + 20,
-					mouseLocation.y - 80);
+			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		}
 
-		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo",
-				mouseLocation.x + 20, mouseLocation.y - 55);
+		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
 	}
 
 	/**

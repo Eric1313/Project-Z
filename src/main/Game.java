@@ -22,7 +22,7 @@ import javax.sound.sampled.Clip;
 
 import utilities.Assets;
 import utilities.GameCamera;
-import Audio.Sound;
+import utilities.Sound;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
