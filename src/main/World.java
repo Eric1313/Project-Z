@@ -42,6 +42,7 @@ public class World {
 	private int width;
 	private int height;
 	private Item hoverItem;
+	private int shotsFired;
 
 	private ArrayList<Entity> entitiesDamaged;
 	private ArrayList<Integer> damage;
@@ -92,6 +93,8 @@ public class World {
 		this.entitiesDamaged = new ArrayList<Entity>();
 		this.damage = new ArrayList<Integer>();
 		this.damageTicks = new ArrayList<Long>();
+		
+		shotsFired = 0;
 	}
 
 	public void render(Graphics g) {
@@ -455,5 +458,33 @@ public class World {
 	public Rectangle getFlag() {
 		return flag;
 	}
-
+	
+	/**
+	 * @return the number of zombies
+	 */
+	public int getNoOfZombie(){
+		
+		int numOfZombies = 0;
+		
+		for (Chunk[] chunks : chunkMap)
+			for (Chunk c : chunks)
+				numOfZombies += c.getZombies().size();
+		
+		return numOfZombies;		
+	}
+	
+	/**
+	 * @return The number of shots fired
+	 */
+	public int getShotsFired(){
+		return shotsFired;
+	}
+	
+	/**
+	 * Sets the number of shots fired
+	 * @param num The number of shots to be fired
+	 */
+	public void setShotsFired(int num){
+		shotsFired = num;
+	}
 }

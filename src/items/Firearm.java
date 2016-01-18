@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.sound.sampled.Clip;
 
 import main.Game;
+import main.World;
 import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
@@ -90,6 +91,8 @@ public class Firearm extends Item {
 				player.makeNoise(this.noise, true);
 				}
 				this.removeAmmo();
+				game.getDisplay().getGamePanel().getWorld().setShotsFired(game.getDisplay().getGamePanel().getWorld().getShotsFired()+1);
+				System.out.println(game.getDisplay().getGamePanel().getWorld().getShotsFired());
 			}
 		}
 	}
