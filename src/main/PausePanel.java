@@ -54,10 +54,12 @@ public class PausePanel extends Canvas {
 		button(g2D, hoverResume, resume, "RESUME", 452, 367, 460, 390);
 		button(g2D, hoverMain, main, "MAIN", 475, 487, 460, 510);
 		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
-
 	}
 
 	public void update() {
+		if (game.getDisplay().getKeyHandler().isEsc()){
+			game.getState().setGameState(State.INGAME, true);
+		}
 		if (resume.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hoverResume = true;
