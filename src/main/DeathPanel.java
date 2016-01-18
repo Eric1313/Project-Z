@@ -15,10 +15,8 @@ public class DeathPanel extends Canvas {
 	private float colour = 30;
 	private boolean decrease;
 
-	private Rectangle resume;
 	private Rectangle main;
 	private Rectangle exit;
-	private boolean hoverResume;
 	private boolean hoverMain;
 	private boolean hoverExit;
 
@@ -48,26 +46,15 @@ public class DeathPanel extends Canvas {
 		g2D.drawString("}", 200, 650);
 		g2D.setFont(game.getUiBigFont());
 		g2D.setColor(Color.WHITE);
-		g2D.drawString("PAUSED", 400, 200);
+		g2D.drawString("YOU DIED", 375, 200);
 
 		// Draw play button
-		button(g2D, hoverResume, resume, "RESUME", 452, 367, 460, 390);
-		button(g2D, hoverMain, main, "MAIN", 475, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
+		button(g2D, hoverMain, main, "MAIN", 475, 367, 460, 390);
+		button(g2D, hoverExit, exit, "QUIT", 475, 487, 460, 510);
 
 	}
 
 	public void update() {
-		if (resume.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
-			hoverResume = true;
-			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getDisplay().getMouseHandler().setClick(false);
-				game.getState().setGameState(State.INGAME, true);
-			}
-		} else {
-			hoverResume = false;
-		}
 		if (main.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hoverMain = true;
@@ -91,9 +78,8 @@ public class DeathPanel extends Canvas {
 
 	public void setup(Game game) {
 		this.game = game;
-		resume = new Rectangle(412, 300, 200, 100);
-		main = new Rectangle(412, 420, 200, 100);
-		exit = new Rectangle(412, 540, 200, 100);
+		main = new Rectangle(412, 300, 200, 100);
+		exit = new Rectangle(412, 420, 200, 100);
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,

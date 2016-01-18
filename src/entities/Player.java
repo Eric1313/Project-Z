@@ -116,7 +116,7 @@ public class Player extends Mob {
 			this.lastDamageTick = currentTick;
 		}
 		if (this.getHealth() <= 0){
-			//DIE
+			game.getState().setGameState(State.DEATH, false);
 		}
 	}
 
