@@ -3,12 +3,11 @@
 3
 1
 100~Health Pack~3~20~res/img/100.png~res/sfx/100-0.wav`res/sfx/100-1.wav~0~1
-101~Pistol Ammo~4~1~res/img/101.png~res/sfx/101-0.wav`res/sfx/101-1.wav~1~8
-102~Rifle Ammo~2~1~res/img/102.png~res/sfx/102-0.wav`res/sfx/102-1.wav~1~30
-103~Shotgun Ammo~2~1~res/img/103.png~res/sfx/103-0.wav`res/sfx/103-1.wav~1~6
-200~Baseball Bat~2~20~res/img/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~20~15~48~60
-300~Pistol~2~40~res/img/300.png~res/sfx/300-0.wav`res/sfx/300-1.wav~101~20~8~600
-301~Rifle~1~80~res/img/301.png~res/sfx/301-0.wav`res/sfx/301-1.wav~102~5~30~800
-302~Shotgun~1~50~res/img/302.png~res/sfx/302-0.wav`res/sfx/302-1.wav~103~75~6~1000
-400~Brick~3~20~res/img/400.png~res/sfx/400-0.wav`res/sfx/400-1.wav~3~256~3
-
+101~Pistol Ammo~2~1~res/img/101.png~res/sfx/101-0.wav`res/sfx/101-1.wav~1~8
+102~Rifle Ammo~1~1~res/img/102.png~res/sfx/102-0.wav`res/sfx/102-1.wav~1~30
+103~Shotgun Ammo~1~1~res/img/103.png~res/sfx/103-0.wav`res/sfx/103-1.wav~1~6
+200~Baseball Bat~5~20~res/img/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~20~15~48~60
+300~Pistol~3~40~res/img/300.png~res/sfx/300-0.wav`res/sfx/300-1.wav~101~20~8~600
+301~Rifle~2~80~res/img/301.png~res/sfx/301-0.wav`res/sfx/301-1.wav~102~5~30~800
+302~Shotgun~2~50~res/img/302.png~res/sfx/302-0.wav`res/sfx/302-1.wav~103~75~6~1000
+400~Brick~5~20~res/img/400.png~res/sfx/400-0.wav`res/sfx/400-1.wav~3~256~3
