@@ -32,6 +32,8 @@ public class Zombie extends Mob {
 	private int imgNo;
 	private Player player;
 
+	public static int damage;
+
 	/**
 	 * Zombie constructor
 	 * 
@@ -54,14 +56,14 @@ public class Zombie extends Mob {
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
 		this.imgNo = imgNo;
-
+		Zombie.damage = 10;
 	}
 
 	/**
 	 * Updates zombie's position based on current path
 	 */
 	public void update() {
-		if(player==null)
+		if (player == null)
 			player = this.game.getDisplay().getGamePanel().getWorld().getPlayer();
 
 		// Reset movement
@@ -126,10 +128,10 @@ public class Zombie extends Mob {
 			else
 				this.rotation = Math.atan(dy / dx);
 		}
-		
+
 		if ((Math.pow(player.getPosition().x - this.position.x, 2)
 				+ Math.pow(player.getPosition().y - this.position.y, 2)) < 1000) {
-player.damage(1);
+			player.damage(Zombie.damage);
 			if (player.getPosition().y > this.position.y) {
 				this.up = true;
 				collideDown = true;
@@ -145,7 +147,7 @@ player.damage(1);
 				collideRight = true;
 			} else
 				collideRight = false;
-			if (player.getPosition().x< this.position.x) {
+			if (player.getPosition().x < this.position.x) {
 				this.right = true;
 				collideLeft = true;
 			} else

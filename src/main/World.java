@@ -74,7 +74,6 @@ public class World {
 		player = new Player(
 				new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
 				true, game, map, (int) Math.floor((Math.random() * 6)));
-		// player = new Player(new Point(0, 0), true, game, map);
 		player.setImages(game.getPlayer()[0]);
 		// this.row = (int) (player.getPosition().getY() / 32);
 		// this.col = (int) (player.getPosition().getX() / 32);
@@ -227,8 +226,8 @@ public class World {
 			}
 		}
 
-		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
-				player.getPosition().getY() - camera.getyOffset() + 16);
+//		g2D.rotate(angle, player.getPosition().getX() - camera.getxOffset() + 16,
+//				player.getPosition().getY() - camera.getyOffset() + 16);
 		GradientPaint gp = new GradientPaint((float) player.getPosition().getX() - camera.getxOffset() + 16,
 				(float) player.getPosition().getY() - camera.getyOffset() + 16, new Color(0, 0, 0, 0),
 				(float) (player.getPosition().getX() - camera.getxOffset()
@@ -240,7 +239,7 @@ public class World {
 		// g2D.draw(flashLight);
 
 		// g2D.setClip(null);
-		player.render(g);
+		player.render(g2D);
 		// g2D.setClip(flashLight);
 		tileY = 0;
 		tileX = 0;
