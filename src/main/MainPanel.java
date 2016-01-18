@@ -83,7 +83,8 @@ public class MainPanel extends Canvas {
 				.getMouseLocation())) {
 			hoverPlay = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getState().setGameState(State.INGAME);
+				game.getState().setGameState(State.INGAME, false);
+				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {
 			hoverPlay = false;
@@ -91,9 +92,6 @@ public class MainPanel extends Canvas {
 		if (help.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hoverHelp = true;
-			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getState().setGameState(State.INGAME);
-			}
 		} else {
 			hoverHelp = false;
 		}

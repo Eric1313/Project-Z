@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener {
 	private boolean q;
 	private boolean e;
 	private boolean r;
+	private boolean esc;
 	private int lastNumber;
 
 	@Override
@@ -61,6 +62,9 @@ public class KeyHandler implements KeyListener {
 			} else {
 				this.lastNumber = e.getKeyCode() - 49;
 			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			esc = pressed;
 		}
 	}
 
@@ -132,9 +136,16 @@ public class KeyHandler implements KeyListener {
 	}
 
 	/**
-	 * @param r the r to set
+	 * @param r
+	 *            the r to set
 	 */
 	public void setR(boolean r) {
 		this.r = r;
 	}
+
+	public boolean isEsc() {
+		return esc;
+	}
+	
+	
 }
