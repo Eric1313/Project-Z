@@ -26,7 +26,7 @@ public class HelpPanel extends Canvas {
 		if (image != 0) {
 			button(g2D, previousHover, previous, "PREVIOUS", 50, 705, 70, 725);
 		}
-		if (image != 4){
+		if (image != 5){
 			button(g2D, nextHover, next, "NEXT", 866, 705, 855, 725);
 		}else {
 			button(g2D, nextHover, next, "MAIN", 866, 705, 855, 725);
@@ -73,11 +73,11 @@ public class HelpPanel extends Canvas {
 		if (next.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			nextHover = true;
-			if (game.getDisplay().getMouseHandler().isClick() && image != 4) {
+			if (game.getDisplay().getMouseHandler().isClick() && image != 5) {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
 			} else if (game.getDisplay().getMouseHandler().isClick()
-					&& image == 4) {
+					&& image == 5) {
 				game.getState().setGameState(State.LOBBY, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
