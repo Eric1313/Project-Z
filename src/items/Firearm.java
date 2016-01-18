@@ -28,6 +28,7 @@ public class Firearm extends Item {
 	private int maxAmmo;
 	private int currentAmmo;
 	private int noise;
+	private double adjustedAngle;
 
 	private long reloadTick = -60;
 
@@ -77,12 +78,12 @@ public class Firearm extends Item {
 					double angleAdjust=((i/2)*.05);
 					if(i%2==1)
 						angleAdjust=angleAdjust*(-1);
-					System.out.println(angleAdjust);
+					adjustedAngle=angle+angleAdjust;
 					
 				Line2D.Double line = new Line2D.Double(
 						new Point(player.getPosition().x + 16, player.getPosition().y + 16),
-						new Point((int) (player.getPosition().x + 16 + d * Math.cos(angle+angleAdjust)),
-								(int) (player.getPosition().y + 16 - d * Math.sin(angle+angleAdjust))));
+						new Point((int) (player.getPosition().x + 16 + d * Math.cos(adjustedAngle)),
+								(int) (player.getPosition().y + 16 - d * Math.sin(adjustedAngle))));
 
 				player.bulletCollision(line, this.getEffectValue());
 
@@ -202,5 +203,19 @@ public class Firearm extends Item {
 		}
 
 		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
+	}
+
+	/**
+	 * @return the adjustedAngle
+	 */
+	public double getAdjustedAngle() {
+		return adjustedAngle;
+	}
+
+	/**
+	 * @param adjustedAngle the adjustedAngle to set
+	 */
+	public void setAdjustedAngle(double adjustedAngle) {
+		this.adjustedAngle = adjustedAngle;
 	}
 }

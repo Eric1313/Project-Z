@@ -57,6 +57,7 @@ public class Map {
 	private Point playerStart;
 	private Point safehouseStart;
 	private Point safehouseEnd;
+	private int safeHouseDisatnce;
 	private Point flagLocation;
 
 	private ArrayList<Item> items;
@@ -84,6 +85,7 @@ public class Map {
 		this.tileMap = new short[width][height];
 		this.upperTileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
+		safeHouseDisatnce=(height+width)/8;
 
 		for (int i = 0; i < this.width / 16; i++)
 			for (int j = 0; j < this.height / 16; j++)
@@ -125,9 +127,9 @@ public class Map {
 				count = 0;
 			}
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
-				- plazaStarts.get(endHouse).getX()) < 200
+				- plazaStarts.get(endHouse).getX()) < safeHouseDisatnce
 				&& Math.abs(plazaStarts.get(startHouse).getY()
-						- plazaStarts.get(endHouse).getY()) < 200);
+						- plazaStarts.get(endHouse).getY()) < safeHouseDisatnce);
 
 		for (int i = 0; i < plazaStarts.size(); i++) {
 			if (i == startHouse)
