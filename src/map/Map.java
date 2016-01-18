@@ -94,7 +94,7 @@ public class Map {
 		itemSpawns = new ArrayList<Item>();
 		for (int item = 0; item < this.items.size(); item++) {
 			Item currentItem = this.items.get(item);
-			int chance = (int) Math.pow(currentItem.getRarity(), 2);
+			int chance = (int) Math.pow(2, currentItem.getRarity());
 			for (int rarity = 0; rarity < chance; rarity++) {
 				itemSpawns.add(currentItem);
 			}
@@ -114,9 +114,15 @@ public class Map {
 
 		int startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
 		int endHouse;
+		int count = 0;
 
 		do {
 			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
+			count++;
+			if (count >= 10){
+				startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
+				count = 0;
+			}
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
 				- plazaStarts.get(endHouse).getX()) < 200
 				&& Math.abs(plazaStarts.get(startHouse).getY()
@@ -423,8 +429,8 @@ public class Map {
 
 			playerX = (int) (Math.random() * xRange + startX);
 			playerY = (int) (Math.random() * yRange + startY);
-			System.out.println(start.getX() + " " + start.getY() + " : "
-					+ playerX + " " + playerY);
+//			System.out.println(start.getX() + " " + start.getY() + " : "
+//					+ playerX + " " + playerY);
 		} while ((tileMap[playerX][playerY] & 0xFFF) != 201);
 
 		if (isStart)

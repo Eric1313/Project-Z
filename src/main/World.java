@@ -286,7 +286,7 @@ public class World {
 		// g2D.fill(flashLight);
 		// g2D.setClip(null);
 		g2D.setTransform(originalTransform);
-		g2D.setColor(new Color(0f, 0f, 0f, .5f));
+		g2D.setColor(new Color(0f, 0f, 0f, .6f));
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		this.hoverItem = hoverItem();

@@ -6,7 +6,6 @@ import items.Item;
 import items.Melee;
 import items.Throwable;
 
-import java.applet.AudioClip;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -39,7 +38,6 @@ public class Game implements Runnable {
 	private Font zombieFontBig;
 	private Font zombieFontHuge;
 	private ArrayList<Item> items;
-
 	private Display display;
 	private String title;
 	private int width;
@@ -78,7 +76,7 @@ public class Game implements Runnable {
 		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
 				.getFont();
 		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
-		.getFont();
+				.getFont();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -194,6 +192,7 @@ public class Game implements Runnable {
 	public Font getUiFont() {
 		return uiFont;
 	}
+
 	public Font getUiBigFont() {
 		return uiBigFont;
 	}
@@ -213,7 +212,7 @@ public class Game implements Runnable {
 	public Font getZombieFontBig() {
 		return zombieFontBig;
 	}
-	
+
 	public Font getZombieFontHuge() {
 		return zombieFontHuge;
 	}
@@ -313,7 +312,7 @@ public class Game implements Runnable {
 
 				tickCount++;
 				if (tickCount % 60 == 0) {
-//					System.out.println(frames + " fps");
+					// System.out.println(frames + " fps");
 					lastTime += 1000;
 					frames = 0;
 				}
