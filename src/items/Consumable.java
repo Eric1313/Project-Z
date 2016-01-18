@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
+import Audio.Sound;
 import main.Game;
 import entities.Inventory;
 import entities.Player;
@@ -27,7 +28,7 @@ public class Consumable extends Item {
 	private int durability;
 
 	public Consumable(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, Clip[] clips,
+			ItemState state, BufferedImage[] images, Sound[] clips,
 			Game game, ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
@@ -41,11 +42,25 @@ public class Consumable extends Item {
 		switch (this.getEffect()) {
 		case HEAL:
 			if (player.getHealth() < 100) {
-				player.setHealth(Math.min(100, player.getHealth() + this.getEffectValue()));
-				this.removeDurability();
-				if (this.getDurability() <= 0) {
-					player.removeItem(player.getSelectedItem());
-				}
+				clips[0].play();
+				Consumable consumable=this;
+				Thread reloadPause = new Thread(new Runnable() {
+					public void run() {
+						try {
+							Thread.sleep(3500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						player.setHealth(Math.min(100, player.getHealth() + consumable.getEffectValue()));
+						consumable.removeDurability();
+						if (consumable.getDurability() <= 0) {
+							player.removeItem(player.getSelectedItem());
+						}
+					}
+				});
+				reloadPause.start();
+				
 			}
 			break;
 		case AMMO:

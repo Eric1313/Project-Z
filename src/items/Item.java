@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
+import Audio.Sound;
 import main.Game;
 import entities.Player;
 import enums.ItemState;
@@ -53,7 +54,7 @@ public abstract class Item {
 	protected boolean hover = true;
 
 	protected BufferedImage[] images;
-	protected Clip[] clips;
+	protected Sound[] clips;
 
 	protected Game game;
 
@@ -61,7 +62,7 @@ public abstract class Item {
 
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Clip[] clips, Game game) {
+			Sound[] clips, Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;
@@ -179,11 +180,11 @@ public abstract class Item {
 		this.images = images;
 	}
 
-	public Clip[] getClips() {
+	public Sound[] getClips() {
 		return clips;
 	}
 
-	public void setClips(Clip[] clips) {
+	public void setClips(Sound[] clips) {
 		this.clips = clips;
 	}
 
