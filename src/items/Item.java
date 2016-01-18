@@ -54,10 +54,8 @@ public abstract class Item {
 	protected AudioClip[] clips;
 
 	protected Game game;
-	
-	
-	public abstract void use(Player player);
 
+	public abstract void use(Player player);
 
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
@@ -73,7 +71,7 @@ public abstract class Item {
 		this.clips = clips;
 
 		this.game = game;
-		this.inHand=false;
+		this.inHand = false;
 	}
 
 	public Item(Item item) {
@@ -190,17 +188,14 @@ public abstract class Item {
 	public Game getGame() {
 		return this.game;
 	}
-	
 
 	public boolean isInHand() {
 		return inHand;
 	}
 
-
 	public void setInHand(boolean inHand) {
 		this.inHand = inHand;
 	}
-
 
 	public void render(Graphics g) {
 		if (this.state == ItemState.DROPPED) {
@@ -213,7 +208,9 @@ public abstract class Item {
 			}
 		} else if (this.state == ItemState.IN_HAND) {
 			g.drawImage(this.getImages()[2], 0, 0, null);
-	
+
 		}
 	}
+
+	public abstract void renderTooltip(Graphics g, Point mouseLocation);
 }

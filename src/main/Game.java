@@ -50,6 +50,8 @@ public class Game implements Runnable {
 	private boolean running = false;
 
 	private long tickCount;
+	private Font miniUiFont;
+	private Font tinyUiFont;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -64,6 +66,8 @@ public class Game implements Runnable {
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
+		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
+		tinyUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
 		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
 				.getFont();
 		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
@@ -181,6 +185,14 @@ public class Game implements Runnable {
 
 	public Font getUiFont() {
 		return uiFont;
+	}
+
+	public Font getMiniUiFont() {
+		return miniUiFont;
+	}
+
+	public Font getTinyUiFont() {
+		return tinyUiFont;
 	}
 
 	public Font getZombieFont() {

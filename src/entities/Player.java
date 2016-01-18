@@ -56,8 +56,6 @@ public class Player extends Mob {
 
 	private long lastItemTick = -60;
 
-	private Arc2D arc = new Arc2D.Double();
-
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -399,7 +397,6 @@ public class Player extends Mob {
 	}
 
 	public int meleeCollision(Arc2D arc, int damage) {
-		this.arc = arc;
 		int noOfEnemies = 0;
 
 		int chunkX = Math.max(this.position.x / 512, 1);
@@ -448,5 +445,9 @@ public class Player extends Mob {
 	 */
 	public void setLastItemTick(long lastItemTick) {
 		this.lastItemTick = lastItemTick;
+	}
+
+	public MouseHandler getMouse() {
+		return mouse;
 	}
 }

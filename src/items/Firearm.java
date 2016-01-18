@@ -1,6 +1,7 @@
 package items;
 
 import java.applet.AudioClip;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
@@ -140,4 +141,49 @@ public class Firearm extends Item {
 		return this.currentAmmo == 0;
 	}
 
+	@Override
+	public void renderTooltip(Graphics g, Point mouseLocation) {
+		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
+		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
+		
+		g.setColor(new Color(0, 0, 0, 200));
+		g.setFont(this.game.getUiFont());
+		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
+
+		g.setFont(this.game.getTinyUiFont());
+		switch (this.rarity) {
+		case 5:
+			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 130);
+			break;
+		case 4:
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 130);
+			break;
+		case 3:
+			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			break;
+		case 2:
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			break;
+		case 1:
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			break;
+		}
+		
+		g.setFont(this.game.getMiniUiFont());
+		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
+		
+		if (this.rateOfFire >= 60) {
+			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+		} else if (this.rateOfFire >= 50) {
+			g.drawString("Slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+		} else if (this.rateOfFire >= 40) {
+			g.drawString("Normal attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+		} else if (this.rateOfFire >= 30) {
+			g.drawString("Fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+		} else {
+			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+		}
+		
+		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
+	}
 }

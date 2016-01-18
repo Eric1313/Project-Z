@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
@@ -102,5 +103,14 @@ public class HUD {
 
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
+		
+		Point mouseLocation = player.getMouse().getMouseLocation();
+		
+		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {
+			Item item = player.getItem((mouseLocation.x - 200) / 60);
+			if (item != null) {
+				item.renderTooltip(g, mouseLocation);
+			}
+		}
 	}
 }
