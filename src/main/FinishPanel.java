@@ -90,6 +90,7 @@ public class FinishPanel extends Canvas {
 		} else {
 			hoverExit = false;
 		}
+		game.getDisplay().getMouseHandler().setClick(false);
 		// game.getDisplay().getGamePanel().getWorld();
 		// game.getDisplay().getGamePanel().getWorld().getNoOfZombie();
 	}

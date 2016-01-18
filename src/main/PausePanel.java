@@ -89,6 +89,7 @@ public class PausePanel extends Canvas {
 		} else {
 			hoverExit = false;
 		}
+		game.getDisplay().getMouseHandler().setClick(false);
 	}
 
 	public void setup(Game game) {
