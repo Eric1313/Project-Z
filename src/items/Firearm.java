@@ -27,36 +27,38 @@ public class Firearm extends Item {
 	private int rateOfFire;
 	private int maxAmmo;
 	private int currentAmmo;
+	private int noise;
 
-	public Firearm(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, Clip[] clips,
-			Game game, int ammoID, int rateOfFire, int maxAmmo) {
+	private long reloadTick = -60;
+
+	public Firearm(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
+			Clip[] clips, Game game, int ammoID, int rateOfFire, int maxAmmo, int noise) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
 		this.maxAmmo = maxAmmo;
 		this.currentAmmo = maxAmmo;
+		this.noise = noise;
 	}
 
 	public Firearm(Firearm item) {
 		super(item);
 
-		this.ammoID = item.getAmmoID();
-		this.rateOfFire = item.getRateOfFire();
-		this.maxAmmo = item.getMaxAmmo();
+		this.ammoID = item.ammoID;
+		this.rateOfFire = item.rateOfFire;
+		this.maxAmmo = item.maxAmmo;
 		this.currentAmmo = maxAmmo;
+		this.noise = item.noise;
 	}
 
 	@Override
 	public void use(Player player) {
 		double angle = -Math.atan2(
 				game.getDisplay().getMouseHandler().getMouseLocation().y
-						- (player.getPosition().y + 16 - game.getCamera()
-								.getyOffset()), game.getDisplay()
-						.getMouseHandler().getMouseLocation().x
-						- (player.getPosition().x + 16 - game.getCamera()
-								.getxOffset()));
+						- (player.getPosition().y + 16 - game.getCamera().getyOffset()),
+				game.getDisplay().getMouseHandler().getMouseLocation().x
+						- (player.getPosition().x + 16 - game.getCamera().getxOffset()));
 
 		if (!this.isEmpty()) {
 			long currentTick = game.getTickCount();
@@ -65,17 +67,14 @@ public class Firearm extends Item {
 
 				int d = 32 * 64;
 
-				Line2D.Double line = new Line2D.Double(new Point(
-						player.getPosition().x + 16,
-						player.getPosition().y + 16), new Point(
-						(int) (player.getPosition().x + 16 + d
-								* Math.cos(angle)),
-						(int) (player.getPosition().y + 16 - d
-								* Math.sin(angle))));
+				Line2D.Double line = new Line2D.Double(
+						new Point(player.getPosition().x + 16, player.getPosition().y + 16),
+						new Point((int) (player.getPosition().x + 16 + d * Math.cos(angle)),
+								(int) (player.getPosition().y + 16 - d * Math.sin(angle))));
 
 				player.bulletCollision(line, this.getEffectValue());
 
-				player.makeNoise(1000, true);
+				player.makeNoise(this.noise, true);
 
 				this.removeAmmo();
 			}
@@ -83,18 +82,22 @@ public class Firearm extends Item {
 	}
 
 	public void reload(Player player) {
+		long currentTick = player.getGame().getTickCount();
 
-		for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
-			Item currentItem = player.getItem(itemNo);
-			if (currentItem!=null&&currentItem.getItemID() == this.ammoID) {
-				Consumable ammo = ((Consumable) currentItem);
-				int bullets = ammo.getDurability();
-				if (this.currentAmmo > 0) {
-					ammo.setDurability(this.currentAmmo);
-				} else {
-					player.removeItem(currentItem);
+		if (currentTick - this.reloadTick > 180) {
+			this.reloadTick = currentTick;
+			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
+				Item currentItem = player.getItem(itemNo);
+				if (currentItem != null && currentItem.getItemID() == this.ammoID) {
+					Consumable ammo = ((Consumable) currentItem);
+					int bullets = ammo.getDurability();
+					if (this.currentAmmo > 0) {
+						ammo.setDurability(this.currentAmmo);
+					} else {
+						player.removeItem(currentItem);
+					}
+					this.currentAmmo = bullets;
 				}
-				this.currentAmmo = bullets;
 			}
 		}
 	}
@@ -147,7 +150,7 @@ public class Firearm extends Item {
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
-		
+
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
 		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
@@ -170,10 +173,10 @@ public class Firearm extends Item {
 			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		}
-		
+
 		g.setFont(this.game.getMiniUiFont());
 		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
-		
+
 		if (this.rateOfFire >= 60) {
 			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		} else if (this.rateOfFire >= 50) {
@@ -185,7 +188,7 @@ public class Firearm extends Item {
 		} else {
 			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
 		}
-		
+
 		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
 	}
 }

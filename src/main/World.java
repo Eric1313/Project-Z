@@ -93,7 +93,7 @@ public class World {
 		this.damageTicks = new ArrayList<Long>();
 	}
 
-	public void render(Graphics g) {
+	public void render(Graphics g) {		
 		if (!initializeOffset) {
 			initializeOffsets();
 			initializeOffset = true;
@@ -105,6 +105,8 @@ public class World {
 				- Math.PI / 2;
 
 		Graphics2D g2D = (Graphics2D) g;
+		
+		g2D.setFont(this.game.getTinyUiFont());
 
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
