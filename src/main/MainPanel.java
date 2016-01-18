@@ -43,7 +43,7 @@ public class MainPanel extends Canvas {
 		if (colour == 160) {
 			decrease = true;
 		}
-		g2D.setFont(game.getZombieFontBig());
+		g2D.setFont(game.getZombieFontL());
 		g2D.drawString("}", 375, 260);
 		// Draw title
 		g.drawImage(game.getMainMenu(), 0, 0, null);

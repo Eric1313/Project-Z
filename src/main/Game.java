@@ -26,17 +26,17 @@ import utilities.GameCamera;
 import utilities.Sound;
 
 public class Game implements Runnable {
-	private BufferedImage[][] tiles;
-	private BufferedImage[][] player;
-	private BufferedImage[][] zombie;
+	private BufferedImage[][] tileImages;
+	private BufferedImage[][] playerImages;
+	private BufferedImage[][] zombieImages;
 	private BufferedImage bloodSplatter;
 	private BufferedImage mainMenu;
 	private BufferedImage[] help;
 	private Font uiFont;
-	private Font uiBigFont;
+	private Font uiFontL;
 	private Font zombieFont;
-	private Font zombieFontBig;
-	private Font zombieFontHuge;
+	private Font zombieFontL;
+	private Font zombieFontXL;
 	private ArrayList<Item> items;
 	private Display display;
 	private String title;
@@ -52,8 +52,8 @@ public class Game implements Runnable {
 	private boolean running = false;
 
 	private long tickCount;
-	private Font miniUiFont;
-	private Font tinyUiFont;
+	private Font uiFontS;
+	private Font uiFontXS;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -63,18 +63,18 @@ public class Game implements Runnable {
 
 	private void initialize() {
 		// Loads the assets
-		tiles = new Assets("res/img/tiles.png", 1, 1).getSprites();
-		player = new Assets("res/img/player.png", 1, 1).getSprites();
-		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
+		tileImages = new Assets("res/img/tiles.png", 1, 1).getSprites();
+		playerImages = new Assets("res/img/player.png", 1, 1).getSprites();
+		zombieImages = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
 		bloodSplatter = new Assets("res/img/bloodvisual.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
-		uiBigFont = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
-		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
-		tinyUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
+		uiFontL = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
+		uiFontS = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
+		uiFontXS = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
 		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150).getFont();
-		zombieFontBig = new Assets("res/fonts/youmurdererbb_reg.ttf", 380).getFont();
-		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000).getFont();
+		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380).getFont();
+		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000).getFont();
 		help = new BufferedImage[6];
 		help[0] = new Assets("res/img/1.png").getImage();
 		help[1] = new Assets("res/img/2.png").getImage();
@@ -175,42 +175,6 @@ public class Game implements Runnable {
 
 	}
 
-	public BufferedImage[] getHelp() {
-		return help;
-	}
-
-	public Font getUiFont() {
-		return uiFont;
-	}
-
-	public Font getUiBigFont() {
-		return uiBigFont;
-	}
-
-	public Font getMiniUiFont() {
-		return miniUiFont;
-	}
-
-	public Font getTinyUiFont() {
-		return tinyUiFont;
-	}
-
-	public Font getZombieFont() {
-		return zombieFont;
-	}
-
-	public Font getZombieFontBig() {
-		return zombieFontBig;
-	}
-
-	public Font getZombieFontHuge() {
-		return zombieFontHuge;
-	}
-
-	public BufferedImage getMainMenu() {
-		return mainMenu;
-	}
-
 	private void update() {
 		// Updates the current state only
 		if (state.getGameState() != null)
@@ -276,7 +240,6 @@ public class Game implements Runnable {
 
 	public void run() {
 		initialize();
-		int frames = 0;
 
 		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
@@ -304,14 +267,12 @@ public class Game implements Runnable {
 				if (tickCount % 60 == 0) {
 					// System.out.println(frames + " fps");
 					lastTime += 1000;
-					frames = 0;
 				}
 			}
 
 			if (ticked) {
 				render();
 				// update();
-				frames++;
 			} else {
 				try {
 					Thread.sleep(1);
@@ -355,51 +316,103 @@ public class Game implements Runnable {
 		}
 	}
 
+	public GameState getState() {
+		return state;
+	}
+
 	public Display getDisplay() {
-		return display;
-	}
-
-	public BufferedImage[][] getTiles() {
-		return tiles;
-	}
-
-	public BufferedImage[][] getPlayer() {
-		return player;
+		return this.display;
 	}
 
 	public GameCamera getCamera() {
-		return camera;
+		return this.camera;
 	}
 
-	/**
-	 * @return the zombie
-	 */
-	public BufferedImage[][] getZombie() {
-		return zombie;
+	public BufferedImage[][] getTileImages() {
+		return this.tileImages;
+	}
+
+	public BufferedImage[][] getPlayerImages() {
+		return this.playerImages;
+	}
+
+	public BufferedImage[][] getZombieImages() {
+		return this.zombieImages;
 	}
 
 	public BufferedImage getBloodVisual() {
-		return bloodSplatter;
+		return this.bloodSplatter;
+	}
+
+	public BufferedImage[] getHelp() {
+		return this.help;
+	}
+
+	public Font getUiFont() {
+		return this.uiFont;
+	}
+
+	public Font getUiFontXS() {
+		return this.uiFontXS;
+	}
+
+	public Font getUiFontS() {
+		return this.uiFontS;
+	}
+
+	public Font getUiFontL() {
+		return this.uiFontL;
+	}
+
+	public Font getZombieFont() {
+		return this.zombieFont;
+	}
+
+	public Font getZombieFontL() {
+		return this.zombieFontL;
+	}
+
+	public Font getZombieFontXL() {
+		return this.zombieFontXL;
+	}
+
+	public BufferedImage getMainMenu() {
+		return this.mainMenu;
 	}
 
 	/**
-	 * @param zombie
-	 *            the zombie to set
+	 * Get a list of all of the different types of items in the game.
+	 * 
+	 * @return a list of all of the different types of items.
 	 */
-	public void setZombie(BufferedImage[][] zombie) {
-		this.zombie = zombie;
-	}
-
 	public ArrayList<Item> getItems() {
 		return this.items;
 	}
 
-	public long getTickCount() {
-		return tickCount;
+	/**
+	 * Gets an item given an item ID.
+	 * 
+	 * @param itemID
+	 *            the item ID of the item to find.
+	 * @return the item found.
+	 */
+	public Item getItem(int itemID) {
+		for (int item = 0; item < this.items.size(); item++) {
+			if (this.items.get(item).getItemID() == itemID) {
+				return this.items.get(item);
+			}
+		}
+
+		return null;
 	}
 
-	public GameState getState() {
-		return state;
+	/**
+	 * Gets the current tick of the game (60 ticks per second).
+	 * 
+	 * @return the current tick.
+	 */
+	public long getTickCount() {
+		return tickCount;
 	}
 
 	public static void main(String[] args) {

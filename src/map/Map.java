@@ -402,7 +402,7 @@ public class Map {
 					setTile(i, j, 200, Direction.UP, false);
 					if (Math.random() > 0.99) {
 						chunkMap[i / 16][j / 16].addZombie(new Zombie(new Point(i * 32, j * 32), Zombie.zombieHealth,
-								game.getZombie()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
+								game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
 						zombieCount++;
 					}
 				}
@@ -580,7 +580,7 @@ public class Map {
 
 				if (Math.random() > 0 && (tileMap[randomX][randomY] & 0xFFF) == 201) {
 					chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new Point(randomX * 32, randomY * 32),
-							100, game.getZombie()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
+							100, game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
 					zombieCount++;
 				}
 			}
@@ -651,7 +651,7 @@ public class Map {
 			if (Math.random() > 0.10 && (tileMap[randomX][randomY] & 0xFFF) == 108
 					|| ((tileMap[randomX][randomY] & 0xFFF) >= 110 && (tileMap[randomX][randomY] & 0xFFF) < 200)) {
 				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new Point(randomX * 32, randomY * 32), 100,
-						game.getZombie()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
+						game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
 				zombieCount++;
 			}
 		}
@@ -887,7 +887,7 @@ public class Map {
 				// Spawns zombies on roads
 				if (Math.random() > 0.99) {
 					chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(new Point(tempx * 32, tempy * 32), 100,
-							game.getZombie()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
+							game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
 					zombieCount++;
 				}
 				tempx++;
@@ -1012,7 +1012,7 @@ public class Map {
 			}
 			if (Math.random() > 0.99) {
 				chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(new Point(tempx * 32, tempy * 32), 100,
-						game.getZombie()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
+						game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
 				zombieCount++;
 			}
 			tempx--;

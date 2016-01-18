@@ -81,7 +81,7 @@ public class HUD {
 		g.setColor(new Color(0, 200, 50));
 		g.fillRect(905, 50, player.getStamina() / 3, 20);
 
-		g.setFont(player.getGame().getTinyUiFont());
+		g.setFont(player.getGame().getUiFontXS());
 
 		g.setColor(Color.WHITE);
 		g.drawString("HEALTH", 908, 35);

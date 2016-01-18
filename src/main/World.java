@@ -74,7 +74,7 @@ public class World {
 		player = new Player(
 				new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
 				true, game, map, (int) Math.floor((Math.random() * 6)));
-		player.setImages(game.getPlayer()[0]);
+		player.setImages(game.getPlayerImages()[0]);
 		// this.row = (int) (player.getPosition().getY() / 32);
 		// this.col = (int) (player.getPosition().getX() / 32);
 		this.row = 0;
@@ -108,7 +108,7 @@ public class World {
 
 		Graphics2D g2D = (Graphics2D) g;
 
-		g2D.setFont(this.game.getTinyUiFont());
+		g2D.setFont(this.game.getUiFontXS());
 
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -159,7 +159,7 @@ public class World {
 					solidTiles[tileY][tileX] = null;
 				}
 				int id = (baseTiles[j][i] & 0xFFF);
-				g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+				g.drawImage(game.getTileImages()[(id / 100) - 1][(id % 100)],
 						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
 						(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), null);
 				if (id == 211) {
@@ -281,7 +281,7 @@ public class World {
 				}
 				int id = (upperTiles[j][i] & 0xFFF);
 				if (id != 0)
-					g.drawImage(game.getTiles()[(id / 100) - 1][(id % 100)],
+					g.drawImage(game.getTileImages()[(id / 100) - 1][(id % 100)],
 							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
 							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), null);
 				tileX++;

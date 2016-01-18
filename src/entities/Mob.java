@@ -29,10 +29,6 @@ public abstract class Mob extends Entity {
 	protected Map map;
 	protected Stack<Node> path = new Stack<Node>();
 
-	public Mob(boolean solid, Game game) {
-		super(solid, game);
-	}
-
 	public Mob(int height, int width, Point position, boolean solid, Game game, Map map) {
 		super(height, width, position, solid, game);
 		this.map = map;

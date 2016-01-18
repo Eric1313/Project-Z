@@ -61,28 +61,27 @@ public class Player extends Mob {
 
 	private boolean shoot;
 
-	public Player(boolean solid, Game game) {
-		super(solid, game);
-		this.movementSpeed = Player.MOVEMENT_SPEED;
-		this.stamina = Player.MAX_STAMINA;
-		this.mouse = game.getDisplay().getMouseHandler();
-	}
-
 	public Player(Point position, boolean solid, Game game, Map map, int skinNo) {
 		super(32, 32, position, solid, game, map);
 		this.skinNo = skinNo;
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
-		addItem(new Melee((Melee) this.game.getItems().get(4)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(6)));
-		((Firearm) getItem(1)).setCurrentAmmo(((Firearm) getItem(1)).getMaxAmmo());
+
 		this.mouse = game.getDisplay().getMouseHandler();
 		this.camera = game.getCamera();
 		this.key = game.getDisplay().getKeyHandler();
 		this.world = game.getDisplay().getGamePanel().getWorld();
+
+		this.addItem(this.game.getItem(200));
+		this.addItem(this.game.getItem(300));
 		this.selectedItem = this.getItem(selectedItemNumber);
 	}
 
+	/**
+	 * Gets the player's center coordinate relative to the game camera.
+	 * 
+	 * @return the player's center coordinate.
+	 */
 	public Point getPlayerCenter() {
 		return new Point((int) (this.getPosition().x - camera.getxOffset() + 16),
 				(int) (this.getPosition().y - camera.getyOffset()) + 16);

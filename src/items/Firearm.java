@@ -38,7 +38,7 @@ public class Firearm extends Item {
 		this.ammoID = ammoID;
 		this.rateOfFire = rateOfFire;
 		this.maxAmmo = maxAmmo;
-		this.currentAmmo = (int) (Math.random() * maxAmmo);
+		this.currentAmmo = this.maxAmmo;
 		this.noise = noise;
 		this.reloadTime = reloadTime;
 	}
@@ -187,7 +187,7 @@ public class Firearm extends Item {
 		g.setFont(this.game.getUiFont());
 		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
 
-		g.setFont(this.game.getTinyUiFont());
+		g.setFont(this.game.getUiFontXS());
 		switch (this.rarity) {
 		case 5:
 			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 130);
@@ -206,7 +206,7 @@ public class Firearm extends Item {
 			break;
 		}
 
-		g.setFont(this.game.getMiniUiFont());
+		g.setFont(this.game.getUiFontS());
 		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
 
 		if (this.rateOfFire >= 60) {

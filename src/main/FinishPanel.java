@@ -42,9 +42,9 @@ public class FinishPanel extends Canvas {
 		if (colour == 160) {
 			decrease = true;
 		}
-		g2D.setFont(game.getZombieFontHuge());
+		g2D.setFont(game.getZombieFontXL());
 		g2D.drawString("}", 200, 650);
-		g2D.setFont(game.getUiBigFont());
+		g2D.setFont(game.getUiFontL());
 		g2D.setColor(Color.WHITE);
 		g2D.drawString("LEVEL " + level + " COMPLETE", 250, 200);
 		// Draw play button

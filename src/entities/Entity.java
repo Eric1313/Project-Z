@@ -32,19 +32,14 @@ public abstract class Entity {
 	protected Game game;
 	private Chunk[][] chunkMap;
 
-	public Entity(boolean solid, Game game) {
-		this.height = 32;
-		this.width = 32;
-		this.position = new Point(0, 0);
-		this.rotation = 0;
-
-		this.health = 100;
-		this.inventory = new Inventory();
-		this.solid = solid;
-
-		this.game = game;
-	}
-
+	/**
+	 * 
+	 * @param height
+	 * @param width
+	 * @param position
+	 * @param solid
+	 * @param game
+	 */
 	public Entity(int height, int width, Point position, boolean solid, Game game) {
 		this.height = height;
 		this.width = width;
