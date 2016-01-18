@@ -468,7 +468,6 @@ public class Map {
 								new Point(i * 32, j * 32), Zombie.zombieHealth, game
 										.getZombie()[0], null, this.game, this,
 								(int) Math.floor((Math.random() * 5))));
-						System.out.println(Zombie.zombieHealth);
 						zombieCount++;
 					}
 				}
