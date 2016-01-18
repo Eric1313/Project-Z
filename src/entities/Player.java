@@ -122,6 +122,7 @@ public class Player extends Mob {
 				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
 
 		g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
+
 		if (this.getItem(selectedItemNumber) != null) {
 			if (selectedItem instanceof Firearm) {
 				g2D.drawImage(selectedItem.getImages()[2], (int) (this.getPosition().x - camera.getxOffset() + 10),
@@ -130,6 +131,7 @@ public class Player extends Mob {
 				g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
 						(int) (this.getPosition().y - camera.getyOffset() - 10), null);
 			}
+
 		}
 		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
 				(int) (this.getPosition().y - camera.getyOffset()), null);
