@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 
 import javax.sound.sampled.Clip;
 
-import Audio.Sound;
 import main.Game;
+import utilities.Sound;
 import entities.Player;
 import enums.ItemState;
 

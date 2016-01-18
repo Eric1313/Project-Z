@@ -63,6 +63,8 @@ public class Player extends Mob {
 	private double swingAngle;
 	private double swingAngleRange;
 
+	private boolean shoot;
+	
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -149,8 +151,14 @@ public class Player extends Mob {
 				g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
 						position.getY() - camera.getyOffset() + 16);
 				if (selectedItem instanceof Firearm) {
-					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[2], (int) (this.getPosition().x - camera.getxOffset() + 10),
+					if (this.shoot) {
+						g2D.drawImage(this.getItem(selectedItemNumber).getImages()[3], (int) (this.getPosition().x - camera.getxOffset() + 10),
+								(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+						this.shoot = false;
+					} else {
+						g2D.drawImage(this.getItem(selectedItemNumber).getImages()[2], (int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+					}
 				} else {
 					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
@@ -534,5 +542,9 @@ public class Player extends Mob {
 		this.swingTick = tick;
 		this.swingAngle = angle;
 		this.swingAngleRange = angleRange;
+	}
+	
+	public void shoot() {
+		this.shoot = true;
 	}
 }
