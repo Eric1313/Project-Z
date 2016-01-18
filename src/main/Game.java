@@ -193,6 +193,7 @@ public class Game implements Runnable {
 				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+
 	}
 
 	public Font getUiFont() {
