@@ -77,15 +77,8 @@ public class Player extends Mob {
 		this.skinNo = skinNo;
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
-		addItem(new Consumable((Consumable) this.game.getItems().get(0)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(1)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(2)));
-		addItem(new Consumable((Consumable) this.game.getItems().get(3)));
 		addItem(new Melee((Melee) this.game.getItems().get(4)));
 		addItem(new Firearm((Firearm) this.game.getItems().get(5)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(6)));
-		addItem(new Firearm((Firearm) this.game.getItems().get(7)));
-		addItem(new Throwable((Throwable) this.game.getItems().get(8)));
 		this.mouse = game.getDisplay().getMouseHandler();
 		this.camera = game.getCamera();
 		this.key = game.getDisplay().getKeyHandler();
@@ -164,6 +157,9 @@ public class Player extends Mob {
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
 				}
 			}
+		} else {
+			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
+					position.getY() - camera.getyOffset() + 16);
 		}
 
 		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
