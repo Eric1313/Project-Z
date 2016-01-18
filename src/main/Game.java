@@ -187,9 +187,9 @@ public class Game implements Runnable {
 				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		
-		Sound sound = new Sound ("res/sfx/100-0.wav");
-		sound.play();
+
+		// Sound sound = new Sound ("res/sfx/100-0.wav");
+		// sound.play();
 
 	}
 
