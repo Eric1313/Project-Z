@@ -210,6 +210,20 @@ player.damage(1);
 			chunkMap[chunkX][chunkY].addZombie(this);
 		}
 	}
+	
+	public void damage(int health) {
+		this.health -= health;
+		
+		if (this.health <= 0) {
+			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
+				dropItem(item);
+			}
+			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
+			this.chunkMap[this.position.x / 512][this.position.y / 512].addCorpse(new Corpse(position, images, game, map, rotation));
+		}
+		
+		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
+	}
 
 	/**
 	 * @return the path
