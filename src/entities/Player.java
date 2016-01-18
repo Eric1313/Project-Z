@@ -341,8 +341,8 @@ public class Player extends Mob {
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16 - 1); y++) {
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16); y++) {
 				ArrayList<Zombie> zombies = chunkMap[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);
@@ -432,8 +432,8 @@ public class Player extends Mob {
 
 		int chunkX = Math.max(this.position.x / 512, 1);
 		int chunkY = Math.max(this.position.y / 512, 1);
-		for (int x = chunkX - 1; x < Math.min(chunkX + 2, map.getWidth() / 16 - 1); x++) {
-			for (int y = chunkY - 1; y < Math.min(chunkY + 2, map.getWidth() / 16 - 1); y++) {
+		for (int x = chunkX - 1; x < Math.min(chunkX + 2, map.getWidth() / 16 ); x++) {
+			for (int y = chunkY - 1; y < Math.min(chunkY + 2, map.getWidth() / 16 ); y++) {
 				ArrayList<Zombie> zombies = chunkMap[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);

@@ -154,8 +154,8 @@ public class Zombie extends Mob {
 				collideLeft = false;
 		}
 
-		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16 - 2); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16 - 1); y++) {
+		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16); y++) {
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					if (1 < chunkMap[x][y].getZombies().size()) {
 						Zombie checkZombie = chunkMap[x][y].getZombies().get(i);
