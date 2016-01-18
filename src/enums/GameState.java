@@ -91,7 +91,6 @@ public class GameState {
 		case INGAME:
 			if (!pause)
 				game.getDisplay().getGamePanel().setup(game, size);
-			System.out.println (size);
 			break;
 		case PAUSE:
 			game.getDisplay().getPause().setup(game);
