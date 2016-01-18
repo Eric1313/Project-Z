@@ -81,12 +81,13 @@ public class Game implements Runnable {
 				.getFont();
 		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
 				.getFont();
-		help = new BufferedImage[5];
+		help = new BufferedImage[6];
 		help[0] = new Assets("res/img/1.png").getImage();
 		help[1] = new Assets("res/img/2.png").getImage();
 		help[2] = new Assets("res/img/3.png").getImage();
 		help[3] = new Assets("res/img/4.png").getImage();
 		help[4] = new Assets("res/img/5.png").getImage();
+		help[5] = new Assets("res/img/6.png").getImage();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
