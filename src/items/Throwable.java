@@ -46,8 +46,8 @@ public class Throwable extends Item {
 				new Point(player.getPosition().x +game.getDisplay().getMouseHandler()
 						.getMouseLocation().x-512, player.getPosition().y +game.getDisplay()
 						.getMouseHandler().getMouseLocation().y-384));
-		System.out.println(( Math.sqrt(Math.pow(line.x2 - line.x1, 2)
-				+ Math.pow(line.y2 - line.y1, 2))));
+//		System.out.println(( Math.sqrt(Math.pow(line.x2 - line.x1, 2)
+//				+ Math.pow(line.y2 - line.y1, 2))));
 		if(( Math.sqrt(Math.pow(line.x1 - line.x2, 2)
 				+ Math.pow(line.y1 - line.y2, 2)))<range)
 		{
