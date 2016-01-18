@@ -31,8 +31,7 @@ public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
 	private int imgNo;
 	private Player player;
-
-	public static int zombieHealth = 100;
+	
 	public static int damage = 5;
 
 	/**
@@ -53,12 +52,10 @@ public class Zombie extends Mob {
 	 */
 	public Zombie(Point position, int health, BufferedImage[] images, AudioClip[] clips, Game game, Map map,
 			int imgNo) {
-		super(32, 32, position, 0, Zombie.zombieHealth, true, images, clips, game, map);
+		super(32, 32, position, 0, health, true, images, clips, game, map);
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
 		this.imgNo = imgNo;
-		
-		this.health = Zombie.zombieHealth;
 	}
 
 	/**
@@ -259,13 +256,13 @@ public class Zombie extends Mob {
 
 		g2D.setTransform(originalTransform);
 
-		if (this.health < Zombie.zombieHealth) {
+		if (this.health < 100) {
 			g2D.drawRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 6,
 					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 33, 44, 6);
 			g2D.setColor(Color.RED);
 			g2D.fillRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 5,
 					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 34,
-					(int) (42.0 * this.health / Zombie.zombieHealth), 5);
+					(int) (42 * (this.health / 100.0)), 5);
 			g2D.setColor(Color.BLACK);
 		}
 	}

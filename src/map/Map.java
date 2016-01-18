@@ -465,7 +465,7 @@ public class Map {
 					setTile(i, j, 200, Direction.UP, false);
 					if (Math.random() > 0.99) {
 						chunkMap[i / 16][j / 16].addZombie(new Zombie(
-								new Point(i * 32, j * 32), Zombie.zombieHealth, game
+								new Point(i * 32, j * 32), 100, game
 										.getZombie()[0], null, this.game, this,
 								(int) Math.floor((Math.random() * 5))));
 						zombieCount++;

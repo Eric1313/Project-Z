@@ -66,7 +66,6 @@ public class FinishPanel extends Canvas {
 				game.getState().setGameState(State.INGAME, false,
 						400 + 160 * level);
 				Zombie.damage = (level + 1) * 5;
-				Zombie.zombieHealth = 100 + level * 50;
 			}
 		} else {
 			hoverNext = false;
