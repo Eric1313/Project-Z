@@ -117,9 +117,8 @@ public class Game implements Runnable {
 
 					Sound[] sounds = new Sound[soundLinks.length];
 
-					for(int i=0;i<sounds.length;i++)
-					{
-						 sounds[i] = new Sound (soundLinks[i]);
+					for (int i = 0; i < sounds.length; i++) {
+						sounds[i] = new Sound(soundLinks[i]);
 					}
 					// TODO: Add AudioClips to the sounds array
 
@@ -152,7 +151,7 @@ public class Game implements Runnable {
 										.parseInt(stats[6]), Integer
 										.parseInt(stats[7]), Integer
 										.parseInt(stats[8]), Integer
-										.parseInt(stats[9]),Integer
+										.parseInt(stats[9]), Integer
 										.parseInt(stats[10])));
 						break;
 					case 3:
@@ -394,8 +393,8 @@ public class Game implements Runnable {
 	public BufferedImage[][] getZombie() {
 		return zombie;
 	}
-	
-	public BufferedImage getBloodVisual(){
+
+	public BufferedImage getBloodVisual() {
 		return bloodSplatter;
 	}
 
