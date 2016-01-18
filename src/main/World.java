@@ -180,8 +180,7 @@ public class World {
 							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
 									+ xChange,
 							(int) (tileY * Assets.TILE_HEIGHT
-									- camera.getyOffset() + yChange),
-							Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+									- camera.getyOffset() + yChange), 32, 32);
 				}
 				tileX++;
 			}
@@ -365,11 +364,11 @@ public class World {
 				this.damageTicks.remove(entity);
 			}
 		}
-		
-		if (player.getHealth() >= 0){
+
+		if (player.getHealth() >= 0) {
 			Composite original = g2D.getComposite();
-			float transparency = (float) ((100.0-player.getHealth())/100);
-			g2D.setComposite(AlphaComposite.SrcOver.derive(transparency)); 
+			float transparency = (float) ((100.0 - player.getHealth()) / 100);
+			g2D.setComposite(AlphaComposite.SrcOver.derive(transparency));
 			g.drawImage(game.getBloodVisual(), 0, 0, null);
 			g2D.setComposite(original);
 		}
