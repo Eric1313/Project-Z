@@ -423,8 +423,8 @@ public class Map {
 
 			playerX = (int) (Math.random() * xRange + startX);
 			playerY = (int) (Math.random() * yRange + startY);
-			System.out.println(start.getX() + " " + start.getY() + " : "
-					+ playerX + " " + playerY);
+//			System.out.println(start.getX() + " " + start.getY() + " : "
+//					+ playerX + " " + playerY);
 		} while ((tileMap[playerX][playerY] & 0xFFF) != 201);
 
 		if (isStart)
