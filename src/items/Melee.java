@@ -7,6 +7,8 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import main.Game;
 import entities.Player;
 import enums.ItemState;
@@ -26,7 +28,7 @@ public class Melee extends Item {
 	private int angle;
 
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			AudioClip[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
+			Clip[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;

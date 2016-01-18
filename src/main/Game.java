@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Clip;
+
 import utilities.Assets;
 import utilities.GameCamera;
 import enums.GameState;
@@ -103,7 +105,7 @@ public class Game implements Runnable {
 							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
-					AudioClip[] sounds = new AudioClip[soundLinks.length];
+					Clip[] sounds = new Clip[soundLinks.length];
 
 					// TODO: Add AudioClips to the sounds array
 

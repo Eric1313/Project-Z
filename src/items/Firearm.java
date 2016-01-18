@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import main.Game;
 import entities.Inventory;
 import entities.Player;
@@ -26,7 +28,7 @@ public class Firearm extends Item {
 	private int currentAmmo;
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			ItemState state, BufferedImage[] images, Clip[] clips,
 			Game game, int ammoID, int rateOfFire, int maxAmmo) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
