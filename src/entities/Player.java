@@ -268,7 +268,7 @@ public class Player extends Mob {
 
 		if (world.getFlag() != null) {
 			if (world.getFlag().contains(hitbox)) {
-				System.out.println ("Collision");
+				game.getState().setGameState(State.FINISH, false);
 			}
 		}
 	}
