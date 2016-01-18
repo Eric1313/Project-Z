@@ -22,6 +22,7 @@ public class ImageLoader {
 	public static BufferedImage loadImage(String path) {
 		// In case of errors (e.g. image not found)
 		try {
+			System.out.println(path);
 			return ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -5,6 +5,7 @@ import items.Item;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import entities.Corpse;
 import entities.Entity;
 import entities.Zombie;
 
@@ -13,12 +14,14 @@ public class Chunk {
 	private ArrayList<Entity> passibleEntities;
 	private ArrayList<Item> items;
 	private ArrayList<Zombie>zombies;
+	private ArrayList<Corpse>corpses;
 
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
 		this.passibleEntities = new ArrayList<Entity>();
 		this.zombies= new ArrayList<Zombie>();
 		this.items = new ArrayList<Item>();
+		this.corpses = new ArrayList<Corpse>();
 	}
 
 	/**
@@ -98,5 +101,13 @@ public class Chunk {
 	{
 		zombies.remove(zombie);
 		return zombie;
+	}
+	
+	public void addCorpse(Corpse corpse){
+		corpses.add(corpse);
+	}
+	
+	public ArrayList<Corpse> getCorpses(){
+		return corpses;
 	}
 }

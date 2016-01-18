@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
+import javax.sound.sampled.Clip;
+
 import main.Game;
 import entities.Inventory;
 import entities.Player;
@@ -27,7 +29,7 @@ public class Firearm extends Item {
 	private int currentAmmo;
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, AudioClip[] clips,
+			ItemState state, BufferedImage[] images, Clip[] clips,
 			Game game, int ammoID, int rateOfFire, int maxAmmo) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
@@ -61,7 +63,7 @@ public class Firearm extends Item {
 			if (currentTick - player.getLastItemTick() > this.getRateOfFire()) {
 				player.setLastItemTick(currentTick);
 
-				int d = 32 * 16;
+				int d = 32 * 64;
 
 				Line2D.Double line = new Line2D.Double(new Point(
 						player.getPosition().x + 16,

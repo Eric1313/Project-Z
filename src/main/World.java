@@ -22,6 +22,7 @@ import map.Map;
 import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
+import entities.Corpse;
 import entities.Entity;
 import entities.Player;
 import entities.Zombie;
@@ -206,9 +207,15 @@ public class World {
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16 - 1); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16 - 1); y++) {
+				
+				
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
+				}
+				for (int i = 0; i < chunkMap[x][y].getCorpses().size(); i++) {
+					Corpse corpse = chunkMap[x][y].getCorpses().get(i);
+					corpse.render(g);
 				}
 				// for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies()
 				// .iterator(); iterator.hasNext();) {

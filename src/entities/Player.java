@@ -49,6 +49,7 @@ public class Player extends Mob {
 	private boolean exhausted = false;
 	private int stamina;
 	private long lastDamageTick = -60;
+	private short[][] tiles;
 
 	private int selectedItemNumber = 0;
 	private Item selectedItem;
@@ -82,6 +83,7 @@ public class Player extends Mob {
 		this.key = game.getDisplay().getKeyHandler();
 		this.world = game.getDisplay().getGamePanel().getWorld();
 		this.selectedItem = this.getItem(selectedItemNumber);
+
 	}
 
 	public int getStamina() {
@@ -119,7 +121,12 @@ public class Player extends Mob {
 				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
 
 		g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
-
+		if (selectedItem instanceof Firearm)
+			g2D.drawImage(selectedItem.getImages()[2], (int) (this.getPosition().x - camera.getxOffset()+10),
+					(int) (this.getPosition().y - camera.getyOffset()-10), null);
+		else
+			g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset()+10),
+					(int) (this.getPosition().y - camera.getyOffset()-10), null);
 		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
 				(int) (this.getPosition().y - camera.getyOffset()), null);
 
@@ -353,9 +360,33 @@ public class Player extends Mob {
 				}
 			}
 		}
-
+		
 		Zombie closestZombie = null;
-		double zombieDistance = 100 * 32;
+		double maxDistance = 100 * 32;
+		
+		if(tiles==null)
+		this.tiles=this.world.getMap().getMap();
+		
+		double slope= (line.y2-line.y2)/(line.x2-line.x1);
+		System.out.println(slope);
+		if(line.x2>line.x1)
+		for (int i=0;i<1024;i++)
+		{
+			if((tiles[(this.position.x+i)/32][((int)(this.position.y+(i*slope)))/32] & (1 << 14)) != 0)
+			{
+				maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));
+				break;
+			}
+		}
+		else
+			for (int i=0;i>-1024;i--)
+			{
+				if((tiles[(this.position.x+i)/32][((int)(this.position.y+(i*slope)))/32] & (1 << 14)) != 0)
+				{
+					maxDistance=(Math.sqrt(Math.pow(i,2)+Math.pow((i*slope), 2)));
+					break;
+				}
+			}
 
 		for (Iterator<Zombie> iterator = zombiesCollided.iterator(); iterator.hasNext();) {
 			Zombie zombie = iterator.next();
@@ -363,8 +394,8 @@ public class Player extends Mob {
 			double distance = Point.distance(this.position.x, this.position.y, zombie.getPosition().x,
 					zombie.getPosition().y);
 
-			if (distance < zombieDistance) {
-				zombieDistance = distance;
+			if (distance < maxDistance) {
+				maxDistance = distance;
 				closestZombie = zombie;
 			}
 		}
@@ -385,7 +416,7 @@ public class Player extends Mob {
 			}
 		}
 
-		if (entityDistance > zombieDistance) {
+		if (entityDistance > maxDistance) {
 			closestEntity = closestZombie;
 		}
 
