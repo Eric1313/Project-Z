@@ -377,7 +377,7 @@ public class Map {
 			// + playerX + " " + playerY);
 		} while ((tileMap[playerX][playerY] & 0xFFF) != 201);
 
-		if (isStart)
+		if (!isStart)
 			playerStart = new Point(playerX, playerY);
 
 		// Generates the Trees inside the plaza
