@@ -33,7 +33,7 @@ public abstract class Entity {
 	protected AudioClip[] clips;
 
 	protected Game game;
-	protected Chunk[][]chunkMap;
+	private Chunk[][]chunkMap;
 
 	public Entity(boolean solid, Game game) {
 		// TODO Add map for future features
@@ -41,7 +41,6 @@ public abstract class Entity {
 		this.width = 32;
 		this.position = new Point(0, 0);
 		this.rotation = 0;
-		// Set this.bounds?
 
 		this.health = 100;
 		this.inventory = new Inventory();
@@ -56,7 +55,6 @@ public abstract class Entity {
 		this.width = width;
 		this.position = position;
 		this.rotation = 0;
-		// Set this.bounds?
 
 		this.health = 100;
 		this.inventory = new Inventory();
@@ -72,7 +70,6 @@ public abstract class Entity {
 		this.width = width;
 		this.position = position;
 		this.rotation = rotation;
-		this.bounds = bounds;
 
 		this.health = health;
 		this.inventory = new Inventory();
@@ -117,10 +114,6 @@ public abstract class Entity {
 		this.rotation = rotation;
 	}
 
-	public Rectangle[] getBounds() {
-		return this.bounds;
-	}
-
 	public int getHealth() {
 		return this.health;
 	}
@@ -136,7 +129,7 @@ public abstract class Entity {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 				dropItem(item);
 			}
-			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
 		}
 		
 		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
@@ -173,7 +166,7 @@ public abstract class Entity {
 			item.setPosition(new Point(this.position.x, this.position.y));
 			item.setState(ItemState.DROPPED);
 			removeItem(itemNo);
-			this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512].add(item);
 		}
 	}
 
@@ -207,4 +200,18 @@ public abstract class Entity {
 	}
 
 	public abstract void render(Graphics g);
+
+	/**
+	 * @return the chunkMap
+	 */
+	public Chunk[][] getChunkMap() {
+		return chunkMap;
+	}
+
+	/**
+	 * @param chunkMap the chunkMap to set
+	 */
+	public void setChunkMap(Chunk[][] chunkMap) {
+		this.chunkMap = chunkMap;
+	}
 }

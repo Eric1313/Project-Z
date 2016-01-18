@@ -7,12 +7,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 
 import javax.sound.sampled.Clip;
 
 import main.Game;
+import map.Map;
 import utilities.Sound;
 import entities.Player;
+import entities.Zombie;
 import enums.ItemState;
 
 /**
@@ -26,6 +29,8 @@ public abstract class Item {
 	protected int itemID;
 	protected String name;
 	protected boolean inHand;
+	protected Map map;
+	
 
 	/**
 	 * Integer that decides how rare it is to find this item in a map.<br>
@@ -89,6 +94,27 @@ public abstract class Item {
 		this.clips = item.clips;
 
 		this.game = item.game;
+	}
+	public void makeNoise(int range, boolean player) {
+		if (map==null)
+			map=game.getDisplay().getGamePanel().getWorld().getMap();
+		int chunkX = Math.max(position.x / 512,2);
+		int chunkY = Math.max(position.y / 512,2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16); x++) {
+			for (int y = chunkY - 2; y <Math.min( chunkY + 3,map.getHeight()/16); y++) {
+				if(x<100&&y<100)
+				for (Iterator<Zombie> iterator = map.getChunkMap()[x][y].getZombies().iterator(); iterator
+						.hasNext();) {
+					Zombie zombie = iterator.next();
+					if(Math.pow(position.x-zombie.getPosition().x, 2)  +Math.pow(position.y-zombie.getPosition().y, 2)<range*range)
+					{
+						if(player)
+						zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.getPosition().x+16)/32, (zombie.getPosition().y+16)/32, (this.position.x+16)/32, (this.position.y+16)/32));
+						
+					}
+				}
+			}
+		}
 	}
 
 	public int getItemID() {

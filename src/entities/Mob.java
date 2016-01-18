@@ -39,7 +39,7 @@ public abstract class Mob extends Entity {
 	public Mob(int height, int width, Point position, boolean solid, Game game,Map map) {
 		super(height, width, position, solid, game);
 		this.map=map;
-		this.chunkMap=map.getChunkMap();
+		this.setChunkMap(map.getChunkMap());
 	}
 
 	public Mob(int height, int width, Point position, double rotation,
@@ -48,7 +48,7 @@ public abstract class Mob extends Entity {
 		super(height, width, position, rotation, health, solid, images, clips,
 				game);
 		this.map=map;
-	this.chunkMap=map.getChunkMap();
+	this.setChunkMap(map.getChunkMap());
 	}
 
 	public void makeNoise(int range, boolean player) {
@@ -57,7 +57,7 @@ public abstract class Mob extends Entity {
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16); x++) {
 			for (int y = chunkY - 2; y <Math.min( chunkY + 3,map.getHeight()/16); y++) {
 				if(x<100&&y<100)
-				for (Iterator<Zombie> iterator = chunkMap[x][y].getZombies().iterator(); iterator
+				for (Iterator<Zombie> iterator = getChunkMap()[x][y].getZombies().iterator(); iterator
 						.hasNext();) {
 					Zombie zombie = iterator.next();
 					if(Math.pow(position.x-zombie.position.x, 2)  +Math.pow(position.y-zombie.position.y, 2)<range*range)
