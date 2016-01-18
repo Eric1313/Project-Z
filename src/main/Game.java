@@ -194,15 +194,6 @@ public class Game implements Runnable {
 				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-<<<<<<< HEAD
-		
-
-=======
-
-		// Sound sound = new Sound ("res/sfx/100-0.wav");
-		// sound.play();
->>>>>>> 90ff31f264cb4779fe9fc6f5e97126eb8f4391fd
-
 	}
 
 	public Font getUiFont() {
