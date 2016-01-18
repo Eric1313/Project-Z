@@ -28,7 +28,7 @@ public class HelpPanel extends Canvas {
 		if (image != 5) {
 			button(g2D, nextHover, next, "NEXT", 866, 705, 855, 725);
 		} else {
-			button(g2D, nextHover, next, "MAIN", 866, 705, 855, 725);
+			button(g2D, nextHover, next, "MENU", 866, 705, 855, 725);
 		}
 	}
 

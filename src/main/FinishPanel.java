@@ -52,7 +52,7 @@ public class FinishPanel extends Canvas {
 		g2D.drawString("LEVEL " + level + " COMPLETE", 250, 200);
 		// Draw play button
 		button(g2D, hoverNext, next, "NEXT", 475, 367, 460, 390);
-		button(g2D, hoverMain, main, "MAIN", 475, 487, 460, 510);
+		button(g2D, hoverMain, main, "MENU", 475, 487, 460, 510);
 		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
 
 		// Credits
