@@ -279,7 +279,6 @@ public class Player extends Mob {
 		if (world.getSolid()[row][col] != null && yMove() == 0 && xMove() == 0 && key.isRight() && key.isLeft()
 				&& key.isUp() && key.isDown()) {
 			if (hitbox.intersects(world.getSolid()[row][col])) {
-				System.out.println("Shit");
 				this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + 32);
 			}
 		}
