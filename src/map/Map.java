@@ -114,9 +114,15 @@ public class Map {
 
 		int startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
 		int endHouse;
+		int count = 0;
 
 		do {
 			endHouse = (int) Math.ceil(Math.random() * (plazaStarts.size()-1));
+			count++;
+			if (count >= 10){
+				startHouse = (int)Math.floor((Math.random()*(plazaStarts.size()-1)));
+				count = 0;
+			}
 		} while (Math.abs(plazaStarts.get(startHouse).getX()
 				- plazaStarts.get(endHouse).getX()) < 200
 				&& Math.abs(plazaStarts.get(startHouse).getY()
