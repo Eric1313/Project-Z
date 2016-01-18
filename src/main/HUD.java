@@ -86,6 +86,7 @@ public class HUD {
 		g.setColor(Color.WHITE);
 		g.drawString("HEALTH", 908, 35);
 		g.drawString("STAMINA", 908, 65);
+		g.drawString(player.getHealth() + " / 100", 953, 35);
 
 		g.setColor(Color.RED);
 		g.drawString("ZOMBIES: " + Integer.toString(Map.zombieCount), 25, 25);
