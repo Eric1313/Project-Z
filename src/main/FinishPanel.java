@@ -14,7 +14,7 @@ public class FinishPanel extends Canvas {
 	private Game game;
 	private float colour = 30;
 	private boolean decrease;
-
+	private int level;
 	private Rectangle next;
 	private Rectangle main;
 	private Rectangle exit;
@@ -48,8 +48,7 @@ public class FinishPanel extends Canvas {
 		g2D.drawString("}", 200, 650);
 		g2D.setFont(game.getUiBigFont());
 		g2D.setColor(Color.WHITE);
-		g2D.drawString("LEVEL COMPLETE", 250, 200);
-
+		g2D.drawString("LEVEL " + level + " COMPLETE", 250, 200);
 		// Draw play button
 		button(g2D, hoverNext, next, "NEXT", 475, 367, 460, 390);
 		button(g2D, hoverMain, main, "MAIN", 475, 487, 460, 510);
@@ -63,6 +62,8 @@ public class FinishPanel extends Canvas {
 			hoverNext = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
+				game.getState().setGameState(State.INGAME, false,
+						400 + 160 * level);
 			}
 		} else {
 			hoverNext = false;
@@ -86,6 +87,8 @@ public class FinishPanel extends Canvas {
 		} else {
 			hoverExit = false;
 		}
+		// game.getDisplay().getGamePanel().getWorld();
+		// game.getDisplay().getGamePanel().getWorld().getNoOfZombie();
 	}
 
 	public void setup(Game game) {
@@ -93,6 +96,7 @@ public class FinishPanel extends Canvas {
 		next = new Rectangle(412, 300, 200, 100);
 		main = new Rectangle(412, 420, 200, 100);
 		exit = new Rectangle(412, 540, 200, 100);
+		level++;
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,

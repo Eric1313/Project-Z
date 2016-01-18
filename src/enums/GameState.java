@@ -71,7 +71,26 @@ public class GameState {
 			break;
 		case INGAME:
 			if (!pause)
-				game.getDisplay().getGamePanel().setup(game);
+				game.getDisplay().getGamePanel().setup(game, 400);
+			break;
+		case PAUSE:
+			game.getDisplay().getPause().setup(game);
+			break;
+		case FINISH:
+			game.getDisplay().getFinish().setup(game);
+			break;
+		}
+	}
+
+	public void setGameState(State gameState, boolean pause, int size) {
+		this.gameState = gameState;
+		switch (gameState) {
+		case LOBBY:
+			game.getDisplay().getMain().setup(game);
+			break;
+		case INGAME:
+			if (!pause)
+				game.getDisplay().getGamePanel().setup(game, size);
 			break;
 		case PAUSE:
 			game.getDisplay().getPause().setup(game);
