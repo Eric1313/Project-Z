@@ -49,8 +49,8 @@ public class GamePanel extends Canvas {
 		}
 	}
 
-	public void setup(Game game) {
-		world = new World(game, 400, 400);
+	public void setup(Game game, int size) {
+		world = new World(game, size, size);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
 		this.map = world.getMap();

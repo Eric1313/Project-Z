@@ -14,6 +14,7 @@ public class Display {
 	private GamePanel gamePanel;
 	private MainPanel main;
 	private PausePanel pause;
+	private FinishPanel finish;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -37,6 +38,7 @@ public class Display {
 		gamePanel = new GamePanel();
 		main = new MainPanel();
 		pause = new PausePanel();
+		finish = new FinishPanel();
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -52,7 +54,7 @@ public class Display {
 		gamePanel.addMouseMotionListener(mouseHandler);
 		gamePanel.addMouseListener(mouseHandler);
 		gamePanel.addMouseWheelListener(mouseHandler);
-		
+
 		main.setPreferredSize(new Dimension(width, height));
 		main.setMaximumSize(new Dimension(width, height));
 		main.setMinimumSize(new Dimension(width, height));
@@ -60,7 +62,7 @@ public class Display {
 		main.addMouseMotionListener(mouseHandler);
 		main.addMouseListener(mouseHandler);
 		main.addMouseWheelListener(mouseHandler);
-		
+
 		pause.setPreferredSize(new Dimension(width, height));
 		pause.setMaximumSize(new Dimension(width, height));
 		pause.setMinimumSize(new Dimension(width, height));
@@ -69,6 +71,14 @@ public class Display {
 		pause.addMouseListener(mouseHandler);
 		pause.addMouseWheelListener(mouseHandler);
 
+		finish.setPreferredSize(new Dimension(width, height));
+		finish.setMaximumSize(new Dimension(width, height));
+		finish.setMinimumSize(new Dimension(width, height));
+		finish.setFocusable(false);
+		finish.addMouseMotionListener(mouseHandler);
+		finish.addMouseListener(mouseHandler);
+		finish.addMouseWheelListener(mouseHandler);
+		
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
 		frame.add(gamePanel);
@@ -80,9 +90,13 @@ public class Display {
 	public MainPanel getMain() {
 		return main;
 	}
-	
+
 	public PausePanel getPause() {
 		return pause;
+	}
+	
+	public FinishPanel getFinish() {
+		return finish;
 	}
 
 	public JFrame getFrame() {

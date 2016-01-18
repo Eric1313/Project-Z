@@ -32,6 +32,7 @@ public class Game implements Runnable {
 	private BufferedImage[][] tiles;
 	private BufferedImage[][] player;
 	private BufferedImage[][] zombie;
+	private BufferedImage bloodSplatter;
 	private BufferedImage mainMenu;
 	private Font uiFont;
 	private Font uiBigFont;
@@ -68,6 +69,7 @@ public class Game implements Runnable {
 		player = new Assets("res/img/player.png", 1, 1).getSprites();
 		zombie = new Assets("res/img/zombie.png", 1, 1).getSprites();
 		mainMenu = new Assets("res/img/menu.png").getImage();
+		bloodSplatter = new Assets("res/img/bloodvisual.png").getImage();
 		uiFont = new Assets("res/fonts/BEBASNEUE.ttf", 50).getFont();
 		uiBigFont = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
 		miniUiFont = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
@@ -192,8 +194,14 @@ public class Game implements Runnable {
 				new Assets("res/img/icon.png").getImage());
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+<<<<<<< HEAD
 		
 
+=======
+
+		// Sound sound = new Sound ("res/sfx/100-0.wav");
+		// sound.play();
+>>>>>>> 90ff31f264cb4779fe9fc6f5e97126eb8f4391fd
 
 	}
 
@@ -394,6 +402,10 @@ public class Game implements Runnable {
 	 */
 	public BufferedImage[][] getZombie() {
 		return zombie;
+	}
+	
+	public BufferedImage getBloodVisual(){
+		return bloodSplatter;
 	}
 
 	/**

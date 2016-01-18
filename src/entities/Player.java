@@ -265,6 +265,12 @@ public class Player extends Mob {
 				makeNoise(200, true);
 			}
 		}
+
+		if (world.getFlag() != null) {
+			if (world.getFlag().intersects(hitbox)) {
+				game.getState().setGameState(State.FINISH, false);
+			}
+		}
 	}
 
 	private int xMove() {
@@ -421,13 +427,13 @@ public class Player extends Mob {
 								+ Math.pow((i * slope), 2)));
 						break;
 					}
+
 			}
 		else
 			for (int i = 0; i > -1024; i--) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
-
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
 
 					& (1 << 14)) != 0) {
@@ -435,6 +441,7 @@ public class Player extends Mob {
 								+ Math.pow((i * slope), 2)));
 						break;
 					}
+
 			}
 
 		for (Iterator<Zombie> iterator = zombiesCollided.iterator(); iterator
