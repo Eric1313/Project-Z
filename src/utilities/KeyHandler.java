@@ -15,16 +15,20 @@ public class KeyHandler implements KeyListener {
 	private boolean e;
 	private boolean r;
 	private boolean esc;
+	private boolean stop;
 	private int lastNumber;
 
 	@Override
 	public void keyPressed(KeyEvent key) {
-		toggle(key, true);
+		if (!stop) {
+			toggle(key, true);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent key) {
 		toggle(key, false);
+		stop = false;
 	}
 
 	private void toggle(KeyEvent e, boolean pressed) {
@@ -104,6 +108,7 @@ public class KeyHandler implements KeyListener {
 
 	public void setQ(boolean q) {
 		this.q = q;
+		this.stop = true;
 	}
 
 	public boolean isE() {
@@ -112,6 +117,7 @@ public class KeyHandler implements KeyListener {
 
 	public void setE(boolean e) {
 		this.e = e;
+		this.stop = true;
 	}
 
 	public int getLastNumber() {
@@ -141,11 +147,15 @@ public class KeyHandler implements KeyListener {
 	 */
 	public void setR(boolean r) {
 		this.r = r;
+		this.stop = true;
 	}
 
 	public boolean isEsc() {
 		return esc;
 	}
-	
-	
+
+	public void setEsc(boolean esc) {
+		this.esc = esc;
+		this.stop = true;
+	}
 }

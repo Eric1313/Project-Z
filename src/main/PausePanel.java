@@ -59,6 +59,7 @@ public class PausePanel extends Canvas {
 	public void update() {
 		if (game.getDisplay().getKeyHandler().isEsc()){
 			game.getState().setGameState(State.INGAME, true);
+			game.getDisplay().getKeyHandler().setEsc(false);
 		}
 		if (resume.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
