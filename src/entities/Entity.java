@@ -41,7 +41,6 @@ public abstract class Entity {
 		this.width = 32;
 		this.position = new Point(0, 0);
 		this.rotation = 0;
-		// Set this.bounds?
 
 		this.health = 100;
 		this.inventory = new Inventory();
@@ -56,7 +55,6 @@ public abstract class Entity {
 		this.width = width;
 		this.position = position;
 		this.rotation = 0;
-		// Set this.bounds?
 
 		this.health = 100;
 		this.inventory = new Inventory();
@@ -72,7 +70,6 @@ public abstract class Entity {
 		this.width = width;
 		this.position = position;
 		this.rotation = rotation;
-		this.bounds = bounds;
 
 		this.health = health;
 		this.inventory = new Inventory();
@@ -115,10 +112,6 @@ public abstract class Entity {
 
 	public void setRotation(double rotation) {
 		this.rotation = rotation;
-	}
-
-	public Rectangle[] getBounds() {
-		return this.bounds;
 	}
 
 	public int getHealth() {
