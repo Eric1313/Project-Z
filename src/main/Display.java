@@ -13,6 +13,7 @@ public class Display {
 	private JFrame frame;
 	private GamePanel gamePanel;
 	private MainPanel main;
+	private PausePanel pause;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -35,6 +36,7 @@ public class Display {
 
 		gamePanel = new GamePanel();
 		main = new MainPanel();
+		pause = new PausePanel();
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -58,6 +60,14 @@ public class Display {
 		main.addMouseMotionListener(mouseHandler);
 		main.addMouseListener(mouseHandler);
 		main.addMouseWheelListener(mouseHandler);
+		
+		pause.setPreferredSize(new Dimension(width, height));
+		pause.setMaximumSize(new Dimension(width, height));
+		pause.setMinimumSize(new Dimension(width, height));
+		pause.setFocusable(false);
+		pause.addMouseMotionListener(mouseHandler);
+		pause.addMouseListener(mouseHandler);
+		pause.addMouseWheelListener(mouseHandler);
 
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
@@ -65,11 +75,14 @@ public class Display {
 		frame.pack();
 
 		frame.setVisible(true);
-
 	}
 
 	public MainPanel getMain() {
 		return main;
+	}
+	
+	public PausePanel getPause() {
+		return pause;
 	}
 
 	public JFrame getFrame() {
