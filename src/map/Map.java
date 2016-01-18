@@ -438,7 +438,7 @@ public class Map {
 			// + playerX + " " + playerY);
 		} while ((tileMap[playerX][playerY] & 0xFFF) != 201);
 
-		if (isStart)
+		if (!isStart)
 			playerStart = new Point(playerX, playerY);
 
 		// Generates the Trees inside the plaza
@@ -465,7 +465,7 @@ public class Map {
 					setTile(i, j, 200, Direction.UP, false);
 					if (Math.random() > 0.99) {
 						chunkMap[i / 16][j / 16].addZombie(new Zombie(
-								new Point(i * 32, j * 32), 100, game
+								new Point(i * 32, j * 32), Zombie.zombieHealth, game
 										.getZombie()[0], null, this.game, this,
 								(int) Math.floor((Math.random() * 5))));
 						zombieCount++;
