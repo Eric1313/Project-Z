@@ -31,7 +31,7 @@ public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
 	private int imgNo;
 	private Player player;
-	
+
 	public static int damage = 5;
 	public static int zombieHealth = 100;
 
@@ -57,8 +57,16 @@ public class Zombie extends Mob {
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
 		this.imgNo = imgNo;
-		
+
 		this.health = Zombie.zombieHealth;
+		if (Math.random() < .05) {
+			this.movementSpeed = Zombie.MOVEMENT_SPEED * 2;
+		} else if (Math.random() < 0.01) {
+			this.movementSpeed = Zombie.MOVEMENT_SPEED * 3;
+		} else {
+			this.movementSpeed = Zombie.MOVEMENT_SPEED;
+		}
+
 	}
 
 	/**
@@ -193,16 +201,16 @@ public class Zombie extends Mob {
 
 		// System.out.println(this.getPosition().x+" "+this.getPosition().y);
 		if (this.up && !collideUp) {
-			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() - MOVEMENT_SPEED);
+			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() - this.movementSpeed);
 		}
 		if (this.down && !collideDown) {
-			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + MOVEMENT_SPEED);
+			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + this.movementSpeed);
 		}
 		if (this.left && !collideLeft) {
-			this.getPosition().setLocation(this.getPosition().getX() - MOVEMENT_SPEED, this.getPosition().getY());
+			this.getPosition().setLocation(this.getPosition().getX() - this.movementSpeed, this.getPosition().getY());
 		}
 		if (this.right && !collideRight) {
-			this.getPosition().setLocation(this.getPosition().getX() + MOVEMENT_SPEED, this.getPosition().getY());
+			this.getPosition().setLocation(this.getPosition().getX() + this.movementSpeed, this.getPosition().getY());
 		}
 		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100, false);
@@ -211,22 +219,24 @@ public class Zombie extends Mob {
 			getChunkMap()[chunkX][chunkY].removeZombie(this);
 			chunkX = this.position.x / 512;
 			chunkY = this.position.y / 512;
-			if(!(chunkX>getChunkMap().length-1||chunkY>getChunkMap()[0].length-1||chunkX<0||chunkY<0))
-			getChunkMap()[chunkX][chunkY].addZombie(this);
+			if (!(chunkX > getChunkMap().length - 1 || chunkY > getChunkMap()[0].length - 1 || chunkX < 0
+					|| chunkY < 0))
+				getChunkMap()[chunkX][chunkY].addZombie(this);
 		}
 	}
-	
+
 	public void damage(int health) {
 		this.health -= health;
-		
+
 		if (this.health <= 0) {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 				dropItem(item);
 			}
 			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512].add(new Corpse(position, images, game, map, rotation));
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512]
+					.add(new Corpse(position, images, game, map, rotation));
 		}
-		
+
 		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
 	}
 

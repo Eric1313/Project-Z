@@ -440,8 +440,13 @@ public class Player extends Mob {
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
-						return new Point((this.position.x + i),
-								((int) (this.position.y + (i * slope))));
+						int hitX= this.position.x+i;
+						int hitY= (int) (this.position.y + (i * slope));
+						if(hitY>line.getY1())
+							hitY-=32;
+						if(hitX>line.getX1())
+							hitX-=32;
+						return new Point(hitX,hitY);
 					}
 			}
 		else
@@ -452,8 +457,13 @@ public class Player extends Mob {
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
 
 					& (1 << 14)) != 0) {
-						return new Point((this.position.x + i),
-								((int) (this.position.y + (i * slope))));
+						int hitX= this.position.x+i;
+						int hitY= (int) (this.position.y + (i * slope));
+						if(hitY>line.getY1())
+							hitY-=32;
+						if(hitX>line.getX1())
+							hitX-=32;
+						return new Point(hitX,hitY);
 					}
 			}
 		return new Point((int) line.x2, (int) line.y2);
