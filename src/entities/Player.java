@@ -64,7 +64,7 @@ public class Player extends Mob {
 	private double swingAngleRange;
 
 	private boolean shoot;
-	
+
 	public Player(boolean solid, Game game) {
 		super(solid, game);
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -79,6 +79,8 @@ public class Player extends Mob {
 		this.stamina = Player.MAX_STAMINA;
 		addItem(new Melee((Melee) this.game.getItems().get(4)));
 		addItem(new Firearm((Firearm) this.game.getItems().get(5)));
+		addItem(new Firearm((Firearm) this.game.getItems().get(6)));
+		addItem(new Firearm((Firearm) this.game.getItems().get(7)));
 		this.mouse = game.getDisplay().getMouseHandler();
 		this.camera = game.getCamera();
 		this.key = game.getDisplay().getKeyHandler();
@@ -110,7 +112,7 @@ public class Player extends Mob {
 			super.damage(health);
 			this.lastDamageTick = currentTick;
 		}
-		if (this.getHealth() <= 0){
+		if (this.getHealth() <= 0) {
 			game.getState().setGameState(State.DEATH, false);
 		}
 	}
@@ -123,13 +125,16 @@ public class Player extends Mob {
 
 		double angle = Math.atan2(((position.getY()) + 16 - camera.getyOffset()) - mouse.getMouseLocation().getY(),
 				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
-		
+
 		if (this.getItem(selectedItemNumber) != null) {
 			if (selectedItem instanceof Melee && this.swinging) {
 				long difference = this.game.getTickCount() - this.swingTick;
 				if (difference <= ((Melee) selectedItem).getSwingSpeed()) {
 					// TODO lol
-					g2D.rotate(this.swingAngle - this.swingAngleRange + (this.swingAngleRange * 2 / difference * ((Melee) selectedItem).getSwingSpeed() * 1.0),
+					g2D.rotate(
+							this.swingAngle - this.swingAngleRange
+									+ (this.swingAngleRange * 2 / difference * ((Melee) selectedItem).getSwingSpeed()
+											* 1.0),
 							position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
 					g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
@@ -144,22 +149,23 @@ public class Player extends Mob {
 				g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
 						position.getY() - camera.getyOffset() + 16);
 				if (selectedItem instanceof Firearm) {
-					if (this.shoot) {
-						g2D.drawImage(this.getItem(selectedItemNumber).getImages()[3], (int) (this.getPosition().x - camera.getxOffset() + 10),
-								(int) (this.getPosition().y - camera.getyOffset() - 10), null);
-						this.shoot = false;
-					} else {
-						g2D.drawImage(this.getItem(selectedItemNumber).getImages()[2], (int) (this.getPosition().x - camera.getxOffset() + 10),
+					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[2],
+							(int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+					if (this.shoot) {
+						g2D.setColor(new Color(255, 255, 0));
+						g2D.fillOval((int) (this.getPosition().x - camera.getxOffset() + 25),
+								(int) (this.getPosition().y - camera.getyOffset() - 18), 6, 12);
+						this.shoot = false;
 					}
 				} else {
-					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
+					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[0],
+							(int) (this.getPosition().x - camera.getxOffset() + 10),
 							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
 				}
 			}
 		} else {
-			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
-					position.getY() - camera.getyOffset() + 16);
+			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
 		}
 
 		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
@@ -420,8 +426,7 @@ public class Player extends Mob {
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
-						maxDistance = (Math.sqrt(Math.pow(i, 2)
-								+ Math.pow((i * slope), 2)));
+						maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
 						break;
 					}
 			}
@@ -432,9 +437,8 @@ public class Player extends Mob {
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1)))
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
 
-					& (1 << 14)) != 0) {
-						maxDistance = (Math.sqrt(Math.pow(i, 2)
-								+ Math.pow((i * slope), 2)));
+							& (1 << 14)) != 0) {
+						maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
 						break;
 					}
 			}
@@ -539,7 +543,7 @@ public class Player extends Mob {
 		this.swingAngle = angle;
 		this.swingAngleRange = angleRange;
 	}
-	
+
 	public void shoot() {
 		this.shoot = true;
 	}
