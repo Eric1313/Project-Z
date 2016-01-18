@@ -57,7 +57,7 @@ public class MainPanel extends Canvas {
 		
 		// Credits
 		g2D.setColor(Color.WHITE);
-		g2D.setFont(game.getTinyUiFont());
+		g2D.setFont(game.getUiFontXS());
 		g2D.drawString(
 				"Ver. 1.0 CREATED BY ALLEN HAN, ALOSHA REYMER, ERIC CHEE, & PATRICK LIU",
 				680, 760);
