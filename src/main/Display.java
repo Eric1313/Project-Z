@@ -16,6 +16,7 @@ public class Display {
 	private PausePanel pause;
 	private FinishPanel finish;
 	private DeathPanel death;
+	private HelpPanel help;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -41,6 +42,7 @@ public class Display {
 		pause = new PausePanel();
 		finish = new FinishPanel();
 		death = new DeathPanel();
+		help = new HelpPanel();
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -88,6 +90,14 @@ public class Display {
 		death.addMouseMotionListener(mouseHandler);
 		death.addMouseListener(mouseHandler);
 		death.addMouseWheelListener(mouseHandler);
+		
+		help.setPreferredSize(new Dimension(width, height));
+		help.setMaximumSize(new Dimension(width, height));
+		help.setMinimumSize(new Dimension(width, height));
+		help.setFocusable(false);
+		help.addMouseMotionListener(mouseHandler);
+		help.addMouseListener(mouseHandler);
+		help.addMouseWheelListener(mouseHandler);
 
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
@@ -111,6 +121,10 @@ public class Display {
 
 	public FinishPanel getFinish() {
 		return finish;
+	}
+	
+	public HelpPanel getHelp() {
+		return help;
 	}
 
 	public JFrame getFrame() {

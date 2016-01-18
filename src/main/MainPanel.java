@@ -53,7 +53,7 @@ public class MainPanel extends Canvas {
 		// Draw play button
 		button(g2D, hoverPlay, play, "PLAY", 475, 367, 460, 390);
 		button(g2D, hoverHelp, help, "HELP", 475, 487, 460, 510);
-		button (g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
+		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,
@@ -92,6 +92,10 @@ public class MainPanel extends Canvas {
 		if (help.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hoverHelp = true;
+			if (game.getDisplay().getMouseHandler().isClick()) {
+				game.getState().setGameState(State.HELP, false);
+				game.getDisplay().getMouseHandler().setClick(false);
+			}
 		} else {
 			hoverHelp = false;
 		}

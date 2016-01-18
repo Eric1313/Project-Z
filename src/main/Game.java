@@ -34,6 +34,7 @@ public class Game implements Runnable {
 	private BufferedImage[][] zombie;
 	private BufferedImage bloodSplatter;
 	private BufferedImage mainMenu;
+	private BufferedImage[] help;
 	private Font uiFont;
 	private Font uiBigFont;
 	private Font zombieFont;
@@ -80,6 +81,12 @@ public class Game implements Runnable {
 				.getFont();
 		zombieFontHuge = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
 				.getFont();
+		help = new BufferedImage[5];
+		help[0] = new Assets("res/img/1.png").getImage();
+		help[1] = new Assets("res/img/2.png").getImage();
+		help[2] = new Assets("res/img/3.png").getImage();
+		help[3] = new Assets("res/img/4.png").getImage();
+		help[4] = new Assets("res/img/5.png").getImage();
 		// Load all of the items
 		BufferedReader itemReader = null;
 
@@ -194,6 +201,10 @@ public class Game implements Runnable {
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
+	}
+
+	public BufferedImage[] getHelp() {
+		return help;
 	}
 
 	public Font getUiFont() {

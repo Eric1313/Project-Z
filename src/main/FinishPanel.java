@@ -63,9 +63,10 @@ public class FinishPanel extends Canvas {
 			hoverNext = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
+				Zombie.damage = (level + 1) * 5;
+				Zombie.zombieHealth = 100 + level * 50;
 				game.getState().setGameState(State.INGAME, false,
 						400 + 160 * level);
-				Zombie.damage = (level + 1) * 5;
 			}
 		} else {
 			hoverNext = false;
