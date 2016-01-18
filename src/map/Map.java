@@ -905,7 +905,7 @@ public class Map {
 				else if (i == size)
 					setTile(tempx, tempy, 120, Direction.RIGHT, false);
 				else
-					setTile(tempx, tempy, 121, Direction.DOWN, false);
+					setTile(tempx, tempy, 120, Direction.DOWN, false);
 				tempx++;
 			}
 		}
@@ -958,7 +958,7 @@ public class Map {
 				else if (i == size)
 					setTile(tempx, tempy, 120, Direction.DOWN, false);
 				else
-					setTile(tempx, tempy, 121, Direction.RIGHT, false);
+					setTile(tempx, tempy, 120, Direction.RIGHT, false);
 				tempy++;
 			}
 			tempx--;
