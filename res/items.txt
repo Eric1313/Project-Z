@@ -9,5 +9,5 @@
 200~Baseball Bat~2~20~res/img/200.png~res/sfx/200-0.wav`res/sfx/200-1.wav~20~15~48~60
 300~Pistol~2~40~res/img/300.png~res/sfx/300-0.wav`res/sfx/300-1.wav~101~5~8~600
 301~Rifle~1~80~res/img/301.png~res/sfx/301-0.wav`res/sfx/301-1.wav~102~5~30~800
-302~Shotgun~1~125~res/img/302.png~res/sfx/302-0.wav`res/sfx/302-1.wav~103~5~6~1000
+302~Shotgun~1~50~res/img/302.png~res/sfx/302-0.wav`res/sfx/302-1.wav~103~5~6~1000
 400~Brick~3~20~res/img/400.png~res/sfx/400-0.wav`res/sfx/400-1.wav~3~256~3

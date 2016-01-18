@@ -66,16 +66,28 @@ public class Firearm extends Item {
 				player.setLastItemTick(currentTick);
 
 				int d = 32 * 64;
+				int noShots =1;
+				if (this.itemID==302)
+				{
+					noShots=7;
+				}
 
+				for (int i=1;i<=noShots;i++)
+				{
+					double angleAdjust=((i/2)*.05);
+					if(i%2==1)
+						angleAdjust=angleAdjust*(-1);
+					System.out.println(angleAdjust);
+					
 				Line2D.Double line = new Line2D.Double(
 						new Point(player.getPosition().x + 16, player.getPosition().y + 16),
-						new Point((int) (player.getPosition().x + 16 + d * Math.cos(angle)),
-								(int) (player.getPosition().y + 16 - d * Math.sin(angle))));
+						new Point((int) (player.getPosition().x + 16 + d * Math.cos(angle+angleAdjust)),
+								(int) (player.getPosition().y + 16 - d * Math.sin(angle+angleAdjust))));
 
 				player.bulletCollision(line, this.getEffectValue());
 
 				player.makeNoise(this.noise, true);
-
+				}
 				this.removeAmmo();
 			}
 		}
