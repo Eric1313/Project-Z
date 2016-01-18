@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -24,14 +25,11 @@ public class PausePanel extends Canvas {
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// Make the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 		// Draws the hand
 		// Pulsates the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -51,16 +49,12 @@ public class PausePanel extends Canvas {
 		g2D.drawString("PAUSED", 400, 200);
 
 		// Draw play button
-		button(g2D, hoverResume, resume, "RESUME", 452, 367, 460, 390);
-		button(g2D, hoverMain, main, "MAIN", 475, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
+		g2D.setFont(game.getUiFont());
+		FontMetrics fm = g2D.getFontMetrics();
 
-		// Credits
-		g2D.setColor(Color.WHITE);
-		g2D.setFont(game.getUiFontXS());
-		g2D.drawString(
-				"Ver. 1.0 CREATED BY ALLEN HAN, ALOSHA REYMER, ERIC CHEE, & PATRICK LIU",
-				680, 760);
+		button(g2D, hoverResume, resume, "RESUME", 512 - fm.stringWidth("RESUME") / 2, 367, 460, 390);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 487, 460, 510);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 607, 460, 630);
 	}
 
 	public void update() {
@@ -68,8 +62,7 @@ public class PausePanel extends Canvas {
 			game.getState().setGameState(State.INGAME, true);
 			game.getDisplay().getKeyHandler().setEsc(false);
 		}
-		if (resume.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (resume.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverResume = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -78,8 +71,7 @@ public class PausePanel extends Canvas {
 		} else {
 			hoverResume = false;
 		}
-		if (main.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (main.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -88,8 +80,7 @@ public class PausePanel extends Canvas {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (exit.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverExit = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				System.exit(0);
@@ -107,8 +98,8 @@ public class PausePanel extends Canvas {
 		exit = new Rectangle(412, 540, 200, 100);
 	}
 
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
+	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
+			int handY) {
 		g2D.setColor(Color.WHITE);
 		if (hover) {
 			g2D.setPaint(Color.WHITE);

@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -51,9 +52,12 @@ public class MainPanel extends Canvas {
 		// Draw title
 		g.drawImage(game.getMainMenu(), 0, 0, null);
 		// Draw play button
-		button(g2D, hoverPlay, play, "PLAY", 475, 367, 460, 390);
-		button(g2D, hoverHelp, help, "HELP", 475, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 475, 607, 460, 630);
+		g2D.setFont(game.getUiFont());
+		FontMetrics fm = g2D.getFontMetrics();
+		
+		button(g2D, hoverPlay, play, "PLAY", 512 - fm.stringWidth("PLAY") / 2, 367, 460, 390);
+		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2, 487, 460, 510);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 607, 460, 630);
 		
 		// Credits
 		g2D.setColor(Color.WHITE);

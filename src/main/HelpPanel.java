@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -22,13 +23,17 @@ public class HelpPanel extends Canvas {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.drawImage(game.getHelp()[image], 0, 0, null);
+
+		g2D.setFont(game.getUiFont());
+		FontMetrics fm = g2D.getFontMetrics();
+
 		if (image != 0) {
-			button(g2D, previousHover, previous, "PREVIOUS", 50, 705, 70, 725);
+			button(g2D, previousHover, previous, "PREVIOUS", 120 - fm.stringWidth("PREVIOUS") / 2, 705, 70, 725);
 		}
 		if (image != 5) {
-			button(g2D, nextHover, next, "NEXT", 866, 705, 855, 725);
+			button(g2D, nextHover, next, "NEXT", 904 - fm.stringWidth("NEXT") / 2, 705, 855, 725);
 		} else {
-			button(g2D, nextHover, next, "MENU", 866, 705, 855, 725);
+			button(g2D, nextHover, next, "MENU", 904 - fm.stringWidth("MENU") / 2, 705, 855, 725);
 		}
 	}
 

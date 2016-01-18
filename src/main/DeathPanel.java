@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -49,15 +50,9 @@ public class DeathPanel extends Canvas {
 		g2D.drawString("YOU DIED", 375, 200);
 
 		// Draw play button
+		FontMetrics fm = g2D.getFontMetrics();
 		button(g2D, hoverMain, main, "MENU", 475, 367, 460, 390);
 		button(g2D, hoverExit, exit, "QUIT", 475, 487, 460, 510);
-
-		// Credits
-		g2D.setColor(Color.WHITE);
-		g2D.setFont(game.getUiFontXS());
-		g2D.drawString(
-				"Ver. 1.0 CREATED BY ALLEN HAN, ALOSHA REYMER, ERIC CHEE, & PATRICK LIU",
-				680, 760);
 	}
 
 	public void update() {
