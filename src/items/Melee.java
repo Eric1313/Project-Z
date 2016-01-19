@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import entities.Player;
 import enums.ItemState;
 import main.Game;
+import utilities.Effect;
 import utilities.Sound;
 
 /**
@@ -27,7 +28,7 @@ public class Melee extends Item {
 	private int durability;
 
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Sound[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle, int durability) {
+			Effect[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;

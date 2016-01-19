@@ -17,6 +17,6 @@
 300~Pistol~3~40~res/img/300.png~res/sfx/300-0.wav~101~20~8~600~1000
 301~Rifle~2~80~res/img/301.png~res/sfx/301-0.wav~102~33~30~800~3500
 302~Shotgun~2~75~res/img/302.png~res/sfx/302-0.wav~103~130~6~1000~5400
-303~Sniper Rifle~2~175~res/img/303.png~res/sfx/302-0.wav~104~150~5~1500~6000
-304~Submachine Gun~3~30~res/img/304.png~res/sfx/301-0.wav~105~5~50~850~3500
+303~Sniper Rifle~2~175~res/img/303.png~res/sfx/303-0.wav~104~161~5~1500~6000
+304~Submachine Gun~3~30~res/img/304.png~res/sfx/304-0.wav~105~10~20~850~3500
 400~Brick~5~20~res/img/400.png~res/sfx/400-0.wav~3~256~3
