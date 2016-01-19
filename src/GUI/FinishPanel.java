@@ -23,6 +23,7 @@ public class FinishPanel extends Canvas {
 	private boolean hoverNext;
 	private boolean hoverMain;
 	private boolean hoverExit;
+	private int level;
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -50,7 +51,7 @@ public class FinishPanel extends Canvas {
 		g2D.drawString("}", 200, 650);
 		g2D.setFont(game.getUiFontL());
 		g2D.setColor(Color.WHITE);
-		g2D.drawString("LEVEL " + game.getLevel() + " COMPLETE", 250, 200);
+		g2D.drawString("LEVEL " + level + " COMPLETE", 250, 200);
 		// Draw play button
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
@@ -75,7 +76,8 @@ public class FinishPanel extends Canvas {
 						State.INGAME,
 						false,
 						400 + 160 * game.getLevel(),
-						null,
+						game.getDisplay().getGamePanel().getWorld().getPlayer()
+								.getInventory(),
 						game.getDisplay().getGamePanel().getWorld().getPlayer()
 								.getSkinNo());
 			}
@@ -111,6 +113,7 @@ public class FinishPanel extends Canvas {
 		next = new Rectangle(412, 300, 200, 100);
 		main = new Rectangle(412, 420, 200, 100);
 		exit = new Rectangle(412, 540, 200, 100);
+		level = game.getLevel();
 		game.setLevel(game.getLevel() + 1);
 	}
 
