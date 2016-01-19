@@ -76,12 +76,9 @@ public class Game implements Runnable {
 		uiFontL = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
 		uiFontS = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
 		uiFontXS = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
-		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
-				.getFont();
-		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
-				.getFont();
-		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
-				.getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150).getFont();
+		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380).getFont();
+		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000).getFont();
 		help = new BufferedImage[6];
 		help[0] = new Assets("res/img/1.png").getImage();
 		help[1] = new Assets("res/img/2.png").getImage();
@@ -89,14 +86,13 @@ public class Game implements Runnable {
 		help[3] = new Assets("res/img/4.png").getImage();
 		help[4] = new Assets("res/img/5.png").getImage();
 		help[5] = new Assets("res/img/6.png").getImage();
+
 		// Load all of the items
 		BufferedReader itemReader = null;
 
 		try {
-			itemReader = new BufferedReader(new InputStreamReader(
-					new FileInputStream("res/items.txt")));
+			itemReader = new BufferedReader(new InputStreamReader(new FileInputStream("res/items.txt")));
 		} catch (FileNotFoundException e) {
-			// TODO Make catch block more useful
 			e.printStackTrace();
 		}
 
@@ -104,10 +100,8 @@ public class Game implements Runnable {
 
 		for (int itemType = 0; itemType < 4; itemType++) {
 			try {
-				// TODO Handle invalid input
 				noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
 			} catch (IOException e) {
-				// TODO Make catch block more useful
 				e.printStackTrace();
 			}
 		}
@@ -117,11 +111,13 @@ public class Game implements Runnable {
 		for (int itemType = 0; itemType < 4; itemType++) {
 			for (int item = 0; item < noOfItems[itemType]; item++) {
 				try {
+					// Read in all of the stats of the current item separated by
+					// '~' delimiters
+					// Load all of the images and sounds
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
-					BufferedImage[] images = new Assets(stats[4], 1, 1)
-							.getSprites()[0];
+					BufferedImage[] images = new Assets(stats[4], 1, 1).getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
 					Effect[] sounds = new Effect[soundLinks.length];
@@ -129,65 +125,47 @@ public class Game implements Runnable {
 					for (int i = 0; i < sounds.length; i++) {
 						sounds[i] = new Effect(soundLinks[i]);
 					}
-					// TODO: Add AudioClips to the sounds array
 
+					// Depending on which item type the current item, use the
+					// respective constructor and add it to the game's list of
+					// items
 					switch (itemType) {
 					case 0:
-						this.items
-								.add(new Consumable(Integer.parseInt(stats[0]),
-										stats[1], Integer.parseInt(stats[2]),
-										Integer.parseInt(stats[3]),
-										ItemState.DROPPED, images, sounds,
-										this, ItemEffect.values()[Integer
-												.parseInt(stats[6])], Integer
-												.parseInt(stats[7])));
+						this.items.add(new Consumable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7])));
 						break;
 					case 1:
-						this.items.add(new Melee(Integer.parseInt(stats[0]),
-								stats[1], Integer.parseInt(stats[2]), Integer
-										.parseInt(stats[3]), ItemState.DROPPED,
-								images, sounds, this, Integer
-										.parseInt(stats[6]), Integer
-										.parseInt(stats[7]), Integer
-										.parseInt(stats[8]), Integer
-										.parseInt(stats[9]), Integer
-										.parseInt(stats[10])));
+						this.items.add(new Melee(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
+								Integer.parseInt(stats[9]), Integer.parseInt(stats[10])));
 						break;
 					case 2:
-						this.items.add(new Firearm(Integer.parseInt(stats[0]),
-								stats[1], Integer.parseInt(stats[2]), Integer
-										.parseInt(stats[3]), ItemState.DROPPED,
-								images, sounds, this, Integer
-										.parseInt(stats[6]), Integer
-										.parseInt(stats[7]), Integer
-										.parseInt(stats[8]), Integer
-										.parseInt(stats[9]), Integer
-										.parseInt(stats[10])));
+						this.items.add(new Firearm(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
+								Integer.parseInt(stats[9]), Integer.parseInt(stats[10])));
 						break;
 					case 3:
-						this.items
-								.add(new Throwable(Integer.parseInt(stats[0]),
-										stats[1], Integer.parseInt(stats[2]),
-										Integer.parseInt(stats[3]),
-										ItemState.DROPPED, images, sounds,
-										this, ItemEffect.values()[Integer
-												.parseInt(stats[6])], Integer
-												.parseInt(stats[7]), Integer
-												.parseInt(stats[8])));
+						this.items.add(new Throwable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7]),
+								Integer.parseInt(stats[8])));
 					}
 
 				} catch (IOException e) {
-					// TODO Make catch block more useful
 					e.printStackTrace();
 				}
 
 			}
 		}
 
+		// Close the file
+		
 		try {
 			itemReader.close();
 		} catch (IOException e) {
-			// TODO Make catch block more useful
 			e.printStackTrace();
 		}
 		// Loads the display
@@ -199,10 +177,8 @@ public class Game implements Runnable {
 		state.setGameState(State.LOBBY, false);
 
 		// display.getFrame().createBufferStrategy(2);
-		display.getFrame().setIconImage(
-				new Assets("res/img/icon.png").getImage());
-		display.getFrame().setCursor(
-				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		display.getFrame().setIconImage(new Assets("res/img/icon.png").getImage());
+		display.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
 	}
 
@@ -410,6 +386,7 @@ public class Game implements Runnable {
 	public BufferedImage getMainMenu() {
 		return this.mainMenu;
 	}
+
 	public int getLevel() {
 		return level;
 	}
@@ -443,8 +420,7 @@ public class Game implements Runnable {
 				case 2:
 					return new Melee((Melee) this.items.get(item));
 				case 3:
-					Firearm newItem = new Firearm(
-							(Firearm) this.items.get(item));
+					Firearm newItem = new Firearm((Firearm) this.items.get(item));
 					newItem.setCurrentAmmo(newItem.getMaxAmmo());
 					return newItem;
 				case 4:
