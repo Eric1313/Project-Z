@@ -286,8 +286,10 @@ public class Game implements Runnable {
 			if (passedTime > 100000000)
 				passedTime = 100000000;
 
+			// Seconds since the last tick
 			unprocessedSeconds += passedTime / 1000000000.0;
 
+			// Updates the game
 			boolean ticked = false;
 			while (unprocessedSeconds > secondsPerTick) {
 				update();
@@ -313,7 +315,7 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Start the game
+	 * Starts the game.
 	 */
 	public synchronized void start() {
 		// Do not make a new thread if it is already running
@@ -328,10 +330,10 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Stop the game
+	 * Stops the game.
 	 */
 	public synchronized void stop() {
-		// In case stop gets called and it is already not running
+		// In case stop gets called and the game is already not running
 		if (!running)
 			return;
 
