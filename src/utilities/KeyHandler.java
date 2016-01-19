@@ -1,3 +1,8 @@
+/*
+ * Handles the key input from the player
+ * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
+ * @version January 4th, 2016
+ */
 package utilities;
 
 import java.awt.event.KeyEvent;
@@ -18,6 +23,9 @@ public class KeyHandler implements KeyListener {
 	private int lastNumber;
 
 	@Override
+	/**
+	 * Toggles the key that is pressed
+	 */
 	public void keyPressed(KeyEvent key) {
 		if (!stop) {
 			toggle(key, true);
@@ -25,56 +33,81 @@ public class KeyHandler implements KeyListener {
 	}
 
 	@Override
+	/**
+	 * Toggles the key that is released
+	 */
 	public void keyReleased(KeyEvent key) {
 		toggle(key, false);
 		stop = false;
 	}
 
-	private void toggle(KeyEvent e, boolean pressed) {
+	/**
+	 * Toggles the key
+	 * 
+	 * @param key
+	 *            the key that was pressed or released
+	 * @param pressed
+	 *            if the key is pressed or not
+	 */
+	private void toggle(KeyEvent key, boolean pressed) {
 		// Sets the pressed key to true or false
-		if (e.getKeyCode() == KeyEvent.VK_W) {
+		if (key.getKeyCode() == KeyEvent.VK_W) {
 			up = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_S) {
+		if (key.getKeyCode() == KeyEvent.VK_S) {
 			down = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_A) {
+		if (key.getKeyCode() == KeyEvent.VK_A) {
 			left = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_D) {
+		if (key.getKeyCode() == KeyEvent.VK_D) {
 			right = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+		if (key.getKeyCode() == KeyEvent.VK_SHIFT) {
 			shift = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+		if (key.getKeyCode() == KeyEvent.VK_CONTROL) {
 			ctrl = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_Q) {
+		if (key.getKeyCode() == KeyEvent.VK_Q) {
 			q = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_E) {
+		if (key.getKeyCode() == KeyEvent.VK_E) {
 			this.e = pressed;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_R) {
+		if (key.getKeyCode() == KeyEvent.VK_R) {
 			this.setR(pressed);
 		}
-		if (e.getKeyCode() >= 48 && e.getKeyCode() <= 57 && pressed) {
-			if (e.getKeyCode() == 48) {
+		if (key.getKeyCode() >= 48 && key.getKeyCode() <= 57 && pressed) {
+			if (key.getKeyCode() == 48) {
 				this.lastNumber = 9;
 			} else {
-				this.lastNumber = e.getKeyCode() - 49;
+				this.lastNumber = key.getKeyCode() - 49;
 			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			esc = pressed;
 		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+	}
 
+	/**
+	 * Sets the last number key (0-9) that was pressed
+	 * 
+	 * @param lastNumber
+	 *            the number that was pressed
+	 */
+	public void setLastNumber(int lastNumber) {
+		if (lastNumber < 0) {
+			this.lastNumber = 10 + lastNumber;
+		} else if (lastNumber > 9) {
+			this.lastNumber = 10 - lastNumber;
+		} else {
+			this.lastNumber = lastNumber;
+		}
 	}
 
 	public boolean isUp() {
@@ -118,7 +151,7 @@ public class KeyHandler implements KeyListener {
 		this.e = e;
 		this.stop = true;
 	}
-	
+
 	public boolean isR() {
 		return r;
 	}
@@ -139,15 +172,5 @@ public class KeyHandler implements KeyListener {
 
 	public int getLastNumber() {
 		return this.lastNumber;
-	}
-
-	public void setLastNumber(int lastNumber) {
-		if (lastNumber < 0) {
-			this.lastNumber = 10 + lastNumber;
-		} else if (lastNumber > 9) {
-			this.lastNumber = 10 - lastNumber;
-		} else {
-			this.lastNumber = lastNumber;
-		}
 	}
 }
