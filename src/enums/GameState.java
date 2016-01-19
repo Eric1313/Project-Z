@@ -3,6 +3,7 @@ package enums;
 import java.awt.Graphics;
 
 import main.Game;
+import entities.Inventory;
 
 /**
  * GameState object for storing and changing the game state of the game.
@@ -83,7 +84,7 @@ public class GameState {
 			break;
 		case INGAME:
 			if (!pause)
-				game.getDisplay().getGamePanel().setup(game, 400);
+				game.getDisplay().getGamePanel().setup(game);
 			break;
 		case PAUSE:
 			game.getDisplay().getPause().setup(game);
@@ -100,7 +101,8 @@ public class GameState {
 		}
 	}
 
-	public void setGameState(State gameState, boolean pause, int size) {
+	public void setGameState(State gameState, boolean pause, int size,
+			Inventory inventory, int skinNo) {
 		this.gameState = gameState;
 		switch (gameState) {
 		case LOBBY:
@@ -108,7 +110,8 @@ public class GameState {
 			break;
 		case INGAME:
 			if (!pause)
-				game.getDisplay().getGamePanel().setup(game, size);
+				game.getDisplay().getGamePanel()
+						.setup(game, size, inventory, skinNo);
 			break;
 		case PAUSE:
 			game.getDisplay().getPause().setup(game);

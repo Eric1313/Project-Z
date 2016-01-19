@@ -8,6 +8,7 @@ import main.Game;
 import map.Chunk;
 import map.Map;
 import map.World;
+import entities.Inventory;
 
 public class GamePanel extends Canvas {
 	private static final long serialVersionUID = 1L;
@@ -55,9 +56,18 @@ public class GamePanel extends Canvas {
 		}
 	}
 
-	public void setup(Game game, int size) {
+	public void setup(Game game) {
 		this.game = game;
-		world = new World(game, size, size);
+		world = new World(game, 400, 400, null, 0);
+		hud = new HUD(world.getPlayer());
+		setUp = true;
+		this.map = world.getMap();
+		this.chunkMap = map.getChunkMap();
+	}
+
+	public void setup(Game game, int size, Inventory inventory, int skinNo) {
+		this.game = game;
+		world = new World(game, size, size, inventory, skinNo);
 		hud = new HUD(world.getPlayer());
 		setUp = true;
 		this.map = world.getMap();
