@@ -109,63 +109,82 @@ public class Melee extends Item {
 		return this.radius;
 	}
 
+	public int getDurability() {
+		return this.durability;
+	}
+
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
-		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
+		g.fillRect(mouseLocation.x, mouseLocation.y - 250, 300, 250);
 
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
-		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
+		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 200);
 
 		g.setFont(this.game.getUiFontXS());
 		switch (this.rarity) {
 		case 5:
-			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 180);
 			break;
 		case 4:
-			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 180);
 			break;
 		case 3:
-			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 180);
 			break;
 		case 2:
-			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 180);
 			break;
 		case 1:
-			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 180);
 			break;
 		}
+		g.drawString("Melee weapon", mouseLocation.x + 20, mouseLocation.y - 165);
 
 		g.setFont(this.game.getUiFontS());
-		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
+		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 140);
 
 		if (this.swingSpeed >= 60) {
-			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 115);
 		} else if (this.swingSpeed >= 50) {
-			g.drawString("Slow attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Slow attack speed", mouseLocation.x + 20, mouseLocation.y - 115);
 		} else if (this.swingSpeed >= 40) {
-			g.drawString("Normal attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Normal attack speed", mouseLocation.x + 20, mouseLocation.y - 115);
 		} else if (this.swingSpeed >= 30) {
-			g.drawString("Fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Fast attack speed", mouseLocation.x + 20, mouseLocation.y - 115);
 		} else {
-			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 115);
 		}
 
 		if (this.rechargeTime >= 40) {
-			g.drawString("Very slow recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Very slow recharge time", mouseLocation.x + 20, mouseLocation.y - 90);
 		} else if (this.rechargeTime >= 30) {
-			g.drawString("Slow recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Slow recharge time", mouseLocation.x + 20, mouseLocation.y - 90);
 		} else if (this.rechargeTime >= 20) {
-			g.drawString("Normal recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Normal recharge time", mouseLocation.x + 20, mouseLocation.y - 90);
 		} else if (this.rechargeTime >= 10) {
-			g.drawString("Fast recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Fast recharge time", mouseLocation.x + 20, mouseLocation.y - 90);
 		} else {
-			g.drawString("Very fast recharge time", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Very fast recharge time", mouseLocation.x + 20, mouseLocation.y - 90);
 		}
-	}
 
-	public int getDurability() {
-		return this.durability;
+		if (this.radius * this.angle >= 4500) {
+			g.drawString("Very large range", mouseLocation.x + 20, mouseLocation.y - 65);
+		} else if (this.radius * this.angle >= 4000) {
+			g.drawString("Large range", mouseLocation.x + 20, mouseLocation.y - 65);
+		} else if (this.radius * this.angle >= 2500) {
+			g.drawString("Normal range", mouseLocation.x + 20, mouseLocation.y - 65);
+		} else if (this.radius * this.angle >= 1000) {
+			g.drawString("Small range", mouseLocation.x + 20, mouseLocation.y - 65);
+		} else {
+			g.drawString("Very small range", mouseLocation.x + 20, mouseLocation.y - 65);
+		}
+		
+		if (this.durability == 1) {
+			g.drawString("Can be used " + this.durability + " time", mouseLocation.x + 20, mouseLocation.y - 40);
+		} else {
+			g.drawString("Can be used " + this.durability + " times", mouseLocation.x + 20, mouseLocation.y - 40);
+		}
 	}
 }
