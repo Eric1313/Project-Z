@@ -526,7 +526,7 @@ public class Map {
 		}
 
 		// Spawns the victory flag
-		if (isStart) {
+		if (!isStart) {
 			int corner = (int) Math.floor((Math.random() * 4));
 
 			if (corner == 0) {
