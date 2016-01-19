@@ -88,8 +88,18 @@ public class Player extends Mob {
 	 * @param skinNo
 	 *            a number representing the player's skin.
 	 */
-	public Player(Point position, boolean solid, Game game, Map map, int skinNo) {
+	public Player(Point position, Inventory inventory, boolean solid, Game game, Map map, int skinNo) {
 		super(32, 32, position, solid, game, map);
+		
+		if (inventory != null) {
+			this.inventory = inventory;
+		} else {
+			this.addItem(this.game.getItem(200));
+			this.addItem(this.game.getItem(300));
+			this.addItem(this.game.getItem(304));
+			this.addItem(this.game.getItem(400));
+			this.addItem(this.game.getItem(303));
+		}
 
 		this.skinNo = skinNo;
 		this.movementSpeed = Player.MOVEMENT_SPEED;
@@ -100,11 +110,6 @@ public class Player extends Mob {
 		this.key = this.game.getDisplay().getKeyHandler();
 		this.mouse = this.game.getDisplay().getMouseHandler();
 
-		this.addItem(this.game.getItem(200));
-		this.addItem(this.game.getItem(300));
-		this.addItem(this.game.getItem(304));
-		this.addItem(this.game.getItem(400));
-		this.addItem(this.game.getItem(303));
 		this.selectedItem = this.getItem(selectedItemNumber);
 	}
 

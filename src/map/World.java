@@ -87,7 +87,7 @@ public class World {
 		// Spawns the player in the map
 		player = new Player(new Point(
 				(int) map.getPlayerCoordinate().getX() * 32, (int) map
-						.getPlayerCoordinate().getY() * 32), true, game, map,
+						.getPlayerCoordinate().getY() * 32), null, true, game, map,
 				(int) Math.floor((Math.random() * 6)));
 
 		// Sets the player's image
