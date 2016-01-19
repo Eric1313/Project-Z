@@ -627,13 +627,16 @@ public class Map {
 	 * Generates trees in the empty plaza areas
 	 * 
 	 * @param start
+	 * 			The start of the forest
 	 * @param end
+	 * 			The end of the forest
 	 */
 	public void generateTrees(Point start, Point end) {
-
+		// The dimensions of the forest
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 
+		// Goes through the forest area with a small chance of placing a tree in every valid tile
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if ((tileMap[i][j] & 0xFFF) == 108) {
@@ -657,6 +660,7 @@ public class Map {
 			}
 		}
 
+		// Spawns zombies inside of the forest
 		for (int z = 0; z < MAX_ZOMBIE_PER_FOREST; z++) {
 			int randomX = (int) (Math.random() * boxWidth + start.getX());
 			int randomY = (int) (Math.random() * boxHeight + start.getY());
@@ -669,6 +673,7 @@ public class Map {
 			}
 		}
 
+		// Spawns items inside of the forest
 		for (int item = 0; item < MAX_ITEM_PER_FOREST; item++) {
 			// Clone the item
 			Item itemSpawned = itemSpawns.get((int) (Math.random() * itemSpawns.size()));
@@ -684,6 +689,8 @@ public class Map {
 
 			int randomX = (int) (Math.random() * boxWidth + start.getX());
 			int randomY = (int) (Math.random() * boxHeight + start.getY());
+			
+			// Checks to see if the chosen tile is valid and if it is, places an item there
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0 && (tileMap[randomX][randomY] & 0xFFF) != 201
 					&& (tileMap[randomX][randomY] & 0xFFF) != 207) {
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
@@ -697,12 +704,19 @@ public class Map {
 	 * Sets the tiles for the walls inside the room
 	 * 
 	 * @param start
+	 * 			The start of the wall
 	 * @param end
+	 * 			The end of the wall
+	 * @param safe
+	 * 			If the area is safe or not
 	 */
 	public void generateWall(Point start, Point end, boolean safe) {
+		// Dimensions of the door
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 		int doorLocation;
+		
+		// Generates a vertical wall while taking into account surrounding tiles
 		if (boxHeight > boxWidth) {
 			doorLocation = (int) start.getY() + boxHeight / 3;
 
@@ -732,7 +746,7 @@ public class Map {
 				else
 					setTile((int) start.getX(), i, 207, Direction.UP, false);
 			}
-
+		// Generates a horizontal wall while taking into account surrounding tiles
 		} else {
 			doorLocation = (int) start.getX() + boxWidth / 3;
 
@@ -769,14 +783,17 @@ public class Map {
 	 * Generates side road off of main road
 	 * 
 	 * @param start
+	 * 		The start of the side road area
 	 * @param end
+	 * 		The end of the side road area
 	 */
 	public void generateSideRoads(Point start, Point end) {
+		// Dimensions of the side road
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX() - 1)));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
-		// System.out.println(boxWidth + " " + boxHeight);
 		int roadX;
 		int roadY;
+		
 		if (boxWidth * boxHeight > MAX_AREA) {
 
 			if ((boxWidth > (2 * MIN_SIDE_LENGTH + ROAD_WIDTH))
@@ -812,13 +829,13 @@ public class Map {
 				Point end2 = new Point((int) end.getX(), (int) end.getY());
 				generateSideRoads(start2, end2);
 			} else {
-				// records corners of plaza
+				// Records corners of plaza
 				plazaStarts.add(start);
 				plazaEnds.add(end);
 
 			}
 		} else {
-			// records corners of plaza
+			// Records corners of plaza
 			plazaStarts.add(start);
 			plazaEnds.add(end);
 		}
@@ -858,10 +875,6 @@ public class Map {
 				if (i == 1 || i == size) {
 
 				}
-				// if (i == 1)
-				// setTile(tempx, (tempy + 1), 102, Direction.LEFT);
-				// else if (i == size)
-				// setTile(tempx, (tempy + 1), 102, Direction.DOWN);
 				else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.LEFT, false);
 					setTile(tempx, (tempy + 1), 103, Direction.LEFT, false);
@@ -922,17 +935,13 @@ public class Map {
 				tempx++;
 			}
 		}
-		// road intersection
+		// Road intersection
 		else {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == size || i == 1) {
 
 				}
-				// if (i == 1)
-				// setTile(tempx, (tempy - 1), 102, Direction.UP);
-				// else if (i == size)
-				// setTile(tempx, (tempy - 1), 102, Direction.RIGHT);
 				else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.LEFT, false);
 					setTile(tempx, (tempy - 1), 103, Direction.UP, false);
@@ -984,10 +993,6 @@ public class Map {
 				if (i == 1 || i == size) {
 
 				}
-				// if (i == 1)
-				// setTile((tempx + 1), tempy, 103, Direction.RIGHT);
-				// else if (i == size)
-				// setTile((tempx + 1), tempy, 103, Direction.DOWN);
 				else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.UP, false);
 					setTile((tempx + 1), tempy, 103, Direction.RIGHT, false);
@@ -1005,9 +1010,8 @@ public class Map {
 
 		// Road generation
 		tempy -= size;
-		while (tempx > 0 && tileMap[tempx][tempy] == 0)// Until end of map or
-														// hit
-														// another road
+		// Until end of map or hit another road
+		while (tempx > 0 && tileMap[tempx][tempy] == 0)
 		{
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
@@ -1051,12 +1055,7 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size) {
-
 				}
-				// if (i == 1)
-				// setTile((tempx - 1), tempy, 103, Direction.UP);
-				// else if (i == size)
-				// setTile((tempx - 1), tempy, 103, Direction.RIGHT);
 				else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.UP, false);
 					setTile((tempx - 1), tempy, 103, Direction.UP, false);
@@ -1130,6 +1129,9 @@ public class Map {
 
 	}
 
+	/**
+	 * @return the map
+	 */
 	public short[][] getMap() {
 		return tileMap;
 	}
