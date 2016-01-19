@@ -47,7 +47,7 @@ public abstract class Mob extends Entity {
 		int chunkY = Math.max(position.y / 512, 2);
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
-				if (x < 100 && y < 100)
+				if (x < 100 && y < 100) {
 					for (Iterator<Zombie> iterator = getChunkMap()[x][y].getZombies().iterator(); iterator.hasNext();) {
 						Zombie zombie = iterator.next();
 						if (Math.pow(position.x - zombie.position.x, 2)
@@ -61,6 +61,7 @@ public abstract class Mob extends Entity {
 										(zombie.position.y) / 32, path.get(0).locationX, path.get(0).locationY));
 						}
 					}
+				}
 			}
 		}
 	}
@@ -80,7 +81,7 @@ public abstract class Mob extends Entity {
 	public void setUp(boolean up) {
 		this.up = up;
 	}
-	
+
 	public boolean isDown() {
 		return this.down;
 	}

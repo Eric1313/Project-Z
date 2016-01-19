@@ -43,7 +43,7 @@ public abstract class Entity {
 	protected AudioClip[] clips;
 
 	protected Game game;
-	private Chunk[][] chunkMap;
+	protected Chunk[][] chunkMap;
 
 	/**
 	 * Constructs a new Entity object.
@@ -55,7 +55,7 @@ public abstract class Entity {
 	 * @param position
 	 *            the coordinates of the entity in the map in terms of pixels.
 	 * @param solid
-	 *            the height of the entity in pixels.
+	 *            whether or not the entity is solid.
 	 * @param game
 	 *            the game to add the entity to.
 	 */
@@ -120,9 +120,9 @@ public abstract class Entity {
 		// Remove the entity from the chunk
 		if (this.health <= 0) {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
-				dropItem(item);
+				this.dropItem(item);
 			}
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
+			this.chunkMap[this.position.x / 512][this.position.y / 512].remove(this);
 		}
 
 		// Notify the world that the entity has been damaged in order to render
@@ -187,8 +187,8 @@ public abstract class Entity {
 		if (item != null) {
 			item.setPosition(new Point(this.position.x, this.position.y));
 			item.setState(ItemState.DROPPED);
-			removeItem(item);
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512].add(item);
+			this.removeItem(item);
+			this.chunkMap[this.position.x / 512][this.position.y / 512].add(item);
 		}
 	}
 
