@@ -1,3 +1,10 @@
+/**
+ * GameState object for storing and changing the game state of the game.
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see main.Game
+ * @since 1.0
+ * @version 1.0
+ */
 package enums;
 
 import java.awt.Graphics;
@@ -5,17 +12,13 @@ import java.awt.Graphics;
 import main.Game;
 import entities.Inventory;
 
-/**
- * GameState object for storing and changing the game state of the game.
- * 
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @see main.Game
- * @since 1.0
- * @version 1.0
- */
 public class GameState {
 	private Game game;
 
+	/**
+	 * Constructor for the GameState.
+	 * @param game
+	 */
 	public GameState(Game game) {
 		this.game = game;
 	}
