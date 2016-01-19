@@ -1,4 +1,4 @@
-package main;
+package map;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,8 +19,7 @@ import entities.Entity;
 import entities.Player;
 import entities.Zombie;
 import items.Item;
-import map.Chunk;
-import map.Map;
+import main.Game;
 import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
