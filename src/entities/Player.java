@@ -74,6 +74,8 @@ public class Player extends Mob {
 
 		this.addItem(this.game.getItem(200));
 		this.addItem(this.game.getItem(300));
+		this.addItem(this.game.getItem(304));
+		this.addItem(this.game.getItem(400));
 		this.selectedItem = this.getItem(selectedItemNumber);
 	}
 
