@@ -13,10 +13,10 @@ public class SpriteSheet {
 	private int height;
 
 	/**
-	 * Constructor for the sprite sheet
+	 * Constructor for the sprite sheet.
 	 * 
 	 * @param sheet
-	 *            the image containing all the sprites
+	 *            the image containing all the sprite images.
 	 */
 	public SpriteSheet(BufferedImage sheet) {
 		this.sheet = sheet;
@@ -25,16 +25,16 @@ public class SpriteSheet {
 	}
 
 	/**
-	 * Crops the correct sprite from the image
+	 * Crops the correct sprite from the image.
 	 * 
 	 * @param x
-	 *            the x position of the sprite
+	 *            the x position of the sprite.
 	 * @param y
-	 *            the y position of the sprite
+	 *            the y position of the sprite.
 	 * @param width
-	 *            the width of the sprite
+	 *            the width of the sprite.
 	 * @param height
-	 *            the height of the sprite
+	 *            the height of the sprite.
 	 * @return
 	 */
 	public BufferedImage crop(int x, int y, int width, int height) {
@@ -42,18 +42,18 @@ public class SpriteSheet {
 	}
 
 	/**
-	 * Get the width of the sprite sheet
+	 * Get the width of the sprite sheet.
 	 * 
-	 * @return the width of the sprite sheet
+	 * @return the width of the sprite sheet.
 	 */
 	public int getWidth() {
 		return width;
 	}
 
 	/**
-	 * Get the height of the sprite sheet
+	 * Get the height of the sprite sheet.
 	 * 
-	 * @return the width of the sprite sheet
+	 * @return the width of the sprite sheet.
 	 */
 	public int getHeight() {
 		return height;

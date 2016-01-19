@@ -13,11 +13,11 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 	/**
-	 * Loads in an image
+	 * Loads in an image.
 	 * 
 	 * @param path
-	 *            location of the image
-	 * @return the image
+	 *            location of the image.
+	 * @return the image.
 	 */
 	public static BufferedImage loadImage(String path) {
 		// In case of errors (e.g. image not found)

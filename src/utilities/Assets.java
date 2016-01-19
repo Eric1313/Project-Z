@@ -21,14 +21,14 @@ public class Assets {
 	private Font font;
 
 	/**
-	 * Constructor for Assets
+	 * Constructor for Assets.
 	 * 
 	 * @param path
-	 *            the path of the file to be loaded
+	 *            the path of the file to be loaded.
 	 * @param height
-	 *            the height of the picture
+	 *            the height of the picture.
 	 * @param width
-	 *            the width of the the picture
+	 *            the width of the the picture.
 	 */
 	public Assets(String path, int height, int width) {
 		this.path = path;
@@ -36,10 +36,10 @@ public class Assets {
 	}
 
 	/**
-	 * Constructor for the Assets
+	 * Constructor for the Assets.
 	 * 
 	 * @param path
-	 *            the path to the file to be loaded
+	 *            the path to the file to be loaded.
 	 */
 	public Assets(String path) {
 		this.path = path;
@@ -47,12 +47,12 @@ public class Assets {
 	}
 
 	/**
-	 * Constructor for the Assets
+	 * Constructor for the Assets.
 	 * 
 	 * @param path
-	 *            the path to the file to be loaded
+	 *            the path to the file to be loaded.
 	 * @param fontSize
-	 *            the size of the font
+	 *            the size of the font.
 	 */
 	public Assets(String path, int fontSize) {
 		this.path = path;
@@ -60,12 +60,12 @@ public class Assets {
 	}
 
 	/**
-	 * Loads in the font
+	 * Loads in the font.
 	 * 
 	 * @param path
-	 *            the path to the font file
+	 *            the path to the font file.
 	 * @param fontSize
-	 *            the size of the font
+	 *            the size of the font.
 	 */
 	private void loadFont(String path, int fontSize) {
 		try {
@@ -80,22 +80,22 @@ public class Assets {
 	}
 
 	/**
-	 * Loads in the image
+	 * Loads in the image.
 	 * 
 	 * @param path
-	 *            the path to the image
+	 *            the path to the image.
 	 */
 	private void loadAssets(String path) {
 		image = ImageLoader.loadImage(path);
 	}
 
 	/**
-	 * Loads sprite sheet
+	 * Loads sprite sheet.
 	 * 
 	 * @param height
-	 *            the height of the sprite
+	 *            the height of the sprite.
 	 * @param width
-	 *            the width of sprite
+	 *            the width of sprite.
 	 */
 	private void loadAssets(int height, int width) {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage(path));
