@@ -601,8 +601,6 @@ public class Player extends Mob {
 			}
 		}
 
-		System.out.println(maxDistance);
-
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
 
