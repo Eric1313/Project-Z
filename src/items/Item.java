@@ -29,7 +29,6 @@ public abstract class Item {
 	protected int itemID;
 	protected String name;
 	protected boolean inHand;
-	protected Map map;
 	
 
 	/**
@@ -38,30 +37,29 @@ public abstract class Item {
 	 * common.<br>
 	 * Colour of the item's name will change depending on rarity as well.<br>
 	 * Grey (common) = 5<br>
-	 * Blue (common?) = 4<br>
+	 * Blue (uncommon) = 4<br>
 	 * Yellow (rare) = 3<br>
-	 * Orange (?) = 2<br>
-	 * Green (?) = 1<br>
-	 * *Colours are subject to change.
+	 * Orange (very rare) = 2<br>
+	 * Green (ultra rare) = 1<br>
 	 */
 	protected int rarity;
 
 	/**
 	 * The value of the effect of an item.<br>
 	 * If the item is a weapon (melee, firearm, some throwables), then the
-	 * effect value is the damage of the weapon.
+	 * effect value will be the damage of the weapon.
 	 */
 	protected int effectValue;
 
 	protected Point position;
-	protected boolean held = false;
 	protected ItemState state;
-	protected boolean hover = true;
+	protected boolean hover;
 
 	protected BufferedImage[] images;
 	protected Sound[] clips;
 
 	protected Game game;
+	protected Map map;
 
 	public abstract void use(Player player);
 
@@ -172,14 +170,6 @@ public abstract class Item {
 
 	public void setPosition(Point position) {
 		this.position = position;
-	}
-
-	public boolean isHeld() {
-		return this.held;
-	}
-
-	public void setHeld(boolean held) {
-		this.held = held;
 	}
 
 	public ItemState getState() {

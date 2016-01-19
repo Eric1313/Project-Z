@@ -73,64 +73,35 @@ public abstract class Mob extends Entity {
 		this.movementSpeed = movementSpeed;
 	}
 
-	/**
-	 * @return the up
-	 */
 	public boolean isUp() {
-		return up;
+		return this.up;
 	}
 
-	/**
-	 * @param up
-	 *            the up to set
-	 */
 	public void setUp(boolean up) {
 		this.up = up;
 	}
-
-	/**
-	 * @return the down
-	 */
+	
 	public boolean isDown() {
-		return down;
+		return this.down;
 	}
 
-	/**
-	 * @param down
-	 *            the down to set
-	 */
 	public void setDown(boolean down) {
 		this.down = down;
 	}
 
-	/**
-	 * @return the left
-	 */
 	public boolean isLeft() {
-		return left;
+		return this.left;
 	}
 
-	/**
-	 * @param left
-	 *            the left to set
-	 */
 	public void setLeft(boolean left) {
 		this.left = left;
 	}
 
-	/**
-	 * @return the right
-	 */
 	public boolean isRight() {
-		return right;
+		return this.right;
 	}
 
-	/**
-	 * @param right
-	 *            the right to set
-	 */
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-
 }
