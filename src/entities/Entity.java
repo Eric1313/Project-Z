@@ -135,7 +135,7 @@ public abstract class Entity implements Comparable<Entity>{
 
 		// Notify the world that the entity has been damaged in order to render
 		// a damage indicator
-		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
+		this.game.getDisplay().getGameScreen().getWorld().damage(health, this);
 	}
 
 	/**

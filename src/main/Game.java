@@ -219,11 +219,11 @@ public class Game implements Runnable {
 	 */
 	private void render() {
 		// Check if there is a buffer strategy
-		bs = display.getGamePanel().getBufferStrategy();
+		bs = display.getGameScreen().getBufferStrategy();
 
 		// If this is the first time running initialize the buffer strategy
 		if (bs == null) {
-			display.getGamePanel().createBufferStrategy(3);
+			display.getGameScreen().createBufferStrategy(3);
 			return;
 		}
 		g = bs.getDrawGraphics();

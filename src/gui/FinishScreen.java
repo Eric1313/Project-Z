@@ -78,9 +78,9 @@ public class FinishScreen extends Screen {
 						State.INGAME,
 						false,
 						400 + 160 * game.getLevel(),
-						game.getDisplay().getGamePanel().getWorld().getPlayer()
+						game.getDisplay().getGameScreen().getWorld().getPlayer()
 								.getInventory(),
-						game.getDisplay().getGamePanel().getWorld().getPlayer()
+						game.getDisplay().getGameScreen().getWorld().getPlayer()
 								.getSkinNo());
 			}
 		} else {

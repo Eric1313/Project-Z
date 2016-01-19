@@ -24,7 +24,6 @@ public class MainScreen extends Screen {
 
 	public MainScreen(Game game) {
 		super(game);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void render(Graphics g) {

@@ -69,7 +69,7 @@ public class Zombie extends Mob {
 	 */
 	public void update() {
 		if (player == null)
-			player = this.game.getDisplay().getGamePanel().getWorld().getPlayer();
+			player = this.game.getDisplay().getGameScreen().getWorld().getPlayer();
 
 		// Reset movement
 		this.setDown(false);

@@ -1,30 +1,42 @@
+/**
+ * Creates the display for the game
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 package gui;
 
-import java.awt.CardLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import utilities.KeyHandler;
 import utilities.MouseHandler;
 
 public class Display {
 	private JFrame frame;
-	private GameScreen gamePanel;
+	private GameScreen game;
 	private MainScreen main;
 	private PauseScreen pause;
 	private FinishScreen finish;
 	private DeathScreen death;
 	private HelpScreen help;
-	private JPanel panelContainer;
-	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
 	private KeyHandler keyHandler;
 	private String title;
 	private int width;
 	private int height;
 
+	/**
+	 * Constructor for the Display.
+	 * 
+	 * @param title
+	 *            the title of the game.
+	 * @param width
+	 *            the width of the frame.
+	 * @param height
+	 *            the height of the frame.
+	 */
 	public Display(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -32,66 +44,40 @@ public class Display {
 		createDisplay();
 	}
 
+	/**
+	 * Creates the display.
+	 */
 	private void createDisplay() {
-		panelContainer = new JPanel();
-		cardLayout = new CardLayout();
-		panelContainer.setLayout(cardLayout);
-
-		gamePanel = new GameScreen();
-		main = new MainScreen(null);
-		pause = new PauseScreen(null);
-		finish = new FinishScreen(null);
-		death = new DeathScreen(null);
-		help = new HelpScreen(null);
-
+		// Creates the main display
+		game = new GameScreen();
 		frame = new JFrame(title);
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 
-		gamePanel.setPreferredSize(new Dimension(width, height));
-		gamePanel.setMaximumSize(new Dimension(width, height));
-		gamePanel.setMinimumSize(new Dimension(width, height));
-		gamePanel.setFocusable(false);
+		// Sets the size of the game
+		game.setPreferredSize(new Dimension(width, height));
+		game.setMaximumSize(new Dimension(width, height));
+		game.setMinimumSize(new Dimension(width, height));
+		game.setFocusable(false);
 		mouseHandler = new MouseHandler();
-		gamePanel.addMouseMotionListener(mouseHandler);
-		gamePanel.addMouseListener(mouseHandler);
-		gamePanel.addMouseWheelListener(mouseHandler);
+		// Adds a mouse to the game so that we can receive mouse input
+		game.addMouseMotionListener(mouseHandler);
+		game.addMouseListener(mouseHandler);
+		game.addMouseWheelListener(mouseHandler);
 
-		main.setPreferredSize(new Dimension(width, height));
-		main.setMaximumSize(new Dimension(width, height));
-		main.setMinimumSize(new Dimension(width, height));
-		main.setFocusable(false);
-		main.addMouseListener(mouseHandler);
+		// Creates the other screens
+		main = new MainScreen(null);
+		pause = new PauseScreen(null);
+		finish = new FinishScreen(null);
+		death = new DeathScreen(null);
+		help = new HelpScreen(null);
 
-		pause.setPreferredSize(new Dimension(width, height));
-		pause.setMaximumSize(new Dimension(width, height));
-		pause.setMinimumSize(new Dimension(width, height));
-		pause.setFocusable(false);
-		pause.addMouseListener(mouseHandler);
-
-		finish.setPreferredSize(new Dimension(width, height));
-		finish.setMaximumSize(new Dimension(width, height));
-		finish.setMinimumSize(new Dimension(width, height));
-		finish.setFocusable(false);
-		finish.addMouseListener(mouseHandler);
-
-		death.setPreferredSize(new Dimension(width, height));
-		death.setMaximumSize(new Dimension(width, height));
-		death.setMinimumSize(new Dimension(width, height));
-		death.setFocusable(false);
-		death.addMouseListener(mouseHandler);
-
-		help.setPreferredSize(new Dimension(width, height));
-		help.setMaximumSize(new Dimension(width, height));
-		help.setMinimumSize(new Dimension(width, height));
-		help.setFocusable(false);
-		help.addMouseListener(mouseHandler);
-
+		// Adds a key handler to the frame so we can receive key input
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);
-		frame.add(gamePanel);
+		frame.add(game);
 		frame.pack();
 
 		frame.setVisible(true);
@@ -121,12 +107,8 @@ public class Display {
 		return frame;
 	}
 
-	public void switchPanel(String panel) {
-		cardLayout.show(panelContainer, panel);
-	}
-
-	public GameScreen getGamePanel() {
-		return gamePanel;
+	public GameScreen getGameScreen() {
+		return game;
 	}
 
 	public MouseHandler getMouseHandler() {

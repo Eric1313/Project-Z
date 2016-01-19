@@ -21,7 +21,6 @@ public class HelpScreen extends Screen {
 	public HelpScreen(Game game) {
 		super(game);
 	}
-
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

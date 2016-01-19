@@ -1,7 +1,6 @@
 /**
  * GameState object for storing and changing the game state of the game.
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @see main.Game
  * @since 1.0
  * @version 1.0
  */
@@ -67,7 +66,7 @@ public class GameState {
 			this.game.getDisplay().getMain().update();
 			break;
 		case INGAME:
-			this.game.getDisplay().getGamePanel().update();
+			this.game.getDisplay().getGameScreen().update();
 			break;
 		case PAUSE:
 			this.game.getDisplay().getPause().update();
@@ -96,7 +95,7 @@ public class GameState {
 			this.game.getDisplay().getMain().render(g);
 			break;
 		case INGAME:
-			this.game.getDisplay().getGamePanel().render(g);
+			this.game.getDisplay().getGameScreen().render(g);
 			break;
 		case PAUSE:
 			this.game.getDisplay().getPause().render(g);
@@ -130,7 +129,7 @@ public class GameState {
 			break;
 		case INGAME:
 			if (!pause) {
-				this.game.getDisplay().getGamePanel().setup(this.game);
+				this.game.getDisplay().getGameScreen().setup(this.game);
 			}
 			break;
 		case PAUSE:
@@ -172,7 +171,7 @@ public class GameState {
 			break;
 		case INGAME:
 			if (!pause) {
-				this.game.getDisplay().getGamePanel()
+				this.game.getDisplay().getGameScreen()
 						.setup(this.game, size, inventory, skinNo);
 			}
 			break;

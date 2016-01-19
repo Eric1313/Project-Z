@@ -114,7 +114,7 @@ public class Player extends Mob {
 		this.movementSpeed = Player.MOVEMENT_SPEED;
 		this.stamina = Player.MAX_STAMINA;
 
-		this.world = this.game.getDisplay().getGamePanel().getWorld();
+		this.world = this.game.getDisplay().getGameScreen().getWorld();
 		this.camera = this.game.getCamera();
 		this.key = this.game.getDisplay().getKeyHandler();
 		this.mouse = this.game.getDisplay().getMouseHandler();
@@ -156,7 +156,7 @@ public class Player extends Mob {
 	 */
 	public void pickUpItem() {
 		// Get the item that's being hovered over
-		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld()
+		Item hoverItem = this.game.getDisplay().getGameScreen().getWorld()
 				.getHoverItem();
 
 		// Check if the player's inventory is not full
@@ -302,7 +302,7 @@ public class Player extends Mob {
 	}
 
 	public void update() {
-		this.world = this.game.getDisplay().getGamePanel().getWorld();
+		this.world = this.game.getDisplay().getGameScreen().getWorld();
 
 		// If the player presses 'ESC', pause the game
 		if (this.key.isEsc()) {

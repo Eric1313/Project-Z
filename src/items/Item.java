@@ -92,7 +92,7 @@ public abstract class Item {
 	}
 	public void makeNoise(int range, boolean player) {
 		if (map==null)
-			map=game.getDisplay().getGamePanel().getWorld().getMap();
+			map=game.getDisplay().getGameScreen().getWorld().getMap();
 		int chunkX = Math.max(position.x / 512,2);
 		int chunkY = Math.max(position.y / 512,2);
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3,map.getWidth()/16); x++) {

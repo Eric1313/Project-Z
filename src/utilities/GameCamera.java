@@ -30,7 +30,7 @@ public class GameCamera {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.frame = game.getDisplay().getFrame();
-		this.panel = game.getDisplay().getGamePanel();
+		this.panel = game.getDisplay().getGameScreen();
 	}
 
 	/**
