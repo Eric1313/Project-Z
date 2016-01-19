@@ -13,6 +13,7 @@ import javax.sound.sampled.Clip;
 
 import main.Game;
 import map.Map;
+import utilities.Effect;
 import utilities.Sound;
 import entities.Player;
 import entities.Zombie;
@@ -67,7 +68,7 @@ public abstract class Item {
 
 	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Sound[] clips, Game game) {
+			Effect[] clips, Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;

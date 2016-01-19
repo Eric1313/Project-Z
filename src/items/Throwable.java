@@ -10,6 +10,7 @@ import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
 import main.Game;
+import utilities.Effect;
 import utilities.Sound;
 
 /**
@@ -26,7 +27,7 @@ public class Throwable extends Item {
 	private int areaOfEffect;
 
 	public Throwable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Sound[] clips, Game game, ItemEffect effect, int range, int areaOfEffect) {
+			Effect[] clips, Game game, ItemEffect effect, int range, int areaOfEffect) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;

@@ -25,6 +25,8 @@ public class Sound {
 	SourceDataLine line;
 
 	private boolean loop;
+	private boolean stop = false;
+
 	String file;
 
 	private BufferedInputStream stream;
@@ -83,8 +85,11 @@ public class Sound {
 			if (in != null) {
 				baseFormat = in.getFormat();
 
-				decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
-						baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
+				decodedFormat = new AudioFormat(
+						AudioFormat.Encoding.PCM_SIGNED,
+						baseFormat.getSampleRate(), 16,
+						baseFormat.getChannels(), baseFormat.getChannels() * 2,
+						baseFormat.getSampleRate(), false);
 
 				din = AudioSystem.getAudioInputStream(decodedFormat, in);
 				line = getLine(decodedFormat);
@@ -98,21 +103,23 @@ public class Sound {
 		}
 	}
 
-	private SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException {
+	private SourceDataLine getLine(AudioFormat audioFormat)
+			throws LineUnavailableException {
 		SourceDataLine res = null;
-		DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+		DataLine.Info info = new DataLine.Info(SourceDataLine.class,
+				audioFormat);
 		res = (SourceDataLine) AudioSystem.getLine(info);
 		res.open(audioFormat);
 		return res;
 	}
 
+
+
 	public void play() {
-		Thread t1 = new Thread(new Runnable() {
-			public void run() {
 				try {
 					boolean firstTime = true;
 					while (firstTime || loop) {
-
+	
 						firstTime = false;
 						byte[] data = new byte[4096];
 
@@ -126,21 +133,16 @@ public class Sound {
 								if (nBytesRead != -1)
 									line.write(data, 0, nBytesRead);
 							}
-
+							
 							line.drain();
 							line.stop();
 							line.close();
-
 							reset();
 						}
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
-		});
-		t1.start();
-
 	}
 
 }
