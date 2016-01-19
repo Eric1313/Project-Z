@@ -7,6 +7,7 @@ import java.awt.Point;
 
 import entities.Inventory;
 import entities.Player;
+import entities.Zombie;
 import items.Consumable;
 import items.Firearm;
 import items.Item;
@@ -89,7 +90,8 @@ public class HUD {
 		g.drawString(player.getHealth() + " / 100", 953, 35);
 
 		g.setColor(Color.RED);
-		g.drawString("ZOMBIES: " + Integer.toString(this.player.getGame().getDisplay().getGamePanel().getWorld().getNoOfZombie()), 25, 25);
+		g.drawString("LEVEL " + Zombie.damage / 5, 25, 25);
+		g.drawString("ZOMBIES: " + Integer.toString(this.player.getGame().getDisplay().getGamePanel().getWorld().getNoOfZombie()), 25, 45);
 
 		Point mouseLocation = player.getMouse().getMouseLocation();
 
