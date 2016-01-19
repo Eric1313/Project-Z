@@ -235,32 +235,20 @@ public class Zombie extends Mob {
 		}
 	}
 
+	@Override
 	public void damage(int health) {
-		this.health -= health;
+		super.damage(health);
 
 		if (this.health <= 0) {
-			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
-				dropItem(item);
-			}
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512]
+			this.chunkMap[this.position.x / 512][this.position.y / 512]
 					.add(new Corpse(position, rotation, images, game, map));
 		}
-
-		this.game.getDisplay().getGamePanel().getWorld().damage(health, this);
 	}
 
-	/**
-	 * @return the path
-	 */
 	public Stack<Node> getPath() {
 		return path;
 	}
 
-	/**
-	 * @param path
-	 *            the path to set
-	 */
 	public void setPath(Stack<Node> path) {
 		this.path = path;
 	}

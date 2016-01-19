@@ -203,6 +203,10 @@ public abstract class Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	
+	public Inventory getInventory() {
+		return this.inventory;
+	}
 
 	public boolean isSolid() {
 		return this.solid;
