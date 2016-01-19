@@ -1,5 +1,5 @@
 /**
- * Subclass of Screen that is displayed when the user needs help
+ * Subclass of Screen that is the main menu
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Screen

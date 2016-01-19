@@ -13,15 +13,30 @@ import java.awt.Rectangle;
 
 import main.Game;
 
-public abstract class 	Screen {
+public abstract class Screen {
 	protected Game game;
 
+	/**
+	 * Constructor for the screen.
+	 * 
+	 * @param game
+	 *            the game.
+	 */
 	public Screen(Game game) {
 		this.game = game;
 	}
 
+	/**
+	 * Renders the screen.
+	 * 
+	 * @param g
+	 *            the graphics object used to render the screen.
+	 */
 	public abstract void render(Graphics g);
 
+	/**
+	 * Updates the screen.
+	 */
 	public abstract void update();
 
 	/**
