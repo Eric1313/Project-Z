@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
 import main.Game;
+import entities.Zombie;
 import enums.GameState.State;
 
 public class DeathPanel extends Canvas {
@@ -62,6 +63,8 @@ public class DeathPanel extends Canvas {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
+				Zombie.damage = (game.getLevel()) * 5;
+				Zombie.zombieHealth = 100;
 				game.getState().setGameState(State.LOBBY, false);
 			}
 		} else {
@@ -83,6 +86,7 @@ public class DeathPanel extends Canvas {
 		this.game = game;
 		main = new Rectangle(412, 300, 200, 100);
 		exit = new Rectangle(412, 420, 200, 100);
+		game.setLevel(1);
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,
