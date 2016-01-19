@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 import main.Game;
 import utilities.Effect;
@@ -30,12 +31,15 @@ public class Firearm extends Item {
 	private int noise;
 	private double adjustedAngle;
 	private int reloadTime;
+	private int noProjectiles;
+	private int penetration;
 
 	private long reloadTick = -60;
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, Effect[] clips, Game game,
-			int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime) {
+			int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime,
+			int noProjectiles, int penetration) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
@@ -44,6 +48,8 @@ public class Firearm extends Item {
 		this.currentAmmo = this.maxAmmo;
 		this.noise = noise;
 		this.reloadTime = reloadTime;
+		this.noProjectiles = noProjectiles;
+		this.penetration = penetration;
 	}
 
 	public Firearm(Firearm item) {
@@ -55,11 +61,14 @@ public class Firearm extends Item {
 		this.currentAmmo = (int) (Math.random() * this.maxAmmo);
 		this.noise = item.noise;
 		this.reloadTime = item.reloadTime;
+		this.noProjectiles = item.noProjectiles;
+		this.penetration = item.penetration;
 
 	}
 
 	@Override
 	public void use(Player player) {
+		// Calculate angle of trajectory
 		double angle = -Math.atan2(
 				game.getDisplay().getMouseHandler().getMouseLocation().y
 						- (player.getPosition().y + 16 - game.getCamera()
@@ -67,42 +76,41 @@ public class Firearm extends Item {
 						.getMouseHandler().getMouseLocation().x
 						- (player.getPosition().x + 16 - game.getCamera()
 								.getxOffset()));
-
+		// Fire the gun if not empty and the enough time has passed since last
+		// shot
 		if (!this.isEmpty()) {
 			long currentTick = game.getTickCount();
 			if (currentTick - player.getLastItemTick() > this.getRateOfFire()) {
 				player.setLastItemTick(currentTick);
+				// Play the firing sound
 				clips[0].play();
 
-				int d = 32 * 64;
-				int noShots = 1;
-				if (this.itemID == 302) {
-					noShots = 5;
-				}
+				int range = 32 * 64;
 
-				for (int i = 1; i <= noShots; i++) {
+				// Calculate the collisions for each shot
+				for (int i = 1; i <= noProjectiles; i++) {
+					// Adjust bullet spread for each shot
 					double angleAdjust = ((i / 2) * .05);
 					if (i % 2 == 1)
 						angleAdjust = angleAdjust * (-1);
 					adjustedAngle = angle + angleAdjust;
-
+					// Create line used to check entity collisions
 					Line2D.Double line = new Line2D.Double(new Point(
 							player.getPosition().x + 16,
 							player.getPosition().y + 16), new Point(
-							(int) (player.getPosition().x + 16 + d
+							(int) (player.getPosition().x + 16 + range
 									* Math.cos(adjustedAngle)),
-							(int) (player.getPosition().y + 16 - d
+							(int) (player.getPosition().y + 16 - range
 									* Math.sin(adjustedAngle))));
-
-					ArrayList<Entity> collisions = player.projectileTracer(
+					// Get the entities hit
+					PriorityQueue<Entity> collisions =  player.projectileTracer(
 							line, this.getEffectValue(), 1000);
 					if (collisions.size() > 0) {
-						if (this.getItemID() == 303) {
-							for (int j = 0; j < collisions.size(); j++) {
-								collisions.get(j).damage(this.getEffectValue());
-							}
-						} else
-							collisions.get(0).damage(this.getEffectValue());
+						for (int j = 0; j < Math.min(collisions.size(),
+								penetration); j++) {
+							collisions.remove().damage(this.getEffectValue());
+						}
+
 					}
 
 					player.makeNoise(this.noise, true);

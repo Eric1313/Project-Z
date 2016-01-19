@@ -10,6 +10,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 import enums.GameState.State;
 import enums.ItemState;
@@ -34,7 +35,7 @@ import utilities.MouseHandler;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
+	public static final int MOVEMENT_SPEED = 6;
 	public static final int MAX_STAMINA = 300;
 	public static final int MIN_STAMINA = MAX_STAMINA / 10;
 	public static final int SPRINT_COST = Player.MAX_STAMINA / 300;
@@ -77,6 +78,11 @@ public class Player extends Mob {
 		this.addItem(this.game.getItem(304));
 		this.addItem(this.game.getItem(400));
 		this.addItem(this.game.getItem(303));
+		this.addItem(this.game.getItem(302));
+		this.addItem(this.game.getItem(103));
+		this.addItem(this.game.getItem(103));
+
+
 		this.selectedItem = this.getItem(selectedItemNumber);
 	}
 
@@ -476,38 +482,14 @@ public class Player extends Mob {
 		return new Point((int) line.x2, (int) line.y2);
 	}
 
-	public ArrayList<Entity> projectileTracer(Line2D.Double line, int damage,
+	public PriorityQueue<Entity> projectileTracer(Line2D.Double line, int damage,
 			int range) {
-		ArrayList<Entity> entitiesCollided = new ArrayList<Entity>();
+		PriorityQueue<Entity> entitiesCollided = new PriorityQueue<Entity>();
 		ArrayList<Entity> validCollisions = new ArrayList<Entity>();
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 3; y < Math.min(chunkY + 4,
-					map.getWidth() / 16); y++) {
-				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
-				for (int zombie = 0; zombie < zombies.size(); zombie++) {
-					Zombie currentZombie = zombies.get(zombie);
-					if (line.intersects(currentZombie.getPosition().x,
-							currentZombie.getPosition().y, 32, 32)) {
-						entitiesCollided.add(currentZombie);
-					}
-				}
-
-				ArrayList<Entity> entities = getChunkMap()[x][y]
-						.getSolidEntities();
-				for (int entity = 0; entity < entities.size(); entity++) {
-					Entity currentEntity = entities.get(entity);
-					if (line.intersects(currentEntity.getPosition().x,
-							currentEntity.getPosition().y, 32, 32)) {
-						entitiesCollided.add(currentEntity);
-					}
-				}
-			}
-		}
-
-		Zombie closestZombie = null;
+		
 		double maxDistance = range;
 
 		if (tiles == null)
@@ -539,48 +521,69 @@ public class Player extends Mob {
 						break;
 					}
 			}
+		
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4,
+					map.getWidth() / 16); y++) {
+				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
+				for (int zombie = 0; zombie < zombies.size(); zombie++) {
+					Zombie currentZombie = zombies.get(zombie);
+					if (line.intersects(currentZombie.getPosition().x,
+							currentZombie.getPosition().y, 32, 32)) {
+						double distance = Point.distance(this.position.x, this.position.y,
+								currentZombie.getPosition().x, currentZombie.getPosition().y);
+						if(distance<maxDistance)
+						{
+						currentZombie.setRelativeDistance((int) distance);
+						entitiesCollided.add(currentZombie);
+						}
+					}
+				}
 
-		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator
-				.hasNext();) {
-			Entity entity = iterator.next();
-
-			double distance = Point.distance(this.position.x, this.position.y,
-					entity.getPosition().x, entity.getPosition().y);
-
-			double closestEntity = maxDistance;
-			if (distance < closestEntity) {
-				closestEntity = distance;
-
-			}
-		}
-
-		Entity closestEntity = null;
-		double entityDistance = 100 * 32;
-
-		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator
-				.hasNext();) {
-
-			Entity entity = iterator.next();
-
-			double distance = Point.distance(this.position.x, this.position.y,
-					entity.getPosition().x, entity.getPosition().y);
-			if (distance < maxDistance) {
-				validCollisions.add(entity);
-				if (distance < entityDistance) {
-					entityDistance = distance;
-					closestEntity=entity;
+				ArrayList<Entity> entities = getChunkMap()[x][y]
+						.getSolidEntities();
+				for (int entity = 0; entity < entities.size(); entity++) {
+					Entity currentEntity = entities.get(entity);
+					if (line.intersects(currentEntity.getPosition().x,
+							currentEntity.getPosition().y, 32, 32)) {
+						entitiesCollided.add(currentEntity);
+					}
 				}
 			}
 		}
 
-		if (entityDistance > maxDistance) {
-			closestEntity = closestZombie;
-		}
-		validCollisions.remove(closestEntity);
-		if(closestEntity!=null)
-		validCollisions.add(closestEntity);
 
-		return validCollisions;
+//		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator
+//				.hasNext();) {
+//			Entity entity = iterator.next();
+//
+//			double distance = Point.distance(this.position.x, this.position.y,
+//					entity.getPosition().x, entity.getPosition().y);
+//
+//			double closestEntity = maxDistance;
+//			if (distance < closestEntity) {
+//				closestEntity = distance;
+//
+//			}
+//		}
+//
+//		double entityDistance = 100 * 32;
+//
+//		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator
+//				.hasNext();) {
+//
+//			Entity entity = iterator.next();
+//
+//			double distance = Point.distance(this.position.x, this.position.y,
+//					entity.getPosition().x, entity.getPosition().y);
+//			if (distance < maxDistance) {
+//				validCollisions.add(entity);
+//				if (distance < entityDistance) {
+//					entityDistance = distance;
+//				}
+//			}
+//		}
+		return entitiesCollided;
 	}
 
 	public int meleeCollision(Arc2D arc, int damage) {

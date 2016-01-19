@@ -17,10 +17,11 @@ import map.Chunk;
  * @since 1.0
  * @version 1.0
  */
-public abstract class Entity {
+public abstract class Entity implements Comparable<Entity>{
 	protected int height, width;
 	protected Point position;
 	protected double rotation;
+	protected int relativeDistance;
 
 	protected int health;
 	protected Inventory inventory;
@@ -69,6 +70,12 @@ public abstract class Entity {
 
 		this.game = game;
 	}
+	
+	public int compareTo(Entity entity)
+	{
+		return relativeDistance-entity.relativeDistance;
+		
+	}
 
 	public Point getPosition() {
 		return this.position;
@@ -114,6 +121,14 @@ public abstract class Entity {
 
 	public Item getItem(int itemNo) {
 		return this.inventory.get(itemNo);
+	}
+
+	public int getRelativeDistance() {
+		return relativeDistance;
+	}
+
+	public void setRelativeDistance(int relativeDistance) {
+		this.relativeDistance = relativeDistance;
 	}
 
 	public void dropItem(int itemNo) {
