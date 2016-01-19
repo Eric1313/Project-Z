@@ -399,7 +399,18 @@ public class Game implements Runnable {
 	public Item getItem(int itemID) {
 		for (int item = 0; item < this.items.size(); item++) {
 			if (this.items.get(item).getItemID() == itemID) {
-				return this.items.get(item);
+				switch (itemID / 100) {
+				case 1:
+					return new Consumable((Consumable) this.items.get(item));
+				case 2:
+					return new Melee((Melee) this.items.get(item));
+				case 3:
+					Firearm newItem = new Firearm((Firearm) this.items.get(item));
+					newItem.setCurrentAmmo(newItem.getMaxAmmo());
+					return newItem;
+				case 4:
+					return new Throwable((Throwable) this.items.get(item));
+				}
 			}
 		}
 
