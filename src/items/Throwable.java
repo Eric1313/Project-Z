@@ -31,8 +31,8 @@ public class Throwable extends Item {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
-		this.areaOfEffect = areaOfEffect;
 		this.range = range;
+		this.areaOfEffect = areaOfEffect;
 	}
 
 	@Override
@@ -56,9 +56,9 @@ public class Throwable extends Item {
 	public Throwable(Throwable item) {
 		super(item);
 
-		this.effect = item.getEffect();
-		this.range = item.getRange();
-		this.areaOfEffect = item.getAreaOfEffect();
+		this.effect = item.effect;
+		this.range = item.range;
+		this.areaOfEffect = item.areaOfEffect;
 	}
 
 	public ItemEffect getEffect() {
@@ -117,40 +117,42 @@ public class Throwable extends Item {
 			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		}
+		
+		g.drawString("Throwable item", mouseLocation.x + 20, mouseLocation.y - 115);
 
 		g.setFont(this.game.getUiFontS());
 		switch (this.effect) {
 		case NOISE:
-			g.drawString("Creates noise of " + this.effectValue + " radius", mouseLocation.x + 20,
-					mouseLocation.y - 105);
+			g.drawString("Creates noise", mouseLocation.x + 20,
+					mouseLocation.y - 90);
 			break;
 		case DAMAGE:
-			g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 105);
+			g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 90);
 			break;
 		}
 
 		if (this.areaOfEffect >= 512) {
-			g.drawString("Very large area of effect", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Very large area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else if (this.areaOfEffect >= 256) {
-			g.drawString("Large area of effect", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Large area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else if (this.areaOfEffect >= 128) {
-			g.drawString("Normal area of effect", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Normal area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else if (this.areaOfEffect >= 64) {
-			g.drawString("Small area of effect", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Small area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else {
-			g.drawString("Very small area of effect", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Very small area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
 		}
 
 		if (this.range >= 640) {
-			g.drawString("Very far throwing range", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Very far throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		} else if (this.range >= 480) {
-			g.drawString("Far throwing range", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Far throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		} else if (this.range >= 320) {
-			g.drawString("Normal throwing range", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Normal throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		} else if (this.range >= 160) {
-			g.drawString("Close throwing range", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Close throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		} else {
-			g.drawString("Very close throwing range", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Very close throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		}
 	}
 }

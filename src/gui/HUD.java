@@ -26,28 +26,28 @@ public class HUD {
 		// g.drawRect(200, 650, 600, 60);
 		for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 			if (item != player.getSelectedItem()) {
-				g.drawRect(200 + item * 60, 650, 60, 60);
+				g.drawRect(212 + item * 60, 650, 60, 60);
 			}
 
 			Item currentItem = player.getItem(item);
 
 			if (currentItem != null) {
-				g.drawImage(currentItem.getImages()[0], 200 + item * 60 + 14, 664, null, null);
+				g.drawImage(currentItem.getImages()[0], 212 + item * 60 + 14, 664, null, null);
 
 				FontMetrics fm = g.getFontMetrics();
 
 				if (currentItem instanceof Consumable) {
 					String amount = ((Consumable) currentItem).getDurability() + "";
 
-					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+					g.drawString(amount, 268 + item * 60 - fm.stringWidth(amount), 704);
 				} else if (currentItem instanceof Firearm) {
 					String amount = ((Firearm) currentItem).getCurrentAmmo() + "";
 
-					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+					g.drawString(amount, 268 + item * 60 - fm.stringWidth(amount), 704);
 				} else if (currentItem instanceof Melee) {
 					String amount = ((Melee) currentItem).getDurability() + "";
 
-					g.drawString(amount, 256 + item * 60 - fm.stringWidth(amount), 704);
+					g.drawString(amount, 268 + item * 60 - fm.stringWidth(amount), 704);
 				}
 			}
 
@@ -57,11 +57,11 @@ public class HUD {
 			} else {
 				itemNo = "0";
 			}
-			g.drawString(itemNo, 200 + item * 60 + 5, 665);
+			g.drawString(itemNo, 216 + item * 60, 665);
 		}
 
 		g.setColor(Color.YELLOW);
-		g.drawRect(200 + player.getSelectedItem() * 60, 650, 60, 60);
+		g.drawRect(212 + player.getSelectedItem() * 60, 650, 60, 60);
 
 		Item selectedItem = player.getItem(player.getSelectedItem());
 		if (selectedItem != null) {
@@ -69,30 +69,30 @@ public class HUD {
 			String itemName = selectedItem.getName();
 			FontMetrics fm = g.getFontMetrics();
 
-			g.drawString(itemName, 500 - fm.stringWidth(itemName) / 2, 625);
+			g.drawString(itemName, 512 - fm.stringWidth(itemName) / 2, 625);
 		}
 
 		g.setColor(new Color(112, 112, 112));
-		g.drawRect(904, 19, 101, 21);
-		g.drawRect(904, 49, 101, 21);
+		g.drawRect(914, 9, 101, 21);
+		g.drawRect(914, 39, 101, 21);
 
 		g.setColor(Color.RED);
-		g.fillRect(905, 20, player.getHealth(), 20);
+		g.fillRect(915, 10, player.getHealth(), 20);
 
 		g.setColor(new Color(0, 200, 50));
-		g.fillRect(905, 50, player.getStamina() / 3, 20);
+		g.fillRect(915, 40, player.getStamina() / 3, 20);
 
 		g.setFont(player.getGame().getUiFontXS());
 
 		g.setColor(Color.WHITE);
-		g.drawString("HEALTH", 908, 35);
-		g.drawString("STAMINA", 908, 65);
-		g.drawString(player.getHealth() + " / 100", 953, 35);
+		g.drawString("HEALTH", 918, 25);
+		g.drawString(player.getHealth() + " / 100", 953, 25);
+		g.drawString("STAMINA", 918, 55);
 
 		Point mouseLocation = player.getMouse().getMouseLocation();
 
-		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {
-			Item item = player.getItem((mouseLocation.x - 200) / 60);
+		if (mouseLocation.x > 212 && mouseLocation.x < 812 && mouseLocation.y > 650 && mouseLocation.y < 710) {
+			Item item = player.getItem((mouseLocation.x - 212) / 60);
 			if (item != null) {
 				item.renderTooltip(g, mouseLocation);
 			}

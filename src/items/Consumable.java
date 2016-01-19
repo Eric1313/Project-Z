@@ -122,39 +122,42 @@ public class Consumable extends Item {
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
-		g.fillRect(mouseLocation.x, mouseLocation.y - 150, 300, 150);
+		g.fillRect(mouseLocation.x, mouseLocation.y - 175, 300, 175);
 
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
-		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 100);
+		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 125);
 
 		g.setFont(this.game.getUiFontXS());
 		switch (this.rarity) {
 		case 5:
-			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 4:
-			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 3:
-			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 2:
-			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 1:
-			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 80);
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		}
 
-		g.setFont(this.game.getUiFontS());
 		switch (this.effect) {
 		case HEAL:
-			g.drawString("Heals " + this.effectValue + " health", mouseLocation.x + 20, mouseLocation.y - 55);
-			g.drawString("Can be used " + this.durability + " time(s)", mouseLocation.x + 20, mouseLocation.y - 30);
+			g.drawString("Healing item", mouseLocation.x + 20, mouseLocation.y - 90);
+			g.setFont(this.game.getUiFontS());
+			g.drawString("Heals " + this.effectValue + " health", mouseLocation.x + 20, mouseLocation.y - 65);
+			g.drawString("Can be used " + this.durability + " time(s)", mouseLocation.x + 20, mouseLocation.y - 40);
 			break;
 		case AMMO:
-			g.drawString("Reloads " + this.durability + " ammo", mouseLocation.x + 20, mouseLocation.y - 55);
+			g.drawString("Ammo", mouseLocation.x + 20, mouseLocation.y - 90);
+			g.setFont(this.game.getUiFontS());
+			g.drawString("Reloads " + this.durability + " ammo", mouseLocation.x + 20, mouseLocation.y - 65);
 			break;
 		}
 	}
