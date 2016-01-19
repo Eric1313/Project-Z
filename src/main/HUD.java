@@ -91,7 +91,6 @@ public class HUD {
 
 		g.setColor(Color.RED);
 		g.drawString("LEVEL " + Zombie.damage / 5, 25, 25);
-		g.drawString("ZOMBIES: " + Integer.toString(this.player.getGame().getDisplay().getGamePanel().getWorld().getNoOfZombie()), 25, 45);
 
 		Point mouseLocation = player.getMouse().getMouseLocation();
 
