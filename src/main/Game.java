@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import utilities.Assets;
 import utilities.Effect;
 import utilities.GameCamera;
-import GUI.Display;
 import enums.GameState;
 import enums.GameState.State;
+import gui.Display;
 import enums.ItemEffect;
 import enums.ItemState;
 

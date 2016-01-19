@@ -7,9 +7,9 @@ package utilities;
 
 import javax.swing.JFrame;
 
-import GUI.GameScreen;
 import main.Game;
 import entities.Entity;
+import gui.GameScreen;
 
 public class GameCamera {
 	private float xOffset, yOffset;
