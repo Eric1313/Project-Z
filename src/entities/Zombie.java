@@ -18,20 +18,20 @@ import utilities.Node;
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Mob
- * @see entities.ZombieThread
  * @since 1.0
  * @version 1.0
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
-	private int imgNo;
-	private Player player;
-
 	public static int damage = 5;
 	public static int zombieHealth = 100;
+	private int zombieVarient;
+	private Player player;
+	private int targetX;
+	private int targetY;
 
 	/**
-	 * Zombie constructor
+	 * Constructs zombie object
 	 * 
 	 * @param position
 	 *            pixel based position
@@ -46,12 +46,13 @@ public class Zombie extends Mob {
 	 * @param map
 	 *            map that it is in
 	 */
-	public Zombie(Point position, int health, BufferedImage[] images, AudioClip[] clips, Game game, Map map,
-			int imgNo) {
-		super(32, 32, position, 0, Zombie.zombieHealth, true, images, clips, game, map);
+	public Zombie(Point position, int health, BufferedImage[] images,
+			AudioClip[] clips, Game game, Map map, int imgNo) {
+		super(32, 32, position, 0, Zombie.zombieHealth, true, images, clips,
+				game, map);
 		rotation = Math.random() * (2 * Math.PI);
 		rotation = Math.random() * (2 * Math.PI);
-		this.imgNo = imgNo;
+		this.zombieVarient = imgNo;
 
 		this.health = Zombie.zombieHealth;
 		if (Math.random() < .05) {
@@ -69,7 +70,8 @@ public class Zombie extends Mob {
 	 */
 	public void update() {
 		if (player == null)
-			player = this.game.getDisplay().getGamePanel().getWorld().getPlayer();
+			player = this.game.getDisplay().getGamePanel().getWorld()
+					.getPlayer();
 
 		// Reset movement
 		this.setDown(false);
@@ -77,17 +79,18 @@ public class Zombie extends Mob {
 		this.setRight(false);
 		this.setLeft(false);
 
+		// Reset collisions
 		boolean collideUp = false;
 		boolean collideDown = false;
 		boolean collideRight = false;
 		boolean collideLeft = false;
+
+		// get current chunk
 		int chunkX = this.position.x / 512;
 		int chunkY = this.position.y / 512;
-		int targetX = 0;
-		int targetY = 0;
 		// Follow the path
 		if (!this.getPath().isEmpty()) {
-			// If path contains null clear
+			// If path contains null clear path
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
@@ -95,11 +98,17 @@ public class Zombie extends Mob {
 					targetY = 0;
 				}
 			} else {
+				// Set pixel coordinate of next node in the path
 				targetX = path.peek().locationX * 32;
 				targetY = path.peek().locationY * 32;
-				if ((this.getPosition().x == targetX) && (this.getPosition().y == targetY)) {
+				// If zombie reached node location pop off node and read in next
+				// node
+				if ((this.getPosition().x == targetX)
+						&& (this.getPosition().y == targetY)) {
 					path.pop();
 				} else {
+					// Set zombie's desired movement based on rellative position
+					// to target
 					if (this.getPosition().y > targetY)
 						this.setUp(true);
 					else if (this.getPosition().y < targetY)
@@ -112,8 +121,10 @@ public class Zombie extends Mob {
 				}
 			}
 		}
+		// Set the zombie's rotation towards the target
 		if (targetX != 0 && targetY != 0) {
-			double dx = this.position.x - targetX, dy = this.position.y - targetY;
+			double dx = this.position.x - targetX, dy = this.position.y
+					- targetY;
 			if (dx == 0)
 				if (dy == 0)
 					this.rotation = 0;
@@ -134,59 +145,64 @@ public class Zombie extends Mob {
 				this.rotation = Math.atan(dy / dx);
 		}
 
-		if ((Math.pow(player.getPosition().x - this.position.x, 2)
-				+ Math.pow(player.getPosition().y - this.position.y, 2)) < 1000) {
+		// Collide with the player by moving zombie sway from player
+		if ((Math.pow(player.getPosition().x - this.position.x, 2) + Math.pow(
+				player.getPosition().y - this.position.y, 2)) < 1000) {
 			player.damage(Zombie.damage);
+			// If player is below
 			if (player.getPosition().y > this.position.y) {
 				this.up = true;
 				collideDown = true;
-			} else
-				collideDown = false;
+			} 
+			//If player is above
 			if (player.getPosition().y < this.position.y) {
 				this.down = true;
 				collideUp = true;
-			} else
-				collideUp = false;
+			} 
+			//If player is right
 			if (player.getPosition().x > this.position.x) {
 				this.left = true;
 				collideRight = true;
-			} else
-				collideRight = false;
+			} 
+			//If player is below
 			if (player.getPosition().x < this.position.x) {
 				this.right = true;
 				collideLeft = true;
-			} else
-				collideLeft = false;
+			} 
 		}
-
-		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2, map.getWidth() / 16); x++) {
-			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1, map.getHeight() / 16); y++) {
+		// Collide with other zombies by moving zombie sway from player
+		for (int x = Math.max(chunkX - 1, 0); x < Math.min(chunkX + 2,
+				map.getWidth() / 16); x++) {
+			for (int y = Math.max(chunkY - 1, 0); y < Math.min(chunkY + 1,
+					map.getHeight() / 16); y++) {
 				for (int i = 0; i < getChunkMap()[x][y].getZombies().size(); i++) {
 					if (1 < getChunkMap()[x][y].getZombies().size()) {
-						Zombie checkZombie = getChunkMap()[x][y].getZombies().get(i);
-						if ((Math.pow(checkZombie.getPosition().x - this.position.x, 2)
-								+ Math.pow(checkZombie.getPosition().y - this.position.y, 2)) < 1100) {
-
+						Zombie checkZombie = getChunkMap()[x][y].getZombies()
+								.get(i);
+						if ((Math.pow(checkZombie.getPosition().x
+								- this.position.x, 2) + Math.pow(
+								checkZombie.getPosition().y - this.position.y,
+								2)) < 1100) {
+							// If player is below
 							if (checkZombie.getPosition().y > this.position.y) {
 								this.up = true;
 								collideDown = true;
-							} else
-								collideDown = false;
+							} 
+							// If player is above
 							if (checkZombie.getPosition().y < this.position.y) {
 								this.down = true;
 								collideUp = true;
-							} else
-								collideUp = false;
+							} 
+							//If player is right
 							if (checkZombie.getPosition().x > this.position.x) {
 								this.left = true;
 								collideRight = true;
-							} else
-								collideRight = false;
+							} 
+							//If player is left
 							if (checkZombie.getPosition().x < this.position.x) {
 								this.right = true;
 								collideLeft = true;
-							} else
-								collideLeft = false;
+							} 
 						}
 
 					}
@@ -194,28 +210,41 @@ public class Zombie extends Mob {
 			}
 		}
 
-		// System.out.println(this.getPosition().x+" "+this.getPosition().y);
+		//Change zombie's coordinates based on previous checks with collide overwriting movement
+		
+		//Move up
 		if (this.up && !collideUp) {
-			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() - this.movementSpeed);
+			this.getPosition().setLocation(this.getPosition().getX(),
+					this.getPosition().getY() - this.movementSpeed);
 		}
+		//Move down
 		if (this.down && !collideDown) {
-			this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + this.movementSpeed);
+			this.getPosition().setLocation(this.getPosition().getX(),
+					this.getPosition().getY() + this.movementSpeed);
 		}
+		//Move right
 		if (this.left && !collideLeft) {
-			this.getPosition().setLocation(this.getPosition().getX() - this.movementSpeed, this.getPosition().getY());
+			this.getPosition().setLocation(
+					this.getPosition().getX() - this.movementSpeed,
+					this.getPosition().getY());
 		}
+		//Move left
 		if (this.right && !collideRight) {
-			this.getPosition().setLocation(this.getPosition().getX() + this.movementSpeed, this.getPosition().getY());
+			this.getPosition().setLocation(
+					this.getPosition().getX() + this.movementSpeed,
+					this.getPosition().getY());
 		}
+		//Zombie makes a noise when moving to alert other zombies
 		if (this.right || this.left || this.up || this.down) {
 			makeNoise(100, false);
 		}
+		//If zombie is no longer in the same chunk move zombie to correct chunk
 		if (chunkX != this.position.x / 512 || chunkY != this.position.y / 512) {
 			getChunkMap()[chunkX][chunkY].removeZombie(this);
 			chunkX = this.position.x / 512;
 			chunkY = this.position.y / 512;
-			if (!(chunkX > getChunkMap().length - 1 || chunkY > getChunkMap()[0].length - 1 || chunkX < 0
-					|| chunkY < 0))
+			if (!(chunkX > getChunkMap().length - 1
+					|| chunkY > getChunkMap()[0].length - 1 || chunkX < 0 || chunkY < 0))
 				getChunkMap()[chunkX][chunkY].addZombie(this);
 		}
 	}
@@ -227,7 +256,8 @@ public class Zombie extends Mob {
 			for (int item = 0; item < Inventory.NO_OF_ITEMS; item++) {
 				dropItem(item);
 			}
-			this.getChunkMap()[this.position.x / 512][this.position.y / 512].remove(this);
+			this.getChunkMap()[this.position.x / 512][this.position.y / 512]
+					.remove(this);
 			this.getChunkMap()[this.position.x / 512][this.position.y / 512]
 					.add(new Corpse(position, images, game, map, rotation));
 		}
@@ -256,20 +286,24 @@ public class Zombie extends Mob {
 
 		AffineTransform originalTransform = g2D.getTransform();
 
-		g2D.rotate(this.rotation, this.position.getX() + 16 - this.getGame().getCamera().getxOffset(),
-				this.getPosition().getY() + 16 - this.getGame().getCamera().getyOffset());
+		g2D.rotate(this.rotation, this.position.getX() + 16
+				- this.getGame().getCamera().getxOffset(), this.getPosition()
+				.getY() + 16 - this.getGame().getCamera().getyOffset());
 
-		g2D.drawImage(this.getImages()[imgNo], (int) (this.position.x - game.getCamera().getxOffset()),
+		g2D.drawImage(this.getImages()[zombieVarient],
+				(int) (this.position.x - game.getCamera().getxOffset()),
 				(int) (this.position.y - game.getCamera().getyOffset()), null);
 
 		g2D.setTransform(originalTransform);
 
 		if (this.health < Zombie.zombieHealth) {
-			g2D.drawRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 6,
-					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 33, 44, 6);
+			g2D.drawRect((int) (this.position.x - this.getGame().getCamera()
+					.getxOffset()) - 6, (int) (this.getPosition().y - this
+					.getGame().getCamera().getyOffset()) + 33, 44, 6);
 			g2D.setColor(Color.RED);
-			g2D.fillRect((int) (this.position.x - this.getGame().getCamera().getxOffset()) - 5,
-					(int) (this.getPosition().y - this.getGame().getCamera().getyOffset()) + 34,
+			g2D.fillRect((int) (this.position.x - this.getGame().getCamera()
+					.getxOffset()) - 5, (int) (this.getPosition().y - this
+					.getGame().getCamera().getyOffset()) + 34,
 					(int) (42 * (this.health / (Zombie.zombieHealth * 1.0))), 5);
 			g2D.setColor(Color.BLACK);
 		}
