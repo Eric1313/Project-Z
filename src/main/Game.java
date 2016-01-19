@@ -1,4 +1,15 @@
+/**
+ * The actual game that contains the game loop, and assets.
+ * @author Allen Han, Patrick Liu, Alosha Reymer, & Eric Chee
+ * @version January 4th, 2016
+ */
 package main;
+
+import items.Consumable;
+import items.Firearm;
+import items.Item;
+import items.Melee;
+import items.Throwable;
 
 import java.awt.Cursor;
 import java.awt.Font;
@@ -12,20 +23,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import utilities.Assets;
+import utilities.Effect;
+import utilities.GameCamera;
 import GUI.Display;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
 import enums.ItemState;
-import items.Consumable;
-import items.Firearm;
-import items.Item;
-import items.Melee;
-import items.Throwable;
-import utilities.Assets;
-import utilities.Effect;
-import utilities.GameCamera;
-import utilities.Sound;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tileImages;
@@ -58,6 +63,16 @@ public class Game implements Runnable {
 	private Font uiFontS;
 	private Font uiFontXS;
 
+	/**
+	 * Constructor for Game.
+	 * 
+	 * @param title
+	 *            the title of the game.
+	 * @param width
+	 *            the width of the game.
+	 * @param height
+	 *            the height of the game.
+	 */
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -65,8 +80,11 @@ public class Game implements Runnable {
 		this.level = 1;
 	}
 
+	/**
+	 * Initializes everything needs for the game.
+	 */
 	private void initialize() {
-		// Loads the assets
+		// Loads in all of the assets used
 		tileImages = new Assets("res/img/tiles.png", 1, 1).getSprites();
 		playerImages = new Assets("res/img/player.png", 1, 1).getSprites();
 		zombieImages = new Assets("res/img/zombie.png", 1, 1).getSprites();
@@ -76,9 +94,12 @@ public class Game implements Runnable {
 		uiFontL = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
 		uiFontS = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
 		uiFontXS = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
-		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150).getFont();
-		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380).getFont();
-		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000).getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
+				.getFont();
+		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
+				.getFont();
+		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
+				.getFont();
 		help = new BufferedImage[6];
 		help[0] = new Assets("res/img/1.png").getImage();
 		help[1] = new Assets("res/img/2.png").getImage();
@@ -89,9 +110,9 @@ public class Game implements Runnable {
 
 		// Load all of the items
 		BufferedReader itemReader = null;
-
 		try {
-			itemReader = new BufferedReader(new InputStreamReader(new FileInputStream("res/items.txt")));
+			itemReader = new BufferedReader(new InputStreamReader(
+					new FileInputStream("res/items.txt")));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -117,7 +138,8 @@ public class Game implements Runnable {
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
-					BufferedImage[] images = new Assets(stats[4], 1, 1).getSprites()[0];
+					BufferedImage[] images = new Assets(stats[4], 1, 1)
+							.getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
 					Effect[] sounds = new Effect[soundLinks.length];
@@ -131,27 +153,47 @@ public class Game implements Runnable {
 					// items
 					switch (itemType) {
 					case 0:
-						this.items.add(new Consumable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
-								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
-								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7])));
+						this.items
+								.add(new Consumable(Integer.parseInt(stats[0]),
+										stats[1], Integer.parseInt(stats[2]),
+										Integer.parseInt(stats[3]),
+										ItemState.DROPPED, images, sounds,
+										this, ItemEffect.values()[Integer
+												.parseInt(stats[6])], Integer
+												.parseInt(stats[7])));
 						break;
 					case 1:
-						this.items.add(new Melee(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
-								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
-								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
-								Integer.parseInt(stats[9]), Integer.parseInt(stats[10])));
+						this.items.add(new Melee(Integer.parseInt(stats[0]),
+								stats[1], Integer.parseInt(stats[2]), Integer
+										.parseInt(stats[3]), ItemState.DROPPED,
+								images, sounds, this, Integer
+										.parseInt(stats[6]), Integer
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8]), Integer
+										.parseInt(stats[9]), Integer
+										.parseInt(stats[10])));
 						break;
 					case 2:
-						this.items.add(new Firearm(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
-								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
-								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
-								Integer.parseInt(stats[9]), Integer.parseInt(stats[10])));
+						this.items.add(new Firearm(Integer.parseInt(stats[0]),
+								stats[1], Integer.parseInt(stats[2]), Integer
+										.parseInt(stats[3]), ItemState.DROPPED,
+								images, sounds, this, Integer
+										.parseInt(stats[6]), Integer
+										.parseInt(stats[7]), Integer
+										.parseInt(stats[8]), Integer
+										.parseInt(stats[9]), Integer
+										.parseInt(stats[10])));
 						break;
 					case 3:
-						this.items.add(new Throwable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
-								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
-								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7]),
-								Integer.parseInt(stats[8])));
+						this.items
+								.add(new Throwable(Integer.parseInt(stats[0]),
+										stats[1], Integer.parseInt(stats[2]),
+										Integer.parseInt(stats[3]),
+										ItemState.DROPPED, images, sounds,
+										this, ItemEffect.values()[Integer
+												.parseInt(stats[6])], Integer
+												.parseInt(stats[7]), Integer
+												.parseInt(stats[8])));
 					}
 
 				} catch (IOException e) {
@@ -162,7 +204,7 @@ public class Game implements Runnable {
 		}
 
 		// Close the file
-		
+
 		try {
 			itemReader.close();
 		} catch (IOException e) {
@@ -171,17 +213,25 @@ public class Game implements Runnable {
 		// Loads the display
 		display = new Display(title, width, height);
 
+		// Creates the camera
 		camera = new GameCamera(this, 0, 0);
+
 		// Sets the state of the game
 		state = new GameState(this);
 		state.setGameState(State.LOBBY, false);
+		
+		// Sets the icon
+		display.getFrame().setIconImage(
+				new Assets("res/img/icon.png").getImage());
 
-		// display.getFrame().createBufferStrategy(2);
-		display.getFrame().setIconImage(new Assets("res/img/icon.png").getImage());
-		display.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-
+		// Changes the mouse to a cross hair
+		display.getFrame().setCursor(
+				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
+	/**
+	 * Updates the game.
+	 */
 	private void update() {
 		// Updates the current state only
 		if (state.getGameState() != null)
@@ -189,22 +239,22 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Where the drawing happens in the program
+	 * Renders the correct screen.
 	 */
 	private void render() {
+		// Check if there is a buffer strategy
 		bs = display.getGamePanel().getBufferStrategy();
-
 		// If this is the first time running initialize the buffer strategy
 		if (bs == null) {
 			display.getGamePanel().createBufferStrategy(3);
 			return;
 		}
-
 		g = bs.getDrawGraphics();
+
 		// Clears the screen
 		g.clearRect(0, 0, width, height);
 
-		// Drawing
+		// Renders the screen
 		if (state.getGameState() != null) {
 			state.render(g);
 		}
@@ -213,47 +263,22 @@ public class Game implements Runnable {
 		g.dispose();
 	}
 
-	// /**
-	// * The main game loop of the game
-	// */
-	// public void run() {
-	//
-	// initialize();
-	//
-	// int fps = 30;
-	// double timePerUpdate = 1000000000 / fps;
-	// double timeElapsed = 0;
-	// long now;
-	// // Current time of computer in nanoseconds
-	// long lastTime = System.nanoTime();
-	//
-	// // Game loop
-	// while (running) {
-	// now = System.nanoTime();
-	// timeElapsed += (now - lastTime) / timePerUpdate;
-	// lastTime = now;
-	//
-	// // If the time elapsed has been 1/60th of a second then refresh the
-	// // game
-	// if (timeElapsed >= 1) {
-	// update();
-	// render();
-	// timeElapsed--;
-	// }
-	// }
-	// // Stops the game
-	// stop();
-	// }
-
+	/**
+	 * The main game loop of the game where the rendering and updating is done.
+	 */
 	public void run() {
+		// Initializes all assets and sets the state
 		initialize();
 
+		// Keeps track of ticks
 		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
 		double secondsPerTick = 1 / 60.0;
 		tickCount = 0;
 
+		// Game loop
 		while (running) {
+			// Calculates the time pasted
 			long now = System.nanoTime();
 			long passedTime = now - lastTime;
 			lastTime = now;
@@ -262,24 +287,23 @@ public class Game implements Runnable {
 			if (passedTime > 100000000)
 				passedTime = 100000000;
 
+			// Seconds since the last tick
 			unprocessedSeconds += passedTime / 1000000000.0;
 
+			// Updates the game
 			boolean ticked = false;
 			while (unprocessedSeconds > secondsPerTick) {
 				update();
 				unprocessedSeconds -= secondsPerTick;
 				ticked = true;
-
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					// System.out.println(frames + " fps");
 					lastTime += 1000;
 				}
 			}
-
+			// Renders the game
 			if (ticked) {
 				render();
-				// update();
 			} else {
 				try {
 					Thread.sleep(1);
@@ -292,7 +316,7 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Start the game
+	 * Starts the game.
 	 */
 	public synchronized void start() {
 		// Do not make a new thread if it is already running
@@ -307,10 +331,10 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Stop the game
+	 * Stops the game.
 	 */
 	public synchronized void stop() {
-		// In case stop gets called and it is already not running
+		// In case stop gets called and the game is already not running
 		if (!running)
 			return;
 
@@ -420,7 +444,8 @@ public class Game implements Runnable {
 				case 2:
 					return new Melee((Melee) this.items.get(item));
 				case 3:
-					Firearm newItem = new Firearm((Firearm) this.items.get(item));
+					Firearm newItem = new Firearm(
+							(Firearm) this.items.get(item));
 					newItem.setCurrentAmmo(newItem.getMaxAmmo());
 					return newItem;
 				case 4:

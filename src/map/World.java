@@ -62,9 +62,9 @@ public class World {
 	 * @param game
 	 *            the game.
 	 * @param mapWidth
-	 *            the width of the map.
+	 *            the width of the map in tiles.
 	 * @param mapHeight
-	 *            the height of the map
+	 *            the height of the map in tiles.
 	 */
 	public World(Game game, int mapWidth, int mapHeight, Inventory inventory,
 			int skinNo) {
