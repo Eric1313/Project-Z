@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -12,9 +11,8 @@ import main.Game;
 import entities.Zombie;
 import enums.GameState.State;
 
-public class DeathScreen extends Canvas {
+public class DeathScreen extends Screen {
 	private static final long serialVersionUID = 1L;
-	private Game game;
 	private float colour = 30;
 	private boolean decrease;
 
@@ -22,6 +20,10 @@ public class DeathScreen extends Canvas {
 	private Rectangle exit;
 	private boolean hoverMain;
 	private boolean hoverExit;
+
+	public DeathScreen(Game game) {
+		super(game);
+	}
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -54,8 +56,10 @@ public class DeathScreen extends Canvas {
 		// Draw play button
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 367, 460, 390);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 487, 460, 510);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
+				367, 460, 390);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
+				487, 460, 510);
 	}
 
 	public void update() {
@@ -88,27 +92,5 @@ public class DeathScreen extends Canvas {
 		main = new Rectangle(412, 300, 200, 100);
 		exit = new Rectangle(412, 420, 200, 100);
 		game.setLevel(1);
-	}
-
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
-		g2D.setColor(Color.WHITE);
-		if (hover) {
-			g2D.setPaint(Color.WHITE);
-			g2D.fill(box);
-		}
-		g2D.draw(box);
-		if (hover) {
-			g2D.setColor(new Color(152, 0, 0));
-			g2D.setFont(game.getZombieFont());
-			g2D.drawString("}", handX, handY);
-		}
-		g2D.setFont(game.getUiFont());
-		if (hover) {
-			g2D.setColor(Color.BLACK);
-		} else {
-			g2D.setColor(Color.WHITE);
-		}
-		g2D.drawString(text, textX, textY);
 	}
 }

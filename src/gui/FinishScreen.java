@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -12,9 +11,8 @@ import main.Game;
 import entities.Zombie;
 import enums.GameState.State;
 
-public class FinishScreen extends Canvas {
+public class FinishScreen extends Screen {
 	private static final long serialVersionUID = 1L;
-	private Game game;
 	private float colour = 30;
 	private boolean decrease;
 	private Rectangle next;
@@ -24,6 +22,10 @@ public class FinishScreen extends Canvas {
 	private boolean hoverMain;
 	private boolean hoverExit;
 	private int level;
+
+	public FinishScreen(Game game) {
+		super(game);
+	}
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -115,27 +117,5 @@ public class FinishScreen extends Canvas {
 		exit = new Rectangle(412, 540, 200, 100);
 		level = game.getLevel();
 		game.setLevel(game.getLevel() + 1);
-	}
-
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
-		g2D.setColor(Color.WHITE);
-		if (hover) {
-			g2D.setPaint(Color.WHITE);
-			g2D.fill(box);
-		}
-		g2D.draw(box);
-		if (hover) {
-			g2D.setColor(new Color(152, 0, 0));
-			g2D.setFont(game.getZombieFont());
-			g2D.drawString("}", handX, handY);
-		}
-		g2D.setFont(game.getUiFont());
-		if (hover) {
-			g2D.setColor(Color.BLACK);
-		} else {
-			g2D.setColor(Color.WHITE);
-		}
-		g2D.drawString(text, textX, textY);
 	}
 }

@@ -16,7 +16,7 @@ public class Display {
 	private PauseScreen pause;
 	private FinishScreen finish;
 	private DeathScreen death;
-	private HelpState help;
+	private HelpScreen help;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -38,11 +38,11 @@ public class Display {
 		panelContainer.setLayout(cardLayout);
 
 		gamePanel = new GameScreen();
-		main = new MainScreen();
-		pause = new PauseScreen();
-		finish = new FinishScreen();
-		death = new DeathScreen();
-		help = new HelpState();
+		main = new MainScreen(null);
+		pause = new PauseScreen(null);
+		finish = new FinishScreen(null);
+		death = new DeathScreen(null);
+		help = new HelpScreen(null);
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -113,7 +113,7 @@ public class Display {
 		return finish;
 	}
 
-	public HelpState getHelp() {
+	public HelpScreen getHelp() {
 		return help;
 	}
 

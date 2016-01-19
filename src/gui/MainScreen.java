@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -11,9 +10,8 @@ import java.awt.RenderingHints;
 import main.Game;
 import enums.GameState.State;
 
-public class MainScreen extends Canvas {
+public class MainScreen extends Screen {
 	private static final long serialVersionUID = 1L;
-	private Game game;
 	private boolean hoverPlay;
 	private boolean hoverHelp;
 	private boolean hoverExit;
@@ -23,6 +21,11 @@ public class MainScreen extends Canvas {
 	// Used for pulsating hand.
 	private float colour = 30;
 	private boolean decrease;
+
+	public MainScreen(Game game) {
+		super(game);
+		// TODO Auto-generated constructor stub
+	}
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -71,28 +74,6 @@ public class MainScreen extends Canvas {
 		g2D.drawString(
 				"Ver. 1.0 CREATED BY ALLEN HAN, ALOSHA REYMER, ERIC CHEE, & PATRICK LIU",
 				680, 760);
-	}
-
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
-		g2D.setColor(Color.WHITE);
-		if (hover) {
-			g2D.setPaint(Color.WHITE);
-			g2D.fill(box);
-		}
-		g2D.draw(box);
-		if (hover) {
-			g2D.setColor(new Color(152, 0, 0));
-			g2D.setFont(game.getZombieFont());
-			g2D.drawString("}", handX, handY);
-		}
-		g2D.setFont(game.getUiFont());
-		if (hover) {
-			g2D.setColor(Color.BLACK);
-		} else {
-			g2D.setColor(Color.WHITE);
-		}
-		g2D.drawString(text, textX, textY);
 	}
 
 	public void update() {

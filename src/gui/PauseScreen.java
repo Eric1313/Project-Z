@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -11,9 +10,8 @@ import java.awt.RenderingHints;
 import main.Game;
 import enums.GameState.State;
 
-public class PauseScreen extends Canvas {
+public class PauseScreen extends Screen {
 	private static final long serialVersionUID = 1L;
-	private Game game;
 	private float colour = 30;
 	private boolean decrease;
 
@@ -24,13 +22,20 @@ public class PauseScreen extends Canvas {
 	private boolean hoverMain;
 	private boolean hoverExit;
 
+	public PauseScreen(Game game) {
+		super(game);
+	}
+
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		// Make the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
 		// Draws the hand
 		// Pulsates the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -53,9 +58,12 @@ public class PauseScreen extends Canvas {
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
 
-		button(g2D, hoverResume, resume, "RESUME", 512 - fm.stringWidth("RESUME") / 2, 367, 460, 390);
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 607, 460, 630);
+		button(g2D, hoverResume, resume, "RESUME",
+				512 - fm.stringWidth("RESUME") / 2, 367, 460, 390);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
+				487, 460, 510);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
+				607, 460, 630);
 	}
 
 	public void update() {
@@ -63,7 +71,8 @@ public class PauseScreen extends Canvas {
 			game.getState().setState(State.INGAME, true);
 			game.getDisplay().getKeyHandler().setEsc(false);
 		}
-		if (resume.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (resume.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverResume = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -72,7 +81,8 @@ public class PauseScreen extends Canvas {
 		} else {
 			hoverResume = false;
 		}
-		if (main.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (main.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -81,7 +91,8 @@ public class PauseScreen extends Canvas {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (exit.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverExit = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				System.exit(0);
@@ -97,27 +108,5 @@ public class PauseScreen extends Canvas {
 		resume = new Rectangle(412, 300, 200, 100);
 		main = new Rectangle(412, 420, 200, 100);
 		exit = new Rectangle(412, 540, 200, 100);
-	}
-
-	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
-			int handY) {
-		g2D.setColor(Color.WHITE);
-		if (hover) {
-			g2D.setPaint(Color.WHITE);
-			g2D.fill(box);
-		}
-		g2D.draw(box);
-		if (hover) {
-			g2D.setColor(new Color(152, 0, 0));
-			g2D.setFont(game.getZombieFont());
-			g2D.drawString("}", handX, handY);
-		}
-		g2D.setFont(game.getUiFont());
-		if (hover) {
-			g2D.setColor(Color.BLACK);
-		} else {
-			g2D.setColor(Color.WHITE);
-		}
-		g2D.drawString(text, textX, textY);
 	}
 }
