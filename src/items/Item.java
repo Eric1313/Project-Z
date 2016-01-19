@@ -1,23 +1,18 @@
 package items;
 
-import java.applet.AudioClip;
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-import javax.sound.sampled.Clip;
-
+import entities.Player;
+import entities.Zombie;
+import enums.ItemState;
 import main.Game;
 import map.Map;
 import utilities.Effect;
 import utilities.Sound;
-import entities.Player;
-import entities.Zombie;
-import enums.ItemState;
 
 /**
  * Abstract Item class for all items in Project Z.
@@ -29,8 +24,6 @@ import enums.ItemState;
 public abstract class Item {
 	protected int itemID;
 	protected String name;
-	protected boolean inHand;
-	
 
 	/**
 	 * Integer that decides how rare it is to find this item in a map.<br>
@@ -64,7 +57,6 @@ public abstract class Item {
 
 	public abstract void use(Player player);
 
-	// TODO Add effectValue?
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
 			Effect[] clips, Game game) {
 		this.itemID = itemID;
@@ -78,9 +70,13 @@ public abstract class Item {
 		this.clips = clips;
 
 		this.game = game;
-		this.inHand = false;
 	}
 
+	/**
+	 * Clones an item template for multiple use.
+	 * 
+	 * @param item the item template.
+	 */
 	public Item(Item item) {
 		this.itemID = item.itemID;
 		this.name = item.name;
@@ -120,24 +116,12 @@ public abstract class Item {
 		return this.itemID;
 	}
 
-	public void setItemID(int itemID) {
-		this.itemID = itemID;
-	}
-
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getRarity() {
 		return this.rarity;
-	}
-
-	public void setRarity(int rarity) {
-		this.rarity = rarity;
 	}
 
 	public Color getColour() {
@@ -159,10 +143,6 @@ public abstract class Item {
 
 	public int getEffectValue() {
 		return this.effectValue;
-	}
-
-	public void setEffectValue(int effectValue) {
-		this.effectValue = effectValue;
 	}
 
 	public Point getPosition() {
@@ -193,28 +173,12 @@ public abstract class Item {
 		return images;
 	}
 
-	public void setImages(BufferedImage[] images) {
-		this.images = images;
-	}
-
 	public Sound[] getClips() {
 		return clips;
 	}
 
-	public void setClips(Sound[] clips) {
-		this.clips = clips;
-	}
-
 	public Game getGame() {
 		return this.game;
-	}
-
-	public boolean isInHand() {
-		return inHand;
-	}
-
-	public void setInHand(boolean inHand) {
-		this.inHand = inHand;
 	}
 
 	public void render(Graphics g) {

@@ -314,10 +314,11 @@ public class Game implements Runnable {
 	 */
 	public synchronized void stop() {
 		// In case stop gets called and the game is already not running
-		if (!running)
+		if (!running) {
 			return;
+		}
 
-		// Stops the game
+		// Stop the game
 		running = false;
 		try {
 			thread.join();
