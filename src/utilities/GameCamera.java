@@ -12,7 +12,6 @@ import main.GamePanel;
 import entities.Entity;
 
 public class GameCamera {
-	private Game game;
 	private float xOffset, yOffset;
 	private JFrame frame;
 	private GamePanel panel;
@@ -28,7 +27,6 @@ public class GameCamera {
 	 *            the y value to offset the map by
 	 */
 	public GameCamera(Game game, float xOffset, float yOffset) {
-		this.game = game;
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.frame = game.getDisplay().getFrame();
