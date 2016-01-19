@@ -11,12 +11,12 @@ import utilities.MouseHandler;
 
 public class Display {
 	private JFrame frame;
-	private GamePanel gamePanel;
-	private MainPanel main;
-	private PausePanel pause;
-	private FinishPanel finish;
-	private DeathPanel death;
-	private HelpPanel help;
+	private GameScreen gamePanel;
+	private MainScreen main;
+	private PauseScreen pause;
+	private FinishScreen finish;
+	private DeathScreen death;
+	private HelpState help;
 	private JPanel panelContainer;
 	private CardLayout cardLayout;
 	private MouseHandler mouseHandler;
@@ -37,12 +37,12 @@ public class Display {
 		cardLayout = new CardLayout();
 		panelContainer.setLayout(cardLayout);
 
-		gamePanel = new GamePanel();
-		main = new MainPanel();
-		pause = new PausePanel();
-		finish = new FinishPanel();
-		death = new DeathPanel();
-		help = new HelpPanel();
+		gamePanel = new GameScreen();
+		main = new MainScreen();
+		pause = new PauseScreen();
+		finish = new FinishScreen();
+		death = new DeathScreen();
+		help = new HelpState();
 
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -97,23 +97,23 @@ public class Display {
 		frame.setVisible(true);
 	}
 
-	public MainPanel getMain() {
+	public MainScreen getMain() {
 		return main;
 	}
 
-	public PausePanel getPause() {
+	public PauseScreen getPause() {
 		return pause;
 	}
 
-	public DeathPanel getDeath() {
+	public DeathScreen getDeath() {
 		return death;
 	}
 
-	public FinishPanel getFinish() {
+	public FinishScreen getFinish() {
 		return finish;
 	}
 
-	public HelpPanel getHelp() {
+	public HelpState getHelp() {
 		return help;
 	}
 
@@ -125,7 +125,7 @@ public class Display {
 		cardLayout.show(panelContainer, panel);
 	}
 
-	public GamePanel getGamePanel() {
+	public GameScreen getGamePanel() {
 		return gamePanel;
 	}
 

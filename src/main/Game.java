@@ -174,15 +174,11 @@ public class Game implements Runnable {
 										.parseInt(stats[10])));
 						break;
 					case 2:
-						this.items.add(new Firearm(Integer.parseInt(stats[0]),
-								stats[1], Integer.parseInt(stats[2]), Integer
-										.parseInt(stats[3]), ItemState.DROPPED,
-								images, sounds, this, Integer
-										.parseInt(stats[6]), Integer
-										.parseInt(stats[7]), Integer
-										.parseInt(stats[8]), Integer
-										.parseInt(stats[9]), Integer
-										.parseInt(stats[10])));
+						this.items.add(new Firearm(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
+								Integer.parseInt(stats[9]), Integer.parseInt(stats[10]), Integer.parseInt(stats[11]), Integer.parseInt(stats[12])));
+
 						break;
 					case 3:
 						this.items

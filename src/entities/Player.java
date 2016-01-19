@@ -10,6 +10,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 import enums.GameState.State;
 import enums.ItemState;
@@ -91,7 +92,8 @@ public class Player extends Mob {
 	 * @param skinNo
 	 *            a number representing the player's skin.
 	 */
-	public Player(Point position, Inventory inventory, boolean solid, Game game, Map map, int skinNo) {
+	public Player(Point position, Inventory inventory, boolean solid,
+			Game game, Map map, int skinNo) {
 		super(32, 32, position, solid, game, map);
 
 		if (inventory != null) {
@@ -102,6 +104,10 @@ public class Player extends Mob {
 			this.addItem(this.game.getItem(304));
 			this.addItem(this.game.getItem(400));
 			this.addItem(this.game.getItem(303));
+			this.addItem(this.game.getItem(302));
+			this.addItem(this.game.getItem(103));
+			this.addItem(this.game.getItem(103));
+
 		}
 
 		this.skinNo = skinNo;
@@ -122,8 +128,10 @@ public class Player extends Mob {
 	 * @return the player's center coordinate.
 	 */
 	public Point getPlayerCenter() {
-		return new Point((int) (this.getPosition().getX() - camera.getxOffset() + this.width / 2),
-				(int) (this.getPosition().getY() - camera.getyOffset()) + this.height / 2);
+		return new Point(
+				(int) (this.getPosition().getX() - camera.getxOffset() + this.width / 2),
+				(int) (this.getPosition().getY() - camera.getyOffset())
+						+ this.height / 2);
 	}
 
 	@Override
@@ -148,16 +156,21 @@ public class Player extends Mob {
 	 */
 	public void pickUpItem() {
 		// Get the item that's being hovered over
-		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld().getHoverItem();
+		Item hoverItem = this.game.getDisplay().getGamePanel().getWorld()
+				.getHoverItem();
 
 		// Check if the player's inventory is not full
 		// Make sure that the player is close enough to the item (32 pixels)
-		if (hoverItem != null && !this.isFull() && Point.distance(this.position.getX(), this.position.getY(),
-				hoverItem.getPosition().getX(), hoverItem.getPosition().getY()) <= 32) {
+		if (hoverItem != null
+				&& !this.isFull()
+				&& Point.distance(this.position.getX(), this.position.getY(),
+						hoverItem.getPosition().getX(), hoverItem.getPosition()
+								.getY()) <= 32) {
 			// Remove the item from the chunk that the item was in
 			// Add the item to the player's inventory
 			hoverItem.setState(ItemState.INVENTORY);
-			this.chunkMap[hoverItem.getPosition().x / 512][hoverItem.getPosition().y / 512].remove(hoverItem);
+			this.chunkMap[hoverItem.getPosition().x / 512][hoverItem
+					.getPosition().y / 512].remove(hoverItem);
 			this.addItem(hoverItem);
 		}
 	}
@@ -203,8 +216,12 @@ public class Player extends Mob {
 
 		AffineTransform originalTransform = g2D.getTransform();
 
-		double angle = Math.atan2(((position.getY()) + 16 - camera.getyOffset()) - mouse.getMouseLocation().getY(),
-				(position.getX() + 16 - camera.getxOffset()) - mouse.getMouseLocation().getX()) - Math.PI / 2;
+		double angle = Math.atan2(
+				((position.getY()) + 16 - camera.getyOffset())
+						- mouse.getMouseLocation().getY(),
+				(position.getX() + 16 - camera.getxOffset())
+						- mouse.getMouseLocation().getX())
+				- Math.PI / 2;
 
 		this.selectedItem = this.getItem(selectedItemNumber);
 		if (selectedItem != null) {
@@ -213,52 +230,74 @@ public class Player extends Mob {
 				if (difference <= ((Melee) selectedItem).getSwingSpeed()) {
 					// TODO lol
 					g2D.rotate(
-							this.swingAngle - this.swingAngleRange
-									+ (this.swingAngleRange * 2 / difference * ((Melee) selectedItem).getSwingSpeed()
-											* 1.0),
-							position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
-					g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
-							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+							this.swingAngle
+									- this.swingAngleRange
+									+ (this.swingAngleRange
+											* 2
+											/ difference
+											* ((Melee) selectedItem)
+													.getSwingSpeed() * 1.0),
+							position.getX() - camera.getxOffset() + 16,
+							position.getY() - camera.getyOffset() + 16);
+					g2D.drawImage(
+							selectedItem.getImages()[0],
+							(int) (this.getPosition().x - camera.getxOffset() + 10),
+							(int) (this.getPosition().y - camera.getyOffset() - 10),
+							null);
 				} else {
 					this.swinging = false;
-					g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
-							position.getY() - camera.getyOffset() + 16);
-					g2D.drawImage(selectedItem.getImages()[0], (int) (this.getPosition().x - camera.getxOffset() + 10),
-							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+					g2D.rotate(angle, position.getX() - camera.getxOffset()
+							+ 16, position.getY() - camera.getyOffset() + 16);
+					g2D.drawImage(
+							selectedItem.getImages()[0],
+							(int) (this.getPosition().x - camera.getxOffset() + 10),
+							(int) (this.getPosition().y - camera.getyOffset() - 10),
+							null);
 				}
 			} else {
 				g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
 						position.getY() - camera.getyOffset() + 16);
 				if (selectedItem instanceof Firearm) {
-					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[2],
+					g2D.drawImage(
+							this.getItem(selectedItemNumber).getImages()[2],
 							(int) (this.getPosition().x - camera.getxOffset() + 10),
-							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+							(int) (this.getPosition().y - camera.getyOffset() - 10),
+							null);
 					if (this.shooting) {
 						g2D.setColor(new Color(255, 255, 0));
-						g2D.fillOval((int) (this.getPosition().x - camera.getxOffset() + 25),
-								(int) (this.getPosition().y - camera.getyOffset() - 18), 6, 12);
+						g2D.fillOval(
+								(int) (this.getPosition().x
+										- camera.getxOffset() + 25),
+								(int) (this.getPosition().y
+										- camera.getyOffset() - 18), 6, 12);
 						this.shooting = false;
 					}
 				} else {
-					g2D.drawImage(this.getItem(selectedItemNumber).getImages()[0],
+					g2D.drawImage(
+							this.getItem(selectedItemNumber).getImages()[0],
 							(int) (this.getPosition().x - camera.getxOffset() + 10),
-							(int) (this.getPosition().y - camera.getyOffset() - 10), null);
+							(int) (this.getPosition().y - camera.getyOffset() - 10),
+							null);
 				}
 			}
 		} else {
-			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16, position.getY() - camera.getyOffset() + 16);
+			g2D.rotate(angle, position.getX() - camera.getxOffset() + 16,
+					position.getY() - camera.getyOffset() + 16);
 		}
 
-		g2D.drawImage(this.getImages()[skinNo], (int) (this.getPosition().x - camera.getxOffset()),
+		g2D.drawImage(this.getImages()[skinNo],
+				(int) (this.getPosition().x - camera.getxOffset()),
 				(int) (this.getPosition().y - camera.getyOffset()), null);
 
 		g2D.setTransform(originalTransform);
 
-		if (this.getItem(selectedItemNumber) != null && selectedItem instanceof Throwable) {
+		if (this.getItem(selectedItemNumber) != null
+				&& selectedItem instanceof Throwable) {
 			Throwable throwable = ((Throwable) selectedItem);
-			g2D.drawOval((int) (this.getPlayerCenter().x - throwable.getRange()),
-					(int) (this.getPlayerCenter().y - throwable.getRange()), 2 * throwable.getRange(),
-					2 * throwable.getRange());
+			g2D.drawOval(
+					(int) (this.getPlayerCenter().x - throwable.getRange()),
+					(int) (this.getPlayerCenter().y - throwable.getRange()),
+					2 * throwable.getRange(), 2 * throwable.getRange());
 		}
 	}
 
@@ -312,8 +351,10 @@ public class Player extends Mob {
 		// If the player is sneaking, halve their movement speed
 		// As long as the player is not sprinting, regenerate their stamina by 1
 		// until it is full
-		if (this.key.isShift() && !this.exhausted
-				&& (this.key.isUp() || this.key.isDown() || this.key.isLeft() || this.key.isRight())) {
+		if (this.key.isShift()
+				&& !this.exhausted
+				&& (this.key.isUp() || this.key.isDown() || this.key.isLeft() || this.key
+						.isRight())) {
 			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
 			this.stamina -= Player.SPRINT_COST;
 		} else if (key.isCtrl()) {
@@ -332,7 +373,8 @@ public class Player extends Mob {
 		// Scrolling down increases the selected item number and loops back
 		// around
 		// Reset the mouse handler's mouse wheel
-		this.key.setLastNumber(this.key.getLastNumber() + this.mouse.getMouseWheel());
+		this.key.setLastNumber(this.key.getLastNumber()
+				+ this.mouse.getMouseWheel());
 		this.mouse.setMouseWheel(0);
 
 		// If the selected item number has change, update the player's selected
@@ -342,24 +384,30 @@ public class Player extends Mob {
 			this.selectedItem = this.getItem(this.selectedItemNumber);
 		}
 
-		this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + yMove());
-		this.getPosition().setLocation(this.getPosition().getX() + xMove(), this.getPosition().getY());
+		this.getPosition().setLocation(this.getPosition().getX(),
+				this.getPosition().getY() + yMove());
+		this.getPosition().setLocation(this.getPosition().getX() + xMove(),
+				this.getPosition().getY());
 		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0)));
 		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
-		if (world.getSolid()[row][col] != null && yMove() == 0 && xMove() == 0 && key.isRight() && key.isLeft()
-				&& key.isUp() && key.isDown()) {
+		if (world.getSolid()[row][col] != null && yMove() == 0 && xMove() == 0
+				&& key.isRight() && key.isLeft() && key.isUp() && key.isDown()) {
 			if (hitbox.intersects(world.getSolid()[row][col])) {
-				this.getPosition().setLocation(this.getPosition().getX(), this.getPosition().getY() + 32);
+				this.getPosition().setLocation(this.getPosition().getX(),
+						this.getPosition().getY() + 32);
 			}
 		}
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
 		else if (position.getX() > Assets.TILE_WIDTH * (world.getWidth() - 1))
-			position.setLocation(Assets.TILE_WIDTH * (world.getWidth() - 1), position.getY());
+			position.setLocation(Assets.TILE_WIDTH * (world.getWidth() - 1),
+					position.getY());
 		if (position.getY() < 0)
 			position.setLocation(position.getX(), 0);
-		else if (position.getY() + 32 > Assets.TILE_HEIGHT * (world.getHeight() - 1))
-			position.setLocation(position.getX(), Assets.TILE_HEIGHT * (world.getHeight() - 1) - 32);
+		else if (position.getY() + 32 > Assets.TILE_HEIGHT
+				* (world.getHeight() - 1))
+			position.setLocation(position.getX(),
+					Assets.TILE_HEIGHT * (world.getHeight() - 1) - 32);
 
 		this.game.getCamera().centerOnEntity(this);
 
@@ -390,8 +438,10 @@ public class Player extends Mob {
 		if (key.isRight()) {
 			xMove = this.movementSpeed;
 		}
-		hitbox = new Rectangle((int) (this.position.getX() - camera.getxOffset()) + xMove,
-				(int) (this.position.getY() - camera.getyOffset()), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		hitbox = new Rectangle(
+				(int) (this.position.getX() - camera.getxOffset()) + xMove,
+				(int) (this.position.getY() - camera.getyOffset()),
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0)));
 		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
 		if (xMove > 0) {// Moving right
@@ -430,8 +480,10 @@ public class Player extends Mob {
 		if (this.game.getDisplay().getKeyHandler().isDown()) {
 			yMove = this.movementSpeed;
 		}
-		hitbox = new Rectangle((int) (this.position.getX() - camera.getxOffset()),
-				(int) (this.position.getY() - camera.getyOffset() + yMove), Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+		hitbox = new Rectangle(
+				(int) (this.position.getX() - camera.getxOffset()),
+				(int) (this.position.getY() - camera.getyOffset() + yMove),
+				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		int row = (int) (((this.getPosition().y - camera.getyOffset()) / 32));
 		int col = (int) (((this.getPosition().x - camera.getxOffset()) / 32.0));
 		if (yMove < 0) {// Moving up
@@ -492,8 +544,7 @@ public class Player extends Mob {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
-					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
-							& (1 << 14)) != 0) {
+					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32] & (1 << 14)) != 0) {
 						int hitX = this.position.x + i;
 						int hitY = (int) (this.position.y + (i * slope));
 						if (hitY > line.getY1()) {
@@ -511,33 +562,12 @@ public class Player extends Mob {
 		return new Point((int) line.x2, (int) line.y2);
 	}
 
-	public ArrayList<Entity> projectileTracer(Line2D.Double line, int damage, int range) {
-		ArrayList<Entity> entitiesCollided = new ArrayList<Entity>();
-		ArrayList<Entity> validCollisions = new ArrayList<Entity>();
+	public PriorityQueue<Entity> projectileTracer(Line2D.Double line,
+			int damage, int range) {
+		PriorityQueue<Entity> entitiesCollided = new PriorityQueue<Entity>();
 
-		int chunkX = Math.max(this.position.x / 512, 3);
-		int chunkY = Math.max(this.position.y / 512, 3);
-		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 3; y < Math.min(chunkY + 4, map.getWidth() / 16); y++) {
-				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
-				for (int zombie = 0; zombie < zombies.size(); zombie++) {
-					Zombie currentZombie = zombies.get(zombie);
-					if (line.intersects(currentZombie.getPosition().x, currentZombie.getPosition().y, 32, 32)) {
-						entitiesCollided.add(currentZombie);
-					}
-				}
+		// ArrayList<Entity> validCollisions = new ArrayList<Entity>();
 
-				ArrayList<Entity> entities = getChunkMap()[x][y].getSolidEntities();
-				for (int entity = 0; entity < entities.size(); entity++) {
-					Entity currentEntity = entities.get(entity);
-					if (line.intersects(currentEntity.getPosition().x, currentEntity.getPosition().y, 32, 32)) {
-						entitiesCollided.add(currentEntity);
-					}
-				}
-			}
-		}
-
-		Zombie closestZombie = null;
 		double maxDistance = range;
 
 		if (tiles == null)
@@ -546,68 +576,59 @@ public class Player extends Mob {
 		double slope = (line.y2 - line.y1) / (line.x2 - line.x1);
 
 		if (line.x2 > line.x1) {
-			for (int i = 0; i < 1024; i++) {
+			for (int i = 0; i < range; i++) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
-						maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
+						maxDistance = (Math.sqrt(Math.pow(i, 2)
+								+ Math.pow((i * slope), 2)));
 						break;
 					}
 				}
 			}
 		} else {
-			for (int i = 0; i > -1024; i--) {
+			for (int i = 0; i > -range; i--) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
-					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32]
-							& (1 << 14)) != 0) {
-						maxDistance = (Math.sqrt(Math.pow(i, 2) + Math.pow((i * slope), 2)));
+					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32] & (1 << 14)) != 0) {
+						maxDistance = (Math.sqrt(Math.pow(i, 2)
+								+ Math.pow((i * slope), 2)));
 						break;
 					}
 				}
 			}
 		}
 
-		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator.hasNext();) {
-			Entity entity = iterator.next();
+		System.out.println(maxDistance);
 
-			double distance = Point.distance(this.position.x, this.position.y, entity.getPosition().x,
-					entity.getPosition().y);
+		int chunkX = Math.max(this.position.x / 512, 3);
+		int chunkY = Math.max(this.position.y / 512, 3);
 
-			double closestEntity = maxDistance;
-			if (distance < closestEntity) {
-				closestEntity = distance;
-			}
-		}
-
-		Entity closestEntity = null;
-		double entityDistance = 100 * 32;
-
-		for (Iterator<Entity> iterator = entitiesCollided.iterator(); iterator.hasNext();) {
-
-			Entity entity = iterator.next();
-
-			double distance = Point.distance(this.position.x, this.position.y, entity.getPosition().x,
-					entity.getPosition().y);
-			if (distance < maxDistance) {
-				validCollisions.add(entity);
-				if (distance < entityDistance) {
-					entityDistance = distance;
-					closestEntity = entity;
+		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
+			for (int y = chunkY - 3; y < Math.min(chunkY + 4,
+					map.getWidth() / 16); y++) {
+				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
+				for (int zombie = 0; zombie < zombies.size(); zombie++) {
+					Zombie currentZombie = zombies.get(zombie);
+					if (line.intersects(currentZombie.getPosition().x,
+							currentZombie.getPosition().y, 32, 32)) {
+						double distance = Point.distance(this.position.x,
+								this.position.y, currentZombie.getPosition().x,
+								currentZombie.getPosition().y);
+						if (distance < maxDistance) {
+							currentZombie.setRelativeDistance((int) distance);
+							entitiesCollided.add(currentZombie);
+						}
+					}
 				}
+
 			}
 		}
 
-		if (entityDistance > maxDistance) {
-			closestEntity = closestZombie;
-		}
-		validCollisions.remove(closestEntity);
-		if (closestEntity != null)
-			validCollisions.add(closestEntity);
+		return entitiesCollided;
 
-		return validCollisions;
 	}
 
 	public int meleeCollision(Arc2D arc, int damage) {
@@ -616,20 +637,24 @@ public class Player extends Mob {
 		int chunkX = Math.max(this.position.x / 512, 1);
 		int chunkY = Math.max(this.position.y / 512, 1);
 		for (int x = chunkX - 1; x < Math.min(chunkX + 2, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 1; y < Math.min(chunkY + 2, map.getWidth() / 16); y++) {
+			for (int y = chunkY - 1; y < Math.min(chunkY + 2,
+					map.getWidth() / 16); y++) {
 				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);
-					if (arc.intersects(currentZombie.getPosition().x, currentZombie.getPosition().y, 32, 32)) {
+					if (arc.intersects(currentZombie.getPosition().x,
+							currentZombie.getPosition().y, 32, 32)) {
 						currentZombie.damage(damage);
 						noOfEnemies++;
 					}
 				}
 
-				ArrayList<Entity> entities = getChunkMap()[x][y].getSolidEntities();
+				ArrayList<Entity> entities = getChunkMap()[x][y]
+						.getSolidEntities();
 				for (int entity = 0; entity < entities.size(); entity++) {
 					Entity currentEntity = entities.get(entity);
-					if (arc.intersects(currentEntity.getPosition().x, currentEntity.getPosition().y, 32, 32)) {
+					if (arc.intersects(currentEntity.getPosition().x,
+							currentEntity.getPosition().y, 32, 32)) {
 						currentEntity.damage(damage);
 						noOfEnemies++;
 					}

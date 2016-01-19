@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import main.Game;
 import enums.GameState.State;
 
-public class PausePanel extends Canvas {
+public class PauseScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;
 	private float colour = 30;
