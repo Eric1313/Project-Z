@@ -418,20 +418,6 @@ public class World {
 	}
 
 	/**
-	 * @return the number of zombies
-	 */
-	public int getNoOfZombie() {
-
-		int numOfZombies = 0;
-
-		for (Chunk[] chunks : chunkMap)
-			for (Chunk c : chunks)
-				numOfZombies += c.getZombies().size();
-
-		return numOfZombies;
-	}
-
-	/**
 	 * @return The number of shots fired
 	 */
 	public int getShotsFired() {
