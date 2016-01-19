@@ -7,14 +7,14 @@ package utilities;
 
 import javax.swing.JFrame;
 
-import GUI.GamePanel;
+import GUI.GameScreen;
 import main.Game;
 import entities.Entity;
 
 public class GameCamera {
 	private float xOffset, yOffset;
 	private JFrame frame;
-	private GamePanel panel;
+	private GameScreen panel;
 
 	/**
 	 * Constructor for the Game Camera.

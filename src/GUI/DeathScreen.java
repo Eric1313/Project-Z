@@ -12,15 +12,14 @@ import main.Game;
 import entities.Zombie;
 import enums.GameState.State;
 
-public class FinishPanel extends Canvas {
+public class DeathScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;
 	private float colour = 30;
 	private boolean decrease;
-	private Rectangle next;
+
 	private Rectangle main;
 	private Rectangle exit;
-	private boolean hoverNext;
 	private boolean hoverMain;
 	private boolean hoverExit;
 
@@ -50,43 +49,22 @@ public class FinishPanel extends Canvas {
 		g2D.drawString("}", 200, 650);
 		g2D.setFont(game.getUiFontL());
 		g2D.setColor(Color.WHITE);
-		g2D.drawString("LEVEL " + game.getLevel() + " COMPLETE", 250, 200);
-		// Draw play button
-		g2D.setFont(game.getUiFont());
-		FontMetrics fm = g2D.getFontMetrics();
+		g2D.drawString("YOU DIED", 375, 200);
 
-		button(g2D, hoverNext, next, "NEXT", 512 - fm.stringWidth("NEXT") / 2,
-				367, 460, 390);
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
-				487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
-				607, 460, 630);
+		// Draw play button
+		FontMetrics fm = g2D.getFontMetrics();
+		button(g2D, hoverMain, main, "MENU", 475, 367, 460, 390);
+		button(g2D, hoverExit, exit, "QUIT", 475, 487, 460, 510);
 	}
 
 	public void update() {
-		if (next.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
-			hoverNext = true;
-			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getDisplay().getMouseHandler().setClick(false);
-				Zombie.damage = (game.getLevel()) * 5;
-				Zombie.zombieHealth = 100 + game.getLevel() * 50;
-				game.getState().setGameState(
-						State.INGAME,
-						false,
-						400 + 160 * game.getLevel(),
-						null,
-						game.getDisplay().getGamePanel().getWorld().getPlayer()
-								.getSkinNo());
-			}
-		} else {
-			hoverNext = false;
-		}
 		if (main.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
+				Zombie.damage = (game.getLevel()) * 5;
+				Zombie.zombieHealth = 100;
 				game.getState().setGameState(State.LOBBY, false);
 			}
 		} else {
@@ -102,16 +80,13 @@ public class FinishPanel extends Canvas {
 			hoverExit = false;
 		}
 		game.getDisplay().getMouseHandler().setClick(false);
-		// game.getDisplay().getGamePanel().getWorld();
-		// game.getDisplay().getGamePanel().getWorld().getNoOfZombie();
 	}
 
 	public void setup(Game game) {
 		this.game = game;
-		next = new Rectangle(412, 300, 200, 100);
-		main = new Rectangle(412, 420, 200, 100);
-		exit = new Rectangle(412, 540, 200, 100);
-		game.setLevel(game.getLevel() + 1);
+		main = new Rectangle(412, 300, 200, 100);
+		exit = new Rectangle(412, 420, 200, 100);
+		game.setLevel(1);
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,

@@ -20,43 +20,35 @@ public class MouseHandler extends MouseAdapter {
 	 */
 	public MouseHandler() {
 		// Sets the initial point of the mouse to (0,0)
-		mouseLocation = new Point(0, 0);
+		this.mouseLocation = new Point(0, 0);
 	}
 
-	/**
-	 * When the mouse is pressed, click is true.
-	 */
+	@Override
 	public void mousePressed(MouseEvent mouse) {
 		this.click = true;
 	}
 
-	/**
-	 * Sets the new mouse position when the mouse is moved.
-	 */
+	@Override
 	public void mouseMoved(MouseEvent mouse) {
-		mouseLocation = mouse.getPoint();
+		this.mouseLocation = mouse.getPoint();
 	}
 
-	/**
-	 * Sets the new mouse position when the mouse is dragged.
-	 */
+	@Override
 	public void mouseDragged(MouseEvent mouse) {
-		mouseLocation = mouse.getPoint();
+		this.mouseLocation = mouse.getPoint();
 	}
 
-	/**
-	 * Gets the movement of the mouse wheel.
-	 */
+	@Override
 	public void mouseWheelMoved(MouseWheelEvent mouse) {
 		this.mouseWheel = mouse.getWheelRotation();
 	}
 
 	public Point getMouseLocation() {
-		return mouseLocation;
+		return this.mouseLocation;
 	}
 
 	public boolean isClick() {
-		return click;
+		return this.click;
 	}
 
 	public void setClick(boolean click) {
@@ -64,7 +56,7 @@ public class MouseHandler extends MouseAdapter {
 	}
 
 	public int getMouseWheel() {
-		return mouseWheel;
+		return this.mouseWheel;
 	}
 
 	public void setMouseWheel(int mouseWheel) {
