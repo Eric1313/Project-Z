@@ -7,8 +7,8 @@ package utilities;
 
 import javax.swing.JFrame;
 
+import GUI.GamePanel;
 import main.Game;
-import main.GamePanel;
 import entities.Entity;
 
 public class GameCamera {

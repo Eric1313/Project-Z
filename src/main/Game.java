@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import GUI.Display;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
