@@ -9,6 +9,7 @@ import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
 import main.Game;
+import utilities.Effect;
 import utilities.Sound;
 
 /**
@@ -24,7 +25,7 @@ public class Consumable extends Item {
 	private int durability;
 
 	public Consumable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Sound[] clips, Game game, ItemEffect effect, int durability) {
+			Effect[] clips, Game game, ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;

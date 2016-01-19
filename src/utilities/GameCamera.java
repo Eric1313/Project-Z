@@ -7,8 +7,8 @@ package utilities;
 
 import javax.swing.JFrame;
 
+import GUI.GamePanel;
 import main.Game;
-import main.GamePanel;
 import entities.Entity;
 
 public class GameCamera {
@@ -17,14 +17,14 @@ public class GameCamera {
 	private GamePanel panel;
 
 	/**
-	 * Constructor for the Game Camera
+	 * Constructor for the Game Camera.
 	 * 
 	 * @param game
-	 *            the game
+	 *            the game.
 	 * @param xOffset
-	 *            the x value to offset the map by
+	 *            the x value to offset the map by.
 	 * @param yOffset
-	 *            the y value to offset the map by
+	 *            the y value to offset the map by.
 	 */
 	public GameCamera(Game game, float xOffset, float yOffset) {
 		this.xOffset = xOffset;
@@ -34,10 +34,10 @@ public class GameCamera {
 	}
 
 	/**
-	 * Center on entity
+	 * Center on entity.
 	 * 
 	 * @param entity
-	 *            the entity to center the camera on
+	 *            the entity to center the camera on.
 	 */
 	public void centerOnEntity(Entity entity) {
 		// Calculates the amount to offset based on the player's position

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import GUI.Display;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
@@ -22,6 +23,7 @@ import items.Item;
 import items.Melee;
 import items.Throwable;
 import utilities.Assets;
+import utilities.Effect;
 import utilities.GameCamera;
 import utilities.Sound;
 
@@ -115,10 +117,10 @@ public class Game implements Runnable {
 					BufferedImage[] images = new Assets(stats[4], 1, 1).getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
-					Sound[] sounds = new Sound[soundLinks.length];
+					Effect[] sounds = new Effect[soundLinks.length];
 
 					for (int i = 0; i < sounds.length; i++) {
-						sounds[i] = new Sound(soundLinks[i]);
+						sounds[i] = new Effect(soundLinks[i]);
 					}
 					// TODO: Add AudioClips to the sounds array
 

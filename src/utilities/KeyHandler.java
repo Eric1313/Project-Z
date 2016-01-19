@@ -24,7 +24,7 @@ public class KeyHandler implements KeyListener {
 
 	@Override
 	/**
-	 * Toggles the key that is pressed
+	 * Toggles the key that is pressed.
 	 */
 	public void keyPressed(KeyEvent key) {
 		if (!stop) {
@@ -34,7 +34,7 @@ public class KeyHandler implements KeyListener {
 
 	@Override
 	/**
-	 * Toggles the key that is released
+	 * Toggles the key that is released.
 	 */
 	public void keyReleased(KeyEvent key) {
 		toggle(key, false);
@@ -45,9 +45,9 @@ public class KeyHandler implements KeyListener {
 	 * Toggles the key
 	 * 
 	 * @param key
-	 *            the key that was pressed or released
+	 *            the key that was pressed or released.
 	 * @param pressed
-	 *            if the key is pressed or not
+	 *            if the key is pressed or not.
 	 */
 	private void toggle(KeyEvent key, boolean pressed) {
 		// Sets the pressed key to true or false
@@ -95,10 +95,10 @@ public class KeyHandler implements KeyListener {
 	}
 
 	/**
-	 * Sets the last number key (0-9) that was pressed
+	 * Sets the last number key (0-9) that was pressed.
 	 * 
 	 * @param lastNumber
-	 *            the number that was pressed
+	 *            the number that was pressed.
 	 */
 	public void setLastNumber(int lastNumber) {
 		if (lastNumber < 0) {
