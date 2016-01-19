@@ -6,7 +6,6 @@
  */
 package gui;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,8 +13,7 @@ import java.awt.Rectangle;
 
 import main.Game;
 
-public abstract class 	Screen extends Canvas {
-	private static final long serialVersionUID = 1L;
+public abstract class 	Screen {
 	protected Game game;
 
 	public Screen(Game game) {

@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
-import utilities.MouseHandler;
 import main.Game;
 import enums.GameState.State;
 
@@ -61,9 +60,9 @@ public class PauseScreen extends Screen {
 
 		button(g2D, hoverResume, resume, "RESUME",
 				512 - fm.stringWidth("RESUME") / 2, 367, 460, 390);
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
-				487, 460, 510);
 		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2,
+				487, 460, 510);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
 				607, 460, 630);
 	}
 
@@ -108,7 +107,7 @@ public class PauseScreen extends Screen {
 	public void setup(Game game) {
 		this.game = game;
 		resume = new Rectangle(412, 300, 200, 100);
-		main = new Rectangle(412, 420, 200, 100);
-		help = new Rectangle(412, 540, 200, 100);
+		main = new Rectangle(412, 540, 200, 100);
+		help = new Rectangle(412, 420, 200, 100);
 	}
 }

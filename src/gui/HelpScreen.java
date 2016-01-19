@@ -1,3 +1,11 @@
+/**
+ * Subclass of Screen that is displayed when the user needs help
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Screen
+ * @since 1.0
+ * @version 1.0
+ */
 package gui;
 
 import java.awt.Color;
@@ -11,7 +19,6 @@ import main.Game;
 import enums.GameState.State;
 
 public class HelpScreen extends Screen {
-	private static final long serialVersionUID = 1L;
 	private boolean previousHover;
 	private boolean nextHover;
 	private Rectangle previous;
@@ -19,24 +26,34 @@ public class HelpScreen extends Screen {
 	private boolean pause;
 	private int image;
 
+	/**
+	 * Constructor for the HelpScreen.
+	 * 
+	 * @param game
+	 *            the game.
+	 */
 	public HelpScreen(Game game) {
 		super(game);
 	}
 
+	/**
+	 * Renders the help screen onto the frame.
+	 */
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		// Draws the instruction onto the screen
 		g.drawImage(game.getHelp()[image], 0, 0, null);
 
+		// Draws the buttons to the screen
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-
 		if (image != 0) {
 			button(g2D, previousHover, previous, "PREVIOUS",
 					120 - fm.stringWidth("PREVIOUS") / 2, 705, 70, 725);
 		}
-		if (image != 5) {
+		if (image != game.getHelp().length - 1) {
 			button(g2D, nextHover, next, "NEXT",
 					904 - fm.stringWidth("NEXT") / 2, 705, 855, 725);
 		} else if (!pause) {
@@ -48,11 +65,16 @@ public class HelpScreen extends Screen {
 		}
 	}
 
+	/**
+	 * Updates the help screen.
+	 */
 	public void update() {
+		// Detects if a button is pressed
 		if (previous.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())
 				&& image != 0) {
 			previousHover = true;
+			// Goes to the previous instruction
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				image--;
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -63,15 +85,19 @@ public class HelpScreen extends Screen {
 		if (next.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			nextHover = true;
-			if (game.getDisplay().getMouseHandler().isClick() && image != 5) {
+			// Goes to the next instruction
+			if (game.getDisplay().getMouseHandler().isClick()
+					&& image != game.getHelp().length - 1) {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
+				// Returns to the menu
 			} else if (game.getDisplay().getMouseHandler().isClick()
-					&& image == 5 && !pause) {
+					&& image == game.getHelp().length - 1 && !pause) {
 				game.getState().setState(State.LOBBY, false);
 				game.getDisplay().getMouseHandler().setClick(false);
+				// Returns to the pause screen
 			} else if (game.getDisplay().getMouseHandler().isClick()
-					&& image == 5 && pause){
+					&& image == game.getHelp().length - 1 && pause) {
 				game.getState().setState(State.PAUSE, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
@@ -81,9 +107,18 @@ public class HelpScreen extends Screen {
 		game.getDisplay().getMouseHandler().setClick(false);
 	}
 
+	/**
+	 * Setup the help screen.
+	 * 
+	 * @param game
+	 *            the game.
+	 * @param pause
+	 *            if the screen linking this one is the pause screen or not.
+	 */
 	public void setup(Game game, boolean pause) {
 		this.game = game;
 		this.pause = pause;
+		// Creates the outlines for the buttons
 		previous = new Rectangle(20, 635, 200, 100);
 		next = new Rectangle(804, 635, 200, 100);
 		image = 0;
@@ -112,6 +147,7 @@ public class HelpScreen extends Screen {
 	 */
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,
 			String text, int textX, int textY, int handX, int handY) {
+		// Draws the button outline
 		if (hover) {
 			g2D.setPaint(Color.WHITE);
 			g2D.fill(box);
@@ -121,6 +157,7 @@ public class HelpScreen extends Screen {
 		}
 		g2D.setColor(Color.WHITE);
 		g2D.draw(box);
+		// Draws the zombie hand
 		if (hover) {
 			g2D.setColor(new Color(152, 0, 0));
 			g2D.setFont(game.getZombieFont());
@@ -132,6 +169,7 @@ public class HelpScreen extends Screen {
 		} else {
 			g2D.setColor(Color.WHITE);
 		}
+		// Draws the button text
 		g2D.drawString(text, textX, textY);
 	}
 }
