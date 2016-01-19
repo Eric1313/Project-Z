@@ -83,6 +83,7 @@ public class DeathPanel extends Canvas {
 		this.game = game;
 		main = new Rectangle(412, 300, 200, 100);
 		exit = new Rectangle(412, 420, 200, 100);
+		game.setLevel(1);
 	}
 
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,

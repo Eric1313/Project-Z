@@ -27,11 +27,14 @@ public class FinishPanel extends Canvas {
 
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		// Make the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
+				.getDisplay().getFrame().getHeight());
 		// Draws the hand
 		// Pulsates the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -53,24 +56,30 @@ public class FinishPanel extends Canvas {
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
 
-		button(g2D, hoverNext, next, "NEXT", 512 - fm.stringWidth("NEXT") / 2, 367, 460, 390);
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 607, 460, 630);
+		button(g2D, hoverNext, next, "NEXT", 512 - fm.stringWidth("NEXT") / 2,
+				367, 460, 390);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
+				487, 460, 510);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
+				607, 460, 630);
 	}
 
 	public void update() {
-		if (next.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (next.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverNext = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
 				Zombie.damage = (level + 1) * 5;
 				Zombie.zombieHealth = 100 + level * 50;
-				game.getState().setGameState(State.INGAME, false, 400 + 160 * level);
+				game.getState().setGameState(State.INGAME, false,
+						400 + 160 * level);
 			}
 		} else {
 			hoverNext = false;
 		}
-		if (main.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (main.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -79,7 +88,8 @@ public class FinishPanel extends Canvas {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
+		if (exit.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
 			hoverExit = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				System.exit(0);
@@ -97,11 +107,12 @@ public class FinishPanel extends Canvas {
 		next = new Rectangle(412, 300, 200, 100);
 		main = new Rectangle(412, 420, 200, 100);
 		exit = new Rectangle(412, 540, 200, 100);
-		level++;
+		level = game.getLevel();
+		game.setLevel(game.getLevel() + 1);
 	}
 
-	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
-			int handY) {
+	public void button(Graphics2D g2D, boolean hover, Rectangle box,
+			String text, int textX, int textY, int handX, int handY) {
 		g2D.setColor(Color.WHITE);
 		if (hover) {
 			g2D.setPaint(Color.WHITE);
