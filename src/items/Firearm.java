@@ -118,7 +118,7 @@ public class Firearm extends Item {
 	public void reload(Player player) {
 		long currentTick = player.getGame().getTickCount();
 
-		if (currentTick - this.reloadTick > 180) {
+		if (currentTick - this.reloadTick > this.reloadTime / 1000 * 60+10) {
 			this.reloadTick = currentTick;
 			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
 				Item currentItem = player.getItem(itemNo);
@@ -131,7 +131,6 @@ public class Firearm extends Item {
 							try {
 								Thread.sleep(firearm.reloadTime);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 							int bullets = ammo.getDurability();
@@ -144,7 +143,7 @@ public class Firearm extends Item {
 						}
 					});
 					reloadPause.start();
-
+					return;
 				}
 			}
 		}
