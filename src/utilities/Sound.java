@@ -41,7 +41,11 @@ public class Sound {
 		try {
 			stream = new BufferedInputStream(new FileInputStream(file));
 			// stream.reset();
-			in = AudioSystem.getAudioInputStream(stream);
+			// TODO
+			try {
+				in = AudioSystem.getAudioInputStream(stream);
+			} catch (UnsupportedAudioFileException e) {
+			}
 			din = AudioSystem.getAudioInputStream(decodedFormat, in);
 			line = getLine(decodedFormat);
 

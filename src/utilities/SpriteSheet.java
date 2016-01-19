@@ -1,7 +1,7 @@
-/**
- * Loads the sprite sheet and allows cropping of images from the spread sheet
- * @author Allen Han & Peter Shi
- * @version June, 15th, 2015
+/*
+ * Crops images from the sprite sheet
+ * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
+ * @version January 4th, 2016
  */
 package utilities;
 
@@ -16,7 +16,7 @@ public class SpriteSheet {
 	 * Constructor for the sprite sheet
 	 * 
 	 * @param sheet
-	 *            the sprite sheet image
+	 *            the image containing all the sprites
 	 */
 	public SpriteSheet(BufferedImage sheet) {
 		this.sheet = sheet;
@@ -25,7 +25,7 @@ public class SpriteSheet {
 	}
 
 	/**
-	 * Crops the image to the correct sprite
+	 * Crops the correct sprite from the image
 	 * 
 	 * @param x
 	 *            the x position of the sprite

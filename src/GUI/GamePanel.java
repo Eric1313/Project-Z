@@ -1,10 +1,12 @@
-package main;
+package GUI;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 
+import main.Game;
 import map.Chunk;
 import map.Map;
+import map.World;
 
 public class GamePanel extends Canvas {
 	private static final long serialVersionUID = 1L;

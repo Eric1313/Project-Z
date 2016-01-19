@@ -1,6 +1,6 @@
-/**
- * Image loader which loads up the image
- * @author Allen Han 
+/*
+ * Loads an image
+ * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
  * @version January 4th, 2016
  */
 package utilities;
@@ -17,7 +17,7 @@ public class ImageLoader {
 	 * 
 	 * @param path
 	 *            location of the image
-	 * @return the buffer image object
+	 * @return the image
 	 */
 	public static BufferedImage loadImage(String path) {
 		// In case of errors (e.g. image not found)
@@ -26,7 +26,7 @@ public class ImageLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 			// Do not run the game if images are not loaded properly
-			System.exit(1);
+			System.exit(-1);
 		}
 		return null;
 	}

@@ -1,4 +1,4 @@
-package main;
+package map;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -19,8 +19,7 @@ import entities.Entity;
 import entities.Player;
 import entities.Zombie;
 import items.Item;
-import map.Chunk;
-import map.Map;
+import main.Game;
 import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
@@ -415,20 +414,6 @@ public class World {
 
 	public Rectangle getFlag() {
 		return flag;
-	}
-
-	/**
-	 * @return the number of zombies
-	 */
-	public int getNoOfZombie() {
-
-		int numOfZombies = 0;
-
-		for (Chunk[] chunks : chunkMap)
-			for (Chunk c : chunks)
-				numOfZombies += c.getZombies().size();
-
-		return numOfZombies;
 	}
 
 	/**
