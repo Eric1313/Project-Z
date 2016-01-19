@@ -23,9 +23,6 @@ public class KeyHandler implements KeyListener {
 	private int lastNumber;
 
 	@Override
-	/**
-	 * Toggles the key that is pressed.
-	 */
 	public void keyPressed(KeyEvent key) {
 		if (!stop) {
 			toggle(key, true);
@@ -33,12 +30,13 @@ public class KeyHandler implements KeyListener {
 	}
 
 	@Override
-	/**
-	 * Toggles the key that is released.
-	 */
 	public void keyReleased(KeyEvent key) {
 		toggle(key, false);
 		stop = false;
+	}
+	
+	@Override
+	public void keyTyped(KeyEvent key) {
 	}
 
 	/**
@@ -88,10 +86,6 @@ public class KeyHandler implements KeyListener {
 		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			esc = pressed;
 		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent key) {
 	}
 
 	/**
