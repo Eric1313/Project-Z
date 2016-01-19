@@ -27,6 +27,11 @@ public class MouseHandler extends MouseAdapter {
 	public void mousePressed(MouseEvent mouse) {
 		this.click = true;
 	}
+	
+	@Override
+	public void mouseReleased(MouseEvent mouse) {
+		this.click = false;
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent mouse) {

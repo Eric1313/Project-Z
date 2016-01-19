@@ -333,7 +333,13 @@ public class Player extends Mob {
 		// If the player clicks with their mouse, use their selected item
 		if (this.mouse.isClick()) {
 			this.useItem();
-			this.mouse.setClick(false);
+			if ((this.selectedItem instanceof Firearm)) {
+				if (!((Firearm) this.selectedItem).isAutomatic()) {
+					this.mouse.setClick(false);
+				}
+			} else {
+				this.mouse.setClick(false);
+			}
 		}
 
 		// If the player has less stamina than what is required to sprint, the
@@ -600,8 +606,6 @@ public class Player extends Mob {
 				}
 			}
 		}
-
-		System.out.println(maxDistance);
 
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
