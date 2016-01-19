@@ -10,7 +10,7 @@ import map.Map;
 import map.World;
 import entities.Inventory;
 
-public class GamePanel extends Canvas {
+public class GameScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;
 	private World world;
@@ -19,7 +19,7 @@ public class GamePanel extends Canvas {
 	private Chunk[][] chunkMap;
 	private Map map;
 
-	public GamePanel() {
+	public GameScreen() {
 	}
 
 	// @Override

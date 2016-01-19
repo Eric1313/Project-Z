@@ -12,7 +12,7 @@ import main.Game;
 import entities.Zombie;
 import enums.GameState.State;
 
-public class DeathPanel extends Canvas {
+public class DeathScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;
 	private float colour = 30;
