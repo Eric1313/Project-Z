@@ -64,7 +64,7 @@ public class DeathPanel extends Canvas {
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
 				Zombie.damage = (game.getLevel()) * 5;
-				Zombie.zombieHealth = 100 + game.getLevel() * 50;
+				Zombie.zombieHealth = 100;
 				game.getState().setGameState(State.LOBBY, false);
 			}
 		} else {
