@@ -146,7 +146,6 @@ public class World {
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
 					map.getHeight() / 16); y++) {
-
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
