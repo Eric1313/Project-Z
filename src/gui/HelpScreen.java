@@ -87,7 +87,7 @@ public class HelpScreen extends Screen {
 			nextHover = true;
 			// Goes to the next instruction
 			if (game.getDisplay().getMouseHandler().isClick()
-					&& image != game.getHelp().length) {
+					&& image != game.getHelp().length - 1) {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
 				// Returns to the menu
