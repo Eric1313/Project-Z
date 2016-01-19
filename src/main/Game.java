@@ -196,7 +196,7 @@ public class Game implements Runnable {
 
 		// Set the state of the game
 		state = new GameState(this);
-		state.setGameState(State.LOBBY, false);
+		state.setState(State.LOBBY, false);
 
 		// Set the icon
 		display.getFrame().setIconImage(new Assets("res/img/icon.png").getImage());

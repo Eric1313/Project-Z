@@ -66,7 +66,7 @@ public class DeathScreen extends Canvas {
 				game.getDisplay().getMouseHandler().setClick(false);
 				Zombie.damage = (game.getLevel()) * 5;
 				Zombie.zombieHealth = 100;
-				game.getState().setGameState(State.LOBBY, false);
+				game.getState().setState(State.LOBBY, false);
 			}
 		} else {
 			hoverMain = false;

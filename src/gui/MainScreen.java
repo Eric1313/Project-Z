@@ -100,7 +100,7 @@ public class MainScreen extends Canvas {
 				.getMouseLocation())) {
 			hoverPlay = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getState().setGameState(State.INGAME, false);
+				game.getState().setState(State.INGAME, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {
@@ -110,7 +110,7 @@ public class MainScreen extends Canvas {
 				.getMouseLocation())) {
 			hoverHelp = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getState().setGameState(State.HELP, false);
+				game.getState().setState(State.HELP, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {

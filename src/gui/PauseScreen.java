@@ -60,14 +60,14 @@ public class PauseScreen extends Canvas {
 
 	public void update() {
 		if (game.getDisplay().getKeyHandler().isEsc()) {
-			game.getState().setGameState(State.INGAME, true);
+			game.getState().setState(State.INGAME, true);
 			game.getDisplay().getKeyHandler().setEsc(false);
 		}
 		if (resume.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverResume = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
-				game.getState().setGameState(State.INGAME, true);
+				game.getState().setState(State.INGAME, true);
 			}
 		} else {
 			hoverResume = false;
@@ -76,7 +76,7 @@ public class PauseScreen extends Canvas {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
-				game.getState().setGameState(State.LOBBY, false);
+				game.getState().setState(State.LOBBY, false);
 			}
 		} else {
 			hoverMain = false;

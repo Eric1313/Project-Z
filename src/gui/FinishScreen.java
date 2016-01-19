@@ -72,7 +72,7 @@ public class FinishScreen extends Canvas {
 				game.getDisplay().getMouseHandler().setClick(false);
 				Zombie.damage = (game.getLevel()) * 5;
 				Zombie.zombieHealth = 100 + game.getLevel() * 50;
-				game.getState().setGameState(
+				game.getState().setState(
 						State.INGAME,
 						false,
 						400 + 160 * game.getLevel(),
@@ -89,7 +89,7 @@ public class FinishScreen extends Canvas {
 			hoverMain = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				game.getDisplay().getMouseHandler().setClick(false);
-				game.getState().setGameState(State.LOBBY, false);
+				game.getState().setState(State.LOBBY, false);
 			}
 		} else {
 			hoverMain = false;

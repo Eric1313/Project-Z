@@ -79,7 +79,7 @@ public class HelpState extends Canvas {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
 			} else if (game.getDisplay().getMouseHandler().isClick() && image == 5) {
-				game.getState().setGameState(State.LOBBY, false);
+				game.getState().setState(State.LOBBY, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {

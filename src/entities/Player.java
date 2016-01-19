@@ -147,7 +147,7 @@ public class Player extends Mob {
 		// If the player's health reaches zero, change the game state to the
 		// game over screen
 		if (this.health <= 0) {
-			this.game.getState().setGameState(State.DEATH, false);
+			this.game.getState().setState(State.DEATH, false);
 		}
 	}
 
@@ -306,7 +306,7 @@ public class Player extends Mob {
 
 		// If the player presses 'ESC', pause the game
 		if (this.key.isEsc()) {
-			this.game.getState().setGameState(State.PAUSE, false);
+			this.game.getState().setState(State.PAUSE, false);
 			this.key.setEsc(false);
 		}
 
@@ -431,7 +431,7 @@ public class Player extends Mob {
 
 		if (world.getFlag() != null) {
 			if (world.getFlag().intersects(hitbox)) {
-				game.getState().setGameState(State.FINISH, false);
+				game.getState().setState(State.FINISH, false);
 			}
 		}
 	}

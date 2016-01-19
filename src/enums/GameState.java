@@ -14,23 +14,55 @@ import entities.Inventory;
 
 public class GameState {
 	private Game game;
+	private State state;
 
 	/**
 	 * Constructor for the GameState.
+	 * 
 	 * @param game
+	 *            the game.
 	 */
 	public GameState(Game game) {
 		this.game = game;
 	}
 
+	/**
+	 * Available states that can be used <li>{@link #LOBBY}</li> <li>
+	 * {@link #INGAME}</li> <li>{@link #PAUSE}</li> <li>{@link #FINISH}</li> <li>
+	 * {@link #DEATH}</li>
+	 */
 	public enum State {
-		LOBBY, INGAME, PAUSE, FINISH, DEATH, HELP
+		/**
+		 * The main menu of the game.
+		 */
+		LOBBY,
+		/**
+		 * The actual game.
+		 */
+		INGAME,
+		/**
+		 * The pause menu.
+		 */
+		PAUSE,
+		/**
+		 * The finish menu after you finish a level.
+		 */
+		FINISH,
+		/**
+		 * The death menu if you die.
+		 */
+		DEATH,
+		/**
+		 * The help menu.
+		 */
+		HELP
 	}
 
-	private State gameState;
-
+	/**
+	 * Updates the selected state.
+	 */
 	public void update() {
-		switch (this.gameState) {
+		switch (this.state) {
 		case LOBBY:
 			this.game.getDisplay().getMain().update();
 			break;
@@ -52,8 +84,14 @@ public class GameState {
 		}
 	}
 
+	/**
+	 * Renders the selected state.
+	 * 
+	 * @param g
+	 *            the graphics object used to render to the screen.
+	 */
 	public void render(Graphics g) {
-		switch (this.gameState) {
+		switch (this.state) {
 		case LOBBY:
 			this.game.getDisplay().getMain().render(g);
 			break;
@@ -75,13 +113,18 @@ public class GameState {
 		}
 	}
 
-	public State getGameState() {
-		return gameState;
-	}
-
-	public void setGameState(State gameState, boolean pause) {
-		this.gameState = gameState;
-		switch (this.gameState) {
+	/**
+	 * Sets the state.
+	 * 
+	 * @param state
+	 *            the state to be set to.
+	 * @param pause
+	 *            if the state is being set from the game then do not make a new
+	 *            game.
+	 */
+	public void setState(State state, boolean pause) {
+		this.state = state;
+		switch (this.state) {
 		case LOBBY:
 			this.game.getDisplay().getMain().setup(this.game);
 			break;
@@ -105,10 +148,25 @@ public class GameState {
 		}
 	}
 
-	public void setGameState(State gameState, boolean pause, int size,
+	/**
+	 * Sets the state of the game. This overloaded method is used to make a new
+	 * level.
+	 * 
+	 * @param state
+	 *            the state to set to.
+	 * @param pause
+	 *            if you are pausing the game or not.
+	 * @param size
+	 *            the size of the next map.
+	 * @param inventory
+	 *            the player's current inventory so that it is saved.
+	 * @param skinNo
+	 *            the player's current skin color.
+	 */
+	public void setState(State state, boolean pause, int size,
 			Inventory inventory, int skinNo) {
-		this.gameState = gameState;
-		switch (this.gameState) {
+		this.state = state;
+		switch (this.state) {
 		case LOBBY:
 			this.game.getDisplay().getMain().setup(this.game);
 			break;
@@ -131,5 +189,9 @@ public class GameState {
 			this.game.getDisplay().getHelp().setup(this.game);
 			break;
 		}
+	}
+
+	public State getGameState() {
+		return state;
 	}
 }
