@@ -1,4 +1,15 @@
+/**
+ * The actual game that contains the game loop, and assets.
+ * @author Allen Han, Patrick Liu, Alosha Reymer, & Eric Chee
+ * @version January 4th, 2016
+ */
 package main;
+
+import items.Consumable;
+import items.Firearm;
+import items.Item;
+import items.Melee;
+import items.Throwable;
 
 import java.awt.Cursor;
 import java.awt.Font;
@@ -12,20 +23,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import utilities.Assets;
+import utilities.Effect;
+import utilities.GameCamera;
 import GUI.Display;
 import enums.GameState;
 import enums.GameState.State;
 import enums.ItemEffect;
 import enums.ItemState;
-import items.Consumable;
-import items.Firearm;
-import items.Item;
-import items.Melee;
-import items.Throwable;
-import utilities.Assets;
-import utilities.Effect;
-import utilities.GameCamera;
-import utilities.Sound;
 
 public class Game implements Runnable {
 	private BufferedImage[][] tileImages;
@@ -58,6 +63,16 @@ public class Game implements Runnable {
 	private Font uiFontS;
 	private Font uiFontXS;
 
+	/**
+	 * Constructor for Game.
+	 * 
+	 * @param title
+	 *            the title of the game.
+	 * @param width
+	 *            the width of the game.
+	 * @param height
+	 *            the height of the game.
+	 */
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -65,8 +80,11 @@ public class Game implements Runnable {
 		this.level = 1;
 	}
 
+	/**
+	 * Initializes everything needs for the game.
+	 */
 	private void initialize() {
-		// Loads the assets
+		// Loads in all of the assets used
 		tileImages = new Assets("res/img/tiles.png", 1, 1).getSprites();
 		playerImages = new Assets("res/img/player.png", 1, 1).getSprites();
 		zombieImages = new Assets("res/img/zombie.png", 1, 1).getSprites();
@@ -89,9 +107,9 @@ public class Game implements Runnable {
 		help[3] = new Assets("res/img/4.png").getImage();
 		help[4] = new Assets("res/img/5.png").getImage();
 		help[5] = new Assets("res/img/6.png").getImage();
+
 		// Load all of the items
 		BufferedReader itemReader = null;
-
 		try {
 			itemReader = new BufferedReader(new InputStreamReader(
 					new FileInputStream("res/items.txt")));
@@ -193,19 +211,26 @@ public class Game implements Runnable {
 		// Loads the display
 		display = new Display(title, width, height);
 
+		// Creates the camera
 		camera = new GameCamera(this, 0, 0);
+
 		// Sets the state of the game
 		state = new GameState(this);
 		state.setGameState(State.LOBBY, false);
 
-		// display.getFrame().createBufferStrategy(2);
+		// Sets the icon
 		display.getFrame().setIconImage(
 				new Assets("res/img/icon.png").getImage());
+
+		// Changes the mouse to a cross hair
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
 	}
 
+	/**
+	 * Updates the game.
+	 */
 	private void update() {
 		// Updates the current state only
 		if (state.getGameState() != null)
@@ -213,22 +238,22 @@ public class Game implements Runnable {
 	}
 
 	/**
-	 * Where the drawing happens in the program
+	 * Renders the correct screen.
 	 */
 	private void render() {
+		// Check if there is a buffer strategy
 		bs = display.getGamePanel().getBufferStrategy();
-
 		// If this is the first time running initialize the buffer strategy
 		if (bs == null) {
 			display.getGamePanel().createBufferStrategy(3);
 			return;
 		}
-
 		g = bs.getDrawGraphics();
+
 		// Clears the screen
 		g.clearRect(0, 0, width, height);
 
-		// Drawing
+		// Renders the screen
 		if (state.getGameState() != null) {
 			state.render(g);
 		}
@@ -237,47 +262,22 @@ public class Game implements Runnable {
 		g.dispose();
 	}
 
-	// /**
-	// * The main game loop of the game
-	// */
-	// public void run() {
-	//
-	// initialize();
-	//
-	// int fps = 30;
-	// double timePerUpdate = 1000000000 / fps;
-	// double timeElapsed = 0;
-	// long now;
-	// // Current time of computer in nanoseconds
-	// long lastTime = System.nanoTime();
-	//
-	// // Game loop
-	// while (running) {
-	// now = System.nanoTime();
-	// timeElapsed += (now - lastTime) / timePerUpdate;
-	// lastTime = now;
-	//
-	// // If the time elapsed has been 1/60th of a second then refresh the
-	// // game
-	// if (timeElapsed >= 1) {
-	// update();
-	// render();
-	// timeElapsed--;
-	// }
-	// }
-	// // Stops the game
-	// stop();
-	// }
-
+	/**
+	 * The main game loop of the game where the rendering and updating is done.
+	 */
 	public void run() {
+		// Initializes all assets and sets the state
 		initialize();
 
+		// Keeps track of ticks
 		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
 		double secondsPerTick = 1 / 60.0;
 		tickCount = 0;
 
+		// Game loop
 		while (running) {
+			// Calculates the time pasted
 			long now = System.nanoTime();
 			long passedTime = now - lastTime;
 			lastTime = now;
@@ -293,17 +293,14 @@ public class Game implements Runnable {
 				update();
 				unprocessedSeconds -= secondsPerTick;
 				ticked = true;
-
 				tickCount++;
 				if (tickCount % 60 == 0) {
-					// System.out.println(frames + " fps");
 					lastTime += 1000;
 				}
 			}
-
+			// Renders the game
 			if (ticked) {
 				render();
-				// update();
 			} else {
 				try {
 					Thread.sleep(1);
@@ -410,6 +407,7 @@ public class Game implements Runnable {
 	public BufferedImage getMainMenu() {
 		return this.mainMenu;
 	}
+
 	public int getLevel() {
 		return level;
 	}
