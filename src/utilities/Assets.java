@@ -110,31 +110,15 @@ public class Assets {
 		}
 	}
 
-	/**
-	 * Returns an array of sprite images
-	 * 
-	 * @return an array of sprite images
-	 */
 	public BufferedImage[][] getSprites() {
 		return sprites;
 	}
 
-	/**
-	 * Returns the image
-	 * 
-	 * @return the image
-	 */
 	public BufferedImage getImage() {
 		return image;
 	}
 
-	/**
-	 * Returns the font
-	 * 
-	 * @return the font
-	 */
 	public Font getFont() {
 		return font;
 	}
-
 }
