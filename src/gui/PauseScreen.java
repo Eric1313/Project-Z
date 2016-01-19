@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
-import utilities.MouseHandler;
 import main.Game;
 import enums.GameState.State;
 
