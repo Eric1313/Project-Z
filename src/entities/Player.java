@@ -333,7 +333,11 @@ public class Player extends Mob {
 		// If the player clicks with their mouse, use their selected item
 		if (this.mouse.isClick()) {
 			this.useItem();
-			if ((this.selectedItem instanceof Firearm) && !((Firearm) this.selectedItem).isAutomatic()) {
+			if ((this.selectedItem instanceof Firearm)) {
+				if (!((Firearm) this.selectedItem).isAutomatic()) {
+					this.mouse.setClick(false);
+				}
+			} else {
 				this.mouse.setClick(false);
 			}
 		}
