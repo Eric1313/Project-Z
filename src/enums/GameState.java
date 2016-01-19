@@ -27,47 +27,47 @@ public class GameState {
 	private State gameState;
 
 	public void update() {
-		switch (gameState) {
+		switch (this.gameState) {
 		case LOBBY:
-			game.getDisplay().getMain().update();
+			this.game.getDisplay().getMain().update();
 			break;
 		case INGAME:
-			game.getDisplay().getGamePanel().update();
+			this.game.getDisplay().getGamePanel().update();
 			break;
 		case PAUSE:
-			game.getDisplay().getPause().update();
+			this.game.getDisplay().getPause().update();
 			break;
 		case FINISH:
-			game.getDisplay().getFinish().update();
+			this.game.getDisplay().getFinish().update();
 			break;
 		case DEATH:
-			game.getDisplay().getDeath().update();
+			this.game.getDisplay().getDeath().update();
 			break;
 		case HELP:
-			game.getDisplay().getHelp().update();
+			this.game.getDisplay().getHelp().update();
 			break;
 		}
 	}
 
 	public void render(Graphics g) {
-		switch (gameState) {
+		switch (this.gameState) {
 		case LOBBY:
-			game.getDisplay().getMain().render(g);
+			this.game.getDisplay().getMain().render(g);
 			break;
 		case INGAME:
-			game.getDisplay().getGamePanel().render(g);
+			this.game.getDisplay().getGamePanel().render(g);
 			break;
 		case PAUSE:
-			game.getDisplay().getPause().render(g);
+			this.game.getDisplay().getPause().render(g);
 			break;
 		case FINISH:
-			game.getDisplay().getFinish().render(g);
+			this.game.getDisplay().getFinish().render(g);
 			break;
 		case DEATH:
-			game.getDisplay().getDeath().render(g);
+			this.game.getDisplay().getDeath().render(g);
 			break;
 		case HELP:
-			game.getDisplay().getHelp().render(g);
+			this.game.getDisplay().getHelp().render(g);
 			break;
 		}
 	}
@@ -78,25 +78,26 @@ public class GameState {
 
 	public void setGameState(State gameState, boolean pause) {
 		this.gameState = gameState;
-		switch (gameState) {
+		switch (this.gameState) {
 		case LOBBY:
-			game.getDisplay().getMain().setup(game);
+			this.game.getDisplay().getMain().setup(this.game);
 			break;
 		case INGAME:
-			if (!pause)
-				game.getDisplay().getGamePanel().setup(game);
+			if (!pause) {
+				this.game.getDisplay().getGamePanel().setup(this.game);
+			}
 			break;
 		case PAUSE:
-			game.getDisplay().getPause().setup(game);
+			this.game.getDisplay().getPause().setup(this.game);
 			break;
 		case FINISH:
-			game.getDisplay().getFinish().setup(game);
+			this.game.getDisplay().getFinish().setup(this.game);
 			break;
 		case DEATH:
-			game.getDisplay().getDeath().setup(game);
+			this.game.getDisplay().getDeath().setup(this.game);
 			break;
 		case HELP:
-			game.getDisplay().getHelp().setup(game);
+			this.game.getDisplay().getHelp().setup(this.game);
 			break;
 		}
 	}
@@ -104,26 +105,27 @@ public class GameState {
 	public void setGameState(State gameState, boolean pause, int size,
 			Inventory inventory, int skinNo) {
 		this.gameState = gameState;
-		switch (gameState) {
+		switch (this.gameState) {
 		case LOBBY:
-			game.getDisplay().getMain().setup(game);
+			this.game.getDisplay().getMain().setup(this.game);
 			break;
 		case INGAME:
-			if (!pause)
-				game.getDisplay().getGamePanel()
-						.setup(game, size, inventory, skinNo);
+			if (!pause) {
+				this.game.getDisplay().getGamePanel()
+						.setup(this.game, size, inventory, skinNo);
+			}
 			break;
 		case PAUSE:
-			game.getDisplay().getPause().setup(game);
+			this.game.getDisplay().getPause().setup(this.game);
 			break;
 		case FINISH:
-			game.getDisplay().getFinish().setup(game);
+			this.game.getDisplay().getFinish().setup(this.game);
 			break;
 		case DEATH:
-			game.getDisplay().getDeath().setup(game);
+			this.game.getDisplay().getDeath().setup(this.game);
 			break;
 		case HELP:
-			game.getDisplay().getHelp().setup(game);
+			this.game.getDisplay().getHelp().setup(this.game);
 			break;
 		}
 	}

@@ -114,7 +114,6 @@ public class Game implements Runnable {
 			itemReader = new BufferedReader(new InputStreamReader(
 					new FileInputStream("res/items.txt")));
 		} catch (FileNotFoundException e) {
-			// TODO Make catch block more useful
 			e.printStackTrace();
 		}
 
@@ -122,10 +121,8 @@ public class Game implements Runnable {
 
 		for (int itemType = 0; itemType < 4; itemType++) {
 			try {
-				// TODO Handle invalid input
 				noOfItems[itemType] += Integer.parseInt(itemReader.readLine());
 			} catch (IOException e) {
-				// TODO Make catch block more useful
 				e.printStackTrace();
 			}
 		}
@@ -135,6 +132,9 @@ public class Game implements Runnable {
 		for (int itemType = 0; itemType < 4; itemType++) {
 			for (int item = 0; item < noOfItems[itemType]; item++) {
 				try {
+					// Read in all of the stats of the current item separated by
+					// '~' delimiters
+					// Load all of the images and sounds
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
@@ -147,8 +147,10 @@ public class Game implements Runnable {
 					for (int i = 0; i < sounds.length; i++) {
 						sounds[i] = new Effect(soundLinks[i]);
 					}
-					// TODO: Add AudioClips to the sounds array
 
+					// Depending on which item type the current item, use the
+					// respective constructor and add it to the game's list of
+					// items
 					switch (itemType) {
 					case 0:
 						this.items
@@ -195,17 +197,17 @@ public class Game implements Runnable {
 					}
 
 				} catch (IOException e) {
-					// TODO Make catch block more useful
 					e.printStackTrace();
 				}
 
 			}
 		}
 
+		// Close the file
+
 		try {
 			itemReader.close();
 		} catch (IOException e) {
-			// TODO Make catch block more useful
 			e.printStackTrace();
 		}
 		// Loads the display
@@ -217,7 +219,7 @@ public class Game implements Runnable {
 		// Sets the state of the game
 		state = new GameState(this);
 		state.setGameState(State.LOBBY, false);
-
+		
 		// Sets the icon
 		display.getFrame().setIconImage(
 				new Assets("res/img/icon.png").getImage());
@@ -225,7 +227,6 @@ public class Game implements Runnable {
 		// Changes the mouse to a cross hair
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-
 	}
 
 	/**
