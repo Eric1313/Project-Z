@@ -94,12 +94,9 @@ public class Game implements Runnable {
 		uiFontL = new Assets("res/fonts/BEBASNEUE.ttf", 100).getFont();
 		uiFontS = new Assets("res/fonts/BEBASNEUE.ttf", 24).getFont();
 		uiFontXS = new Assets("res/fonts/BEBASNEUE.ttf", 14).getFont();
-		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150)
-				.getFont();
-		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380)
-				.getFont();
-		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000)
-				.getFont();
+		zombieFont = new Assets("res/fonts/youmurdererbb_reg.ttf", 150).getFont();
+		zombieFontL = new Assets("res/fonts/youmurdererbb_reg.ttf", 380).getFont();
+		zombieFontXL = new Assets("res/fonts/youmurdererbb_reg.ttf", 1000).getFont();
 		help = new BufferedImage[6];
 		help[0] = new Assets("res/img/1.png").getImage();
 		help[1] = new Assets("res/img/2.png").getImage();
@@ -111,8 +108,7 @@ public class Game implements Runnable {
 		// Load in all of the items
 		BufferedReader itemReader = null;
 		try {
-			itemReader = new BufferedReader(new InputStreamReader(
-					new FileInputStream("res/items.txt")));
+			itemReader = new BufferedReader(new InputStreamReader(new FileInputStream("res/items.txt")));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -138,8 +134,7 @@ public class Game implements Runnable {
 					String currentItem = itemReader.readLine();
 
 					String[] stats = currentItem.split("~");
-					BufferedImage[] images = new Assets(stats[4], 1, 1)
-							.getSprites()[0];
+					BufferedImage[] images = new Assets(stats[4], 1, 1).getSprites()[0];
 					String[] soundLinks = stats[5].split("`");
 
 					Effect[] sounds = new Effect[soundLinks.length];
@@ -153,43 +148,29 @@ public class Game implements Runnable {
 					// items
 					switch (itemType) {
 					case 0:
-						this.items
-								.add(new Consumable(Integer.parseInt(stats[0]),
-										stats[1], Integer.parseInt(stats[2]),
-										Integer.parseInt(stats[3]),
-										ItemState.DROPPED, images, sounds,
-										this, ItemEffect.values()[Integer
-												.parseInt(stats[6])], Integer
-												.parseInt(stats[7])));
+						this.items.add(new Consumable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7])));
 						break;
 					case 1:
-						this.items.add(new Melee(Integer.parseInt(stats[0]),
-								stats[1], Integer.parseInt(stats[2]), Integer
-										.parseInt(stats[3]), ItemState.DROPPED,
-								images, sounds, this, Integer
-										.parseInt(stats[6]), Integer
-										.parseInt(stats[7]), Integer
-										.parseInt(stats[8]), Integer
-										.parseInt(stats[9]), Integer
-										.parseInt(stats[10])));
+						this.items.add(new Melee(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
+								Integer.parseInt(stats[9]), Integer.parseInt(stats[10])));
 						break;
 					case 2:
 						this.items.add(new Firearm(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
 								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
 								Integer.parseInt(stats[6]), Integer.parseInt(stats[7]), Integer.parseInt(stats[8]),
-								Integer.parseInt(stats[9]), Integer.parseInt(stats[10]), Integer.parseInt(stats[11]), Integer.parseInt(stats[12])));
+								Integer.parseInt(stats[9]), Integer.parseInt(stats[10]), Integer.parseInt(stats[11]),
+								Integer.parseInt(stats[12]), Integer.parseInt(stats[13])));
 
 						break;
 					case 3:
-						this.items
-								.add(new Throwable(Integer.parseInt(stats[0]),
-										stats[1], Integer.parseInt(stats[2]),
-										Integer.parseInt(stats[3]),
-										ItemState.DROPPED, images, sounds,
-										this, ItemEffect.values()[Integer
-												.parseInt(stats[6])], Integer
-												.parseInt(stats[7]), Integer
-												.parseInt(stats[8])));
+						this.items.add(new Throwable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
+								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
+								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7]),
+								Integer.parseInt(stats[8])));
 					}
 
 				} catch (IOException e) {
@@ -206,7 +187,7 @@ public class Game implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Load the display
 		display = new Display(title, width, height);
 
@@ -216,14 +197,12 @@ public class Game implements Runnable {
 		// Set the state of the game
 		state = new GameState(this);
 		state.setGameState(State.LOBBY, false);
-		
+
 		// Set the icon
-		display.getFrame().setIconImage(
-				new Assets("res/img/icon.png").getImage());
+		display.getFrame().setIconImage(new Assets("res/img/icon.png").getImage());
 
 		// Change the mouse to a cross hair
-		display.getFrame().setCursor(
-				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		display.getFrame().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 	}
 
 	/**
@@ -241,7 +220,7 @@ public class Game implements Runnable {
 	private void render() {
 		// Check if there is a buffer strategy
 		bs = display.getGamePanel().getBufferStrategy();
-		
+
 		// If this is the first time running initialize the buffer strategy
 		if (bs == null) {
 			display.getGamePanel().createBufferStrategy(3);
@@ -325,7 +304,7 @@ public class Game implements Runnable {
 		// Start the game
 		running = true;
 		thread = new Thread(this);
-		
+
 		// Go to run
 		thread.start();
 	}
@@ -444,8 +423,7 @@ public class Game implements Runnable {
 				case 2:
 					return new Melee((Melee) this.items.get(item));
 				case 3:
-					Firearm newItem = new Firearm(
-							(Firearm) this.items.get(item));
+					Firearm newItem = new Firearm((Firearm) this.items.get(item));
 					newItem.setCurrentAmmo(newItem.getMaxAmmo());
 					return newItem;
 				case 4:

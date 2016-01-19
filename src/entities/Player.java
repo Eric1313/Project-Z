@@ -333,7 +333,9 @@ public class Player extends Mob {
 		// If the player clicks with their mouse, use their selected item
 		if (this.mouse.isClick()) {
 			this.useItem();
-			this.mouse.setClick(false);
+			if ((this.selectedItem instanceof Firearm) && !((Firearm) this.selectedItem).isAutomatic()) {
+				this.mouse.setClick(false);
+			}
 		}
 
 		// If the player has less stamina than what is required to sprint, the

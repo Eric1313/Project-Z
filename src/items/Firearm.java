@@ -33,13 +33,14 @@ public class Firearm extends Item {
 	private int reloadTime;
 	private int noProjectiles;
 	private int penetration;
+	private int automatic;
 
 	private long reloadTick = -60;
 
 	public Firearm(int itemID, String name, int rarity, int effectValue,
 			ItemState state, BufferedImage[] images, Effect[] clips, Game game,
 			int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime,
-			int noProjectiles, int penetration) {
+			int noProjectiles, int penetration, int automatic) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
@@ -50,6 +51,7 @@ public class Firearm extends Item {
 		this.reloadTime = reloadTime;
 		this.noProjectiles = noProjectiles;
 		this.penetration = penetration;
+		this.automatic = automatic;
 	}
 
 	public Firearm(Firearm item) {
@@ -63,7 +65,7 @@ public class Firearm extends Item {
 		this.reloadTime = item.reloadTime;
 		this.noProjectiles = item.noProjectiles;
 		this.penetration = item.penetration;
-
+		this.automatic = item.automatic;
 	}
 
 	@Override
@@ -200,6 +202,18 @@ public class Firearm extends Item {
 	public boolean isEmpty() {
 		return this.currentAmmo == 0;
 	}
+	
+	public double getAdjustedAngle() {
+		return adjustedAngle;
+	}
+
+	public void setAdjustedAngle(double adjustedAngle) {
+		this.adjustedAngle = adjustedAngle;
+	}
+	
+	public boolean isAutomatic() {
+		return this.automatic == 1;
+	}
 
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
@@ -256,20 +270,5 @@ public class Firearm extends Item {
 
 		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo",
 				mouseLocation.x + 20, mouseLocation.y - 55);
-	}
-
-	/**
-	 * @return the adjustedAngle
-	 */
-	public double getAdjustedAngle() {
-		return adjustedAngle;
-	}
-
-	/**
-	 * @param adjustedAngle
-	 *            the adjustedAngle to set
-	 */
-	public void setAdjustedAngle(double adjustedAngle) {
-		this.adjustedAngle = adjustedAngle;
 	}
 }
