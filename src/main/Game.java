@@ -410,7 +410,6 @@ public class Game implements Runnable {
 	public BufferedImage getMainMenu() {
 		return this.mainMenu;
 	}
-
 	public int getLevel() {
 		return level;
 	}
