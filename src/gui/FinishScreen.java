@@ -20,7 +20,6 @@ import entities.Zombie;
 import enums.GameState.State;
 
 public class FinishScreen extends Screen {
-	private static final long serialVersionUID = 1L;
 	private float colour = 30;
 	private boolean decrease;
 	private Rectangle next;
