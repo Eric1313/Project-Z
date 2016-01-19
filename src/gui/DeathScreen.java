@@ -30,7 +30,7 @@ public class DeathScreen extends Screen {
 	private boolean hoverExit;
 
 	/**
-	 * Constructor for the DeathScreen
+	 * Constructor for the DeathScreen.
 	 * 
 	 * @param game
 	 *            the game
@@ -40,7 +40,7 @@ public class DeathScreen extends Screen {
 	}
 
 	/**
-	 * Renders the death screen on to the frame
+	 * Renders the death screen on to the frame.
 	 */
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -81,7 +81,7 @@ public class DeathScreen extends Screen {
 	}
 
 	/**
-	 * Updates the death screen
+	 * Updates the death screen.
 	 */
 	public void update() {
 		// Detects if the player clicks on a certain button
@@ -112,10 +112,10 @@ public class DeathScreen extends Screen {
 	}
 
 	/**
-	 * Setup the death screen
+	 * Setup the death screen.
 	 * 
 	 * @param game
-	 *            the game
+	 *            the game.
 	 */
 	public void setup(Game game) {
 		this.game = game;
