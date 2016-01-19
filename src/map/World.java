@@ -146,7 +146,6 @@ public class World {
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
 					map.getHeight() / 16); y++) {
-
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
@@ -166,20 +165,7 @@ public class World {
 			}
 		}
 		// *****************************************************************************************************
-
-		// Calculates the angle of rotation based on the mouse rotation
-		g2D.rotate(
-				Math.atan2(
-						((player.getPosition().getY()) + Assets.TILE_HEIGHT / 2 - camera
-								.getyOffset())
-								- mouse.getMouseLocation().getY(),
-						(player.getPosition().getX() + Assets.TILE_WIDTH / 2 - camera
-								.getxOffset())
-								- mouse.getMouseLocation().getX())
-						- Math.PI / 2,
-				player.getPosition().getX() - camera.getxOffset()
-						+ Assets.TILE_WIDTH / 2, player.getPosition().getY()
-						- camera.getyOffset() + Assets.TILE_HEIGHT / 2);
+		g2D.setTransform(originalTransform);
 		// Renders the player
 		player.render(g2D);
 		// Renders the upper layer of tiles over the player (such as the trees)
@@ -342,7 +328,7 @@ public class World {
 							* Assets.TILE_HEIGHT - camera.getyOffset()
 							+ yChange + Assets.TILE_HEIGHT / 2));
 				} else if ((baseTiles[j][i] & (1 << 13)) != 0) {
-					// Rotates the tiles 270 degreees
+					// Rotates the tiles 270 degrees
 					g2D.rotate(Math.toRadians(-90), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
 							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
@@ -394,33 +380,28 @@ public class World {
 		for (int i = row; i < row + 26; i++) {
 			tileX = 0;
 			for (int j = col; j < col + 34; j++) {
-				if (j >= baseTiles[0].length || i >= baseTiles.length) {
+				if (j >= upperTiles[0].length || i >= upperTiles.length) {
 					break;
 				}
 				g2D.setTransform(originalTransform);
-				// Rotates the tiles 180 decrease
-				if ((baseTiles[j][i] & (1 << 12)) != 0
-						&& ((baseTiles[j][i] & (1 << 13)) != 0)) {
+				if ((upperTiles[j][i] & (1 << 12)) != 0
+						&& ((upperTiles[j][i] & (1 << 13)) != 0)) {
 					g2D.rotate(Math.toRadians(180), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
 				}
-				// Rotates the tile 90 degrees
-				else if ((baseTiles[j][i] & (1 << 12)) != 0) {
+
+				else if ((upperTiles[j][i] & (1 << 12)) != 0) {
 					g2D.rotate(Math.toRadians(90), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
-				} else if ((baseTiles[j][i] & (1 << 13)) != 0) {
-					// Rotates the tiles 270 degreees
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
+				} else if ((upperTiles[j][i] & (1 << 13)) != 0) {
 					g2D.rotate(Math.toRadians(-90), (int) (tileX
 							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
+							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
+							- camera.getyOffset() + yChange + 16));
 				}
 				// Gets the tile id
 				int id = (upperTiles[j][i] & 0xFFF);
