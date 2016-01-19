@@ -1,5 +1,10 @@
 package entities;
 
+import items.Firearm;
+import items.Item;
+import items.Melee;
+import items.Throwable;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,15 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.PriorityQueue;
 
-import enums.GameState.State;
-import enums.ItemState;
-import items.Firearm;
-import items.Item;
-import items.Melee;
-import items.Throwable;
 import main.Game;
 import map.Map;
 import map.World;
@@ -25,6 +23,8 @@ import utilities.Assets;
 import utilities.GameCamera;
 import utilities.KeyHandler;
 import utilities.MouseHandler;
+import enums.GameState.State;
+import enums.ItemState;
 
 /**
  * Subclass of Mob that represents a player in Project Z.
@@ -391,10 +391,13 @@ public class Player extends Mob {
 			this.selectedItem = this.getItem(this.selectedItemNumber);
 		}
 
+		// Player movement
 		this.getPosition().setLocation(this.getPosition().getX(),
 				this.getPosition().getY() + yMove());
 		this.getPosition().setLocation(this.getPosition().getX() + xMove(),
 				this.getPosition().getY());
+
+		// This stops the player from getting stuck
 		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0)));
 		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
 		if (world.getSolid()[row][col] != null && yMove() == 0 && xMove() == 0
@@ -404,6 +407,8 @@ public class Player extends Mob {
 						this.getPosition().getY() + 32);
 			}
 		}
+
+		// Maps sure that the player stays inside the map
 		if (position.getX() < 0)
 			position.setLocation(0, position.getY());
 		else if (position.getX() > Assets.TILE_WIDTH * (world.getWidth() - 1))
@@ -416,7 +421,8 @@ public class Player extends Mob {
 			position.setLocation(position.getX(),
 					Assets.TILE_HEIGHT * (world.getHeight() - 1) - 32);
 
-		this.game.getCamera().centerOnEntity(this);
+		// Centers the camera on the player
+		this.camera.centerOnEntity(this);
 
 		// If the player is moving, make noise of 100px/200px/300px radius
 		// depending on if the player is sneaking, walking, or sprinting
@@ -430,6 +436,7 @@ public class Player extends Mob {
 			}
 		}
 
+		// Checks if the player has reached the check point
 		if (world.getFlag() != null) {
 			if (world.getFlag().intersects(hitbox)) {
 				game.getState().setState(State.FINISH, false);
@@ -437,14 +444,21 @@ public class Player extends Mob {
 		}
 	}
 
+	/**
+	 * The x movement of the player.
+	 * 
+	 * @return the amount to move.
+	 */
 	private int xMove() {
 		int xMove = 0;
+		// Sets the movement direction based on the key pressed
 		if (key.isLeft()) {
 			xMove = -this.movementSpeed;
 		}
 		if (key.isRight()) {
 			xMove = this.movementSpeed;
 		}
+		// Creates the player hit box
 		hitbox = new Rectangle(
 				(int) (this.position.getX() - camera.getxOffset()) + xMove,
 				(int) (this.position.getY() - camera.getyOffset()),
@@ -454,6 +468,7 @@ public class Player extends Mob {
 		if (xMove > 0) {// Moving right
 			if (row != 0)
 				row -= 1;
+			// Checks if the player collides with anythings
 			for (int i = row; i < world.getSolid().length; i++) {
 				for (int j = col; j < world.getSolid()[0].length; j++) {
 					if (world.getSolid()[i][j] != null) {
@@ -466,6 +481,7 @@ public class Player extends Mob {
 		} else if (xMove < 0) {// Moving Left
 			if (row != 0)
 				row -= 1;
+			// Checks if the player collides with anythings
 			for (int i = row; i < world.getSolid().length; i++) {
 				for (int j = col; j >= 0; j--) {
 					if (world.getSolid()[i][j] != null) {
@@ -479,14 +495,21 @@ public class Player extends Mob {
 		return xMove;
 	}
 
+	/**
+	 * The y movement of the player.
+	 * 
+	 * @return the amount to move in the y axis.
+	 */
 	private int yMove() {
 		int yMove = 0;
+		// Sets the movement direction based on the key pressed
 		if (this.game.getDisplay().getKeyHandler().isUp()) {
 			yMove = -this.movementSpeed;
 		}
 		if (this.game.getDisplay().getKeyHandler().isDown()) {
 			yMove = this.movementSpeed;
 		}
+		// Creates the player hit box
 		hitbox = new Rectangle(
 				(int) (this.position.getX() - camera.getxOffset()),
 				(int) (this.position.getY() - camera.getyOffset() + yMove),
@@ -496,6 +519,7 @@ public class Player extends Mob {
 		if (yMove < 0) {// Moving up
 			if (col != 0)
 				col -= 1;
+			// Checks if the player collides with anythings
 			for (int i = row; i >= 0; i--) {
 				for (int j = col; j < world.getSolid()[0].length; j++) {
 					if (world.getSolid()[i][j] != null) {
@@ -508,6 +532,7 @@ public class Player extends Mob {
 		} else if (yMove > 0) {// Moving down
 			if (col != 0)
 				col -= 1;
+			// Checks if the player collides with anythings
 			for (int i = row; i < world.getSolid().length; i++) {
 				for (int j = col; j < world.getSolid()[0].length; j++) {
 					if (world.getSolid()[i][j] != null) {
