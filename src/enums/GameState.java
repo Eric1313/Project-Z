@@ -142,7 +142,7 @@ public class GameState {
 			this.game.getDisplay().getDeath().setup(this.game);
 			break;
 		case HELP:
-			this.game.getDisplay().getHelp().setup(this.game);
+			this.game.getDisplay().getHelp().setup(this.game, pause);
 			break;
 		}
 	}
@@ -185,7 +185,7 @@ public class GameState {
 			this.game.getDisplay().getDeath().setup(this.game);
 			break;
 		case HELP:
-			this.game.getDisplay().getHelp().setup(this.game);
+			this.game.getDisplay().getHelp().setup(this.game, pause);
 			break;
 		}
 	}

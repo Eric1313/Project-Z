@@ -16,11 +16,13 @@ public class HelpScreen extends Screen {
 	private boolean nextHover;
 	private Rectangle previous;
 	private Rectangle next;
+	private boolean pause;
 	private int image;
 
 	public HelpScreen(Game game) {
 		super(game);
 	}
+
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -37,9 +39,12 @@ public class HelpScreen extends Screen {
 		if (image != 5) {
 			button(g2D, nextHover, next, "NEXT",
 					904 - fm.stringWidth("NEXT") / 2, 705, 855, 725);
-		} else {
+		} else if (!pause) {
 			button(g2D, nextHover, next, "MENU",
 					904 - fm.stringWidth("MENU") / 2, 705, 855, 725);
+		} else {
+			button(g2D, nextHover, next, "PAUSE",
+					904 - fm.stringWidth("PAUSE") / 2, 705, 855, 725);
 		}
 	}
 
@@ -62,8 +67,12 @@ public class HelpScreen extends Screen {
 				image++;
 				game.getDisplay().getMouseHandler().setClick(false);
 			} else if (game.getDisplay().getMouseHandler().isClick()
-					&& image == 5) {
+					&& image == 5 && !pause) {
 				game.getState().setState(State.LOBBY, false);
+				game.getDisplay().getMouseHandler().setClick(false);
+			} else if (game.getDisplay().getMouseHandler().isClick()
+					&& image == 5 && pause){
+				game.getState().setState(State.PAUSE, false);
 				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {
@@ -72,14 +81,35 @@ public class HelpScreen extends Screen {
 		game.getDisplay().getMouseHandler().setClick(false);
 	}
 
-	public void setup(Game game) {
+	public void setup(Game game, boolean pause) {
 		this.game = game;
+		this.pause = pause;
 		previous = new Rectangle(20, 635, 200, 100);
 		next = new Rectangle(804, 635, 200, 100);
 		image = 0;
 	}
 
 	@Override
+	/**
+	 * Creates the button on the screen.
+	 * 
+	 * @param g2D
+	 *            the graphics object used to draw on to the screen.
+	 * @param hover
+	 *            if the object is being hovered over or not.
+	 * @param box
+	 *            the box of the button.
+	 * @param text
+	 *            the text to be displayed on the button.
+	 * @param textX
+	 *            the x location of the button.
+	 * @param textY
+	 *            the y location of the button.
+	 * @param handX
+	 *            the x location of the hand.
+	 * @param handY
+	 *            the y location of the hand.
+	 */
 	public void button(Graphics2D g2D, boolean hover, Rectangle box,
 			String text, int textX, int textY, int handX, int handY) {
 		if (hover) {

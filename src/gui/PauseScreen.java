@@ -18,10 +18,10 @@ public class PauseScreen extends Screen {
 
 	private Rectangle resume;
 	private Rectangle main;
-	private Rectangle exit;
+	private Rectangle help;
 	private boolean hoverResume;
 	private boolean hoverMain;
-	private boolean hoverExit;
+	private boolean hoverHelp;
 
 	public PauseScreen(Game game) {
 		super(game);
@@ -63,7 +63,7 @@ public class PauseScreen extends Screen {
 				512 - fm.stringWidth("RESUME") / 2, 367, 460, 390);
 		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
 				487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
+		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2,
 				607, 460, 630);
 	}
 
@@ -92,14 +92,15 @@ public class PauseScreen extends Screen {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler()
+		if (help.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
-			hoverExit = true;
+			hoverHelp = true;
 			if (game.getDisplay().getMouseHandler().isClick()) {
-				System.exit(0);
+				game.getDisplay().getMouseHandler().setClick(false);
+				game.getState().setState(State.HELP, true);
 			}
 		} else {
-			hoverExit = false;
+			hoverHelp = false;
 		}
 		game.getDisplay().getMouseHandler().setClick(false);
 	}
@@ -108,6 +109,6 @@ public class PauseScreen extends Screen {
 		this.game = game;
 		resume = new Rectangle(412, 300, 200, 100);
 		main = new Rectangle(412, 420, 200, 100);
-		exit = new Rectangle(412, 540, 200, 100);
+		help = new Rectangle(412, 540, 200, 100);
 	}
 }
