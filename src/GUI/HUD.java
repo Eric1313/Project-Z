@@ -89,9 +89,6 @@ public class HUD {
 		g.drawString("STAMINA", 908, 65);
 		g.drawString(player.getHealth() + " / 100", 953, 35);
 
-		g.setColor(Color.RED);
-		g.drawString("LEVEL " + Zombie.damage / 5, 25, 25);
-
 		Point mouseLocation = player.getMouse().getMouseLocation();
 
 		if (mouseLocation.x > 200 && mouseLocation.x < 800 && mouseLocation.y > 650 && mouseLocation.y < 710) {

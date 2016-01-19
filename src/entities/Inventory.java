@@ -22,11 +22,11 @@ public class Inventory {
 	}
 
 	/**
-	 * Gets the Item that is in a given slot of the Inventory.
+	 * Gets the item that is in a given slot of the inventory.
 	 * 
 	 * @param itemNo
-	 *            the item number (from 0-9) of the Item to find.
-	 * @return the Item in the item number's slot. Returns null if it is empty.
+	 *            the item number (from 0-9) of the item to find.
+	 * @return the item in the item number's slot. Returns null if it is empty.
 	 */
 	public Item get(int itemNo) {
 		if (itemNo < 0 || itemNo > this.items.length) {
@@ -37,40 +37,13 @@ public class Inventory {
 	}
 
 	/**
-	 * Gets the item number of a given Item in the Inventory.
+	 * Adds an item to the inventory.<br>
+	 * Adds the item to the first available slot (lowest item number available).
 	 * 
 	 * @param item
-	 *            the Item to find in the Inventory.
-	 * @return the item number of the Item searching for. Returns -1 if it was
-	 *         not found.
-	 */
-	public int get(Item item) {
-		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
-			if (this.items[itemNo] == item) {
-				return itemNo;
-			}
-		}
-
-		return -1;
-	}
-
-	/**
-	 * Gets the number of items currently in the inventory.
-	 * 
-	 * @return the number of items currently in the inventory.
-	 */
-	public int getNoOfItems() {
-		return noOfItems;
-	}
-
-	/**
-	 * Adds an Item to the Inventory.<br>
-	 * Adds the Item to the first available slot (lowest item number available).
-	 * 
-	 * @param item
-	 *            the Item to add to the Inventory.
-	 * @return the slot number that the Item took. Returns -1 if it was not
-	 *         added (meaning the Inventory is full).
+	 *            the item to add to the inventory.
+	 * @return the slot number that the item took. Returns -1 if it was not
+	 *         added (meaning the inventory is full).
 	 */
 	public int add(Item item) {
 		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
@@ -86,12 +59,12 @@ public class Inventory {
 	}
 
 	/**
-	 * Removes an item from the Inventory.
+	 * Removes an item from the inventory.
 	 * 
 	 * @param item
-	 *            a reference to the Item to remove.
-	 * @return the slot number that the Item was removed from. Returns -1 if it
-	 *         was not removed (meaning the Item was not found).
+	 *            a reference to the item to remove.
+	 * @return the slot number that the item was removed from. Returns -1 if it
+	 *         was not removed (meaning the item was not found).
 	 */
 	public int remove(Item item) {
 		for (int itemNo = 0; itemNo < this.items.length; itemNo++) {
@@ -106,22 +79,11 @@ public class Inventory {
 	}
 
 	/**
-	 * Removes an item from the Inventory.
+	 * Gets the number of items currently in the inventory.
 	 * 
-	 * @param itemNo
-	 *            the item number (from 0-9) of the Item to remove.
-	 * @return the Item that was removed. Returns null if there was no item
-	 *         removed.
+	 * @return the number of items currently in the inventory.
 	 */
-	public Item remove(int itemNo) {
-		if (itemNo >= this.items.length || itemNo < 0 || this.items[itemNo] == null) {
-			return null;
-		} else {
-			Item removedItem = this.items[itemNo];
-			this.items[itemNo] = null;
-			removedItem.setState(ItemState.DROPPED);
-			this.noOfItems--;
-			return removedItem;
-		}
+	public int getNoOfItems() {
+		return this.noOfItems;
 	}
 }

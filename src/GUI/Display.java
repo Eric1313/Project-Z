@@ -63,41 +63,31 @@ public class Display {
 		main.setMaximumSize(new Dimension(width, height));
 		main.setMinimumSize(new Dimension(width, height));
 		main.setFocusable(false);
-		main.addMouseMotionListener(mouseHandler);
 		main.addMouseListener(mouseHandler);
-		main.addMouseWheelListener(mouseHandler);
 
 		pause.setPreferredSize(new Dimension(width, height));
 		pause.setMaximumSize(new Dimension(width, height));
 		pause.setMinimumSize(new Dimension(width, height));
 		pause.setFocusable(false);
-		pause.addMouseMotionListener(mouseHandler);
 		pause.addMouseListener(mouseHandler);
-		pause.addMouseWheelListener(mouseHandler);
 
 		finish.setPreferredSize(new Dimension(width, height));
 		finish.setMaximumSize(new Dimension(width, height));
 		finish.setMinimumSize(new Dimension(width, height));
 		finish.setFocusable(false);
-		finish.addMouseMotionListener(mouseHandler);
 		finish.addMouseListener(mouseHandler);
-		finish.addMouseWheelListener(mouseHandler);
 
 		death.setPreferredSize(new Dimension(width, height));
 		death.setMaximumSize(new Dimension(width, height));
 		death.setMinimumSize(new Dimension(width, height));
 		death.setFocusable(false);
-		death.addMouseMotionListener(mouseHandler);
 		death.addMouseListener(mouseHandler);
-		death.addMouseWheelListener(mouseHandler);
 
 		help.setPreferredSize(new Dimension(width, height));
 		help.setMaximumSize(new Dimension(width, height));
 		help.setMinimumSize(new Dimension(width, height));
 		help.setFocusable(false);
-		help.addMouseMotionListener(mouseHandler);
 		help.addMouseListener(mouseHandler);
-		help.addMouseWheelListener(mouseHandler);
 
 		keyHandler = new KeyHandler();
 		frame.addKeyListener(keyHandler);

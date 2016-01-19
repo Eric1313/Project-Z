@@ -43,24 +43,27 @@ public abstract class Mob extends Entity {
 	}
 
 	public void makeNoise(int range, boolean player) {
-		int chunkX = Math.max(position.x / 512, 2);
-		int chunkY = Math.max(position.y / 512, 2);
-		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
-				if (x < 100 && y < 100)
-					for (Iterator<Zombie> iterator = getChunkMap()[x][y].getZombies().iterator(); iterator.hasNext();) {
+		int chunkX = Math.max(this.position.x / 512, 2);
+		int chunkY = Math.max(this.position.y / 512, 2);
+		for (int x = chunkX - 2; x < Math.min(chunkX + 3, this.map.getWidth() / 16); x++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, this.map.getHeight() / 16); y++) {
+				if (x < 100 && y < 100) {
+					for (Iterator<Zombie> iterator = this.chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 						Zombie zombie = iterator.next();
-						if (Math.pow(position.x - zombie.position.x, 2)
-								+ Math.pow(position.y - zombie.position.y, 2) < range * range) {
-							if (player)
-								zombie.setPath(map.getPathFinder().findPath(zombie.getPath(),
+						if (Math.pow(this.position.x - zombie.position.x, 2)
+								+ Math.pow(this.position.y - zombie.position.y, 2) < range * range) {
+							if (player) {
+								zombie.setPath(this.map.getPathFinder().findPath(zombie.getPath(),
 										(zombie.position.x + 16) / 32, (zombie.position.y + 16) / 32,
 										(this.position.x + 16) / 32, (this.position.y + 16) / 32));
-							else if (!path.isEmpty())
-								zombie.setPath(map.getPathFinder().findPath(zombie.getPath(), (zombie.position.x) / 32,
-										(zombie.position.y) / 32, path.get(0).locationX, path.get(0).locationY));
+							} else if (!this.path.isEmpty()) {
+								zombie.setPath(this.map.getPathFinder().findPath(zombie.getPath(),
+										(zombie.position.x) / 32, (zombie.position.y) / 32, this.path.get(0).locationX,
+										this.path.get(0).locationY));
+							}
 						}
 					}
+				}
 			}
 		}
 	}
@@ -73,64 +76,35 @@ public abstract class Mob extends Entity {
 		this.movementSpeed = movementSpeed;
 	}
 
-	/**
-	 * @return the up
-	 */
 	public boolean isUp() {
-		return up;
+		return this.up;
 	}
 
-	/**
-	 * @param up
-	 *            the up to set
-	 */
 	public void setUp(boolean up) {
 		this.up = up;
 	}
 
-	/**
-	 * @return the down
-	 */
 	public boolean isDown() {
-		return down;
+		return this.down;
 	}
 
-	/**
-	 * @param down
-	 *            the down to set
-	 */
 	public void setDown(boolean down) {
 		this.down = down;
 	}
 
-	/**
-	 * @return the left
-	 */
 	public boolean isLeft() {
-		return left;
+		return this.left;
 	}
 
-	/**
-	 * @param left
-	 *            the left to set
-	 */
 	public void setLeft(boolean left) {
 		this.left = left;
 	}
 
-	/**
-	 * @return the right
-	 */
 	public boolean isRight() {
-		return right;
+		return this.right;
 	}
 
-	/**
-	 * @param right
-	 *            the right to set
-	 */
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-
 }

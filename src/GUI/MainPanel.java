@@ -55,13 +55,18 @@ public class MainPanel extends Canvas {
 		// Draw play button
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		
-		button(g2D, hoverPlay, play, "PLAY", 512 - fm.stringWidth("PLAY") / 2, 367, 460, 390);
-		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2, 487, 460, 510);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 607, 460, 630);
-		
-		// Credits
+
+		button(g2D, hoverPlay, play, "PLAY", 512 - fm.stringWidth("PLAY") / 2,
+				367, 460, 390);
+		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2,
+				487, 460, 510);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
+				607, 460, 630);
+		// Displays the current level
 		g2D.setColor(Color.WHITE);
+		g2D.setFont(game.getUiFontS());
+		g2D.drawString("LEVEL: " + game.getLevel(), 5, 25);
+		// Credits
 		g2D.setFont(game.getUiFontXS());
 		g2D.drawString(
 				"Ver. 1.0 CREATED BY ALLEN HAN, ALOSHA REYMER, ERIC CHEE, & PATRICK LIU",

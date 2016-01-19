@@ -21,6 +21,7 @@ import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
 import entities.Entity;
+import entities.Inventory;
 import entities.Player;
 import entities.Zombie;
 
@@ -65,7 +66,8 @@ public class World {
 	 * @param mapHeight
 	 *            the height of the map
 	 */
-	public World(Game game, int mapWidth, int mapHeight) {
+	public World(Game game, int mapWidth, int mapHeight, Inventory inventory,
+			int skinNo) {
 		this.width = mapWidth;
 		this.height = mapHeight;
 		this.game = game;
@@ -85,11 +87,16 @@ public class World {
 		upperTiles = map.getUpperTileMap();
 
 		// Spawns the player in the map
-		player = new Player(new Point(
-				(int) map.getPlayerCoordinate().getX() * 32, (int) map
-						.getPlayerCoordinate().getY() * 32), true, game, map,
-				(int) Math.floor((Math.random() * 6)));
-
+		if (inventory == null)
+			player = new Player(new Point((int) map.getPlayerCoordinate()
+					.getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
+					null, true, game, map,
+					(int) Math.floor((Math.random() * 6)));
+		else {
+			player = new Player(new Point((int) map.getPlayerCoordinate()
+					.getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
+					inventory, true, game, map, skinNo);
+		}
 		// Sets the player's image
 		player.setImages(game.getPlayerImages()[0]);
 
@@ -146,7 +153,6 @@ public class World {
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
 					map.getHeight() / 16); y++) {
-
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
