@@ -79,6 +79,9 @@ public class Player extends Mob {
 	 * 
 	 * @param position
 	 *            the coordinates of the player in the map in terms of pixels.
+	 * @param inventory
+	 *            the starting inventory of the player. If null is entered, the
+	 *            player will spawn with a default inventory.
 	 * @param solid
 	 *            whether or not the player is solid.
 	 * @param game
@@ -90,7 +93,7 @@ public class Player extends Mob {
 	 */
 	public Player(Point position, Inventory inventory, boolean solid, Game game, Map map, int skinNo) {
 		super(32, 32, position, solid, game, map);
-		
+
 		if (inventory != null) {
 			this.inventory = inventory;
 		} else {
@@ -110,7 +113,7 @@ public class Player extends Mob {
 		this.key = this.game.getDisplay().getKeyHandler();
 		this.mouse = this.game.getDisplay().getMouseHandler();
 
-		this.selectedItem = this.getItem(selectedItemNumber);
+		this.selectedItem = this.getItem(this.selectedItemNumber);
 	}
 
 	/**
@@ -643,6 +646,10 @@ public class Player extends Mob {
 
 	public int getSelectedItem() {
 		return this.selectedItemNumber;
+	}
+
+	public int getSkinNo() {
+		return this.skinNo;
 	}
 
 	public MouseHandler getMouse() {
