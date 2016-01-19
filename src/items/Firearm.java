@@ -7,13 +7,12 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import main.Game;
+import utilities.Effect;
 import entities.Entity;
 import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
-import main.Game;
-import utilities.Effect;
-import utilities.Sound;
 
 /**
  * Subclass of Item that represents a firearm weapon item in Project Z.
@@ -109,12 +108,6 @@ public class Firearm extends Item {
 					player.makeNoise(this.noise, true);
 				}
 				this.removeAmmo();
-				game.getDisplay()
-						.getGamePanel()
-						.getWorld()
-						.setShotsFired(
-								game.getDisplay().getGamePanel().getWorld()
-										.getShotsFired() + 1);
 				player.shoot();
 			}
 		}
