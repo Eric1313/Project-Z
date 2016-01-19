@@ -276,7 +276,7 @@ public class Firearm extends Item {
 		if (this.penetration == 1) {
 			g.drawString("No penetration", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else {
-			g.drawString("Pentrates up to " + this.penetration + " zombies", mouseLocation.x + 20,
+			g.drawString("Penetrates up to " + this.penetration + " zombies", mouseLocation.x + 20,
 					mouseLocation.y - 65);
 		}
 
