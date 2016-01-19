@@ -25,6 +25,8 @@ public class MainScreen extends Screen {
 	private Rectangle play;
 	private Rectangle help;
 	private Rectangle exit;
+	private Rectangle hack;
+	private int clicks;
 	private float colour = 30;
 	private boolean decrease;
 
@@ -68,7 +70,6 @@ public class MainScreen extends Screen {
 		// Draws the hand
 		g2D.setFont(game.getZombieFontL());
 		g2D.drawString("}", 375, 260);
-
 		// Draw title
 		g.drawImage(game.getMainMenu(), 0, 0, null);
 
@@ -130,6 +131,17 @@ public class MainScreen extends Screen {
 		} else {
 			hoverExit = false;
 		}
+
+		if (hack.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
+			if (game.getDisplay().getMouseHandler().isClick()) {
+				clicks++;
+				if (clicks >= 10){
+					game.getState().setDebug(true);
+				}
+				game.getDisplay().getMouseHandler().setClick(false);
+			}
+		}
 		game.getDisplay().getMouseHandler().setClick(false);
 	}
 
@@ -145,5 +157,8 @@ public class MainScreen extends Screen {
 		play = new Rectangle(412, 300, 200, 100);
 		help = new Rectangle(412, 420, 200, 100);
 		exit = new Rectangle(412, 540, 200, 100);
+		hack = new Rectangle(375, 30, 210, 260);
+		this.clicks = 0;
+		game.getState().setDebug(false);
 	}
 }

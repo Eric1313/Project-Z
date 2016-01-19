@@ -1,5 +1,6 @@
 package entities;
 
+import items.Consumable;
 import items.Firearm;
 import items.Item;
 import items.Melee;
@@ -98,16 +99,25 @@ public class Player extends Mob {
 
 		if (inventory != null) {
 			this.inventory = inventory;
+		} else if (game.getState().isDebug()) {
+			this.addItem(this.game.getItem(304));
+			((Firearm) this.getItem(0)).setCurrentAmmo(Integer.MAX_VALUE);
+			this.addItem(this.game.getItem(106));
+			((Consumable) this.getItem(1)).setDurability(Integer.MAX_VALUE);
+			this.addItem(this.game.getItem(302));
+			((Firearm) this.getItem(2)).setCurrentAmmo(Integer.MAX_VALUE);
+			((Firearm) this.getItem(2)).setRateOfFire(10);;
+			this.addItem(this.game.getItem(303));
+			((Firearm) this.getItem(3)).setCurrentAmmo(Integer.MAX_VALUE);
+			((Firearm) this.getItem(3)).setRateOfFire(10);
+			this.addItem(this.game.getItem(301));
+			((Firearm) this.getItem(4)).setCurrentAmmo(Integer.MAX_VALUE);
+			this.addItem(this.game.getItem(300));
+			((Firearm) this.getItem(5)).setCurrentAmmo(Integer.MAX_VALUE);
 		} else {
 			this.addItem(this.game.getItem(200));
 			this.addItem(this.game.getItem(300));
-			this.addItem(this.game.getItem(304));
 			this.addItem(this.game.getItem(400));
-			this.addItem(this.game.getItem(303));
-			this.addItem(this.game.getItem(302));
-			this.addItem(this.game.getItem(103));
-			this.addItem(this.game.getItem(103));
-
 		}
 
 		this.skinNo = skinNo;

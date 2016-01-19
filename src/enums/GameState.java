@@ -14,6 +14,7 @@ import entities.Inventory;
 public class GameState {
 	private Game game;
 	private State state;
+	private boolean debug;
 
 	/**
 	 * Constructor for the GameState.
@@ -192,5 +193,13 @@ public class GameState {
 
 	public State getGameState() {
 		return state;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
