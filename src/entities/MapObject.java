@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import enums.MapObjectType;
 import main.Game;
 
 /**
@@ -17,8 +16,6 @@ import main.Game;
  * @version 1.0
  */
 public abstract class MapObject extends Entity {
-	private MapObjectType type;
-
 	/**
 	 * 
 	 * @param height
@@ -45,10 +42,8 @@ public abstract class MapObject extends Entity {
 	 *            corpse, etc.)
 	 */
 	public MapObject(int height, int width, Point position, double rotation, int health, boolean solid,
-			BufferedImage[] images, AudioClip[] clips, Game game, MapObjectType type) {
+			BufferedImage[] images, AudioClip[] clips, Game game) {
 		super(height, width, position, rotation, health, solid, images, clips, game);
-
-		this.type = type;
 	}
 
 	public abstract void render(Graphics g);

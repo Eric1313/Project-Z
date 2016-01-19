@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import enums.MapObjectType;
 import main.Game;
 import map.Map;
 
@@ -34,7 +33,7 @@ public class Corpse extends MapObject {
 	 *            the rotation of the corpse (in radians).
 	 */
 	public Corpse(Point position, double rotation, BufferedImage[] images, Game game, Map map) {
-		super(32, 32, position, 0, 0, false, images, null, game, MapObjectType.CORPSE);
+		super(32, 32, position, 0, 0, false, images, null, game);
 
 		this.rotation = rotation;
 	}
