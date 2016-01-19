@@ -52,9 +52,10 @@ public class DeathPanel extends Canvas {
 		g2D.drawString("YOU DIED", 375, 200);
 
 		// Draw play button
+		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		button(g2D, hoverMain, main, "MENU", 475, 367, 460, 390);
-		button(g2D, hoverExit, exit, "QUIT", 475, 487, 460, 510);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 367, 460, 390);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 487, 460, 510);
 	}
 
 	public void update() {

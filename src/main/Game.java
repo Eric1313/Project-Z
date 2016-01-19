@@ -84,7 +84,7 @@ public class Game implements Runnable {
 	 * Initializes everything needs for the game.
 	 */
 	private void initialize() {
-		// Loads in all of the assets used
+		// Load in all of the assets used
 		tileImages = new Assets("res/img/tiles.png", 1, 1).getSprites();
 		playerImages = new Assets("res/img/player.png", 1, 1).getSprites();
 		zombieImages = new Assets("res/img/zombie.png", 1, 1).getSprites();
@@ -108,7 +108,7 @@ public class Game implements Runnable {
 		help[4] = new Assets("res/img/5.png").getImage();
 		help[5] = new Assets("res/img/6.png").getImage();
 
-		// Load all of the items
+		// Load in all of the items
 		BufferedReader itemReader = null;
 		try {
 			itemReader = new BufferedReader(new InputStreamReader(
@@ -210,21 +210,22 @@ public class Game implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// Loads the display
+		
+		// Load the display
 		display = new Display(title, width, height);
 
-		// Creates the camera
+		// Create the camera
 		camera = new GameCamera(this, 0, 0);
 
-		// Sets the state of the game
+		// Set the state of the game
 		state = new GameState(this);
 		state.setGameState(State.LOBBY, false);
 		
-		// Sets the icon
+		// Set the icon
 		display.getFrame().setIconImage(
 				new Assets("res/img/icon.png").getImage());
 
-		// Changes the mouse to a cross hair
+		// Change the mouse to a cross hair
 		display.getFrame().setCursor(
 				Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 	}
@@ -244,6 +245,7 @@ public class Game implements Runnable {
 	private void render() {
 		// Check if there is a buffer strategy
 		bs = display.getGamePanel().getBufferStrategy();
+		
 		// If this is the first time running initialize the buffer strategy
 		if (bs == null) {
 			display.getGamePanel().createBufferStrategy(3);
@@ -251,14 +253,14 @@ public class Game implements Runnable {
 		}
 		g = bs.getDrawGraphics();
 
-		// Clears the screen
+		// Clear the screen
 		g.clearRect(0, 0, width, height);
 
-		// Renders the screen
+		// Render the screen
 		if (state.getGameState() != null) {
 			state.render(g);
 		}
-		// End drawing
+		// End the drawing
 		bs.show();
 		g.dispose();
 	}
@@ -267,10 +269,10 @@ public class Game implements Runnable {
 	 * The main game loop of the game where the rendering and updating is done.
 	 */
 	public void run() {
-		// Initializes all assets and sets the state
+		// Initialize all assets and sets the state
 		initialize();
 
-		// Keeps track of ticks
+		// Keep track of ticks
 		double unprocessedSeconds = 0;
 		long lastTime = System.nanoTime();
 		double secondsPerTick = 1 / 60.0;
@@ -278,7 +280,7 @@ public class Game implements Runnable {
 
 		// Game loop
 		while (running) {
-			// Calculates the time pasted
+			// Calculate the time passed
 			long now = System.nanoTime();
 			long passedTime = now - lastTime;
 			lastTime = now;
@@ -287,10 +289,10 @@ public class Game implements Runnable {
 			if (passedTime > 100000000)
 				passedTime = 100000000;
 
-			// Seconds since the last tick
+			// Calculate the seconds since the last tick
 			unprocessedSeconds += passedTime / 1000000000.0;
 
-			// Updates the game
+			// Update the game
 			boolean ticked = false;
 			while (unprocessedSeconds > secondsPerTick) {
 				update();
@@ -301,7 +303,7 @@ public class Game implements Runnable {
 					lastTime += 1000;
 				}
 			}
-			// Renders the game
+			// Render the game
 			if (ticked) {
 				render();
 			} else {
@@ -320,13 +322,15 @@ public class Game implements Runnable {
 	 */
 	public synchronized void start() {
 		// Do not make a new thread if it is already running
-		if (running)
+		if (running) {
 			return;
+		}
 
-		// Starts the game
+		// Start the game
 		running = true;
 		thread = new Thread(this);
-		// Goes to run
+		
+		// Go to run
 		thread.start();
 	}
 
