@@ -436,6 +436,10 @@ public class Game implements Runnable {
 		return this.items;
 	}
 
+	public void setScores(String[][] scores) {
+		this.scores = scores;
+	}
+
 	/**
 	 * Gets an item given an item ID.
 	 * 

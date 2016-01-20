@@ -14,6 +14,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+import javax.swing.JOptionPane;
 
 import main.Game;
 import entities.Zombie;
@@ -27,6 +31,8 @@ public class DeathScreen extends Screen {
 	private Rectangle exit;
 	private boolean hoverMain;
 	private boolean hoverExit;
+	private int level;
+	private boolean highscore;
 
 	/**
 	 * Constructor for the DeathScreen.
@@ -110,6 +116,48 @@ public class DeathScreen extends Screen {
 			hoverExit = false;
 		}
 		game.getDisplay().getMouseHandler().setClick(false);
+
+		if (highscore) {
+			highscore = false;
+			// Gets the player's name
+			String name;
+			do {
+				name = JOptionPane.showInputDialog(null, "New highscore!!!",
+						"Enter your name", JOptionPane.QUESTION_MESSAGE);
+				if (name == null) {
+					name = "";
+				}
+				// Checks the length of the name
+				if (name.length() <= 0 || name.length() > 20)
+					JOptionPane.showMessageDialog(null,
+							"NAME LENGTH MUST BE BETWEEN 1-20", "WARNING!",
+							JOptionPane.WARNING_MESSAGE);
+			} while (name.length() <= 0 || name.length() > 20);
+			// Adds the new name
+			for (int i = 0; i < game.getScores()[0].length; i++) {
+				if (level > Integer.parseInt(game.getScores()[0][i])) {
+					// Changes score
+					game.getScores()[0][i] = Integer.toString(level);
+					game.getScores()[1][i] = name;
+
+					// Writes the score back to the text file
+					try {
+						PrintWriter writer = new PrintWriter(
+								"res/highscores.txt");
+						for (String[] row : game.getScores()) {
+							for (String s : row) {
+								writer.println(s);
+							}
+						}
+						writer.close();
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+					System.out.println("Run");
+					return;
+				}
+			}
+		}
 	}
 
 	/**
@@ -123,6 +171,13 @@ public class DeathScreen extends Screen {
 		main = new Rectangle(412, 300, 200, 100);
 		exit = new Rectangle(412, 420, 200, 100);
 		// If you die the level is reset
+		level = game.getLevel();
+		for (int i = 0; i < game.getScores()[0].length; i++) {
+			if (level > Integer.parseInt(game.getScores()[0][i])) {
+				highscore = true;
+				System.out.println("Run");
+			}
+		}
 		game.setLevel(1);
 	}
 }

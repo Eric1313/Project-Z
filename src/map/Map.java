@@ -532,7 +532,7 @@ public class Map {
 			setTile((int) start.getX() + 1, (int) end.getY() - 5, 207, Direction.UP, false);
 		}
 		// Spawns the victory flag in any corner of the building
-		if (isStart) {
+		if (!isStart) {
 			int corner = (int) Math.floor((Math.random() * 4));
 
 			if (corner == 0) {
