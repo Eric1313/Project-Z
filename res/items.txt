@@ -9,7 +9,7 @@
 104~Sniper Ammo~1~1~res/img/104.png~res/sfx/104.wav~1~5
 105~SMG Ammo~2~1~res/img/105.png~res/sfx/105.wav~1~20
 106~Morphine~2~50~res/img/106.png~res/sfx/100.wav~0~1
-107~Adrenaline~2~50~res/img/107.png~res/sfx/100.wav~0~1
+107~Adrenaline~2~30000~res/img/107.png~res/sfx/100.wav~2~1
 200~Baseball Bat~5~35~res/img/200.png~res/sfx/200.wav~20~45~48~60~10
 201~Fireaxe~4~30~res/img/201.png~res/sfx/200.wav~25~50~64~75~20
 202~Knife~5~100~res/img/202.png~res/sfx/200.wav~10~20~36~15~5

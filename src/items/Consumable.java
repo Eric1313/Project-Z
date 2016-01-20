@@ -48,8 +48,9 @@ public class Consumable extends Item {
 	 * @param durability
 	 *            the number of times the item can be used.
 	 */
-	public Consumable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, ItemEffect effect, int durability) {
+	public Consumable(int itemID, String name, int rarity, int effectValue,
+			ItemState state, BufferedImage[] images, Effect[] clips, Game game,
+			ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
@@ -76,7 +77,8 @@ public class Consumable extends Item {
 		case HEAL:
 			// Check if enough time has passed to use the item
 			long currentTick = player.getGame().getTickCount();
-			if (player.getHealth() < 100 && currentTick - player.getLastItemTick() > 210) {
+			if (player.getHealth() < 100
+					&& currentTick - player.getLastItemTick() > 210) {
 				player.setLastItemTick(currentTick);
 				// Play the item's sound
 				clips[0].play();
@@ -91,7 +93,8 @@ public class Consumable extends Item {
 							e.printStackTrace();
 						}
 						// Heal the player by the item's effect value
-						player.setHealth(Math.min(100, player.getHealth() + consumable.getEffectValue()));
+						player.setHealth(Math.min(100, player.getHealth()
+								+ consumable.getEffectValue()));
 						// Remove 1 durability from the item
 						// If the item is out of durability, remove it
 						consumable.removeDurability();
@@ -104,6 +107,34 @@ public class Consumable extends Item {
 			}
 			break;
 		case AMMO:
+			break;
+		case SPEED_BUFF:
+			// Check if enough time has passed to use the item
+
+				player.setBaseMovementSpeed(player.getBaseMovementSpeed() +1);
+
+				// Play the item's sound
+				clips[0].play();
+				
+				this.removeDurability();
+				if (this.getDurability() <= 0) {
+					player.removeItem(this);
+				}
+
+				// Run a thread to delay the use of the item
+				Consumable consumable = this;
+				Thread reloadPause = new Thread(new Runnable() {
+					public void run() {
+						try {
+							Thread.sleep(consumable.getEffectValue());
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						player.setBaseMovementSpeed(player.getBaseMovementSpeed()-1);
+					}
+				});
+				reloadPause.start();
+			
 			break;
 		default:
 			break;
@@ -141,7 +172,8 @@ public class Consumable extends Item {
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
 		// Render the tooltip's background depending on its rarity
-		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
+		g.setColor(new Color(getColour().getRed(), getColour().getGreen(),
+				getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 175, 300, 175);
 
 		// Write the item's name
@@ -156,31 +188,38 @@ public class Consumable extends Item {
 			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 4:
-			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 105);
+			g.drawString("Uncommon", mouseLocation.x + 20,
+					mouseLocation.y - 105);
 			break;
 		case 3:
 			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 2:
-			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 105);
+			g.drawString("Very Rare", mouseLocation.x + 20,
+					mouseLocation.y - 105);
 			break;
 		case 1:
-			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 105);
+			g.drawString("Ultra Rare", mouseLocation.x + 20,
+					mouseLocation.y - 105);
 			break;
 		}
 
 		// Write the effect of the item and how much of the effect it does
 		switch (this.effect) {
 		case HEAL:
-			g.drawString("Healing item", mouseLocation.x + 20, mouseLocation.y - 90);
+			g.drawString("Healing item", mouseLocation.x + 20,
+					mouseLocation.y - 90);
 			g.setFont(this.game.getUiFontS());
-			g.drawString("Heals " + this.effectValue + " health", mouseLocation.x + 20, mouseLocation.y - 65);
-			g.drawString("Can be used " + this.durability + " time(s)", mouseLocation.x + 20, mouseLocation.y - 40);
+			g.drawString("Heals " + this.effectValue + " health",
+					mouseLocation.x + 20, mouseLocation.y - 65);
+			g.drawString("Can be used " + this.durability + " time(s)",
+					mouseLocation.x + 20, mouseLocation.y - 40);
 			break;
 		case AMMO:
 			g.drawString("Ammo", mouseLocation.x + 20, mouseLocation.y - 90);
 			g.setFont(this.game.getUiFontS());
-			g.drawString("Reloads " + this.durability + " ammo", mouseLocation.x + 20, mouseLocation.y - 65);
+			g.drawString("Reloads " + this.durability + " ammo",
+					mouseLocation.x + 20, mouseLocation.y - 65);
 			break;
 		default:
 			break;
