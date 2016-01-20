@@ -37,19 +37,19 @@ public class ScoreScreen extends Screen {
 	@Override
 	/**
 	 * Renders everything to the screen.
+	 * 
+	 * @param g
+	 *            the graphics variable to render with.
 	 */
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Makes the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		// Changes the color of the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -71,15 +71,12 @@ public class ScoreScreen extends Screen {
 		g2D.setColor(Color.WHITE);
 		g2D.setFont(game.getUiFontS());
 		for (int i = 0; i < game.getScores()[0].length; i++) {
-			g.drawString(String.format("%d.%35s%38s", i + 1,
-					game.getScores()[0][i], game.getScores()[1][i]), 350,
+			g.drawString(String.format("%d.%35s%38s", i + 1, game.getScores()[0][i], game.getScores()[1][i]), 350,
 					300 + (50 * i));
 
 		}
 		// Draws the header
-		g2D.drawString(
-				String.format("%s%27s%33s", "PLACEMENT", "LEVEL", "NAME"), 310,
-				270);
+		g2D.drawString(String.format("%s%27s%33s", "PLACEMENT", "LEVEL", "NAME"), 310, 270);
 		g2D.setFont(game.getUiFontL());
 		// Draws the title
 		g.drawString("HIGHSCORES", 320, 200);
@@ -87,8 +84,7 @@ public class ScoreScreen extends Screen {
 		// Draws the button
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		button(g2D, backHover, back, "BACK", 120 - fm.stringWidth("back") / 2,
-				705, 70, 725);
+		button(g2D, backHover, back, "BACK", 120 - fm.stringWidth("back") / 2, 705, 70, 725);
 	}
 
 	@Override
@@ -96,8 +92,7 @@ public class ScoreScreen extends Screen {
 	 * Updates the screen.
 	 */
 	public void update() {
-		if (back.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (back.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			backHover = true;
 			// Goes to the main menu
 			if (game.getDisplay().getMouseHandler().isClick()) {

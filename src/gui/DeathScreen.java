@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import main.Game;
 import entities.Zombie;
@@ -50,14 +51,11 @@ public class DeathScreen extends Screen {
 	 */
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// Make the background black
 		g2D.setColor(Color.BLACK);
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
-		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
+		g.drawRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		// Changes the color of the hand
 		g.setColor(new Color((int) colour, 0, 0));
@@ -80,10 +78,8 @@ public class DeathScreen extends Screen {
 		// Draws the buttons on to the screen
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
-				367, 460, 390);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
-				487, 460, 510);
+		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2, 367, 460, 390);
+		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2, 487, 460, 510);
 	}
 
 	@Override
@@ -92,8 +88,7 @@ public class DeathScreen extends Screen {
 	 */
 	public void update() {
 		// Detects if the player clicks on a certain button
-		if (main.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (main.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverMain = true;
 			// Go to the main menu if the button is pressed
 			if (game.getDisplay().getMouseHandler().isClick()) {
@@ -105,8 +100,7 @@ public class DeathScreen extends Screen {
 		} else {
 			hoverMain = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
+		if (exit.contains(game.getDisplay().getMouseHandler().getMouseLocation())) {
 			hoverExit = true;
 			// Exit the game if the user wishes to quit
 			if (game.getDisplay().getMouseHandler().isClick()) {
@@ -118,19 +112,23 @@ public class DeathScreen extends Screen {
 		game.getDisplay().getMouseHandler().setClick(false);
 
 		if (highscore) {
+			try {
+				// Set swing L&F to the system L&F
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e) {
+			}
 			highscore = false;
 			// Gets the player's name
 			String name;
 			do {
-				name = JOptionPane.showInputDialog(null, "New highscore!!!",
-						"Enter your name", JOptionPane.QUESTION_MESSAGE);
+				name = JOptionPane.showInputDialog(null, "Please enter your name", "New Highscore",
+						JOptionPane.QUESTION_MESSAGE);
 				if (name == null) {
 					name = "";
 				}
 				// Checks the length of the name
 				if (name.length() <= 0 || name.length() > 20)
-					JOptionPane.showMessageDialog(null,
-							"NAME LENGTH MUST BE BETWEEN 1-20", "WARNING!",
+					JOptionPane.showMessageDialog(null, "Name length must be between 1-20", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 			} while (name.length() <= 0 || name.length() > 20);
 			// Adds the new name
@@ -142,8 +140,7 @@ public class DeathScreen extends Screen {
 
 					// Writes the score back to the text file
 					try {
-						PrintWriter writer = new PrintWriter(
-								"res/highscores.txt");
+						PrintWriter writer = new PrintWriter("res/highscores.txt");
 						for (String[] row : game.getScores()) {
 							for (String s : row) {
 								writer.println(s);
