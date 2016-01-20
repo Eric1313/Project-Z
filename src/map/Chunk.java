@@ -6,12 +6,23 @@ import entities.Entity;
 import entities.Zombie;
 import items.Item;
 
+/**
+ * Object that represents a 16x16 block area.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Map
+ * @since 1.0
+ * @version 1.0
+ */
 public class Chunk {
 	private ArrayList<Entity> solidEntities;
 	private ArrayList<Entity> passibleEntities;
-	private ArrayList<Item> items;
 	private ArrayList<Zombie> zombies;
+	private ArrayList<Item> items;
 
+	/**
+	 * Constructs a new Chunk object.
+	 */
 	public Chunk() {
 		this.solidEntities = new ArrayList<Entity>();
 		this.passibleEntities = new ArrayList<Entity>();
@@ -20,10 +31,10 @@ public class Chunk {
 	}
 
 	/**
-	 * Adds entity to chunk
+	 * Adds an entity to the chunk.
 	 * 
 	 * @param entity
-	 *            entity to add
+	 *            the entity to add.
 	 */
 	public void add(Entity entity) {
 		if (entity.isSolid()) {
@@ -33,20 +44,32 @@ public class Chunk {
 		}
 	}
 
+	/**
+	 * Adds an item to the chunk.
+	 * 
+	 * @param item
+	 *            the item to add.
+	 */
 	public void add(Item item) {
 		this.items.add(item);
-		// TODO Make sure the chunk isn't full
 	}
 
+	/**
+	 * Removes an item from the chunk.
+	 * 
+	 * @param item
+	 *            the item to remove
+	 */
 	public void remove(Item item) {
 		this.items.remove(item);
 	}
 
 	/**
-	 * Removes Entities from chunks
+	 * Removes entities from the chunk.
 	 * 
 	 * @param entity
-	 * @return
+	 *            the entity to remove.
+	 * @return the entity removed.
 	 */
 	public Entity remove(Entity entity) {
 		if (entity instanceof Zombie) {
@@ -57,6 +80,28 @@ public class Chunk {
 			this.passibleEntities.remove(entity);
 		}
 		return entity;
+	}
+
+	/**
+	 * Adds a zombie to the chunk.
+	 * 
+	 * @param zombie
+	 *            the zombie to add.
+	 */
+	public void addZombie(Zombie zombie) {
+		this.zombies.add(zombie);
+	}
+
+	/**
+	 * Removes a zombie from the chunk.
+	 * 
+	 * @param zombie
+	 *            the zombie to remove.
+	 * @return the zombie removed.
+	 */
+	public Zombie removeZombie(Zombie zombie) {
+		this.zombies.remove(zombie);
+		return zombie;
 	}
 
 	public ArrayList<Entity> getSolidEntities() {
@@ -79,24 +124,7 @@ public class Chunk {
 		return this.items;
 	}
 
-	/**
-	 * @return the zombies
-	 */
 	public ArrayList<Zombie> getZombies() {
-		return zombies;
+		return this.zombies;
 	}
-
-	/**
-	 * @param zombies
-	 *            the zombies to set
-	 */
-	public void addZombie(Zombie zombie) {
-		zombies.add(zombie);
-	}
-
-	public Zombie removeZombie(Zombie zombie) {
-		zombies.remove(zombie);
-		return zombie;
-	}
-
 }
