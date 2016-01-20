@@ -1,7 +1,6 @@
 package map;
 
 import java.awt.Point;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import entities.MapObject;
@@ -23,7 +22,6 @@ import main.Game;
  * @version 1.0
  */
 public class Map {
-
 	public enum Direction {
 		UP, DOWN, RIGHT, LEFT
 	};
@@ -56,8 +54,7 @@ public class Map {
 	private Game game;
 	private PathFinder pathFinder;
 	private int safeHouseDistance;
-	public static int zombieCount;
-	
+
 	// Important points on the map
 	private Point playerStart;
 	private Point safehouseStart;
@@ -70,18 +67,16 @@ public class Map {
 	private ArrayList<Point> plazaEnds;
 
 	/**
-	 * Creates map object
+	 * Constructs a new Map object.
 	 * 
 	 * @param height
-	 *            height of map to make
+	 *            height of map to make.
 	 * @param width
-	 *            width of map to make
+	 *            width of map to make.
 	 * @param game
-	 * 			  the instance of the game
-	 * @throws FileNotFoundException
-	 *             temp file writer
+	 *            the instance of the game.
 	 */
-	public Map(int height, int width, Game game) throws FileNotFoundException {
+	public Map(int height, int width, Game game) {
 		// Initializes variables
 		this.width = width;
 		this.height = height;
@@ -90,7 +85,7 @@ public class Map {
 		this.tileMap = new short[width][height];
 		this.upperTileMap = new short[width][height];
 		this.chunkMap = new Chunk[this.width / 16][this.height / 16];
-		
+
 		safeHouseDistance = (height + width) / 8;
 		plazaStarts = new ArrayList<Point>();
 		plazaEnds = new ArrayList<Point>();
@@ -118,7 +113,8 @@ public class Map {
 		generateSideRoads(new Point(0, 0), new Point(mainRoadX - (MAIN_ROAD_SIZE + 1) / 2, height - 1));
 		generateSideRoads(new Point(mainRoadX + (MAIN_ROAD_SIZE + 1) / 2, 0), new Point(height - 1, width - 1));
 
-		// Generates locations for the starting safehouse and the target safehouse
+		// Generates locations for the starting safehouse and the target
+		// safehouse
 		int startHouse = (int) Math.floor((Math.random() * (plazaStarts.size() - 1)));
 		int endHouse;
 		int count = 0;
@@ -149,16 +145,17 @@ public class Map {
 	}
 
 	/**
-	 * Generates buildings within the plaza
+	 * Generates buildings within the plaza.
 	 * 
 	 * @param start
-	 * 			starting point of the plaza
+	 *            starting point of the plaza.
 	 * @param end
-	 * 			ending point of the plaza
+	 *            ending point of the plaza.
 	 */
 	public void generatePlaza(Point start, Point end) {
 
-		// Initializes arrays for the side lengths, starts and ends of the corner buildings
+		// Initializes arrays for the side lengths, starts and ends of the
+		// corner buildings
 		int[] cornerWidths = new int[4];
 		int[] cornerHeights = new int[4];
 		Point[] buildingStarts = new Point[4];
@@ -227,16 +224,16 @@ public class Map {
 	}
 
 	/**
-	 * Generates buildings for a column
+	 * Generates buildings for a column.
 	 * 
 	 * @param start
-	 *            The start of the column
+	 *            the start of the column.
 	 * @param end
-	 *            The end of the column
+	 *            the end of the column.
 	 * @param dir
-	 *            The direction of the column (1 = West, -1 = East)
+	 *            the direction of the column (1 = West, -1 = East).
 	 * @param numToGenerate
-	 *            The number of buildings to generate
+	 *            the number of buildings to generate.
 	 */
 	public void generateVerticalBuildings(Point start, Point end, int dir, int numToGenerate) {
 		// Creates variables for the building to be generated
@@ -245,11 +242,13 @@ public class Map {
 		Point sideBuildingStart;
 		Point sideBuildingEnd;
 
-		// Generates the last building in a column making sure that it fills up all remaining space
+		// Generates the last building in a column making sure that it fills up
+		// all remaining space
 		if (numToGenerate == 1) {
 			sideBuildingLength = sideLength;
-			
-			// Generates building using different points depending on whether the building is on the left or right of the plaza
+
+			// Generates building using different points depending on whether
+			// the building is on the left or right of the plaza
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) end.getX(), (int) start.getY() + 1);
 				sideBuildingEnd = new Point(
@@ -264,15 +263,17 @@ public class Map {
 
 			generateBuilding(sideBuildingStart, sideBuildingEnd, Direction.LEFT);
 		} else if (sideLength < MIN_BUILD_LENGTH * numToGenerate) {
-			// Reruns the method if the specified number of buildings cannot possibly fit into the column
+			// Reruns the method if the specified number of buildings cannot
+			// possibly fit into the column
 			generateVerticalBuildings(start, end, dir, numToGenerate - 1);
 		} else {
-			// Generates a length for the building 
+			// Generates a length for the building
 			do {
 				sideBuildingLength = (int) (Math.random() * BUILD_LENGTH_RANGE) + MIN_BUILD_LENGTH;
 			} while (sideLength - sideBuildingLength * (numToGenerate - 1) < MIN_BUILD_LENGTH);
-			
-			// Generates building using different points depending on whether the building is on the left or right of the plaza
+
+			// Generates building using different points depending on whether
+			// the building is on the left or right of the plaza
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) end.getX(), (int) start.getY() + 1);
 				sideBuildingEnd = new Point(
@@ -294,18 +295,18 @@ public class Map {
 	}
 
 	/**
-	 * Generates buildings for a row
+	 * Generates buildings for a row.
 	 * 
 	 * @param start
-	 *            The start of the row
+	 *            the start of the row.
 	 * @param end
-	 *            The end of the row
+	 *            the end of the row.
 	 * @param dir
-	 *            The direction (1 = North, -1 = South)
+	 *            the direction (1 = North, -1 = South).
 	 * @param numToGenerate
-	 *            The number of buildings to generate
+	 *            the number of buildings to generate.
 	 * @param maxRange
-	 *            The maximum height of the buildings
+	 *            the maximum height of the buildings.
 	 */
 	public void generateHorizontalBuildings(Point start, Point end, int dir, int numToGenerate, int maxRange) {
 		// Creates variables for the building to be generated
@@ -313,11 +314,13 @@ public class Map {
 		int sideBuildingLength = 0;
 		Point sideBuildingStart;
 		Point sideBuildingEnd;
-		
-		// Generates the last building in a row making sure that it fills up all remaining space
+
+		// Generates the last building in a row making sure that it fills up all
+		// remaining space
 		if (numToGenerate == 1) {
 			sideBuildingLength = sideLength;
-			// Generates building using different points depending on whether the building is on the Northern or Southern side of the plaza
+			// Generates building using different points depending on whether
+			// the building is on the Northern or Southern side of the plaza
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) start.getX() + 1, (int) start.getY());
 				sideBuildingEnd = new Point((int) start.getX() + sideBuildingLength - 1,
@@ -330,15 +333,17 @@ public class Map {
 
 			generateBuilding(sideBuildingStart, sideBuildingEnd, Direction.UP);
 		} else if (sideLength < MIN_BUILD_LENGTH * numToGenerate) {
-			// Reruns the method if the specified number of buildings cannot possibly fit into the row
+			// Reruns the method if the specified number of buildings cannot
+			// possibly fit into the row
 			generateHorizontalBuildings(start, end, dir, numToGenerate - 1, maxRange);
 		} else {
-			// Generates a length for the building 
+			// Generates a length for the building
 			do {
 				sideBuildingLength = (int) (Math.random() * BUILD_LENGTH_RANGE) + MIN_BUILD_LENGTH;
 			} while (sideLength - sideBuildingLength * (numToGenerate - 1) < MIN_BUILD_LENGTH);
 
-			// Generates building using different points depending on whether the building is on the Northern or Southern side of the plaza
+			// Generates building using different points depending on whether
+			// the building is on the Northern or Southern side of the plaza
 			if (dir == 1) {
 				sideBuildingStart = new Point((int) start.getX() + 1, (int) start.getY());
 				sideBuildingEnd = new Point((int) start.getX() + sideBuildingLength,
@@ -361,12 +366,12 @@ public class Map {
 	}
 
 	/**
-	 * Generates the plaza for the safehouse
+	 * Generates the plaza for the safehouse.
 	 * 
 	 * @param start
-	 * 			The start of the safehouse
+	 *            the start of the safehouse.
 	 * @param end
-	 * 			The end of the safehouse
+	 *            the end of the safehouse.
 	 */
 	public void generateSafehousePlaza(Point start, Point end, boolean isStart) {
 		// Gets the width and height of the plaza
@@ -384,10 +389,9 @@ public class Map {
 		generateSafeBuilding(new Point((int) start.getX() + boxWidth / 3, (int) start.getY() + boxHeight / 3),
 				new Point((int) end.getX() - boxWidth / 3, (int) end.getY() - boxHeight / 3), Direction.UP, isStart);
 
-		
 		int playerX;
 		int playerY;
-		
+
 		// Generates a spawn point for the player
 		do {
 			int xRange = boxWidth - 2 * (boxWidth / 3);
@@ -411,14 +415,14 @@ public class Map {
 	}
 
 	/**
-	 * Generates the building and its tiles
+	 * Generates the building and its tiles.
 	 * 
 	 * @param start
-	 * 			The start of the building
+	 *            the start of the building.
 	 * @param end
-	 * 			The end of the building
+	 *            the end of the building.
 	 * @param direction
-	 * 			The direction the building is facing
+	 *            the direction the building is facing.
 	 */
 	public void generateBuilding(Point start, Point end, Direction direction) {
 		// Fills the given area with the required building tiles
@@ -428,12 +432,11 @@ public class Map {
 					setTile(i, j, 200, Direction.UP, false);
 					// Spawns zombies on the building alleys
 					if (Math.random() > 0.99) {
-						chunkMap[i / 16][j / 16].addZombie(new Zombie(new Point(i * 32, j * 32), Zombie.zombieHealth,
-								game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
-						zombieCount++;
+						chunkMap[i / 16][j / 16].addZombie(
+								new Zombie(new Point(i * 32, j * 32), Zombie.zombieHealth, game.getZombieImages()[0],
+										null, this.game, this, (int) Math.floor((Math.random() * 5))));
 					}
-				}
-				else if (i == start.getX() + 1 && j == start.getY() + 1) {
+				} else if (i == start.getX() + 1 && j == start.getY() + 1) {
 					setTile(i, j, 203, Direction.DOWN, true);
 				} else if (i == start.getX() + 1 && j == end.getY() - 1) {
 					setTile(i, j, 203, Direction.RIGHT, true);
@@ -476,12 +479,12 @@ public class Map {
 	}
 
 	/**
-	 * Generates the building and its tiles
+	 * Generates the building and its tiles.
 	 * 
 	 * @param start
-	 * 			The start of the safehouse
+	 *            the start of the safehouse.
 	 * @param end
-	 * 			The end of the safehouse
+	 *            the end of the safehouse.
 	 */
 	public void generateSafeBuilding(Point start, Point end, Direction direction, boolean isStart) {
 		// Fills the given area with the required safehouse building tiles
@@ -489,8 +492,7 @@ public class Map {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if (i == start.getX() || i == end.getX() || j == start.getY() || j == end.getY()) {
 					setTile(i, j, 200, Direction.UP, false);
-				}
-				else if (i == start.getX() + 1 && j == start.getY() + 1) {
+				} else if (i == start.getX() + 1 && j == start.getY() + 1) {
 					setTile(i, j, 209, Direction.DOWN, true);
 				} else if (i == start.getX() + 1 && j == end.getY() - 1) {
 					setTile(i, j, 209, Direction.RIGHT, true);
@@ -551,22 +553,22 @@ public class Map {
 	}
 
 	/**
-	 * Generates Rooms in each building
+	 * Generates rooms in each building.
 	 * 
 	 * @param start
-	 * 			The start of the room
+	 *            the start of the room.
 	 * @param end
-	 * 			The end of the room
+	 *            the end of the room.
 	 * @param safe
-	 * 			If the room is safe or not
+	 *            if the room is safe or not.
 	 */
 	public void generateRooms(Point start, Point end, boolean safe) {
-
 		// Gets the width and height of the area
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
-		
-		// Generates a wall and then checks to see if a the two rooms created can be split into more rooms
+
+		// Generates a wall and then checks to see if a the two rooms created
+		// can be split into more rooms
 		if (boxWidth * boxHeight > MAX_ROOM_AREA) {
 
 			if (boxWidth <= boxHeight) {
@@ -588,9 +590,9 @@ public class Map {
 				int randomY = (int) (Math.random() * boxHeight + start.getY());
 
 				if (Math.random() > 0 && (tileMap[randomX][randomY] & 0xFFF) == 201) {
-					chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new Point(randomX * 32, randomY * 32),
-							100, game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
-					zombieCount++;
+					chunkMap[randomX / 16][randomY / 16]
+							.addZombie(new Zombie(new Point(randomX * 32, randomY * 32), 100, game.getZombieImages()[0],
+									null, this.game, this, (int) Math.floor((Math.random() * 5))));
 				}
 			}
 		}
@@ -607,7 +609,7 @@ public class Map {
 			} else if (itemSpawned instanceof Throwable) {
 				itemSpawned = new Throwable((Throwable) itemSpawned);
 			}
-			
+
 			// Gets random coordinates for the item
 			int randomX = (int) (Math.random() * boxWidth + start.getX());
 			int randomY = (int) (Math.random() * boxHeight + start.getY());
@@ -623,19 +625,20 @@ public class Map {
 	}
 
 	/**
-	 * Generates trees in the empty plaza areas
+	 * Generates trees in the empty plaza areas.
 	 * 
 	 * @param start
-	 * 			The start of the forest
+	 *            the start of the forest.
 	 * @param end
-	 * 			The end of the forest
+	 *            the end of the forest.
 	 */
 	public void generateTrees(Point start, Point end) {
 		// The dimensions of the forest
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 
-		// Goes through the forest area with a small chance of placing a tree in every valid tile
+		// Goes through the forest area with a small chance of placing a tree in
+		// every valid tile
 		for (int i = (int) start.getX(); i <= end.getX(); i++) {
 			for (int j = (int) start.getY(); j <= end.getY(); j++) {
 				if ((tileMap[i][j] & 0xFFF) == 108) {
@@ -668,7 +671,6 @@ public class Map {
 					|| ((tileMap[randomX][randomY] & 0xFFF) >= 110 && (tileMap[randomX][randomY] & 0xFFF) < 200)) {
 				chunkMap[randomX / 16][randomY / 16].addZombie(new Zombie(new Point(randomX * 32, randomY * 32), 100,
 						game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
-				zombieCount++;
 			}
 		}
 
@@ -688,33 +690,33 @@ public class Map {
 
 			int randomX = (int) (Math.random() * boxWidth + start.getX());
 			int randomY = (int) (Math.random() * boxHeight + start.getY());
-			
-			// Checks to see if the chosen tile is valid and if it is, places an item there
+
+			// Checks to see if the chosen tile is valid and if it is, places an
+			// item there
 			if ((tileMap[randomX][randomY] & (1 << 14)) == 0 && (tileMap[randomX][randomY] & 0xFFF) != 201
 					&& (tileMap[randomX][randomY] & 0xFFF) != 207) {
 				itemSpawned.setPosition(new Point(randomX * 32, randomY * 32));
 				chunkMap[randomX / 16][randomY / 16].add(itemSpawned);
 			}
 		}
-
 	}
 
 	/**
-	 * Sets the tiles for the walls inside the room
+	 * Sets the tiles for the walls inside the room.
 	 * 
 	 * @param start
-	 * 			The start of the wall
+	 *            the start of the wall.
 	 * @param end
-	 * 			The end of the wall
+	 *            the end of the wall.
 	 * @param safe
-	 * 			If the area is safe or not
+	 *            if the area is safe or not.
 	 */
 	public void generateWall(Point start, Point end, boolean safe) {
 		// Dimensions of the door
 		int boxWidth = (int) (Math.abs(end.getX() - (start.getX())));
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY())));
 		int doorLocation;
-		
+
 		// Generates a vertical wall while taking into account surrounding tiles
 		if (boxHeight > boxWidth) {
 			doorLocation = (int) start.getY() + boxHeight / 3;
@@ -745,7 +747,8 @@ public class Map {
 				else
 					setTile((int) start.getX(), i, 207, Direction.UP, false);
 			}
-		// Generates a horizontal wall while taking into account surrounding tiles
+			// Generates a horizontal wall while taking into account surrounding
+			// tiles
 		} else {
 			doorLocation = (int) start.getX() + boxWidth / 3;
 
@@ -779,12 +782,12 @@ public class Map {
 	}
 
 	/**
-	 * Generates side road off of main road
+	 * Generates side road off of main road.
 	 * 
 	 * @param start
-	 * 		The start of the side road area
+	 *            the start of the side road area.
 	 * @param end
-	 * 		The end of the side road area
+	 *            the end of the side road area.
 	 */
 	public void generateSideRoads(Point start, Point end) {
 		// Dimensions of the side road
@@ -792,7 +795,7 @@ public class Map {
 		int boxHeight = (int) (Math.abs(end.getY() - (start.getY() - 1)));
 		int roadX;
 		int roadY;
-		
+
 		if (boxWidth * boxHeight > MAX_AREA) {
 
 			if ((boxWidth > (2 * MIN_SIDE_LENGTH + ROAD_WIDTH))
@@ -841,14 +844,14 @@ public class Map {
 	}
 
 	/**
-	 * Generates a vertical road
+	 * Generates a vertical road.
 	 * 
 	 * @param x
-	 *            starting x
+	 *            starting x.
 	 * @param y
-	 *            starting y
+	 *            starting y.
 	 * @param size
-	 *            road size in blocks
+	 *            road size in blocks.
 	 */
 	public void generateVerticalRoad(int x, int y, int size) {
 		int tempx = x - ((size - 1) / 2);
@@ -873,8 +876,7 @@ public class Map {
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size) {
 
-				}
-				else if (i == size - 1) {
+				} else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.LEFT, false);
 					setTile(tempx, (tempy + 1), 103, Direction.LEFT, false);
 				} else if (i == 2) {
@@ -913,7 +915,6 @@ public class Map {
 				if (Math.random() > 0.99) {
 					chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(new Point(tempx * 32, tempy * 32), 100,
 							game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
-					zombieCount++;
 				}
 				tempx++;
 			}
@@ -940,8 +941,7 @@ public class Map {
 			for (int i = 1; i <= size; i++) {
 				if (i == size || i == 1) {
 
-				}
-				else if (i == size - 1) {
+				} else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.LEFT, false);
 					setTile(tempx, (tempy - 1), 103, Direction.UP, false);
 				} else if (i == 2) {
@@ -958,14 +958,14 @@ public class Map {
 	}
 
 	/**
-	 * Generates a horizontal road
+	 * Generates a horizontal road.
 	 * 
 	 * @param x
-	 *            starting x
+	 *            starting x.
 	 * @param y
-	 *            starting y
+	 *            starting y.
 	 * @param size
-	 *            road size in blocks
+	 *            road size in blocks.
 	 */
 	public void generateHorizontalRoad(int x, int y, int size) {
 		int tempx = x;
@@ -991,8 +991,7 @@ public class Map {
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size) {
 
-				}
-				else if (i == size - 1) {
+				} else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.UP, false);
 					setTile((tempx + 1), tempy, 103, Direction.RIGHT, false);
 				} else if (i == 2) {
@@ -1010,8 +1009,7 @@ public class Map {
 		// Road generation
 		tempy -= size;
 		// Until end of map or hit another road
-		while (tempx > 0 && tileMap[tempx][tempy] == 0)
-		{
+		while (tempx > 0 && tileMap[tempx][tempy] == 0) {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size)
@@ -1029,7 +1027,6 @@ public class Map {
 			if (Math.random() > 0.99) {
 				chunkMap[tempx / 16][tempy / 16].addZombie(new Zombie(new Point(tempx * 32, tempy * 32), 100,
 						game.getZombieImages()[0], null, this.game, this, (int) Math.floor((Math.random() * 5))));
-				zombieCount++;
 			}
 			tempx--;
 			tempy -= size;
@@ -1054,8 +1051,7 @@ public class Map {
 			// Places correct tile type and direction
 			for (int i = 1; i <= size; i++) {
 				if (i == 1 || i == size) {
-				}
-				else if (i == size - 1) {
+				} else if (i == size - 1) {
 					setTile(tempx, tempy, 107, Direction.UP, false);
 					setTile((tempx - 1), tempy, 103, Direction.UP, false);
 				} else if (i == 2) {
@@ -1071,16 +1067,16 @@ public class Map {
 	}
 
 	/**
-	 * Sets tile to tile id and sets direction
+	 * Sets tile to tile id and sets direction.
 	 * 
 	 * @param x
-	 *            x position
+	 *            x position.
 	 * @param y
-	 *            y position
+	 *            y position.
 	 * @param id
-	 *            tile ID
+	 *            tile ID.
 	 * @param direction
-	 *            tile direction
+	 *            tile direction.
 	 */
 	public void setTile(int x, int y, int id, Direction direction, boolean solid) {
 		// set id
@@ -1102,16 +1098,16 @@ public class Map {
 	}
 
 	/**
-	 * Sets tile to tile id and sets direction
+	 * Sets tile to tile id and sets direction.
 	 * 
 	 * @param x
-	 *            x position
+	 *            x position.
 	 * @param y
-	 *            y position
+	 *            y position.
 	 * @param id
-	 *            tile ID
+	 *            tile ID.
 	 * @param direction
-	 *            tile direction
+	 *            tile direction.
 	 */
 	public void setUpperTile(int x, int y, int id, Direction direction) {
 		// set id
@@ -1128,121 +1124,63 @@ public class Map {
 
 	}
 
-	/**
-	 * @return the map
-	 */
 	public short[][] getMap() {
-		return tileMap;
+		return this.tileMap;
 	}
 
-	/**
-	 * @return the height
-	 */
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
-	/**
-	 * @param height
-	 *            the height to set
-	 */
 	public void setHeight(int height) {
 		this.height = height;
 	}
 
-	/**
-	 * @return the width
-	 */
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
-	/**
-	 * @param width
-	 *            the width to set
-	 */
 	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	/**
-	 * @return The starting point of the final safehouse
-	 */
 	public Point getSafehouseStart() {
-		return safehouseStart;
+		return this.safehouseStart;
 	}
 
-	/**
-	 * @return The ending point of the final safehouse
-	 */
 	public Point getSafehouseEnd() {
-		return safehouseEnd;
+		return this.safehouseEnd;
 	}
 
-	/**
-	 * @return The location of the flag
-	 */
 	public Point getFlagLocation() {
-		return flagLocation;
+		return this.flagLocation;
 	}
 
-	/**
-	 * @return the chunkMap
-	 */
 	public Chunk[][] getChunkMap() {
-		return chunkMap;
+		return this.chunkMap;
 	}
 
-	/**
-	 * @return the player starting point
-	 */
 	public Point getPlayerCoordinate() {
-		return playerStart;
+		return this.playerStart;
 	}
 
-	/**
-	 * @return the number of zombies
-	 */
-	public int getZombieCount() {
-		return zombieCount;
-	}
-
-	/**
-	 * @param chunkMap
-	 *            the chunkMap to set
-	 */
 	public void setChunkMap(Chunk[][] chunkMap) {
 		this.chunkMap = chunkMap;
 	}
 
-	/**
-	 * @return the pathFinder
-	 */
 	public PathFinder getPathFinder() {
-		return pathFinder;
+		return this.pathFinder;
 	}
 
-	/**
-	 * @param pathFinder
-	 *            the pathFinder to set
-	 */
 	public void setPathFinder(PathFinder pathFinder) {
 		this.pathFinder = pathFinder;
 	}
 
-	/**
-	 * @return the upperTileMap
-	 */
 	public short[][] getUpperTileMap() {
-		return upperTileMap;
+		return this.upperTileMap;
 	}
 
-	/**
-	 * @param upperTileMap
-	 *            the upperTileMap to set
-	 */
 	public void setUpperTileMap(short[][] upperTileMap) {
 		this.upperTileMap = upperTileMap;
 	}
-
 }
