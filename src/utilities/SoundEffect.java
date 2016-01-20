@@ -1,8 +1,5 @@
 package utilities;
 
-import entities.Player;
-import entities.Zombie;
-
 /**
  * Sound Effect
  * 
