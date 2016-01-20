@@ -33,6 +33,7 @@ public class Firearm extends Item {
 	private int noOfProjectiles;
 	private int penetration;
 	private int automatic;
+	private boolean reloading;
 
 	private long reloadTick = -60;
 
@@ -87,6 +88,7 @@ public class Firearm extends Item {
 		this.noOfProjectiles = noOfProjectiles;
 		this.penetration = penetration;
 		this.automatic = automatic;
+		this.reloading=false;
 	}
 
 	/**
@@ -107,6 +109,7 @@ public class Firearm extends Item {
 		this.noOfProjectiles = item.noOfProjectiles;
 		this.penetration = item.penetration;
 		this.automatic = item.automatic;
+		this.reloading=false;
 	}
 
 	@Override
@@ -121,7 +124,7 @@ public class Firearm extends Item {
 		// shot
 		if (!this.isEmpty()) {
 			long currentTick = this.game.getTickCount();
-			if (currentTick - player.getLastItemTick() > this.rateOfFire) {
+			if (currentTick - player.getLastItemTick() > this.rateOfFire&&!reloading) {
 				player.setLastItemTick(currentTick);
 				// Play the firing sound
 				new SoundEffect(clips[0]).play();
@@ -176,8 +179,9 @@ public class Firearm extends Item {
 					Consumable ammo = ((Consumable) currentItem);
 					
 					// Play the ammo sound
-					new SoundEffect(clips[0]).play();
+					new SoundEffect(currentItem.clips[0]).play();
 					Firearm firearm = this;
+					this.reloading=true;
 					
 					// Run a thread to delay the reload
 					Thread reloadPause = new Thread(new Runnable() {
@@ -188,7 +192,7 @@ public class Firearm extends Item {
 								e.printStackTrace();
 							}
 							int bullets = ammo.getDurability();
-							
+							firearm.reloading=false;
 							// Swap the ammo between the gun and ammo
 							// If the ammo has run out, remove it
 							if (firearm.currentAmmo > 0) {
