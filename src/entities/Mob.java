@@ -107,4 +107,5 @@ public abstract class Mob extends Entity {
 	public void setRight(boolean right) {
 		this.right = right;
 	}
+	
 }

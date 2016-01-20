@@ -9,7 +9,7 @@ import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
 import main.Game;
-import utilities.Effect;
+import utilities.SoundEffect;
 
 /**
  * Subclass of Item that represents a consumable item in Project Z.
@@ -49,7 +49,7 @@ public class Consumable extends Item {
 	 *            the number of times the item can be used.
 	 */
 	public Consumable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, ItemEffect effect, int durability) {
+			String[] clips, Game game, ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.effect = effect;
@@ -79,7 +79,7 @@ public class Consumable extends Item {
 			if (player.getHealth() < 100 && currentTick - player.getLastItemTick() > 210) {
 				player.setLastItemTick(currentTick);
 				// Play the item's sound
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 
 				// Run a thread to delay the use of the item
 				Consumable consumable = this;
@@ -104,6 +104,47 @@ public class Consumable extends Item {
 			}
 			break;
 		case AMMO:
+			break;
+		case SPEED_BUFF:
+			// Check if enough time has passed to use the item
+			player.setBaseMovementSpeed(player.getBaseMovementSpeed() + 1);
+
+			// Play the item's sound
+			new SoundEffect(clips[0]).play();
+			Consumable consumable = this;
+
+			//Delay before it kicks in
+			Thread buffUseDelay = new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(3500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					player.setBaseMovementSpeed(player.getBaseMovementSpeed() + 1);
+
+					consumable.removeDurability();
+					if (consumable.getDurability() <= 0) {
+						player.removeItem(consumable);
+					}
+				}
+			});
+			buffUseDelay.start();
+			
+
+			// Thread to wait for duration to end
+			Thread effectDuration = new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(consumable.getEffectValue());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					player.setBaseMovementSpeed(player.getBaseMovementSpeed() - 1);
+				}
+			});
+			effectDuration.start();
+
 			break;
 		default:
 			break;
@@ -175,12 +216,26 @@ public class Consumable extends Item {
 			g.drawString("Healing item", mouseLocation.x + 20, mouseLocation.y - 90);
 			g.setFont(this.game.getUiFontS());
 			g.drawString("Heals " + this.effectValue + " health", mouseLocation.x + 20, mouseLocation.y - 65);
-			g.drawString("Can be used " + this.durability + " time(s)", mouseLocation.x + 20, mouseLocation.y - 40);
+			if (this.durability == 1) {
+				g.drawString("Can be used " + this.durability + " time", mouseLocation.x + 20, mouseLocation.y - 40);
+			} else {
+				g.drawString("Can be used " + this.durability + " times", mouseLocation.x + 20, mouseLocation.y - 40);
+			}
 			break;
 		case AMMO:
 			g.drawString("Ammo", mouseLocation.x + 20, mouseLocation.y - 90);
 			g.setFont(this.game.getUiFontS());
 			g.drawString("Reloads " + this.durability + " ammo", mouseLocation.x + 20, mouseLocation.y - 65);
+			break;
+		case SPEED_BUFF:
+			g.drawString("Buff", mouseLocation.x + 20, mouseLocation.y - 90);
+			g.setFont(this.game.getUiFontS());
+			g.drawString("Temporarily increases speed", mouseLocation.x + 20, mouseLocation.y - 65);
+			if (this.durability == 1) {
+				g.drawString("Can be used " + this.durability + " time", mouseLocation.x + 20, mouseLocation.y - 40);
+			} else {
+				g.drawString("Can be used " + this.durability + " times", mouseLocation.x + 20, mouseLocation.y - 40);
+			}
 			break;
 		default:
 			break;

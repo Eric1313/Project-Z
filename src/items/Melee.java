@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import entities.Player;
 import enums.ItemState;
 import main.Game;
-import utilities.Effect;
+import utilities.SoundEffect;
 
 /**
  * Subclass of Item that represents a melee weapon item in Project Z.
@@ -59,7 +59,7 @@ public class Melee extends Item {
 	 *            the number of times the weapon can be used before breaking.
 	 */
 	public Melee(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle, int durability) {
+			String[] clips, Game game, int swingSpeed, int rechargeTime, int radius, int angle, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.swingSpeed = swingSpeed;
@@ -121,11 +121,11 @@ public class Melee extends Item {
 			// Make a certain amount of noise depending on the number of zombies
 			// hit
 			if (enemiesHit == 0) {
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 				player.makeNoise(100, true);
 			} else {
 				this.durability -= enemiesHit;
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 				player.makeNoise(200, true);
 
 				// If the item has run out of durability, remove it
