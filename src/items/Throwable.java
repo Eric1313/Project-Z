@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import entities.Player;
 import enums.ItemState;
 import main.Game;
-import utilities.Effect;
+import utilities.SoundEffect;
 
 /**
  * Subclass of Item that represents a throwable item in Project Z.
@@ -46,7 +46,7 @@ public class Throwable extends Item {
 	 *            the radius of the circle of which the throwable can be thrown.
 	 */
 	public Throwable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, int range) {
+			String[] clips, Game game, int range) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.range = range;
@@ -66,7 +66,7 @@ public class Throwable extends Item {
 			this.position = player.calculatePointOfImpact(line);
 			player.getChunkMap()[this.position.x / 512][this.position.y / 512].add(this);
 			makeNoise(150, true);
-			clips[0].play();
+			new SoundEffect(clips[0]).play();
 		}
 	}
 

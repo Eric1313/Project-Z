@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import utilities.Assets;
-import utilities.Effect;
+import utilities.SoundEffect;
 import utilities.GameCamera;
 import enums.GameState;
 import enums.GameState.State;
@@ -135,13 +135,7 @@ public class Game implements Runnable {
 
 					String[] stats = currentItem.split("~");
 					BufferedImage[] images = new Assets(stats[4], 1, 1).getSprites()[0];
-					String[] soundLinks = stats[5].split("`");
-
-					Effect[] sounds = new Effect[soundLinks.length];
-
-					for (int i = 0; i < sounds.length; i++) {
-						sounds[i] = new Effect(soundLinks[i]);
-					}
+					String[] sounds = stats[5].split("`");
 
 					// Depending on which item type the current item, use the
 					// respective constructor and add it to the game's list of

@@ -9,7 +9,7 @@ import entities.Player;
 import enums.ItemEffect;
 import enums.ItemState;
 import main.Game;
-import utilities.Effect;
+import utilities.SoundEffect;
 
 /**
  * Subclass of Item that represents a consumable item in Project Z.
@@ -49,7 +49,7 @@ public class Consumable extends Item {
 	 *            the number of times the item can be used.
 	 */
 	public Consumable(int itemID, String name, int rarity, int effectValue,
-			ItemState state, BufferedImage[] images, Effect[] clips, Game game,
+			ItemState state, BufferedImage[] images, String[] clips, Game game,
 			ItemEffect effect, int durability) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
@@ -81,7 +81,7 @@ public class Consumable extends Item {
 					&& currentTick - player.getLastItemTick() > 210) {
 				player.setLastItemTick(currentTick);
 				// Play the item's sound
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 
 				// Run a thread to delay the use of the item
 				Consumable consumable = this;
@@ -114,7 +114,7 @@ public class Consumable extends Item {
 				player.setBaseMovementSpeed(player.getBaseMovementSpeed() +1);
 
 				// Play the item's sound
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 				
 				this.removeDurability();
 				if (this.getDurability() <= 0) {

@@ -12,7 +12,7 @@ import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
 import main.Game;
-import utilities.Effect;
+import utilities.SoundEffect;
 
 /**
  * Subclass of Item that represents a firearm weapon item in Project Z.
@@ -74,7 +74,7 @@ public class Firearm extends Item {
 	 *            whether or not the firearm is automatic (0 = false, 1 = true).
 	 */
 	public Firearm(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime,
+			String[] clips, Game game, int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime,
 			int noOfProjectiles, int penetration, int automatic) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
@@ -124,7 +124,7 @@ public class Firearm extends Item {
 			if (currentTick - player.getLastItemTick() > this.rateOfFire) {
 				player.setLastItemTick(currentTick);
 				// Play the firing sound
-				clips[0].play();
+				new SoundEffect(clips[0]).play();
 
 				int range = 32 * 64;
 
@@ -176,7 +176,7 @@ public class Firearm extends Item {
 					Consumable ammo = ((Consumable) currentItem);
 					
 					// Play the ammo sound
-					ammo.clips[0].play();
+					new SoundEffect(clips[0]).play();
 					Firearm firearm = this;
 					
 					// Run a thread to delay the reload

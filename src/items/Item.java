@@ -11,7 +11,7 @@ import entities.Zombie;
 import enums.ItemState;
 import main.Game;
 import map.Map;
-import utilities.Effect;
+import utilities.SoundEffect;
 import utilities.Sound;
 
 /**
@@ -58,7 +58,7 @@ public abstract class Item {
 	protected boolean hover;
 
 	protected BufferedImage[] images;
-	protected Sound[] clips;
+	protected String[] clips;
 
 	protected Game game;
 	protected Map map;
@@ -87,7 +87,7 @@ public abstract class Item {
 	 *            the game to add the item to.
 	 */
 	public Item(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game) {
+			String[] clips, Game game) {
 		this.itemID = itemID;
 		this.name = name;
 		this.rarity = rarity;
@@ -222,7 +222,7 @@ public abstract class Item {
 		return images;
 	}
 
-	public Sound[] getClips() {
+	public String[] getClips() {
 		return clips;
 	}
 
