@@ -33,7 +33,7 @@ public class Node implements Comparable<Node> {
 	}
 
 	/**
-	 * Compares node to another node based on the movement cost and heuristic
+	 * Compares node to another node based on f value (movement cost and heuristic)
 	 */
 	public int compareTo(Node node) {
 		return (int) ((g + h) - (node.g + node.h));
