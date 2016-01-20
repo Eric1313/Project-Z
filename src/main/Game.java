@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import utilities.Assets;
-import utilities.SoundEffect;
 import utilities.GameCamera;
 import enums.GameState;
 import enums.GameState.State;
