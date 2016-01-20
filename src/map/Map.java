@@ -3,8 +3,8 @@ package map;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import utilities.PathFinder;
 import entities.MapObject;
-import entities.PathFinder;
 import entities.Zombie;
 import items.Consumable;
 import items.Firearm;

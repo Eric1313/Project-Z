@@ -1,11 +1,11 @@
-package entities;
+package utilities;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
+import entities.Zombie;
 import map.Map;
-import utilities.Node;
 
 /**
  * A* pathfinding algorithm used by zombies
