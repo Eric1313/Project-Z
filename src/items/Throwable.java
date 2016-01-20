@@ -92,42 +92,47 @@ public class Throwable extends Item {
 
 	public void render(Graphics g) {
 		super.render(g);
-
 	}
 
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
+		// Render the tooltip's background depending on its rarity
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
-		g.fillRect(mouseLocation.x, mouseLocation.y - 200, 300, 200);
+		g.fillRect(mouseLocation.x, mouseLocation.y - 175, 300, 175);
 
+		// Write the item's name
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
-		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 150);
+		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 125);
 
+		// Write the item's rarity
 		g.setFont(this.game.getUiFontXS());
 		switch (this.rarity) {
 		case 5:
-			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Common", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 4:
-			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Uncommon", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 3:
-			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 2:
-			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Very Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		case 1:
-			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
+			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 105);
 			break;
 		}
 
-		g.drawString("Throwable item", mouseLocation.x + 20, mouseLocation.y - 115);
+		// Write the type of item
+		g.drawString("Throwable item", mouseLocation.x + 20, mouseLocation.y - 90);
 
+		// Write what the item does
 		g.setFont(this.game.getUiFontS());
-		g.drawString("Creates noise", mouseLocation.x + 20, mouseLocation.y - 90);
+		g.drawString("Creates noise", mouseLocation.x + 20, mouseLocation.y - 65);
 
+		// Write the relative throwing range
 		if (this.range >= 640) {
 			g.drawString("Very far throwing range", mouseLocation.x + 20, mouseLocation.y - 40);
 		} else if (this.range >= 480) {
