@@ -20,6 +20,7 @@ public class Display {
 	private PauseScreen pause;
 	private FinishScreen finish;
 	private DeathScreen death;
+	private ScoreScreen score;
 	private HelpScreen help;
 	private MouseHandler mouseHandler;
 	private KeyHandler keyHandler;
@@ -72,6 +73,7 @@ public class Display {
 		pause = new PauseScreen(null);
 		finish = new FinishScreen(null);
 		death = new DeathScreen(null);
+		score = new ScoreScreen(null);
 		help = new HelpScreen(null);
 
 		// Adds a key handler to the frame so we can receive key input
@@ -101,6 +103,10 @@ public class Display {
 
 	public HelpScreen getHelp() {
 		return help;
+	}
+
+	public ScoreScreen getScore() {
+		return score;
 	}
 
 	public JFrame getFrame() {

@@ -1,5 +1,5 @@
 /**
- * Subclass of Screen that is displayed when the player dies
+ * Subclass of Screen that contains the highscores
  * 
  * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
  * @see Screen
@@ -15,38 +15,36 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
-import main.Game;
-import entities.Zombie;
 import enums.GameState.State;
+import main.Game;
 
-public class DeathScreen extends Screen {
+public class ScoreScreen extends Screen {
 	private float colour = 30;
 	private boolean decrease;
-
-	private Rectangle main;
-	private Rectangle exit;
-	private boolean hoverMain;
-	private boolean hoverExit;
+	private Rectangle back;
+	private boolean backHover;
 
 	/**
-	 * Constructor for the DeathScreen.
+	 * Constructor for the high scores.
 	 * 
 	 * @param game
 	 *            the game.
 	 */
-	public DeathScreen(Game game) {
+	public ScoreScreen(Game game) {
 		super(game);
 	}
 
 	@Override
 	/**
-	 * Renders the death screen on to the frame.
+	 * Renders everything to the screen.
 	 */
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
+
 		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		// Make the background black
+
+		// Makes the background black
 		g2D.setColor(Color.BLACK);
 		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
 				.getDisplay().getFrame().getHeight());
@@ -64,65 +62,61 @@ public class DeathScreen extends Screen {
 		if (colour == 160) {
 			decrease = true;
 		}
+
 		// Draws the hand
 		g2D.setFont(game.getZombieFontXL());
 		g2D.drawString("}", 200, 650);
-		g2D.setFont(game.getUiFontL());
-		g2D.setColor(Color.WHITE);
-		g2D.drawString("YOU DIED", 375, 200);
 
-		// Draws the buttons on to the screen
+		// Draws the high scores to the screen
+		g2D.setColor(Color.WHITE);
+		g2D.setFont(game.getUiFontS());
+		for (int i = 0; i < game.getScores()[0].length; i++) {
+			g.drawString(String.format("%d.%35s%38s", i + 1,
+					game.getScores()[0][i], game.getScores()[1][i]), 350,
+					300 + (50 * i));
+
+		}
+		// Draws the header
+		g2D.drawString(
+				String.format("%s%27s%33s", "PLACEMENT", "LEVEL", "NAME"), 310,
+				270);
+		g2D.setFont(game.getUiFontL());
+		// Draws the title
+		g.drawString("HIGHSCORES", 320, 200);
+
+		// Draws the button
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
-		button(g2D, hoverMain, main, "MENU", 512 - fm.stringWidth("MENU") / 2,
-				367, 460, 390);
-		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
-				487, 460, 510);
+		button(g2D, backHover, back, "BACK", 120 - fm.stringWidth("back") / 2,
+				705, 70, 725);
 	}
 
 	@Override
 	/**
-	 * Updates the death screen.
+	 * Updates the screen.
 	 */
 	public void update() {
-		// Detects if the player clicks on a certain button
-		if (main.contains(game.getDisplay().getMouseHandler()
+		if (back.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
-			hoverMain = true;
-			// Go to the main menu if the button is pressed
+			backHover = true;
+			// Goes to the main menu
 			if (game.getDisplay().getMouseHandler().isClick()) {
-				game.getDisplay().getMouseHandler().setClick(false);
-				Zombie.damage = (game.getLevel()) * 5;
-				Zombie.zombieHealth = 100;
 				game.getState().setState(State.LOBBY, false);
+				game.getDisplay().getMouseHandler().setClick(false);
 			}
 		} else {
-			hoverMain = false;
+			backHover = false;
 		}
-		if (exit.contains(game.getDisplay().getMouseHandler()
-				.getMouseLocation())) {
-			hoverExit = true;
-			// Exit the game if the user wishes to quit
-			if (game.getDisplay().getMouseHandler().isClick()) {
-				System.exit(0);
-			}
-		} else {
-			hoverExit = false;
-		}
-		game.getDisplay().getMouseHandler().setClick(false);
 	}
 
 	/**
-	 * Setup the death screen.
+	 * Setup the score screen.
 	 * 
 	 * @param game
 	 *            the game.
 	 */
 	public void setup(Game game) {
 		this.game = game;
-		main = new Rectangle(412, 300, 200, 100);
-		exit = new Rectangle(412, 420, 200, 100);
-		// If you die the level is reset
-		game.setLevel(1);
+		back = new Rectangle(20, 635, 200, 100);
 	}
 }

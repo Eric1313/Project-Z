@@ -39,6 +39,7 @@ public class PauseScreen extends Screen {
 		super(game);
 	}
 
+	@Override
 	/**
 	 * Renders the pause screen to the frame.
 	 */
@@ -83,6 +84,7 @@ public class PauseScreen extends Screen {
 				607, 460, 630);
 	}
 
+	@Override
 	/**
 	 * Updates the pause screen.
 	 */

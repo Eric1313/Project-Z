@@ -22,10 +22,12 @@ public class MainScreen extends Screen {
 	private boolean hoverPlay;
 	private boolean hoverHelp;
 	private boolean hoverExit;
+	private boolean hoverScore;
 	private Rectangle play;
 	private Rectangle help;
 	private Rectangle exit;
 	private Rectangle hack;
+	private Rectangle scores;
 	private int clicks;
 	private float colour = 30;
 	private boolean decrease;
@@ -40,6 +42,7 @@ public class MainScreen extends Screen {
 		super(game);
 	}
 
+	@Override
 	/**
 	 * Renders the main menu.
 	 */
@@ -77,11 +80,13 @@ public class MainScreen extends Screen {
 		g2D.setFont(game.getUiFont());
 		FontMetrics fm = g2D.getFontMetrics();
 		button(g2D, hoverPlay, play, "PLAY", 512 - fm.stringWidth("PLAY") / 2,
-				367, 460, 390);
+				365, 460, 389);
 		button(g2D, hoverHelp, help, "HELP", 512 - fm.stringWidth("HELP") / 2,
-				487, 460, 510);
+				470, 460, 494);
+		button(g2D, hoverScore, scores, "SCORES",
+				512 - fm.stringWidth("SCORES") / 2, 575, 460, 599);
 		button(g2D, hoverExit, exit, "QUIT", 512 - fm.stringWidth("QUIT") / 2,
-				607, 460, 630);
+				680, 460, 704);
 
 		// Displays the current level
 		g2D.setColor(Color.WHITE);
@@ -94,6 +99,7 @@ public class MainScreen extends Screen {
 				680, 760);
 	}
 
+	@Override
 	/**
 	 * Updates the main menu.
 	 */
@@ -131,12 +137,24 @@ public class MainScreen extends Screen {
 		} else {
 			hoverExit = false;
 		}
-
+		if (scores.contains(game.getDisplay().getMouseHandler()
+				.getMouseLocation())) {
+			hoverScore = true;
+			// Exits the game
+			if (game.getDisplay().getMouseHandler().isClick()) {
+				game.getState().setState(State.SCORE, false);
+				game.getDisplay().getMouseHandler().setClick(false);
+			}
+		} else {
+			hoverScore = false;
+		}
+		// If the giant hand at the beginning of the game is pressed 10 times
+		// enable debug mode
 		if (hack.contains(game.getDisplay().getMouseHandler()
 				.getMouseLocation())) {
 			if (game.getDisplay().getMouseHandler().isClick()) {
 				clicks++;
-				if (clicks >= 10){
+				if (clicks >= 10) {
 					game.getState().setDebug(true);
 				}
 				game.getDisplay().getMouseHandler().setClick(false);
@@ -154,9 +172,10 @@ public class MainScreen extends Screen {
 	public void setup(Game game) {
 		this.game = game;
 		// Creates the basic box for the buttons
-		play = new Rectangle(412, 300, 200, 100);
-		help = new Rectangle(412, 420, 200, 100);
-		exit = new Rectangle(412, 540, 200, 100);
+		play = new Rectangle(412, 300, 200, 95);
+		help = new Rectangle(412, 405, 200, 95);
+		scores = new Rectangle(412, 510, 200, 95);
+		exit = new Rectangle(412, 615, 200, 95);
 		hack = new Rectangle(375, 30, 210, 260);
 		this.clicks = 0;
 		game.getState().setDebug(false);

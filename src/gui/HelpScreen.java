@@ -36,6 +36,7 @@ public class HelpScreen extends Screen {
 		super(game);
 	}
 
+	@Override
 	/**
 	 * Renders the help screen onto the frame.
 	 */
@@ -65,6 +66,7 @@ public class HelpScreen extends Screen {
 		}
 	}
 
+	@Override
 	/**
 	 * Updates the help screen.
 	 */

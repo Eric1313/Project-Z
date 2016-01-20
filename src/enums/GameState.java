@@ -29,7 +29,7 @@ public class GameState {
 	/**
 	 * Available states that can be used <li>{@link #LOBBY}</li> <li>
 	 * {@link #INGAME}</li> <li>{@link #PAUSE}</li> <li>{@link #FINISH}</li> <li>
-	 * {@link #DEATH}</li>
+	 * {@link #DEATH}</li><li>{@link #HELP}</li><li>{@link #SCORE}</li>
 	 */
 	public enum State {
 		/**
@@ -55,7 +55,11 @@ public class GameState {
 		/**
 		 * The help menu.
 		 */
-		HELP
+		HELP,
+		/**
+		 * The high score screen
+		 */
+		SCORE
 	}
 
 	/**
@@ -80,6 +84,9 @@ public class GameState {
 			break;
 		case HELP:
 			this.game.getDisplay().getHelp().update();
+			break;
+		case SCORE:
+			this.game.getDisplay().getScore().update();
 			break;
 		}
 	}
@@ -109,6 +116,9 @@ public class GameState {
 			break;
 		case HELP:
 			this.game.getDisplay().getHelp().render(g);
+			break;
+		case SCORE:
+			this.game.getDisplay().getScore().render(g);
 			break;
 		}
 	}
@@ -144,6 +154,10 @@ public class GameState {
 			break;
 		case HELP:
 			this.game.getDisplay().getHelp().setup(this.game, pause);
+			break;
+		case SCORE:
+			this.game.getDisplay().getScore().setup(game);
+			;
 			break;
 		}
 	}
@@ -187,6 +201,9 @@ public class GameState {
 			break;
 		case HELP:
 			this.game.getDisplay().getHelp().setup(this.game, pause);
+			break;
+		case SCORE:
+			this.game.getDisplay().getScore().setup(game);
 			break;
 		}
 	}

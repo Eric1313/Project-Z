@@ -37,6 +37,7 @@ public class FinishScreen extends Screen {
 		super(game);
 	}
 
+	@Override
 	/**
 	 * Renders the finish screen to the frame.
 	 */
@@ -85,6 +86,7 @@ public class FinishScreen extends Screen {
 				607, 460, 630);
 	}
 
+	@Override
 	/**
 	 * Updates the finish screen.
 	 */
