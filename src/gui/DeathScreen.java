@@ -122,7 +122,7 @@ public class DeathScreen extends Screen {
 			// Gets the player's name
 			String name;
 			do {
-				name = JOptionPane.showInputDialog(null, "New highscore!!!",
+				name = JOptionPane.showInputDialog(null, "HIGHSCORE",
 						"Enter your name", JOptionPane.QUESTION_MESSAGE);
 				if (name == null) {
 					name = "";
