@@ -532,11 +532,11 @@ public class Player extends Mob {
 	}
 
 	/**
-	 * Calculates point of impact of a throwable
+	 * Calculates point of impact of a throwable.
 	 * 
 	 * @param line
-	 *            Trajectory of throw
-	 * @return Point of impact
+	 *            the trajectory of throw.
+	 * @return the point of impact.
 	 */
 	public Point calculatePointOfImpact(Line2D.Double line) {
 		if (tiles == null) {
@@ -598,12 +598,13 @@ public class Player extends Mob {
 	}
 
 	/**
+	 * Checks for entity collisions with a projectile.
 	 * 
 	 * @param line
-	 *            Trajectory of bullet
+	 *            the trajectory of bullet.
 	 * @param range
-	 *            Range of bullet
-	 * @return Queue of hit entities sorted by distance
+	 *            the range of bullet.
+	 * @return a queue of hit entities sorted by distance.
 	 */
 	public PriorityQueue<Entity> projectileTracer(Line2D.Double line, int range) {
 		// Queue of hit entities
@@ -753,9 +754,6 @@ public class Player extends Mob {
 		this.lastItemTick = lastItemTick;
 	}
 
-	/**
-	 * @return the baseMovementSpeed
-	 */
 	public int getBaseMovementSpeed() {
 		return baseMovementSpeed;
 	}
