@@ -153,7 +153,6 @@ public class DeathScreen extends Screen {
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
-					System.out.println("Run");
 					return;
 				}
 			}
@@ -175,7 +174,6 @@ public class DeathScreen extends Screen {
 		for (int i = 0; i < game.getScores()[0].length; i++) {
 			if (level > Integer.parseInt(game.getScores()[0][i])) {
 				highscore = true;
-				System.out.println("Run");
 			}
 		}
 		game.setLevel(1);
