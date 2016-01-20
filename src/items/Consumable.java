@@ -37,7 +37,8 @@ public class Consumable extends Item {
 	public void use(Player player) {
 		switch (this.getEffect()) {
 		case HEAL:
-			if (player.getHealth() < 100) {
+			if (player.getHealth() < 100 && this.game.getTickCount() - player.getLastItemTick() > 180) {
+				player.setLastItemTick(this.game.getTickCount());
 				clips[0].play();
 				Consumable consumable = this;
 				Thread reloadPause = new Thread(new Runnable() {
@@ -56,7 +57,6 @@ public class Consumable extends Item {
 					}
 				});
 				reloadPause.start();
-
 			}
 			break;
 		case AMMO:
