@@ -36,7 +36,7 @@ import enums.ItemState;
  * @version 1.0
  */
 public class Player extends Mob {
-	public static final int MOVEMENT_SPEED = 2;
+	private int baseMovementSpeed = 2;
 	public static final int MAX_STAMINA = 300;
 	public static final int MIN_STAMINA = MAX_STAMINA / 10;
 	public static final int SPRINT_COST = Player.MAX_STAMINA / 300;
@@ -118,10 +118,12 @@ public class Player extends Mob {
 			this.addItem(this.game.getItem(200));
 			this.addItem(this.game.getItem(300));
 			this.addItem(this.game.getItem(400));
+			this.addItem(this.game.getItem(107));
+
 		}
 
 		this.skinNo = skinNo;
-		this.movementSpeed = Player.MOVEMENT_SPEED;
+		this.movementSpeed = getBaseMovementSpeed();
 		this.stamina = Player.MAX_STAMINA;
 
 		this.world = this.game.getDisplay().getGameScreen().getWorld();
@@ -359,15 +361,15 @@ public class Player extends Mob {
 		// until it is full
 		if (this.key.isShift() && !this.exhausted
 				&& (this.key.isUp() || this.key.isDown() || this.key.isLeft() || this.key.isRight())) {
-			this.movementSpeed = Player.MOVEMENT_SPEED * 2;
+			this.movementSpeed = getBaseMovementSpeed() * 2;
 			this.stamina -= Player.SPRINT_COST;
 		} else if (key.isCtrl()) {
-			this.movementSpeed = Player.MOVEMENT_SPEED / 2;
+			this.movementSpeed = getBaseMovementSpeed() / 2;
 			if (this.stamina < Player.MAX_STAMINA) {
 				this.stamina++;
 			}
 		} else {
-			this.movementSpeed = Player.MOVEMENT_SPEED;
+			this.movementSpeed = getBaseMovementSpeed();
 			if (this.stamina < Player.MAX_STAMINA) {
 				this.stamina++;
 			}
@@ -745,5 +747,16 @@ public class Player extends Mob {
 
 	public void setLastItemTick(long lastItemTick) {
 		this.lastItemTick = lastItemTick;
+	}
+
+	/**
+	 * @return the baseMovementSpeed
+	 */
+	public int getBaseMovementSpeed() {
+		return baseMovementSpeed;
+	}
+
+	public void setBaseMovementSpeed(int i) {
+		this.baseMovementSpeed = i;
 	}
 }
