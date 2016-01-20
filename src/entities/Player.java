@@ -106,11 +106,8 @@ public class Player extends Mob {
 			((Consumable) this.getItem(1)).setDurability(Integer.MAX_VALUE);
 			this.addItem(this.game.getItem(302));
 			((Firearm) this.getItem(2)).setCurrentAmmo(Integer.MAX_VALUE);
-			((Firearm) this.getItem(2)).setRateOfFire(10);
-			;
 			this.addItem(this.game.getItem(303));
 			((Firearm) this.getItem(3)).setCurrentAmmo(Integer.MAX_VALUE);
-			((Firearm) this.getItem(3)).setRateOfFire(10);
 			this.addItem(this.game.getItem(301));
 			((Firearm) this.getItem(4)).setCurrentAmmo(Integer.MAX_VALUE);
 			this.addItem(this.game.getItem(300));
