@@ -141,7 +141,7 @@ public class Firearm extends Item {
 							new Point((int) (player.getPosition().x + 16 + range * Math.cos(adjustedAngle)),
 									(int) (player.getPosition().y + 16 - range * Math.sin(adjustedAngle))));
 					// Get the entities hit
-					PriorityQueue<Entity> collisions = player.projectileTracer(line, this.getEffectValue(), 1000);
+					PriorityQueue<Entity> collisions = player.projectileTracer(line,  1000);
 					if (collisions.size() > 0) {
 						for (int j = 0; j < Math.min(collisions.size(), penetration); j++) {
 							collisions.remove().damage(this.getEffectValue());

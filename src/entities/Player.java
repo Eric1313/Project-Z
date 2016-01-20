@@ -106,7 +106,8 @@ public class Player extends Mob {
 			((Consumable) this.getItem(1)).setDurability(Integer.MAX_VALUE);
 			this.addItem(this.game.getItem(302));
 			((Firearm) this.getItem(2)).setCurrentAmmo(Integer.MAX_VALUE);
-			((Firearm) this.getItem(2)).setRateOfFire(10);;
+			((Firearm) this.getItem(2)).setRateOfFire(10);
+			;
 			this.addItem(this.game.getItem(303));
 			((Firearm) this.getItem(3)).setCurrentAmmo(Integer.MAX_VALUE);
 			((Firearm) this.getItem(3)).setRateOfFire(10);
@@ -556,14 +557,25 @@ public class Player extends Mob {
 		return yMove;
 	}
 
+	/**
+	 * Calculates point of impact of a throwable
+	 * 
+	 * @param line
+	 *            Trajectory of throw
+	 * @return Point of impact
+	 */
 	public Point calculatePointOfImpact(Line2D.Double line) {
 		if (tiles == null) {
 			this.tiles = this.world.getMap().getMap();
 		}
 
+		// Calculate slope of line
 		double slope = (line.y2 - line.y1) / (line.x2 - line.x1);
 
+		// If on the right side add to x when calculating
 		if (line.x2 > line.x1) {
+			// Cycle through each pixel on the line and check if it hit a solid
+			// block
 			for (int i = 0; i < Math.abs(line.x2 - line.x1); i++) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
@@ -571,6 +583,7 @@ public class Player extends Mob {
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
 						int hitX = this.position.x + i;
 						int hitY = (int) (this.position.y + (i * slope));
+						// Shift point out of the wall
 						if (hitY > line.getY1()) {
 							hitY -= 32;
 						}
@@ -581,14 +594,19 @@ public class Player extends Mob {
 					}
 				}
 			}
+			// If on the left side subtract from x when calculating
 		} else {
 			for (int i = 0; i > -Math.abs(line.x2 - line.x1); i--) {
+				// Cycle through each pixel on the line and check if it hit a
+				// solid block
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
+
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32] & (1 << 14)) != 0) {
 						int hitX = this.position.x + i;
 						int hitY = (int) (this.position.y + (i * slope));
+						// Shift point out of the wall
 						if (hitY > line.getY1()) {
 							hitY -= 32;
 						}
@@ -600,26 +618,42 @@ public class Player extends Mob {
 				}
 			}
 		}
-
+		// If no collisions detected return the second point of the line
 		return new Point((int) line.x2, (int) line.y2);
 	}
 
-	public PriorityQueue<Entity> projectileTracer(Line2D.Double line,
-			int damage, int range) {
+	/**
+	 * 
+	 * @param line
+	 *            Trajectory of bullet
+	 * @param range
+	 *            Range of bullet
+	 * @return Queue of hit entities sorted by distance
+	 */
+	public PriorityQueue<Entity> projectileTracer(Line2D.Double line, int range) {
+
+		// Queue of hit entities
 		PriorityQueue<Entity> entitiesCollided = new PriorityQueue<Entity>();
 
+		// Distance of bullet travel
 		double maxDistance = range;
 
+		// Set tile map if null
 		if (tiles == null)
 			this.tiles = this.world.getMap().getMap();
 
+		// Calculate path of trajectory
 		double slope = (line.y2 - line.y1) / (line.x2 - line.x1);
 
+		// If on the right side add to x when calculating
 		if (line.x2 > line.x1) {
+			// Cycle through each pixel on the line and check if it hit a solid
+			// block
 			for (int i = 0; i < range; i++) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
+					// Set max distance of bullet
 					if ((tiles[tileX][tileY] & (1 << 14)) != 0) {
 						maxDistance = (Math.sqrt(Math.pow(i, 2)
 								+ Math.pow((i * slope), 2)));
@@ -627,11 +661,15 @@ public class Player extends Mob {
 					}
 				}
 			}
+			// If on the left side subtract from x when calculating
 		} else {
+			// Cycle through each pixel on the line and check if it hit a solid
+			// block
 			for (int i = 0; i > -range; i--) {
 				int tileX = (this.position.x + i) / 32;
 				int tileY = ((int) (this.position.y + (i * slope))) / 32;
 				if (!(tileX < 0 || tileY < 0 || tileX > (tiles.length - 1) || tileY > (tiles[0].length - 1))) {
+					// Set max distance of bullet
 					if ((tiles[(this.position.x + i) / 32][((int) (this.position.y + (i * slope))) / 32] & (1 << 14)) != 0) {
 						maxDistance = (Math.sqrt(Math.pow(i, 2)
 								+ Math.pow((i * slope), 2)));
@@ -641,15 +679,20 @@ public class Player extends Mob {
 			}
 		}
 
+		// Find chunk player is in
 		int chunkX = Math.max(this.position.x / 512, 3);
 		int chunkY = Math.max(this.position.y / 512, 3);
 
+		// Cycle through a 7x7 chunk area around the player to check for
+		// collsions
 		for (int x = chunkX - 3; x < Math.min(chunkX + 4, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 3; y < Math.min(chunkY + 4,
 					map.getWidth() / 16); y++) {
+				// Cycle through zombies
 				ArrayList<Zombie> zombies = getChunkMap()[x][y].getZombies();
 				for (int zombie = 0; zombie < zombies.size(); zombie++) {
 					Zombie currentZombie = zombies.get(zombie);
+					// If in bullets path add to the list of hit entities
 					if (line.intersects(currentZombie.getPosition().x,
 							currentZombie.getPosition().y, 32, 32)) {
 						double distance = Point.distance(this.position.x,
