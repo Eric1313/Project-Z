@@ -119,8 +119,6 @@ public class Player extends Mob {
 			this.addItem(this.game.getItem(101));
 			this.addItem(this.game.getItem(102));
 
-			
-
 		}
 
 		this.skinNo = skinNo;
