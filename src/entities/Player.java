@@ -118,7 +118,6 @@ public class Player extends Mob {
 			this.addItem(this.game.getItem(200));
 			this.addItem(this.game.getItem(300));
 			this.addItem(this.game.getItem(400));
-			this.addItem(this.game.getItem(100));
 		}
 
 		this.skinNo = skinNo;
@@ -476,7 +475,7 @@ public class Player extends Mob {
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		int row = (int) ((((this.getPosition().y - camera.getyOffset()) / 32.0)));
 		int col = (int) ((this.getPosition().x - camera.getxOffset()) / 32);
-		if (xMove > 0) {// Moving right
+		if (xMove > 0) { // Moving right
 			if (row != 0)
 				row -= 1;
 			// Checks if the player collides with anythings
@@ -489,7 +488,7 @@ public class Player extends Mob {
 					}
 				}
 			}
-		} else if (xMove < 0) {// Moving Left
+		} else if (xMove < 0) { // Moving Left
 			if (row != 0)
 				row -= 1;
 			// Checks if the player collides with anythings
@@ -527,7 +526,7 @@ public class Player extends Mob {
 				Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
 		int row = (int) (((this.getPosition().y - camera.getyOffset()) / 32));
 		int col = (int) (((this.getPosition().x - camera.getxOffset()) / 32.0));
-		if (yMove < 0) {// Moving up
+		if (yMove < 0) { // Moving up
 			if (col != 0)
 				col -= 1;
 			// Checks if the player collides with anythings
@@ -540,7 +539,7 @@ public class Player extends Mob {
 					}
 				}
 			}
-		} else if (yMove > 0) {// Moving down
+		} else if (yMove > 0) { // Moving down
 			if (col != 0)
 				col -= 1;
 			// Checks if the player collides with anythings
@@ -608,8 +607,6 @@ public class Player extends Mob {
 	public PriorityQueue<Entity> projectileTracer(Line2D.Double line,
 			int damage, int range) {
 		PriorityQueue<Entity> entitiesCollided = new PriorityQueue<Entity>();
-
-		// ArrayList<Entity> validCollisions = new ArrayList<Entity>();
 
 		double maxDistance = range;
 

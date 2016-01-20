@@ -7,11 +7,9 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 
 import entities.Player;
-import enums.ItemEffect;
 import enums.ItemState;
 import main.Game;
 import utilities.Effect;
-import utilities.Sound;
 
 /**
  * Subclass of Item that represents a throwable item in Project Z.
@@ -22,28 +20,47 @@ import utilities.Sound;
  * @version 1.0
  */
 public class Throwable extends Item {
-	private ItemEffect effect;
 	private int range;
-	private int areaOfEffect;
 
+	/**
+	 * Constructs a new Throwable object.
+	 * 
+	 * @param itemID
+	 *            the item ID.
+	 * @param name
+	 *            the name of the item.
+	 * @param rarity
+	 *            the rarity of the item (from 1-5).
+	 * @param effectValue
+	 *            the effect's value. In the case of weapons, this would be the
+	 *            damage.
+	 * @param state
+	 *            whether the item is in an inventory or dropped in the world.
+	 * @param images
+	 *            an array of images of the item.
+	 * @param clips
+	 *            an array of audio clips played by item.
+	 * @param game
+	 *            the game to add the item to.
+	 * @param range
+	 *            the radius of the circle of which the throwable can be thrown.
+	 */
 	public Throwable(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
-			Effect[] clips, Game game, ItemEffect effect, int range, int areaOfEffect) {
+			Effect[] clips, Game game, int range) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
-		this.effect = effect;
 		this.range = range;
-		this.areaOfEffect = areaOfEffect;
 	}
 
 	@Override
 	public void use(Player player) {
-
+		// Create a line from the player to the point that the brick was thrown
 		Line2D.Double line = new Line2D.Double(new Point(player.getPosition().x, player.getPosition().y),
 				new Point(player.getPosition().x + game.getDisplay().getMouseHandler().getMouseLocation().x - 512,
 						player.getPosition().y + game.getDisplay().getMouseHandler().getMouseLocation().y - 384));
-		// System.out.println(( Math.sqrt(Math.pow(line.x2 - line.x1, 2)
-		// + Math.pow(line.y2 - line.y1, 2))));
 		if ((Math.sqrt(Math.pow(line.x1 - line.x2, 2) + Math.pow(line.y1 - line.y2, 2))) < range) {
+			// Remove the item, check for collisions, add the item to the map,
+			// and make a noise/sound effect
 			player.removeItem(this);
 			this.state = ItemState.DROPPED;
 			this.position = player.calculatePointOfImpact(line);
@@ -53,20 +70,16 @@ public class Throwable extends Item {
 		}
 	}
 
+	/**
+	 * Clones an item template for multiple use.
+	 * 
+	 * @param item
+	 *            the item template.
+	 */
 	public Throwable(Throwable item) {
 		super(item);
 
-		this.effect = item.effect;
 		this.range = item.range;
-		this.areaOfEffect = item.areaOfEffect;
-	}
-
-	public ItemEffect getEffect() {
-		return this.effect;
-	}
-
-	public void setEffect(ItemEffect effect) {
-		this.effect = effect;
 	}
 
 	public int getRange() {
@@ -75,14 +88,6 @@ public class Throwable extends Item {
 
 	public void setRange(int range) {
 		this.range = range;
-	}
-
-	public int getAreaOfEffect() {
-		return this.areaOfEffect;
-	}
-
-	public void setAreaOfEffect(int areaOfEffect) {
-		this.areaOfEffect = areaOfEffect;
 	}
 
 	public void render(Graphics g) {
@@ -117,31 +122,11 @@ public class Throwable extends Item {
 			g.drawString("Ultra Rare", mouseLocation.x + 20, mouseLocation.y - 130);
 			break;
 		}
-		
+
 		g.drawString("Throwable item", mouseLocation.x + 20, mouseLocation.y - 115);
 
 		g.setFont(this.game.getUiFontS());
-		switch (this.effect) {
-		case NOISE:
-			g.drawString("Creates noise", mouseLocation.x + 20,
-					mouseLocation.y - 90);
-			break;
-		case DAMAGE:
-			g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 90);
-			break;
-		}
-
-		if (this.areaOfEffect >= 512) {
-			g.drawString("Very large area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
-		} else if (this.areaOfEffect >= 256) {
-			g.drawString("Large area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
-		} else if (this.areaOfEffect >= 128) {
-			g.drawString("Normal area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
-		} else if (this.areaOfEffect >= 64) {
-			g.drawString("Small area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
-		} else {
-			g.drawString("Very small area of effect", mouseLocation.x + 20, mouseLocation.y - 65);
-		}
+		g.drawString("Creates noise", mouseLocation.x + 20, mouseLocation.y - 90);
 
 		if (this.range >= 640) {
 			g.drawString("Very far throwing range", mouseLocation.x + 20, mouseLocation.y - 40);

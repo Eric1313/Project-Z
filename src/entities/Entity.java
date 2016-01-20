@@ -17,7 +17,7 @@ import map.Chunk;
  * @since 1.0
  * @version 1.0
  */
-public abstract class Entity implements Comparable<Entity>{
+public abstract class Entity implements Comparable<Entity> {
 
 	/**
 	 * The height of the entity in pixels.
@@ -112,11 +112,14 @@ public abstract class Entity implements Comparable<Entity>{
 
 		this.game = game;
 	}
-	
-	public int compareTo(Entity entity)
-	{
-		return relativeDistance-entity.relativeDistance;
-		
+
+	/**
+	 * Compares the relative distance between two entities.
+	 * @return the difference in distance.
+	 */
+	public int compareTo(Entity entity) {
+		return this.relativeDistance - entity.relativeDistance;
+
 	}
 
 	public void damage(int health) {
@@ -185,7 +188,7 @@ public abstract class Entity implements Comparable<Entity>{
 	}
 
 	public int getRelativeDistance() {
-		return relativeDistance;
+		return this.relativeDistance;
 	}
 
 	public void setRelativeDistance(int relativeDistance) {
@@ -219,7 +222,7 @@ public abstract class Entity implements Comparable<Entity>{
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	
+
 	public Inventory getInventory() {
 		return this.inventory;
 	}

@@ -9,5 +9,5 @@ package enums;
  * @version 1.0
  */
 public enum ItemEffect {
-	HEAL, AMMO, NOISE, DAMAGE
+	HEAL, AMMO
 }

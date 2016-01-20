@@ -23,7 +23,17 @@ import utilities.Node;
  */
 public class Zombie extends Mob {
 	public static final int MOVEMENT_SPEED = 1;
+
+	/**
+	 * The damage that a zombie deals to a player. Scales as level increases
+	 * (start at 5, increases by 5 per level).
+	 */
 	public static int damage = 5;
+
+	/**
+	 * The total health of a zombie. Scales as level increases (start at 100,
+	 * increases by 50 per level).
+	 */
 	public static int zombieHealth = 100;
 	private int zombieVariant;
 	private Player player;
@@ -31,26 +41,28 @@ public class Zombie extends Mob {
 	private int targetY;
 
 	/**
-	 * Constructs zombie object
+	 * Constructs a new Zombie object.
 	 * 
 	 * @param position
-	 *            pixel based position
+	 *            the coordinates of the zombie in the map in terms of pixels.
 	 * @param health
-	 *            zombie health
+	 *            the total health of the zombie.
 	 * @param images
-	 *            images for render
+	 *            an array of images of the zombie.
 	 * @param clips
-	 *            requited audio clips
+	 *            an array of audio clips played by the zombie.
 	 * @param game
-	 *            game that it is in
+	 *            the game to add the zombie to.
 	 * @param map
-	 *            map that it is in
+	 *            the map to add the zombie to.
+	 * @param imgNo
+	 *            a number representing the zombie's skin.
 	 */
 	public Zombie(Point position, int health, BufferedImage[] images, AudioClip[] clips, Game game, Map map,
 			int imgNo) {
 		super(32, 32, position, 0, Zombie.zombieHealth, true, images, clips, game, map);
-		rotation = Math.random() * (2 * Math.PI);
-		rotation = Math.random() * (2 * Math.PI);
+		this.rotation = Math.random() * (2 * Math.PI);
+		this.rotation = Math.random() * (2 * Math.PI);
 		this.zombieVariant = imgNo;
 
 		this.health = Zombie.zombieHealth;
@@ -61,7 +73,6 @@ public class Zombie extends Mob {
 		} else {
 			this.movementSpeed = Zombie.MOVEMENT_SPEED;
 		}
-
 	}
 
 	/**
@@ -83,12 +94,13 @@ public class Zombie extends Mob {
 		boolean collideRight = false;
 		boolean collideLeft = false;
 
-		// get current chunk
+		// Get the current chunk
 		int chunkX = this.position.x / 512;
 		int chunkY = this.position.y / 512;
+		
 		// Follow the path
 		if (!this.getPath().isEmpty()) {
-			// If path contains null clear path
+			// If path contains null, clear path
 			if (this.path.peek() == null) {
 				{
 					this.path.clear();
@@ -245,14 +257,6 @@ public class Zombie extends Mob {
 		}
 	}
 
-	public Stack<Node> getPath() {
-		return path;
-	}
-
-	public void setPath(Stack<Node> path) {
-		this.path = path;
-	}
-
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
@@ -282,5 +286,13 @@ public class Zombie extends Mob {
 					(int) (42 * (this.health / (Zombie.zombieHealth * 1.0))), 5);
 			g2D.setColor(Color.BLACK);
 		}
+	}
+	
+	public Stack<Node> getPath() {
+		return path;
+	}
+
+	public void setPath(Stack<Node> path) {
+		this.path = path;
 	}
 }

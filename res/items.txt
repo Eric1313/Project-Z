@@ -20,4 +20,4 @@
 303~Sniper Rifle~1~250~res/img/303.png~res/sfx/303.wav~104~161~5~700~3500~1~5~0
 304~Submachine Gun~3~40~res/img/304.png~res/sfx/304.wav~105~10~20~750~3000~1~1~1
 305~Silenced Pistol~2~60~res/img/305.png~res/sfx/305.wav~101~25~8~100~1000~1~1~0
-400~Brick~5~20~res/img/400.png~res/sfx/400.wav~2~256~3
+400~Brick~5~20~res/img/400.png~res/sfx/400.wav~256~3

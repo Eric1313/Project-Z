@@ -169,8 +169,7 @@ public class Game implements Runnable {
 					case 3:
 						this.items.add(new Throwable(Integer.parseInt(stats[0]), stats[1], Integer.parseInt(stats[2]),
 								Integer.parseInt(stats[3]), ItemState.DROPPED, images, sounds, this,
-								ItemEffect.values()[Integer.parseInt(stats[6])], Integer.parseInt(stats[7]),
-								Integer.parseInt(stats[8])));
+								Integer.parseInt(stats[6])));
 					}
 
 				} catch (IOException e) {

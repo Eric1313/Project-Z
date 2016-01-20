@@ -32,7 +32,7 @@ public class DeathScreen extends Screen {
 	 * Constructor for the DeathScreen.
 	 * 
 	 * @param game
-	 *            the game
+	 *            the game.
 	 */
 	public DeathScreen(Game game) {
 		super(game);

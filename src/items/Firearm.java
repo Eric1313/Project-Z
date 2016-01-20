@@ -5,15 +5,14 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import main.Game;
-import utilities.Effect;
 import entities.Entity;
 import entities.Inventory;
 import entities.Player;
 import enums.ItemState;
+import main.Game;
+import utilities.Effect;
 
 /**
  * Subclass of Item that represents a firearm weapon item in Project Z.
@@ -31,15 +30,52 @@ public class Firearm extends Item {
 	private int noise;
 	private double adjustedAngle;
 	private int reloadTime;
-	private int noProjectiles;
+	private int noOfProjectiles;
 	private int penetration;
 	private int automatic;
 
 	private long reloadTick = -60;
 
+	/**
+	 * Constructs a new Firearm object.
+	 * 
+	 * @param itemID
+	 *            the item ID.
+	 * @param name
+	 *            the name of the item.
+	 * @param rarity
+	 *            the rarity of the item (from 1-5).
+	 * @param effectValue
+	 *            the effect's value. In the case of weapons, this would be the
+	 *            damage.
+	 * @param state
+	 *            whether the item is in an inventory or dropped in the world.
+	 * @param images
+	 *            an array of images of the item.
+	 * @param clips
+	 *            an array of audio clips played by item.
+	 * @param game
+	 *            the game to add the item to.
+	 * @param ammoID
+	 *            the item ID of the firearm's ammo.
+	 * @param rateOfFire
+	 *            the number of ticks in between each shot.
+	 * @param maxAmmo
+	 *            the maximum ammo the item can hold.
+	 * @param noise
+	 *            the radius of the noise circle the firearm makes.
+	 * @param reloadTime
+	 *            the number of milliseconds it takes to reload.
+	 * @param noOfProjectiles
+	 *            the number of projectiles the firearm fires.
+	 * @param penetration
+	 *            the number of zombies that the firearm's bullets penetrate.
+	 * @param automatic
+	 *            whether or not the firearm is automatic (0 = false, 1 = true).
+	 */
 	public Firearm(int itemID, String name, int rarity, int effectValue, ItemState state, BufferedImage[] images,
 			Effect[] clips, Game game, int ammoID, int rateOfFire, int maxAmmo, int noise, int reloadTime,
-			int noProjectiles, int penetration, int automatic) {
+			int noOfProjectiles, int penetration, int automatic) {
 		super(itemID, name, rarity, effectValue, state, images, clips, game);
 
 		this.ammoID = ammoID;
@@ -48,11 +84,17 @@ public class Firearm extends Item {
 		this.currentAmmo = this.maxAmmo;
 		this.noise = noise;
 		this.reloadTime = reloadTime;
-		this.noProjectiles = noProjectiles;
+		this.noOfProjectiles = noOfProjectiles;
 		this.penetration = penetration;
 		this.automatic = automatic;
 	}
 
+	/**
+	 * Clones an item template for multiple use.
+	 * 
+	 * @param item
+	 *            the item template.
+	 */
 	public Firearm(Firearm item) {
 		super(item);
 
@@ -62,7 +104,7 @@ public class Firearm extends Item {
 		this.currentAmmo = (int) (Math.random() * this.maxAmmo);
 		this.noise = item.noise;
 		this.reloadTime = item.reloadTime;
-		this.noProjectiles = item.noProjectiles;
+		this.noOfProjectiles = item.noOfProjectiles;
 		this.penetration = item.penetration;
 		this.automatic = item.automatic;
 	}
@@ -78,8 +120,8 @@ public class Firearm extends Item {
 		// Fire the gun if not empty and the enough time has passed since last
 		// shot
 		if (!this.isEmpty()) {
-			long currentTick = game.getTickCount();
-			if (currentTick - player.getLastItemTick() > this.getRateOfFire()) {
+			long currentTick = this.game.getTickCount();
+			if (currentTick - player.getLastItemTick() > this.rateOfFire) {
 				player.setLastItemTick(currentTick);
 				// Play the firing sound
 				clips[0].play();
@@ -87,7 +129,7 @@ public class Firearm extends Item {
 				int range = 32 * 64;
 
 				// Calculate the collisions for each shot
-				for (int i = 1; i <= noProjectiles; i++) {
+				for (int i = 1; i <= this.noOfProjectiles; i++) {
 					// Adjust bullet spread for each shot
 					double angleAdjust = ((i / 2) * .05);
 					if (i % 2 == 1)
@@ -115,17 +157,29 @@ public class Firearm extends Item {
 		}
 	}
 
+	/**
+	 * Reload the firearm with a delay.
+	 * 
+	 * @param player
+	 *            the player that is reloading the firearm.
+	 */
 	public void reload(Player player) {
+		// Check if enough time has passed to reload
 		long currentTick = player.getGame().getTickCount();
-
-		if (currentTick - this.reloadTick > this.reloadTime / 1000 * 60+10) {
+		if (currentTick - this.reloadTick > this.reloadTime / 1000 * 60 + 10) {
 			this.reloadTick = currentTick;
+			
+			// Look for the correct ammo for this firearm
 			for (int itemNo = 0; itemNo < Inventory.NO_OF_ITEMS; itemNo++) {
 				Item currentItem = player.getItem(itemNo);
 				if (currentItem != null && currentItem.getItemID() == this.ammoID) {
 					Consumable ammo = ((Consumable) currentItem);
+					
+					// Play the ammo sound
 					ammo.clips[0].play();
 					Firearm firearm = this;
+					
+					// Run a thread to delay the reload
 					Thread reloadPause = new Thread(new Runnable() {
 						public void run() {
 							try {
@@ -134,6 +188,9 @@ public class Firearm extends Item {
 								e.printStackTrace();
 							}
 							int bullets = ammo.getDurability();
+							
+							// Swap the ammo between the gun and ammo
+							// If the ammo has run out, remove it
 							if (firearm.currentAmmo > 0) {
 								ammo.setDurability(firearm.currentAmmo);
 							} else {
@@ -207,13 +264,16 @@ public class Firearm extends Item {
 
 	@Override
 	public void renderTooltip(Graphics g, Point mouseLocation) {
+		// Render the tooltip's background depending on its rarity
 		g.setColor(new Color(getColour().getRed(), getColour().getGreen(), getColour().getBlue(), 75));
 		g.fillRect(mouseLocation.x, mouseLocation.y - 275, 300, 275);
 
+		// Write the item's name
 		g.setColor(new Color(0, 0, 0, 200));
 		g.setFont(this.game.getUiFont());
 		g.drawString(this.name, mouseLocation.x + 20, mouseLocation.y - 225);
 
+		// Write the item's rarity
 		g.setFont(this.game.getUiFontXS());
 		switch (this.rarity) {
 		case 5:
@@ -233,15 +293,18 @@ public class Firearm extends Item {
 			break;
 		}
 
+		// Write whether or not the firearm is automatic
 		if (this.automatic == 1) {
 			g.drawString("Automatic firearm", mouseLocation.x + 20, mouseLocation.y - 190);
 		} else {
 			g.drawString("Semi-automatic firearm", mouseLocation.x + 20, mouseLocation.y - 190);
 		}
 
+		// Write the damage of the firearm
 		g.setFont(this.game.getUiFontS());
 		g.drawString("Deals " + this.effectValue + " damage", mouseLocation.x + 20, mouseLocation.y - 165);
 
+		// Write a relative attack speed
 		if (this.rateOfFire >= 40) {
 			g.drawString("Very slow attack speed", mouseLocation.x + 20, mouseLocation.y - 140);
 		} else if (this.rateOfFire >= 30) {
@@ -254,6 +317,7 @@ public class Firearm extends Item {
 			g.drawString("Very fast attack speed", mouseLocation.x + 20, mouseLocation.y - 140);
 		}
 
+		// Write a relative reload time
 		if (this.reloadTime >= 5000) {
 			g.drawString("Very slow reload time", mouseLocation.x + 20, mouseLocation.y - 115);
 		} else if (this.reloadTime >= 4000) {
@@ -266,12 +330,14 @@ public class Firearm extends Item {
 			g.drawString("Very fast reload time", mouseLocation.x + 20, mouseLocation.y - 115);
 		}
 
-		if (this.noProjectiles == 1) {
-			g.drawString("Shoots " + this.noProjectiles + " projectile", mouseLocation.x + 20, mouseLocation.y - 90);
+		// Write how many projectiles the firearm shoots
+		if (this.noOfProjectiles == 1) {
+			g.drawString("Shoots " + this.noOfProjectiles + " projectile", mouseLocation.x + 20, mouseLocation.y - 90);
 		} else {
-			g.drawString("Shoots " + this.noProjectiles + " projectiles", mouseLocation.x + 20, mouseLocation.y - 90);
+			g.drawString("Shoots " + this.noOfProjectiles + " projectiles", mouseLocation.x + 20, mouseLocation.y - 90);
 		}
 
+		// Write how many zombies the firearm's bullets penetrates
 		if (this.penetration == 1) {
 			g.drawString("No penetration", mouseLocation.x + 20, mouseLocation.y - 65);
 		} else {
@@ -279,6 +345,7 @@ public class Firearm extends Item {
 					mouseLocation.y - 65);
 		}
 
+		// Write how much ammo the firearm has
 		g.drawString(this.currentAmmo + " / " + this.maxAmmo + " ammo", mouseLocation.x + 20, mouseLocation.y - 40);
 	}
 }
