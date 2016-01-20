@@ -144,34 +144,37 @@ public class World {
 		updateMapOffset();
 		g2D.setTransform(originalTransform);
 
-		// *****************************************************************************************************
-		// ******************EVERYTHING BETWEEN THIS LINE AND THE NEXT IS YOURS
-		// ERIC
-		// *****************************************************************************************************
+
+		//Find chunk player is located in
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
+		
+		//Cycle through a 5x5 chunk area around the player to render
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
 					map.getHeight() / 16); y++) {
+				//Render all items
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
 					Item item = chunkMap[x][y].getItems().get(i);
 					item.render(g);
 				}
+				//Render all passible entities
 				for (int i = 0; i < chunkMap[x][y].getPassibleEntities().size(); i++) {
 					Entity entity = chunkMap[x][y].getPassibleEntities().get(i);
 					entity.render(g);
 				}
+				//Render all sold entities
 				for (int i = 0; i < chunkMap[x][y].getSolidEntities().size(); i++) {
 					Entity entity = chunkMap[x][y].getSolidEntities().get(i);
 					entity.render(g);
 				}
+				//Render all zombies
 				for (int i = 0; i < chunkMap[x][y].getZombies().size(); i++) {
 					Zombie zombie = chunkMap[x][y].getZombies().get(i);
 					zombie.render(g);
 				}
 			}
 		}
-		// *****************************************************************************************************
 		g2D.setTransform(originalTransform);
 		// Renders the player
 		player.render(g2D);
