@@ -11,8 +11,6 @@ import entities.Zombie;
 import enums.ItemState;
 import main.Game;
 import map.Map;
-import utilities.SoundEffect;
-import utilities.Sound;
 
 /**
  * Abstract Item class for all items in Project Z.

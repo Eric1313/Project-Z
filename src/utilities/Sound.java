@@ -25,7 +25,6 @@ public class Sound {
 	SourceDataLine line;
 
 	private boolean loop;
-	private boolean stop = false;
 
 	String file;
 
