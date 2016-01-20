@@ -1,11 +1,3 @@
-/**
- * Subclass of Screen that is displayed when the player dies
- * 
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @see Screen
- * @since 1.0
- * @version 1.0
- */
 package gui;
 
 import java.awt.Color;
@@ -24,6 +16,14 @@ import main.Game;
 import entities.Zombie;
 import enums.GameState.State;
 
+/**
+ * Subclass of Screen that is displayed when the player dies
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Screen
+ * @since 1.0
+ * @version 1.0
+ */
 public class DeathScreen extends Screen {
 	private float colour = 30;
 	private boolean decrease;

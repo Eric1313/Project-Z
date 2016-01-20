@@ -1,9 +1,3 @@
-/**
- * A generic screen
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @since 1.0
- * @version 1.0
- */
 package gui;
 
 import java.awt.Color;
@@ -13,6 +7,13 @@ import java.awt.Rectangle;
 
 import main.Game;
 
+/**
+ * A generic screen.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public abstract class Screen {
 	protected Game game;
 
@@ -59,8 +60,8 @@ public abstract class Screen {
 	 * @param handY
 	 *            the y location of the hand.
 	 */
-	public void button(Graphics2D g2D, boolean hover, Rectangle box,
-			String text, int textX, int textY, int handX, int handY) {
+	public void button(Graphics2D g2D, boolean hover, Rectangle box, String text, int textX, int textY, int handX,
+			int handY) {
 		g2D.setColor(Color.WHITE);
 		if (hover) {
 			g2D.setPaint(Color.WHITE);

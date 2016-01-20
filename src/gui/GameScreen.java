@@ -1,10 +1,3 @@
-/**
- * The game screen which renders the actual game
- * 
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @since 1.0
- * @version 1.0
- */
 package gui;
 
 import java.awt.Canvas;
@@ -17,6 +10,13 @@ import map.Map;
 import map.World;
 import entities.Inventory;
 
+/**
+ * The game screen which renders the actual game
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class GameScreen extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private Game game;

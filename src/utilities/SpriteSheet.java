@@ -1,12 +1,14 @@
-/*
- * Crops images from the sprite sheet
- * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
- * @version January 4th, 2016
- */
 package utilities;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Crops images from the sprite sheet.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class SpriteSheet {
 	private BufferedImage sheet;
 	private int width;

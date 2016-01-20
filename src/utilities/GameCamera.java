@@ -1,8 +1,3 @@
-/*
- * This class controls what the player sees on the screen
- * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
- * @version January 4th, 2016
- */
 package utilities;
 
 import javax.swing.JFrame;
@@ -11,6 +6,12 @@ import main.Game;
 import entities.Entity;
 import gui.GameScreen;
 
+/**
+ * Class that controls what the player sees on the screen.
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class GameCamera {
 	private float xOffset, yOffset;
 	private JFrame frame;

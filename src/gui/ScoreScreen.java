@@ -1,11 +1,3 @@
-/**
- * Subclass of Screen that contains the highscores
- * 
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @see Screen
- * @since 1.0
- * @version 1.0
- */
 package gui;
 
 import java.awt.Color;
@@ -18,6 +10,14 @@ import java.awt.RenderingHints;
 import enums.GameState.State;
 import main.Game;
 
+/**
+ * Subclass of Screen that contains the highscores
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Screen
+ * @since 1.0
+ * @version 1.0
+ */
 public class ScoreScreen extends Screen {
 	private float colour = 30;
 	private boolean decrease;

@@ -1,8 +1,3 @@
-/**
- * The actual game that contains the game loop, and assets.
- * @author Allen Han, Patrick Liu, Alosha Reymer, & Eric Chee
- * @version January 4th, 2016
- */
 package main;
 
 import enums.GameState;
@@ -31,6 +26,12 @@ import java.util.ArrayList;
 import utilities.Assets;
 import utilities.GameCamera;
 
+/**
+ * The actual game that contains the game loop, and assets.
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class Game implements Runnable {
 	private BufferedImage[][] tileImages;
 	private BufferedImage[][] playerImages;

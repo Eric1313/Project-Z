@@ -12,6 +12,13 @@ import items.Firearm;
 import items.Item;
 import items.Melee;
 
+/**
+ * A heads-up display for a player in the game.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class HUD {
 	private Player player;
 

@@ -1,11 +1,3 @@
-/**
- * Subclass of Screen that is the main menu
- * 
- * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
- * @see Screen
- * @since 1.0
- * @version 1.0
- */
 package gui;
 
 import java.awt.Color;
@@ -18,6 +10,14 @@ import java.awt.RenderingHints;
 import main.Game;
 import enums.GameState.State;
 
+/**
+ * Subclass of Screen that is the main menu
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @see Screen
+ * @since 1.0
+ * @version 1.0
+ */
 public class MainScreen extends Screen {
 	private boolean hoverPlay;
 	private boolean hoverHelp;

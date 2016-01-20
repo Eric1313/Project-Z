@@ -23,6 +23,13 @@ import utilities.Assets;
 import utilities.GameCamera;
 import utilities.MouseHandler;
 
+/**
+ * The world of the game.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class World {
 	private Game game;
 	private Player player;
@@ -64,8 +71,7 @@ public class World {
 	 * @param mapHeight
 	 *            the height of the map in tiles.
 	 */
-	public World(Game game, int mapWidth, int mapHeight, Inventory inventory,
-			int skinNo) {
+	public World(Game game, int mapWidth, int mapHeight, Inventory inventory, int skinNo) {
 		this.width = mapWidth;
 		this.height = mapHeight;
 		this.game = game;
@@ -82,13 +88,12 @@ public class World {
 
 		// Spawns the player in the map
 		if (inventory == null)
-			player = new Player(new Point((int) map.getPlayerCoordinate()
-					.getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
-					null, true, game, map,
-					(int) Math.floor((Math.random() * 6)));
+			player = new Player(
+					new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
+					null, true, game, map, (int) Math.floor((Math.random() * 6)));
 		else {
-			player = new Player(new Point((int) map.getPlayerCoordinate()
-					.getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
+			player = new Player(
+					new Point((int) map.getPlayerCoordinate().getX() * 32, (int) map.getPlayerCoordinate().getY() * 32),
 					inventory, true, game, map, skinNo);
 		}
 		// Sets the player's image
@@ -124,8 +129,7 @@ public class World {
 		// graphics 2D
 		Graphics2D g2D = (Graphics2D) g;
 
-		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Sets the original transformation of the map without any rotations
 		if (originalTransform == null) {
@@ -144,8 +148,7 @@ public class World {
 
 		// Cycle through a 5x5 chunk area around the player to render
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
-					map.getHeight() / 16); y++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
 				// Render all items
 
 				for (int i = 0; i < chunkMap[x][y].getItems().size(); i++) {
@@ -178,8 +181,7 @@ public class World {
 		// Makes the map darker to simulate night
 		g2D.setTransform(originalTransform);
 		g2D.setColor(new Color(0f, 0f, 0f, .6f));
-		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game
-				.getDisplay().getFrame().getHeight());
+		g2D.fillRect(0, 0, game.getDisplay().getFrame().getWidth(), game.getDisplay().getFrame().getHeight());
 
 		g2D.setFont(this.game.getUiFontXS());
 
@@ -193,20 +195,16 @@ public class World {
 			// Draw a rectangle above the item relative to the camera
 			g.setColor(new Color(100, 100, 100, 150));
 			g.fillRect(
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15
-							- fm.stringWidth(this.hoverItem.getName())
-							/ 2
-							- 15,
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2 - 15,
 					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 30,
 					fm.stringWidth(this.hoverItem.getName()) + 30, 20);
 
 			// Draw the item's name in the rectangle depending on its rarity
 			g.setColor(this.hoverItem.getColour());
-			g.drawString(
-					this.hoverItem.getName(),
-					(int) (this.hoverItem.getPosition().x - camera.getxOffset())
-							+ 15 - fm.stringWidth(this.hoverItem.getName()) / 2,
+			g.drawString(this.hoverItem.getName(),
+					(int) (this.hoverItem.getPosition().x - camera.getxOffset()) + 15
+							- fm.stringWidth(this.hoverItem.getName()) / 2,
 					(int) (this.hoverItem.getPosition().y - camera.getyOffset()) - 15);
 		}
 
@@ -220,14 +218,11 @@ public class World {
 			if (difference < 90) {
 				// Draw a damage indicator that becomes more transparent as time
 				// goes on
-				g.setColor(new Color(200, 200, 200,
-						(int) (255 - difference * 2)));
-				g.drawString(
-						this.damage.get(entity).toString(),
-						(int) (this.entitiesDamaged.get(entity).getPosition().x - camera
-								.getxOffset()) + 16,
-						(int) (this.entitiesDamaged.get(entity).getPosition().y - camera
-								.getyOffset()) - 32 - (int) (difference / 5));
+				g.setColor(new Color(200, 200, 200, (int) (255 - difference * 2)));
+				g.drawString(this.damage.get(entity).toString(),
+						(int) (this.entitiesDamaged.get(entity).getPosition().x - camera.getxOffset()) + 16,
+						(int) (this.entitiesDamaged.get(entity).getPosition().y - camera.getyOffset()) - 32
+								- (int) (difference / 5));
 				g.setColor(Color.BLACK);
 			} else {
 				// If 90 ticks have passed, remove the entity from the
@@ -328,36 +323,31 @@ public class World {
 				}
 				g2D.setTransform(originalTransform);
 				// Rotates the tiles 180 decrease
-				if ((baseTiles[j][i] & (1 << 12)) != 0
-						&& ((baseTiles[j][i] & (1 << 13)) != 0)) {
-					g2D.rotate(Math.toRadians(180), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
+				if ((baseTiles[j][i] & (1 << 12)) != 0 && ((baseTiles[j][i] & (1 << 13)) != 0)) {
+					g2D.rotate(Math.toRadians(180),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + Assets.TILE_WIDTH / 2,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange
+									+ Assets.TILE_HEIGHT / 2));
 				}
 				// Rotates the tile 90 degrees
 				else if ((baseTiles[j][i] & (1 << 12)) != 0) {
-					g2D.rotate(Math.toRadians(90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
+					g2D.rotate(Math.toRadians(90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + Assets.TILE_WIDTH / 2,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange
+									+ Assets.TILE_HEIGHT / 2));
 				} else if ((baseTiles[j][i] & (1 << 13)) != 0) {
 					// Rotates the tiles 270 degrees
-					g2D.rotate(Math.toRadians(-90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + Assets.TILE_WIDTH / 2, (int) (tileY
-							* Assets.TILE_HEIGHT - camera.getyOffset()
-							+ yChange + Assets.TILE_HEIGHT / 2));
+					g2D.rotate(Math.toRadians(-90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + Assets.TILE_WIDTH / 2,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange
+									+ Assets.TILE_HEIGHT / 2));
 				}
 				if ((baseTiles[j][i] & (1 << 14)) != 0) {
 					// Sets the collision tiles which are solid
-					solidTiles[tileY][tileX] = new Rectangle((int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange),
-							Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+					solidTiles[tileY][tileX] = new Rectangle(
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), Assets.TILE_WIDTH,
+							Assets.TILE_HEIGHT);
 				} else {
 					solidTiles[tileY][tileX] = null;
 				}
@@ -365,18 +355,14 @@ public class World {
 				int id = (baseTiles[j][i] & 0xFFF);
 				// Draws the tile to the screen
 				g2D.drawImage(game.getTileImages()[(id / 100) - 1][(id % 100)],
-						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
-								+ xChange, (int) (tileY * Assets.TILE_HEIGHT
-								- camera.getyOffset() + yChange), null);
+						(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+						(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), null);
 
 				// Special collision rectangle for the checkpoint
 				if (id == 211) {
-					flag = new Rectangle(
-							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset())
-									+ xChange,
-							(int) (tileY * Assets.TILE_HEIGHT
-									- camera.getyOffset() + yChange),
-							Assets.TILE_WIDTH, Assets.TILE_HEIGHT);
+					flag = new Rectangle((int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), Assets.TILE_WIDTH,
+							Assets.TILE_HEIGHT);
 				}
 				tileX++;
 			}
@@ -400,35 +386,28 @@ public class World {
 					break;
 				}
 				g2D.setTransform(originalTransform);
-				if ((upperTiles[j][i] & (1 << 12)) != 0
-						&& ((upperTiles[j][i] & (1 << 13)) != 0)) {
-					g2D.rotate(Math.toRadians(180), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+				if ((upperTiles[j][i] & (1 << 12)) != 0 && ((upperTiles[j][i] & (1 << 13)) != 0)) {
+					g2D.rotate(Math.toRadians(180),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				}
 
 				else if ((upperTiles[j][i] & (1 << 12)) != 0) {
-					g2D.rotate(Math.toRadians(90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+					g2D.rotate(Math.toRadians(90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				} else if ((upperTiles[j][i] & (1 << 13)) != 0) {
-					g2D.rotate(Math.toRadians(-90), (int) (tileX
-							* Assets.TILE_WIDTH - camera.getxOffset())
-							+ xChange + 16, (int) (tileY * Assets.TILE_HEIGHT
-							- camera.getyOffset() + yChange + 16));
+					g2D.rotate(Math.toRadians(-90),
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange + 16,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange + 16));
 				}
 				// Gets the tile id
 				int id = (upperTiles[j][i] & 0xFFF);
 				// Draws the tile to the screen
 				if (id != 0)
-					g2D.drawImage(
-							game.getTileImages()[(id / 100) - 1][(id % 100)],
-							(int) (tileX * Assets.TILE_WIDTH - camera
-									.getxOffset()) + xChange,
-							(int) (tileY * Assets.TILE_HEIGHT
-									- camera.getyOffset() + yChange), null);
+					g2D.drawImage(game.getTileImages()[(id / 100) - 1][(id % 100)],
+							(int) (tileX * Assets.TILE_WIDTH - camera.getxOffset()) + xChange,
+							(int) (tileY * Assets.TILE_HEIGHT - camera.getyOffset() + yChange), null);
 				tileX++;
 			}
 			tileY++;
@@ -445,13 +424,11 @@ public class World {
 		int chunkX = Math.max((int) player.getPosition().getX() / 512, 2);
 		int chunkY = Math.max((int) player.getPosition().getY() / 512, 2);
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, map.getWidth() / 16); x++) {
-			for (int y = chunkY - 2; y < Math.min(chunkY + 3,
-					map.getHeight() / 16); y++) {
+			for (int y = chunkY - 2; y < Math.min(chunkY + 3, map.getHeight() / 16); y++) {
 				// Go through each item in the chunk backwards (to find the
 				// uppermost item)
 				for (ListIterator<Item> iterator = chunkMap[x][y].getItems()
-						.listIterator(chunkMap[x][y].getItems().size()); iterator
-						.hasPrevious();) {
+						.listIterator(chunkMap[x][y].getItems().size()); iterator.hasPrevious();) {
 					Item item = iterator.previous();
 
 					// Check if the mouse is hovering over the item and the
@@ -462,21 +439,14 @@ public class World {
 					// over to true
 					// Otherwise, the item is not being hovered over and set it
 					// to false
-					Rectangle itemHitbox = new Rectangle(
-							(int) (item.getPosition().x - camera.getxOffset()),
-							(int) (item.getPosition().y - camera.getyOffset()),
-							32, 32);
-					if (itemHitbox.contains(mouse.getMouseLocation())
-							&& Point.distance(player.getPosition().x,
-									player.getPosition().y,
-									item.getPosition().x, item.getPosition().y) <= 256) {
+					Rectangle itemHitbox = new Rectangle((int) (item.getPosition().x - camera.getxOffset()),
+							(int) (item.getPosition().y - camera.getyOffset()), 32, 32);
+					if (itemHitbox.contains(mouse.getMouseLocation()) && Point.distance(player.getPosition().x,
+							player.getPosition().y, item.getPosition().x, item.getPosition().y) <= 256) {
 						item.setHover(true);
 						return item;
-					} else if (itemHitbox
-							.intersects(new Rectangle((int) (player
-									.getPosition().x - camera.getxOffset()),
-									(int) (player.getPosition().y - camera
-											.getyOffset()), 32, 32))) {
+					} else if (itemHitbox.intersects(new Rectangle((int) (player.getPosition().x - camera.getxOffset()),
+							(int) (player.getPosition().y - camera.getyOffset()), 32, 32))) {
 						item.setHover(true);
 						return item;
 					} else {

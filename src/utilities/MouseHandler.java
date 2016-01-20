@@ -1,8 +1,3 @@
-/*
- * Handles the mouse input from the player
- * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
- * @version January 4th, 2016
- */
 package utilities;
 
 import java.awt.Point;
@@ -10,6 +5,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
+/**
+ * Handles the mouse input from the player.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class MouseHandler extends MouseAdapter {
 	private boolean click;
 	private Point mouseLocation;
@@ -27,7 +29,7 @@ public class MouseHandler extends MouseAdapter {
 	public void mousePressed(MouseEvent mouse) {
 		this.click = true;
 	}
-	
+
 	@Override
 	public void mouseReleased(MouseEvent mouse) {
 		this.click = false;

@@ -12,35 +12,29 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+/**
+ * Handles sound for the game.
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class Sound {
-
 	AudioInputStream in;
-
 	AudioFormat decodedFormat;
-
 	AudioInputStream din;
-
 	AudioFormat baseFormat;
-
 	SourceDataLine line;
-
 	private boolean loop;
-
 	String file;
-
 	private BufferedInputStream stream;
 
-	// private ByteArrayInputStream stream;
-
 	/**
-	 * recreate the stream
-	 * 
+	 * Recreates the stream.
 	 */
 	public void reset() {
 		try {
 			stream = new BufferedInputStream(new FileInputStream(file));
-			// stream.reset();
-			// TODO
 			try {
 				in = AudioSystem.getAudioInputStream(stream);
 			} catch (UnsupportedAudioFileException e) {
@@ -53,6 +47,9 @@ public class Sound {
 		}
 	}
 
+	/**
+	 * Closes the stream.
+	 */
 	public void close() {
 		try {
 			line.close();
@@ -62,37 +59,39 @@ public class Sound {
 		}
 	}
 
+	/**
+	 * Constructs a new Sound object.
+	 * 
+	 * @param filename
+	 *            the path of the file.
+	 * @param loop
+	 *            whether or not to loop the sound.
+	 */
 	public Sound(String filename, boolean loop) {
 		this(filename);
 		this.loop = loop;
 	}
 
+	/**
+	 * Constructs a new Sound object.
+	 * 
+	 * @param filename
+	 *            the path of the file.
+	 */
 	public Sound(String filename) {
 		file = filename;
 		this.loop = false;
 		try {
-			// InputStream raw = Object.class.getResourceAsStream(filename);
 			stream = new BufferedInputStream(new FileInputStream(filename));
 
-			// ByteArrayOutputStream out = new ByteArrayOutputStream();
-			// byte[] buffer = new byte[1024];
-			// int read = raw.read(buffer);
-			// while( read > 0 ) {
-			// out.write(buffer, 0, read);
-			// read = raw.read(buffer);
-			// }
-			// stream = new ByteArrayInputStream(out.toByteArray());
 			in = AudioSystem.getAudioInputStream(stream);
 			din = null;
 
 			if (in != null) {
 				baseFormat = in.getFormat();
 
-				decodedFormat = new AudioFormat(
-						AudioFormat.Encoding.PCM_SIGNED,
-						baseFormat.getSampleRate(), 16,
-						baseFormat.getChannels(), baseFormat.getChannels() * 2,
-						baseFormat.getSampleRate(), false);
+				decodedFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
+						baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
 
 				din = AudioSystem.getAudioInputStream(decodedFormat, in);
 				line = getLine(decodedFormat);
@@ -106,46 +105,54 @@ public class Sound {
 		}
 	}
 
-	private SourceDataLine getLine(AudioFormat audioFormat)
-			throws LineUnavailableException {
+	/**
+	 * Gets data line from the file.
+	 * 
+	 * @param audioFormat
+	 *            the audio format of the file.
+	 * @return format of file
+	 * @throws LineUnavailableException
+	 *             when file is invalid.
+	 */
+	private SourceDataLine getLine(AudioFormat audioFormat) throws LineUnavailableException {
 		SourceDataLine res = null;
-		DataLine.Info info = new DataLine.Info(SourceDataLine.class,
-				audioFormat);
+		DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 		res = (SourceDataLine) AudioSystem.getLine(info);
 		res.open(audioFormat);
 		return res;
 	}
 
-
-
+	/**
+	 * Plays the sound.
+	 */
 	public void play() {
-				try {
-					boolean firstTime = true;
-					while (firstTime || loop) {
-	
-						firstTime = false;
-						byte[] data = new byte[4096];
+		try {
+			// Plays sound once
+			boolean firstTime = true;
+			while (firstTime || loop) {
 
-						if (line != null) {
+				firstTime = false;
+				byte[] data = new byte[4096];
 
-							line.start();
-							int nBytesRead = 0;
+				if (line != null) {
 
-							while (nBytesRead != -1) {
-								nBytesRead = din.read(data, 0, data.length);
-								if (nBytesRead != -1)
-									line.write(data, 0, nBytesRead);
-							}
-							
-							line.drain();
-							line.stop();
-							line.close();
-							reset();
-						}
+					line.start();
+					int nBytesRead = 0;
+
+					while (nBytesRead != -1) {
+						nBytesRead = din.read(data, 0, data.length);
+						if (nBytesRead != -1)
+							line.write(data, 0, nBytesRead);
 					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	}
 
+					line.drain();
+					line.stop();
+					line.close();
+					reset();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

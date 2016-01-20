@@ -1,8 +1,3 @@
-/*
- * Loads an image
- * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
- * @version January 4th, 2016
- */
 package utilities;
 
 import java.awt.image.BufferedImage;
@@ -11,6 +6,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * Loads an image
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class ImageLoader {
 	/**
 	 * Loads in an image.

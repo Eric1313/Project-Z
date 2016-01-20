@@ -1,13 +1,15 @@
-/*
- * Handles the key input from the player
- * @author Allen Han, Eric Chee, Patrick Liu, Alosha Reymer
- * @version January 4th, 2016
- */
 package utilities;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Handles the key input from the player
+ * 
+ * @author Allen Han, Alosha Reymer, Eric Chee, Patrick Liu
+ * @since 1.0
+ * @version 1.0
+ */
 public class KeyHandler implements KeyListener {
 	private boolean up;
 	private boolean down;
@@ -34,7 +36,7 @@ public class KeyHandler implements KeyListener {
 		toggle(key, false);
 		stop = false;
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent key) {
 	}

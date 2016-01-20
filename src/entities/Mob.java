@@ -29,6 +29,22 @@ public abstract class Mob extends Entity {
 	protected Map map;
 	protected Stack<Node> path = new Stack<Node>();
 
+	/**
+	 * Constructs a new Mob object.
+	 * 
+	 * @param height
+	 *            the height of the mob in pixels.
+	 * @param width
+	 *            the width of the mob in pixels.
+	 * @param position
+	 *            the coordinates of the mob in the map in terms of pixels.
+	 * @param solid
+	 *            whether or not the mob is solid.
+	 * @param game
+	 *            the game to add the mob to.
+	 * @param map
+	 *            the game to add the mob to.
+	 */
 	public Mob(int height, int width, Point position, boolean solid, Game game, Map map) {
 		super(height, width, position, solid, game);
 		this.map = map;
@@ -42,14 +58,25 @@ public abstract class Mob extends Entity {
 		this.setChunkMap(map.getChunkMap());
 	}
 
+	/**
+	 * Alerts other zombies within a sound radius
+	 * 
+	 * @param range
+	 *            range of sound
+	 * @param player
+	 *            if sound is made by player
+	 */
 	public void makeNoise(int range, boolean player) {
 		int chunkX = Math.max(this.position.x / 512, 2);
 		int chunkY = Math.max(this.position.y / 512, 2);
+		// Cycle througha 5x5 chunk area around the player
 		for (int x = chunkX - 2; x < Math.min(chunkX + 3, this.map.getWidth() / 16); x++) {
 			for (int y = chunkY - 2; y < Math.min(chunkY + 3, this.map.getHeight() / 16); y++) {
 				if (x < 100 && y < 100) {
 					for (Iterator<Zombie> iterator = this.chunkMap[x][y].getZombies().iterator(); iterator.hasNext();) {
 						Zombie zombie = iterator.next();
+						// Alert zombie if within radius and made by player on
+						// if it does not have a path already
 						if (Math.pow(this.position.x - zombie.position.x, 2)
 								+ Math.pow(this.position.y - zombie.position.y, 2) < range * range) {
 							if (player) {
@@ -107,5 +134,5 @@ public abstract class Mob extends Entity {
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-	
+
 }
