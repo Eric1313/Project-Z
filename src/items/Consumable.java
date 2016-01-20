@@ -111,15 +111,29 @@ public class Consumable extends Item {
 
 			// Play the item's sound
 			new SoundEffect(clips[0]).play();
-
-			this.removeDurability();
-			if (this.getDurability() <= 0) {
-				player.removeItem(this);
-			}
-
-			// Run a thread to delay the use of the item
 			Consumable consumable = this;
-			Thread reloadPause = new Thread(new Runnable() {
+
+			//Delay before it kicks in
+			Thread buffUseDelay = new Thread(new Runnable() {
+				public void run() {
+					try {
+						Thread.sleep(3500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					player.setBaseMovementSpeed(player.getBaseMovementSpeed() + 1);
+
+					consumable.removeDurability();
+					if (consumable.getDurability() <= 0) {
+						player.removeItem(consumable);
+					}
+				}
+			});
+			buffUseDelay.start();
+			
+
+			// Thread to wait for duration to end
+			Thread effectDuration = new Thread(new Runnable() {
 				public void run() {
 					try {
 						Thread.sleep(consumable.getEffectValue());
@@ -129,7 +143,7 @@ public class Consumable extends Item {
 					player.setBaseMovementSpeed(player.getBaseMovementSpeed() - 1);
 				}
 			});
-			reloadPause.start();
+			effectDuration.start();
 
 			break;
 		default:
