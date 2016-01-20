@@ -606,7 +606,6 @@ public class Player extends Mob {
 	 * @return Queue of hit entities sorted by distance
 	 */
 	public PriorityQueue<Entity> projectileTracer(Line2D.Double line, int range) {
-
 		// Queue of hit entities
 		PriorityQueue<Entity> entitiesCollided = new PriorityQueue<Entity>();
 
@@ -680,9 +679,17 @@ public class Player extends Mob {
 		}
 
 		return entitiesCollided;
-
 	}
 
+	/**
+	 * Checks entity collision with a given arc.
+	 * 
+	 * @param arc
+	 *            the arc to check.
+	 * @param damage
+	 *            the damage to damage the entities with.
+	 * @return the number of entities collided with.
+	 */
 	public int meleeCollision(Arc2D arc, int damage) {
 		int noOfEnemies = 0;
 
